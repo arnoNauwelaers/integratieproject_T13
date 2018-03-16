@@ -12,6 +12,7 @@ namespace politiekeBarometer
     {
         protected void Application_Start()
         {
+            //halokes
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
