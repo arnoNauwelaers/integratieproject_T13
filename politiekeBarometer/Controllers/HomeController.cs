@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BL;
+using BL.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +10,18 @@ namespace politiekeBarometer.Controllers
 {
     public class HomeController : Controller
     {
+        private ItemController ItemController = new ItemController();
         public ActionResult Index()
         {
-            return View();
+            ItemController.SynchroniseDb();
+            List<Notification> model = new List<Notification>();
+            foreach(Notification n in ItemController.notificationManager.GetNotifications()) {
+                if(n.User.Equals(ItemController.gebruikerManager.GetUser()))
+                {
+                    model.Add(n);
+                }
+            }
+            return View(model);
         }
 
         public ActionResult About()
