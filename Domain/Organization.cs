@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    class Person : Item
+    class Organization : Item
     {
         public ICollection<SocialMediaProfile> socialMediaProfiles { get; set; }
-
-        public Organization Organization { get; set; }
+        public ICollection<Person> persons { get; set; }
     }
 }

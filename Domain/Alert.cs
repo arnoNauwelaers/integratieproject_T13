@@ -10,18 +10,16 @@ namespace Domain
     public class Alert
     {
         [Key]
-        public int Id { get; set; }
-        public String Type { get; set; }
-        public String Conditie { get; set; }
-        public String Parameter;
-        public int ItemId1 { get; set; }
-        public int ItemId2 { get; set; }
+        public int AlertId { get; set; }
+        public AlertType Type { get; set; }
+        public AlertParameter Parameter { get; set; }
+        public char Condition { get; set; }
 
-        public Alert(string type, string parameter, int item1)
-        {
-            Type = type;
-            Parameter = parameter;
-            ItemId1 = item1;
-        }
+        [Required]
+        public User User { get; set; }
+        public ICollection<Notification> Notifications { get; set; }
+        [Required]
+        public Item Item { get; set; }
+        public Item CompareItem { get; set; }
     }
 }

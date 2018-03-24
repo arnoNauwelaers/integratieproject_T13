@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    class Theme
+    public enum AlertType : byte
     {
-        public ICollection<string> Keywords { get; set; }
+        notification = 0,
+        mail,
+        notificationMail
     }
 }

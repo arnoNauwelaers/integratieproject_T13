@@ -6,3 +6,7 @@ C:\Users\Mathijs\Source\Repos\integratieproject_T13\Domain\obj\Debug\Domain.pdb
 C:\Users\Mathijs\Source\Repos\integratieproject_T13\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
 C:\Users\Mathijs\Source\Repos\integratieproject_T13\Domain\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Mathijs\Source\Repos\integratieproject_T13\Domain\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\intefratieproject_T13\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\intefratieproject_T13\Domain\obj\Debug\Domain.csproj.CoreCompileInputs.cache
+C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\intefratieproject_T13\Domain\obj\Debug\Domain.dll
+C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\intefratieproject_T13\Domain\obj\Debug\Domain.pdb

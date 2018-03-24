@@ -10,13 +10,12 @@ namespace Domain
     public class Item
     {
         [Key]
-        public int Id { get; set; }
-        public String Name { get; set; }
+        public int itemId { get; set; }
+        public string name { get; set; }
+        //public int photo { get; set; }
+        //public ICollection<Set> sets { get; set; }
 
-        public Item(int id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
+        //public ICollection<Set> Set { get; set; }
+        public ICollection<Alert> Alert { get; set; }
     }
 }

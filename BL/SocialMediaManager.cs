@@ -9,16 +9,13 @@ namespace BL
 {
     public class SocialMediaManager
     {
-        private SocialMediaRepository repo;
+        private SocialMediaRepository SocialMediaRepository;
+        private ItemManager ItemManager;
 
         public SocialMediaManager()
         {
-            this.repo = new SocialMediaRepository();
-        }
-
-        private List<int> GetItemIds()
-        {
-            return null;
+            SocialMediaRepository = new SocialMediaRepository();
+            ItemManager = new ItemManager();
         }
     }
 }

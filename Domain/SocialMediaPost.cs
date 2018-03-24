@@ -11,23 +11,17 @@ namespace Domain
     {
         [Key]
         public int PostId { get; set; }
-        public long Id { get; set; }
-        public String[] Hashtags { get; set; }
-        public String[] Words { get; set; }
-        public DateTime Date { get; set; }
-        public String[] Politician { get; set; }
-        public String Geo { get; set; }
-        public String User_id { get; set; }
-        public double[] Sentiment { get; set; }
+        public string Geo { get; set; }
         public Boolean Retweet { get; set; }
-        public String Source { get; set; }
-        public String[] Urls { get; set; }
-        public String[] Mentions { get; set; }
+        public DateTime Date { get; set; }
+        public int Polarity { get; set; }
+        public int Objectivity { get; set; }
+        public List<String> Hashtags { get; set; }
+        public List<String> Verhalen { get; set; }
+        public List<String> Words { get; set; }
 
-       
-            public override String ToString()
-        {
-            return Source;
-        }
+        [Required]
+        public SocialMediaSource SocialMediaSource { get; set; }
+        public ICollection<SocialMediaProfile> SocialMediaProfiles { get; set; }
     }
 }

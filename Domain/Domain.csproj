@@ -46,13 +46,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alert.cs" />
+    <Compile Include="AlertParameter.cs" />
+    <Compile Include="AlertType.cs" />
+    <Compile Include="Deelplatform_SocialMediaSource.cs" />
     <Compile Include="Item.cs" />
-    <Compile Include="Organisation.cs" />
+    <Compile Include="Organization.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="SocialMediaPost.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Records.cs" />
+    <Compile Include="SocialMediaProfile.cs" />
+    <Compile Include="SocialMediaSource.cs" />
     <Compile Include="Theme.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>

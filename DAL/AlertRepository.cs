@@ -7,28 +7,11 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class AlertRepository
+    public class AlertRepository : MemoryRepository
     {
-        private IList<Alert> alerts = new List<Alert>();
-
-
-        Alert alert = new Alert("OnlyNotification", "AantalTweets", 1);
-
-        public AlertRepository()
+        public AlertRepository() : base()
         {
-            alerts.Add(alert);
-        }
 
-        public Alert getAlert(int alertId)
-        {
-            foreach (Alert alert in alerts)
-            {
-                if (alert.Id == alertId)
-                {
-                    return alert;
-                }
-            }
-            return null;
         }
     }
 }
