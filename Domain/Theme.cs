@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain
+namespace BL.Domain
 {
-    class Theme
+    public class Theme
     {
         public ICollection<string> Keywords { get; set; }
     }

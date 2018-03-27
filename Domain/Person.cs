@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain
+namespace BL.Domain
 {
-    class Person : Item
+    public class Person : Item
     {
+        public int PersonID { get; set; }
         public ICollection<SocialMediaProfile> socialMediaProfiles { get; set; }
 
         public Organization Organization { get; set; }
