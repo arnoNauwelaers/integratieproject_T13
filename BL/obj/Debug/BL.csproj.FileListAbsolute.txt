@@ -10,3 +10,15 @@ C:\Users\Mathijs\Source\Repos\integratieproject_T13\BL\obj\Debug\BL.dll
 C:\Users\Mathijs\Source\Repos\integratieproject_T13\BL\obj\Debug\BL.pdb
 C:\Users\Mathijs\Source\Repos\integratieproject_T13\BL\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Mathijs\Source\Repos\integratieproject_T13\BL\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Mathijs\Desktop\integratieproject\integratieproject_T13\BL\bin\Debug\BL.dll
+C:\Users\Mathijs\Desktop\integratieproject\integratieproject_T13\BL\bin\Debug\BL.pdb
+C:\Users\Mathijs\Desktop\integratieproject\integratieproject_T13\BL\bin\Debug\DAL.dll
+C:\Users\Mathijs\Desktop\integratieproject\integratieproject_T13\BL\bin\Debug\Domain.dll
+C:\Users\Mathijs\Desktop\integratieproject\integratieproject_T13\BL\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Mathijs\Desktop\integratieproject\integratieproject_T13\BL\bin\Debug\DAL.pdb
+C:\Users\Mathijs\Desktop\integratieproject\integratieproject_T13\BL\bin\Debug\Domain.pdb
+C:\Users\Mathijs\Desktop\integratieproject\integratieproject_T13\BL\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Mathijs\Desktop\integratieproject\integratieproject_T13\BL\obj\Debug\BL.csprojResolveAssemblyReference.cache
+C:\Users\Mathijs\Desktop\integratieproject\integratieproject_T13\BL\obj\Debug\BL.csproj.CoreCompileInputs.cache
+C:\Users\Mathijs\Desktop\integratieproject\integratieproject_T13\BL\obj\Debug\BL.dll
+C:\Users\Mathijs\Desktop\integratieproject\integratieproject_T13\BL\obj\Debug\BL.pdb

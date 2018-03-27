@@ -13,14 +13,14 @@ namespace politiekeBarometer.Controllers
         private ItemController ItemController = new ItemController();
         public ActionResult Index()
         {
-            ItemController.SynchroniseDb();
+            //ItemController.SynchroniseDb();
             List<Notification> model = new List<Notification>();
-            foreach(Notification n in ItemController.notificationManager.GetNotifications()) {
-                if(n.User.Equals(ItemController.gebruikerManager.GetUser()))
-                {
-                    model.Add(n);
-                }
-            }
+            //foreach(Notification n in ItemController.notificationManager.GetNotifications()) {
+            //    if(n.User.Equals(ItemController.gebruikerManager.GetUser()))
+            //    {
+            //        model.Add(n);
+            //    }
+            //}
             return View(model);
         }
 
