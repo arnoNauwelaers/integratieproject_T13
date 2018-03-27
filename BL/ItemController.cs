@@ -22,5 +22,10 @@ namespace BL
             SocialMediaManager = new SocialMediaManager();
             UserManager = new UserManager();
         }
+
+        public void SynchronizeDatabase()
+        {
+
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace Domain
     {
         [Key]
         [JsonProperty("id")]
-        public int PostId { get; set; }
+        public long PostId { get; set; }
         [JsonProperty("geo")]
         public string Geo { get; set; }
         [JsonProperty("retweet")]
@@ -28,6 +28,8 @@ namespace Domain
         public List<String> Verhalen { get; set; }
         [JsonProperty("words")]
         public List<String> Words { get; set; }
+        [JsonProperty("politician")]
+        public string[] Politician { get; set; }
 
         [Required]
         public SocialMediaSource SocialMediaSource { get; set; }

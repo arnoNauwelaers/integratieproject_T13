@@ -9,7 +9,7 @@ namespace BL.Domain
     public class Person : Item
     {
         public ICollection<SocialMediaProfile> socialMediaProfiles { get; set; }
-
+        public string FirstName { get; set; }
         public Organization Organization { get; set; }
     }
 }

@@ -10,8 +10,8 @@ namespace BL.Domain
     public class Item
     {
         [Key]
-        public int itemId { get; set; }
-        public string name { get; set; }
+        public int ItemId { get; set; }
+        public string Name { get; set; }
         //public int photo { get; set; }
         //public ICollection<Set> sets { get; set; }
 

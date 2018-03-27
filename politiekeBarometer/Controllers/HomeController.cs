@@ -13,6 +13,7 @@ namespace politiekeBarometer.Controllers
         private ItemController ItemController = new ItemController();
         public ActionResult Index()
         {
+            ItemController.SynchronizeDatabase();
             //ItemController.SynchroniseDb();
             List<Notification> model = new List<Notification>();
             //foreach(Notification n in ItemController.notificationManager.GetNotifications()) {

@@ -1,8 +1,10 @@
-﻿using DAL;
+﻿using BL.Domain;
+using DAL;
 using Domain;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -15,26 +17,25 @@ namespace BL
     {
         private SocialMediaRepository SocialMediaRepository;
         private ItemManager ItemManager;
+        private Read read;
 
         public SocialMediaManager()
         {
             SocialMediaRepository = new SocialMediaRepository();
             ItemManager = new ItemManager();
+            read = new Read(); 
         }
 
-        public void ReadData()
+        public List<Item> CreatePosts()
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.bitzfactory.com/textgaindump.json");
-            request.Method = WebRequestMethods.Http.Get;
-            request.Accept = "application/json";
-            string text;
-            var response = (HttpWebResponse)request.GetResponse();
-            using (var sr = new StreamReader(response.GetResponseStream()))
+            List<SocialMediaPost> data = (List<SocialMediaPost>) read.ReadData();
+            foreach (var item in data)
             {
-                text = sr.ReadToEnd();
+                SocialMediaRepository.Add(item);
             }
-            var tweets = JObject.Parse(text).SelectToken("records").ToObject<IEnumerable<SocialMediaPost>>(); ;
+            SocialMediaRepository.setTrends();
+            Debug.WriteLine("LOLOLOL");
+            return ItemManager.GetAllItemsFromPosts(data);
         }
-
     }
 }
