@@ -19,7 +19,7 @@ namespace DAL
 
     public void CreateAlert(Alert alert)
     {
-      Alerts.(alert);
+      Alerts.Add(alert);
     }
 
     public void DeleteAlert(Alert alert)
