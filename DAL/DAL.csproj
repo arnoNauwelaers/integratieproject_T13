@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="AlertRepository.cs" />
     <Compile Include="IAlertRepository.cs" />
+    <Compile Include="IItemRepository%3b.cs" />
     <Compile Include="ItemRepository.cs" />
     <Compile Include="Read.cs" />
     <Compile Include="SocialMediaRepository.cs" />
