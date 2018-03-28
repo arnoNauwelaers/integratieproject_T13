@@ -10,9 +10,9 @@ namespace BL.Domain
     {
         tweets = 0, //aantal tweets veranderd
         mentions, //aantal mentios veranderd
-        tweetsNegatief, //item tweets worden negatiever
-        tweetsPositief, //item tweets worden positiever
-        mentionsPositif, //mentions worden positiever
-        mentionsNegatif // mentions worden negatiever
+        tweetsNegative, //item tweets worden negatiever
+        tweetsPositive, //item tweets worden positiever
+        mentionsPositive, //mentions worden positiever
+        mentionsNegative // mentions worden negatiever
     }
 }

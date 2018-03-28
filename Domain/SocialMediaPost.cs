@@ -34,5 +34,6 @@ namespace BL.Domain
         public string Source { get; set; }
         public SocialMediaSource SocialMediaSource { get; set; }
         public ICollection<SocialMediaProfile> SocialMediaProfiles { get; set; }
+
     }
 }

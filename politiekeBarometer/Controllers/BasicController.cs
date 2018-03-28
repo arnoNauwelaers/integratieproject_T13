@@ -14,12 +14,22 @@ namespace politiekeBarometer.Controllers
         public BasicController()
         {
             SocialMediaManager = new SocialMediaManager();
-            UserManager = new UserManager();
+            UserManager = new UserManager(SocialMediaManager);
         }
 
         public void SynchronizeDatabase()
         {
             List<Item> alteredItems = SocialMediaManager.CreatePosts();
+            List<Alert> alerts = new List<Alert>();
+            foreach (var item in alteredItems)
+            {
+                alerts = UserManager.GetAlerts(item);
+                foreach(var alert in alerts)
+                {
+                    UserManager.InspectAlert(alert);
+                }
+            }
+
         }
 
         /* GET: Basic

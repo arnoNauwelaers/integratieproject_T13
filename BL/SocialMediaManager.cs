@@ -34,5 +34,23 @@ namespace BL
             }
             return ItemManager.GetAllItemsFromPosts(data);
         }
+
+        //TODO VerifyCondition
+        public Boolean VerifyCondition(Alert alert)
+        {
+            if (alert.Parameter == AlertParameter.tweets)
+            {
+                int tweetAmount = SocialMediaRepository.ReadItemParameter(alert.Item, DateTime.Now, DateTime.Now.AddHours(-1));
+                int oldTweetAmount = SocialMediaRepository.ReadItemParameter(alert.Item, DateTime.Now.AddHours(-1), DateTime.Now.AddHours(-3));
+                if (alert.Condition == '>')
+                {
+                    
+                }
+                else if (alert.Condition == '<')
+                {
+
+                }
+            }
+        }
     }
 }

@@ -10,11 +10,23 @@ namespace BL
 {
     public class UserManager
     {
-        private AlertRepository AlertRepository;
+        private AlertRepository alertRepository;
+        private SocialMediaManager socialMediaManager;
 
-        public UserManager()
+        public UserManager(SocialMediaManager socialMediaManager)
         {
-            AlertRepository = new AlertRepository();
+            alertRepository = new AlertRepository();
+            this.socialMediaManager = socialMediaManager;
+        }
+
+        public List<Alert> GetAlerts(Item item)
+        {
+           return alertRepository.GetAlerts(item);
+        }
+
+        public void InspectAlert(Alert alert)
+        {
+            socialMediaManager.VerifyCondition(alert);
         }
     }
 }

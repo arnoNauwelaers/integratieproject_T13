@@ -12,7 +12,7 @@ namespace DAL
 {
     public class Read
     {
-        public IEnumerable<SocialMediaPost> ReadData()
+        public List<SocialMediaPost> ReadData()
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.bitzfactory.com/textgaindump.json");
             request.Method = WebRequestMethods.Http.Get;

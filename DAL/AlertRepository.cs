@@ -9,36 +9,49 @@ namespace DAL
 {
     public class AlertRepository : IAlertRepository
     {
-
-      IList<Alert> Alerts { get; set; }
+        Memory memory = new Memory();
+        List<Alert> Alerts { get; set; }
 
         public AlertRepository()
         {
-          Alerts = new List<Alert>();
+            Alerts = memory.alerts;
 
         }
 
-      public Alert ReadAlert(int alertId)
-      {
-      return Alerts.First(a => a.AlertId == alertId);
-      }
+        public Alert ReadAlert(int alertId)
+        {
+            return Alerts.First(a => a.AlertId == alertId);
+        }
 
-    public void CreateAlert(Alert alert)
-    {
-      Alerts.Add(alert);
+        public void CreateAlert(Alert alert)
+        {
+            Alerts.Add(alert);
+        }
+
+        public void DeleteAlert(Alert alert)
+        {
+            Alerts.Remove(alert);
+
+        }
+
+
+
+        public void UpdateAlert(Alert alert)
+        {
+            Alert a = ReadAlert(alert.AlertId);
+        }
+
+        public List<Alert> GetAlerts(Item item)
+        {
+            List<Alert> usedAlerts = new List<Alert>();
+            foreach (var alert in Alerts)
+            {
+                if (alert.Item.ItemId == item.ItemId)
+                {
+                    usedAlerts.Add(alert);
+                }
+            }
+            return usedAlerts;
+        }
     }
-
-    public void DeleteAlert(Alert alert)
-    {
-      Alerts.Remove(alert);
-      
-    }
-
-    
-
-    public void UpdateAlert(Alert alert)
-    {
-      Alert a = ReadAlert(alert.AlertId);
-    }
-  }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace BL.Domain
 {
+    //TODO laatste opvraging
     public class SocialMediaSource
     {
         [Key]
