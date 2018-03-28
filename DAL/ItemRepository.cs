@@ -16,9 +16,27 @@ namespace DAL
             CreateItems();
         }
 
-        public List<Item> ReadItems(SocialMediaPost post)
+        public List<Item> ReadItems(SocialMediaPost post) //Lees welke items in post steken
         {
-            return null;
+            List<Item> usedItems = new List<Item>();
+            foreach (var item in items)
+            {
+                foreach (var hashtag in post.Hashtags)
+                {
+                    if (item.Name == hashtag)
+                    {
+                        usedItems.Add(item);
+                    }
+                }
+                foreach (var word in post.Words)
+                {
+                    if (item.Name == word)
+                    {
+                        usedItems.Add(item);
+                    }
+                }
+            }
+            return usedItems;
         }
 
         public void CreateItems()
