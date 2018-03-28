@@ -31,7 +31,7 @@ namespace BL.Domain
         [JsonProperty("politician")]
         public string[] Politician { get; set; }
         [JsonProperty("source")]
-        [Required]
+        public string Source { get; set; }
         public SocialMediaSource SocialMediaSource { get; set; }
         public ICollection<SocialMediaProfile> SocialMediaProfiles { get; set; }
     }

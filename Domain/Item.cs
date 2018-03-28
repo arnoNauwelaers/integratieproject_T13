@@ -16,6 +16,10 @@ namespace BL.Domain
         //public ICollection<Set> sets { get; set; }
 
         //public ICollection<Set> Set { get; set; }
-        public ICollection<Alert> Alerts { get; set; }
+        public List<Alert> Alerts { get; set; }
+        public Item()
+        {
+            Alerts = new List<Alert>();
+        }
     }
 }

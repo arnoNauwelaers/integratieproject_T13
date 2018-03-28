@@ -28,3 +28,13 @@ C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratiep
 C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratieproject_T13\integratieproject_T13\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
 C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratieproject_T13\integratieproject_T13\DAL\obj\Debug\DAL.dll
 C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratieproject_T13\integratieproject_T13\DAL\obj\Debug\DAL.pdb
+C:\Users\Mathijs\Source\NogIS\integratieproject_T13\DAL\bin\Debug\DAL.dll
+C:\Users\Mathijs\Source\NogIS\integratieproject_T13\DAL\bin\Debug\DAL.pdb
+C:\Users\Mathijs\Source\NogIS\integratieproject_T13\DAL\bin\Debug\Domain.dll
+C:\Users\Mathijs\Source\NogIS\integratieproject_T13\DAL\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Mathijs\Source\NogIS\integratieproject_T13\DAL\bin\Debug\Domain.pdb
+C:\Users\Mathijs\Source\NogIS\integratieproject_T13\DAL\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Mathijs\Source\NogIS\integratieproject_T13\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\Mathijs\Source\NogIS\integratieproject_T13\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
+C:\Users\Mathijs\Source\NogIS\integratieproject_T13\DAL\obj\Debug\DAL.dll
+C:\Users\Mathijs\Source\NogIS\integratieproject_T13\DAL\obj\Debug\DAL.pdb

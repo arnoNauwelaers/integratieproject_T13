@@ -10,10 +10,11 @@ namespace politiekeBarometer.Controllers
 {
     public class HomeController : Controller
     {
-        private ItemController ItemController = new ItemController();
+        
         public ActionResult Index()
         {
-            ItemController.SynchronizeDatabase();
+            BasicController controller = new BasicController();
+            controller.SynchronizeDatabase();
             //ItemController.SynchroniseDb();
             List<Notification> model = new List<Notification>();
             //foreach(Notification n in ItemController.notificationManager.GetNotifications()) {

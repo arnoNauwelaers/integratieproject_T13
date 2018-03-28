@@ -32,8 +32,6 @@ namespace BL
             {
                 SocialMediaRepository.Add(item);
             }
-            //SocialMediaRepository.setTrends();
-            //Debug.WriteLine("LOLOLOL");
             return ItemManager.GetAllItemsFromPosts(data);
         }
     }

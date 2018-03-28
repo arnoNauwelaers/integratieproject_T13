@@ -26,6 +26,10 @@ namespace BL.Domain
         public ICollection<Deelplatform> Deelplatformen { get; set; }*/
         /*[Required]
         public ICollection<Dashboard> Dashboards { get; set; }*/
-        public ICollection<Alert> Alerts { get; set; }
+        public List<Alert> Alerts { get; set; }
+        public User()
+        {
+            Alerts = new List<Alert>();
+        }
     }
 }

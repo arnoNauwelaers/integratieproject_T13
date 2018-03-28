@@ -8,7 +8,12 @@ namespace BL.Domain
 {
     public class Organization : Item
     {
-        public ICollection<SocialMediaProfile> socialMediaProfiles { get; set; }
-        public ICollection<Person> persons { get; set; }
+        public List<SocialMediaProfile> socialMediaProfiles { get; set; }
+        public List<Person> persons { get; set; }
+        public Organization()
+        {
+            persons = new List<Person>();
+            socialMediaProfiles = new List<SocialMediaProfile>();
+        }
     }
 }

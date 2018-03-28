@@ -10,7 +10,7 @@ namespace politiekeBarometer.Controllers
         private SocialMediaManager SocialMediaManager;
         private UserManager UserManager;
 
-        protected BasicController()
+        public BasicController()
         {
             SocialMediaManager = new SocialMediaManager();
             UserManager = new UserManager();

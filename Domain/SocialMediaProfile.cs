@@ -14,8 +14,13 @@ namespace BL.Domain
         public String Url { get; set; }
         public String Source { get; set; }
 
-        public ICollection<SocialMediaPost> SocialMediaPosts { get; set; }
+        public List<SocialMediaPost> SocialMediaPosts { get; set; }
         [Required]
         public Item Item { get; set; }
+
+        public SocialMediaProfile()
+        {
+            SocialMediaPosts = new List<SocialMediaPost>();
+        }
     }
 }

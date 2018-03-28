@@ -26,3 +26,11 @@ C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratiep
 C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratieproject_T13\integratieproject_T13\Domain\obj\Debug\Domain.csproj.CoreCompileInputs.cache
 C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratieproject_T13\integratieproject_T13\Domain\obj\Debug\Domain.dll
 C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratieproject_T13\integratieproject_T13\Domain\obj\Debug\Domain.pdb
+C:\Users\Mathijs\Source\NogIS\integratieproject_T13\Domain\bin\Debug\Domain.dll
+C:\Users\Mathijs\Source\NogIS\integratieproject_T13\Domain\bin\Debug\Domain.pdb
+C:\Users\Mathijs\Source\NogIS\integratieproject_T13\Domain\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Mathijs\Source\NogIS\integratieproject_T13\Domain\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Mathijs\Source\NogIS\integratieproject_T13\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+C:\Users\Mathijs\Source\NogIS\integratieproject_T13\Domain\obj\Debug\Domain.csproj.CoreCompileInputs.cache
+C:\Users\Mathijs\Source\NogIS\integratieproject_T13\Domain\obj\Debug\Domain.dll
+C:\Users\Mathijs\Source\NogIS\integratieproject_T13\Domain\obj\Debug\Domain.pdb
