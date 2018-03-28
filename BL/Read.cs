@@ -8,7 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace BL
 {
     public class Read
     {
@@ -23,7 +23,7 @@ namespace DAL
             {
                 text = sr.ReadToEnd();
             }
-            var tweets = JObject.Parse(text).SelectToken("records").ToObject<List<SocialMediaPost>>(); ;
+            var tweets = JObject.Parse(text).SelectToken("records").ToObject<List<SocialMediaPost>>();
             return (List<SocialMediaPost>) tweets;
         }
     }

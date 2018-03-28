@@ -1,5 +1,4 @@
-﻿using Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,8 +12,9 @@ namespace BL.Domain
         public int ProfileId { get; set; }
         public int Name { get; set; }
         public String Url { get; set; }
+        public String Source { get; set; }
 
-        public ICollection<SocialMediaPost> SocialMediaPost { get; set; }
+        public ICollection<SocialMediaPost> SocialMediaPosts { get; set; }
         [Required]
         public Item Item { get; set; }
     }

@@ -1,5 +1,4 @@
 ﻿using BL.Domain;
-using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class ItemRepository : MemoryRepository
+    public class ItemRepository : Memory
     {
         List<Item> items; 
         public ItemRepository() : base()

@@ -1,6 +1,5 @@
 ﻿using BL.Domain;
 using DAL;
-using Domain;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -33,8 +32,8 @@ namespace BL
             {
                 SocialMediaRepository.Add(item);
             }
-            SocialMediaRepository.setTrends();
-            Debug.WriteLine("LOLOLOL");
+            //SocialMediaRepository.setTrends();
+            //Debug.WriteLine("LOLOLOL");
             return ItemManager.GetAllItemsFromPosts(data);
         }
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using BL.Domain;
 
-namespace Domain
+namespace BL.Domain
 {
     public class SocialMediaPost
     {
@@ -30,7 +30,7 @@ namespace Domain
         public List<String> Words { get; set; }
         [JsonProperty("politician")]
         public string[] Politician { get; set; }
-
+        [JsonProperty("source")]
         [Required]
         public SocialMediaSource SocialMediaSource { get; set; }
         public ICollection<SocialMediaProfile> SocialMediaProfiles { get; set; }

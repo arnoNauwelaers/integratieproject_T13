@@ -5,17 +5,16 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Domain;
-using Newtonsoft.Json;
 using System.Diagnostics;
+using BL;
+using BL.Domain;
 
-namespace BL
+namespace Application
 {
     public class ItemController
     {
         private SocialMediaManager SocialMediaManager;
         private UserManager UserManager;
-
 
         public ItemController()
         {
@@ -25,7 +24,7 @@ namespace BL
 
         public void SynchronizeDatabase()
         {
-
+            List<Item> alteredItems = SocialMediaManager.CreatePosts();
         }
     }
 }

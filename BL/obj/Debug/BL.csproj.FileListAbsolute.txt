@@ -22,3 +22,15 @@ C:\Users\Mathijs\Desktop\integratieproject\integratieproject_T13\BL\obj\Debug\BL
 C:\Users\Mathijs\Desktop\integratieproject\integratieproject_T13\BL\obj\Debug\BL.csproj.CoreCompileInputs.cache
 C:\Users\Mathijs\Desktop\integratieproject\integratieproject_T13\BL\obj\Debug\BL.dll
 C:\Users\Mathijs\Desktop\integratieproject\integratieproject_T13\BL\obj\Debug\BL.pdb
+C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratieproject_T13\integratieproject_T13\BL\bin\Debug\BL.dll
+C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratieproject_T13\integratieproject_T13\BL\bin\Debug\BL.pdb
+C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratieproject_T13\integratieproject_T13\BL\bin\Debug\DAL.dll
+C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratieproject_T13\integratieproject_T13\BL\bin\Debug\Domain.dll
+C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratieproject_T13\integratieproject_T13\BL\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratieproject_T13\integratieproject_T13\BL\bin\Debug\DAL.pdb
+C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratieproject_T13\integratieproject_T13\BL\bin\Debug\Domain.pdb
+C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratieproject_T13\integratieproject_T13\BL\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratieproject_T13\integratieproject_T13\BL\obj\Debug\BL.csprojResolveAssemblyReference.cache
+C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratieproject_T13\integratieproject_T13\BL\obj\Debug\BL.csproj.CoreCompileInputs.cache
+C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratieproject_T13\integratieproject_T13\BL\obj\Debug\BL.dll
+C:\Users\Arno\Documents\school_jaar2\programmeren2\integratieProject\integratieproject_T13\integratieproject_T13\BL\obj\Debug\BL.pdb

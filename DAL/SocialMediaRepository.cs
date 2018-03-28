@@ -1,5 +1,4 @@
 ﻿using BL.Domain;
-using Domain;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class SocialMediaRepository : MemoryRepository
+    public class SocialMediaRepository : Memory
     {
         public IEnumerable<string> trendingPersons;
         public IEnumerable<string> trendingTerms;
@@ -22,8 +21,16 @@ namespace DAL
 
         public void Add(SocialMediaPost post)
         {
+            List<SocialMediaProfile> tempprofiles = base.getProfile(post);
+            post.SocialMediaProfiles = tempprofiles;
+            foreach(var profile in tempprofiles)
+            {
+                profile.SocialMediaPosts.Add(post);
+            }
+
             posts.Add(post);
         }
+
         public void setTrends()
         {
             setTrendingPoliticians();
