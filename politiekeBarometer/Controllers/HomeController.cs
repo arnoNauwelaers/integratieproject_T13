@@ -13,8 +13,9 @@ namespace politiekeBarometer.Controllers
         
         public ActionResult Index()
         {
-            BasicController controller = new BasicController();
-            controller.SynchronizeDatabase();
+            //TODO: delete code
+            //BasicController controller = new BasicController();
+            //controller.SynchronizeDatabase();
             //ItemController.SynchroniseDb();
             List<Notification> model = new List<Notification>();
             //foreach(Notification n in ItemController.notificationManager.GetNotifications()) {

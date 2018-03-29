@@ -31,11 +31,5 @@ namespace politiekeBarometer.Controllers
             }
 
         }
-
-        /* GET: Basic
-        public ActionResult Index()
-        {
-            return View();
-        }*/
     }
 }

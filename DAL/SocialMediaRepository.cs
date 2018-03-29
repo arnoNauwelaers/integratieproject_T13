@@ -1,35 +1,80 @@
 ﻿using BL.Domain;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL
 {
     public class SocialMediaRepository : Memory
     {
-        public IEnumerable<string> trendingPersons;
-        public IEnumerable<string> trendingTerms;
-        public IEnumerable<string> trendingArticles;
+
         public List<SocialMediaPost> posts;
+        public List<SocialMediaProfile> socialmediaprofiles;
+
+
         public SocialMediaRepository() : base()
         {
             posts = new List<SocialMediaPost>();
+            socialmediaprofiles = base.SocialMediaProfiles;
         }
 
         public void Add(SocialMediaPost post)
         {
-            List<SocialMediaProfile> tempprofiles = base.getProfile(post);
+            List<SocialMediaProfile> tempprofiles = this.getProfile(post);
             post.SocialMediaProfiles = tempprofiles;
-            foreach(var profile in tempprofiles)
+            foreach (var profile in tempprofiles)
             {
                 profile.SocialMediaPosts.Add(post);
             }
-
             posts.Add(post);
         }
+
+        public List<SocialMediaProfile> getProfile(SocialMediaPost post)
+        {
+            List<SocialMediaProfile> tempprofiles = new List<SocialMediaProfile>();
+
+            foreach (var profile in socialmediaprofiles)
+            {
+                if (profile.Item.Name == post.Politician[1])
+                {
+                    tempprofiles.Add(profile);
+                }
+            }
+            return tempprofiles;
+        }
+
+        public int ReadItemParameter(Alert alert, DateTime end, DateTime start)
+        {
+            int aantal = 0;
+            if (alert.Item.GetType() == typeof(Person))
+            {
+                if (alert.Parameter == AlertParameter.tweets)
+                {
+                    foreach (var profile in ((Person)alert.Item).socialMediaProfiles)
+                    {
+                        foreach(var compareprofile in socialmediaprofiles)
+                        {
+                            if (profile.ProfileId == compareprofile.ProfileId)
+                            {
+                                foreach (var post in compareprofile.SocialMediaPosts)
+                                {
+                                    if (post.Date > start && post.Date < end)
+                                    {
+                                        aantal += 1;
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+            }
+            return aantal;
+        }
+
+        //TODO: code van jordi
+        /*public IEnumerable<string> trendingPersons;
+        public IEnumerable<string> trendingTerms;
+        public IEnumerable<string> trendingArticles;
 
         public void setTrends()
         {
@@ -111,7 +156,7 @@ namespace DAL
             a.ToList().Sort((pair1, pair2) => pair1.Value.CompareTo(pair2.Value));
             trendingArticles = a.Keys.ToList();
             Debug.Write(trendingArticles);
-        }
-    
+        }*/
+
     }
 }

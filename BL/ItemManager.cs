@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DAL;
 using BL.Domain;
 
@@ -19,16 +16,21 @@ namespace BL
 
         public List<Item> GetAllItemsFromPosts(List<SocialMediaPost> data)
         {
-            List<Item> alteredItems = new List<Item>();
+            Dictionary<int, Item> alteredItems = new Dictionary<int, Item>();
             foreach (var post in data)
             {
                 List<Item> items = ItemRepository.ReadItems(post);
                 foreach (var item in items)
                 {
-                    alteredItems.Add(item);
+                    //alteredItems.Add(item);
+                    if (!alteredItems.ContainsKey(item.ItemId))
+                    {
+                        alteredItems.Add(item.ItemId, item);
+                    }
+                        
                 }
             }
-            return alteredItems;
+            return alteredItems.Values.ToList();
         }
     }
 }

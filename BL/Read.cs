@@ -14,7 +14,7 @@ namespace BL
     {
         public IEnumerable<SocialMediaPost> ReadData()
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.bitzfactory.com/textgaindump.json");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.bitzfactory.com/json.txt");
             request.Method = WebRequestMethods.Http.Get;
             request.Accept = "application/json";
             string text;

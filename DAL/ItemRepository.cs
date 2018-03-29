@@ -1,9 +1,5 @@
 ﻿using BL.Domain;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL
 {
@@ -12,8 +8,7 @@ namespace DAL
         List<Item> items; 
         public ItemRepository() : base()
         {
-            items = new List<Item>();
-            CreateItems();
+            items = base.items;
         }
 
         public List<Item> ReadItems(SocialMediaPost post) //Lees welke items in post steken
@@ -21,27 +16,26 @@ namespace DAL
             List<Item> usedItems = new List<Item>();
             foreach (var item in items)
             {
+                if(item.Name.ToUpper() == post.Politician[1].ToUpper())
+                {
+                    usedItems.Add(item);
+                }
                 foreach (var hashtag in post.Hashtags)
                 {
-                    if (item.Name == hashtag)
+                    if (item.Name.ToUpper() == hashtag.ToUpper())
                     {
                         usedItems.Add(item);
                     }
                 }
                 foreach (var word in post.Words)
                 {
-                    if (item.Name == word)
+                    if (item.Name.ToUpper() == word.ToUpper())
                     {
                         usedItems.Add(item);
                     }
                 }
             }
             return usedItems;
-        }
-
-        public void CreateItems()
-        {
-            items.Add(new Person() { ItemId = 1, FirstName = "Imade", Name = "Annouri", Organization = (new Organization() { ItemId = 1, Name = "N-VA"})});
         }
     }
 }

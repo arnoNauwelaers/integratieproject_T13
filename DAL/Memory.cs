@@ -1,9 +1,5 @@
 ﻿using BL.Domain;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 namespace DAL
 {
     public class Memory
@@ -39,7 +35,7 @@ namespace DAL
             Person person3 = new Person() { ItemId = 4, Name = "Bertels", FirstName = "Jan", Organization = organization1 };
             person3.socialMediaProfiles.Add(socialMediaProfile3);
             socialMediaProfile3.Item = person3;
-            Person person4 = new Person() { ItemId = 3, Name = "De Ridder", FirstName = "Annick", Organization = organization1 };
+            Person person4 = new Person() { ItemId = 5, Name = "De Ridder", FirstName = "Annick", Organization = organization1 };
             person4.socialMediaProfiles.Add(socialMediaProfile4);
             socialMediaProfile4.Item = person4;
 
@@ -50,16 +46,16 @@ namespace DAL
 
             Alert alert1 = new Alert() { AlertId = 1, Type = AlertType.notification, Parameter = AlertParameter.tweets, Condition = '>', User = user1, Item = person1 };
             Alert alert2 = new Alert() { AlertId = 2, Type = AlertType.notification, Parameter = AlertParameter.tweets, Condition = '>', User = user1, Item = person2 };
-            Alert alert3 = new Alert() { AlertId = 3, Type = AlertType.notification, Parameter = AlertParameter.tweets, Condition = '>', User = user2, Item = person3 };
-            Alert alert4 = new Alert() { AlertId = 3, Type = AlertType.notification, Parameter = AlertParameter.tweets, Condition = '>', User = user2, Item = person4 };
+            Alert alert3 = new Alert() { AlertId = 3, Type = AlertType.notification, Parameter = AlertParameter.tweets, Condition = '>', User = user2, Item = person1 };
+            Alert alert4 = new Alert() { AlertId = 4, Type = AlertType.notification, Parameter = AlertParameter.tweets, Condition = '>', User = user2, Item = person4 };
             person1.Alerts.Add(alert1);
+            person1.Alerts.Add(alert3);
             person2.Alerts.Add(alert2);
-            person3.Alerts.Add(alert3);
             person4.Alerts.Add(alert4);
             user1.Alerts.Add(alert1);
             user1.Alerts.Add(alert2);
-            user2.Alerts.Add(alert1);
-            user2.Alerts.Add(alert2);
+            user2.Alerts.Add(alert3);
+            user2.Alerts.Add(alert4);
 
             users = new List<User>();
             users.Add(user1);
@@ -85,18 +81,6 @@ namespace DAL
             alerts.Add(alert4);
         }
 
-        public List<SocialMediaProfile> getProfile(SocialMediaPost post)
-        {
-            List<SocialMediaProfile> tempprofiles = new List<SocialMediaProfile>();
-
-            foreach(var profile in SocialMediaProfiles)
-            {
-                if(profile.Item.Name == post.Politician[1])
-                {
-                    tempprofiles.Add(profile);
-                }
-            }
-            return tempprofiles;
-        }
+        
     }
 }
