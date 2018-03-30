@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace BL.Domain
 {
-    //TODO laatste opvraging
     public class SocialMediaSource
     {
         [Key]
@@ -16,7 +15,9 @@ namespace BL.Domain
         public string Ip { get; set; }
         public string Name { get; set; }
 
-        public ICollection<Deelplatform_SocialMediaSource> Deelplatform_SocialMediaSource { get; set; }
         public ICollection<SocialMediaPost> SocialMediaPost { get; set; }
+        /*
+        public ICollection<Deelplatform_SocialMediaSource> Deelplatform_SocialMediaSource { get; set; }
+        */
     }
 }

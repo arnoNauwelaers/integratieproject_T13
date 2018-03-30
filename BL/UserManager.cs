@@ -2,10 +2,6 @@
 using DAL;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BL
 {
@@ -58,7 +54,7 @@ namespace BL
 
         private void sendMail(Alert alert)
         {
-            //TODO: implementeer send mail
+            //TODO: implementatie send mail
         }
     }
 }

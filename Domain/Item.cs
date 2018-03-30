@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BL.Domain
 {
@@ -15,7 +12,6 @@ namespace BL.Domain
         //public int photo { get; set; }
         //public ICollection<Set> sets { get; set; }
 
-        //public ICollection<Set> Set { get; set; }
         public List<Alert> Alerts { get; set; }
         public Item()
         {

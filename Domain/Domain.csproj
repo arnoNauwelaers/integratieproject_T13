@@ -48,7 +48,6 @@
     <Compile Include="Alert.cs" />
     <Compile Include="AlertParameter.cs" />
     <Compile Include="AlertType.cs" />
-    <Compile Include="Deelplatform_SocialMediaSource.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Person.cs" />
