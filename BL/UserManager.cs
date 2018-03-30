@@ -11,18 +11,29 @@ namespace BL
 {
     public class UserManager
     {
+        private UserRepository userRepository;
         private AlertRepository alertRepository;
         private SocialMediaManager socialMediaManager;
+
+        public UserManager()
+        {
+        }
 
         public UserManager(SocialMediaManager socialMediaManager)
         {
             alertRepository = new AlertRepository();
+            userRepository = new UserRepository();
             this.socialMediaManager = socialMediaManager;
         }
 
         public List<Alert> GetAlerts(Item item)
         {
            return alertRepository.GetAlerts(item);
+        }
+
+        public User GetUser()
+        {
+            return userRepository.GetUser();
         }
 
         public void InspectAlert(Alert alert)
@@ -35,10 +46,8 @@ namespace BL
                 if(type != AlertType.mail)
                 {
                     Notification notification = new Notification() { NotificationId = notificationNmr, DateTime = DateTime.Now, Alert = alert};
+                    alert.Notifications.Add(notification);
                     notificationNmr++;
-                    Debug.WriteLine("LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL");
-                    Debug.WriteLine("new not made");
-                    Debug.WriteLine("LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL");
                 }
                 if (type != AlertType.notification)
                 {

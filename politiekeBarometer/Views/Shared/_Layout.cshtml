@@ -18,15 +18,14 @@
                 <span class="icon-bar"></span>
             </button>
             @Html.ActionLink("Politieke Barometer", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            
-</div>
+
+        </div>
         <ul class="nav navbar-nav navbar-right">
             <li>Zoeken</li>
             <li>Alert</li>
             <li>Account</li>
-            <a href="#" data-toggle="dropdown"><img width="50px" src="~/Images/bel.png" /></a>
-            <ul id="notificaties" class="dropdown-menu">
-            </ul>
+            <a onclick="loadNotifications()" href="#" data-toggle="dropdown"><img width="50px" src="~/Images/bel.png" /></a>
+            <ul id="notificaties" class="dropdown-menu"></ul>
         </ul>
     </div>
     <div class="body-content">
@@ -56,5 +55,32 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script>
+        function synchronizeDB() {
+            $.getJSON("/api/Basic", function (data) {
+                var items = [];
+                $.each(data, function (key, val) {
+                    iziToast.info({ title: "Nieuwe melding!", message: val.Alert.Content, position: "topRight" });
+                });
+            });
+            setTimeout(synchronizeDB, 5000);
+        }
+        synchronizeDB();
+
+        var ul = document.getElementById("notificaties");
+        function loadNotifications() {
+            $.getJSON("/api/Basic/GetNotifications", function (data) {
+                var items = [];
+                ul.innerHTML = "";
+                $.each(data, function (key, val) {
+                    
+                    var li = document.createElement("li");
+                    li.appendChild(document.createTextNode(val.Alert.Content));
+                    ul.appendChild(li);
+                    console.log(val.Alert.Content);
+                });
+            });
+        }
+    </script>
 </body>
 </html>

@@ -4,17 +4,17 @@ using System.Collections.Generic;
 
 namespace DAL
 {
-    public class SocialMediaRepository : Memory
+    public class SocialMediaRepository
     {
 
         public List<SocialMediaPost> posts;
         public List<SocialMediaProfile> socialmediaprofiles;
 
 
-        public SocialMediaRepository() : base()
+        public SocialMediaRepository()
         {
             posts = new List<SocialMediaPost>();
-            socialmediaprofiles = base.SocialMediaProfiles;
+            socialmediaprofiles = Memory.SocialMediaProfiles;
         }
 
         public void Add(SocialMediaPost post)
@@ -57,7 +57,9 @@ namespace DAL
                             {
                                 foreach (var post in compareprofile.SocialMediaPosts)
                                 {
-                                    if (post.Date > start && post.Date < end)
+                                    int result = post.Date.CompareTo(start);
+                                    int result2 = post.Date.CompareTo(end);
+                                    if ( result > 0 && result2 < 0)
                                     {
                                         aantal += 1;
                                     }

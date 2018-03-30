@@ -2,31 +2,27 @@
 using System.Collections.Generic;
 namespace DAL
 {
-    public class Memory
+    public static class Memory
     {
-        public List<User> users;
-        public List<SocialMediaProfile> SocialMediaProfiles;
-        public List<Item> items;
-        public List<Alert> alerts;
+        public static List<User> users;
+        public static List<SocialMediaProfile> SocialMediaProfiles;
+        public static List<Item> items;
+        public static List<Alert> alerts;
 
-        public Memory()
+        public static void generateData()
         {
-            this.GenerateDummyData();
-        }
 
-        private void GenerateDummyData()
-        {
-            User user1 = new User() { UserId = 1, Admin = false, UserName = "user1", Password = "poc", Mail = "user1.test@hotmail.com"};
-            User user2 = new User() { UserId = 1, Admin = false, UserName = "user2", Password = "poc", Mail = "user2.test@hotmail.com"};
+            User user1 = new User() { UserId = 1, Admin = false, UserName = "user1", Password = "poc", Mail = "user1.test@hotmail.com" };
+            User user2 = new User() { UserId = 1, Admin = false, UserName = "user2", Password = "poc", Mail = "user2.test@hotmail.com" };
 
-            SocialMediaProfile socialMediaProfile1 = new SocialMediaProfile() { ProfileId = 1, Url = "http://www.twitter.be/AnnouriImade" , Source ="twitter" };
+            SocialMediaProfile socialMediaProfile1 = new SocialMediaProfile() { ProfileId = 1, Url = "http://www.twitter.be/AnnouriImade", Source = "twitter" };
             SocialMediaProfile socialMediaProfile2 = new SocialMediaProfile() { ProfileId = 2, Url = "http://www.twitter.be/BastiaensCaroline", Source = "twitter" };
             SocialMediaProfile socialMediaProfile3 = new SocialMediaProfile() { ProfileId = 3, Url = "http://www.twitter.be/BertelsJan", Source = "twitter" };
             SocialMediaProfile socialMediaProfile4 = new SocialMediaProfile() { ProfileId = 4, Url = "http://www.twitter.be/DeRidderAnnick", Source = "twitter" };
 
             Organization organization1 = new Organization() { ItemId = 1, Name = "NVA" };
 
-            Person person1 = new Person() { ItemId = 2, Name = "Annouri", FirstName = "Imade", Organization = organization1};
+            Person person1 = new Person() { ItemId = 2, Name = "Annouri", FirstName = "Imade", Organization = organization1 };
             person1.socialMediaProfiles.Add(socialMediaProfile1);
             socialMediaProfile1.Item = person1;
             Person person2 = new Person() { ItemId = 3, Name = "Bastiaens", FirstName = "Caroline", Organization = organization1 };
@@ -44,10 +40,10 @@ namespace DAL
             organization1.persons.Add(person3);
             organization1.persons.Add(person4);
 
-            Alert alert1 = new Alert() { AlertId = 1, Type = AlertType.notification, Parameter = AlertParameter.tweets, Condition = '>', User = user1, Item = person1 };
-            Alert alert2 = new Alert() { AlertId = 2, Type = AlertType.notification, Parameter = AlertParameter.tweets, Condition = '>', User = user1, Item = person2 };
-            Alert alert3 = new Alert() { AlertId = 3, Type = AlertType.notification, Parameter = AlertParameter.tweets, Condition = '>', User = user2, Item = person1 };
-            Alert alert4 = new Alert() { AlertId = 4, Type = AlertType.notification, Parameter = AlertParameter.tweets, Condition = '>', User = user2, Item = person4 };
+            Alert alert1 = new Alert(1, AlertType.notification, AlertParameter.tweets, '>', user1, person1);
+            Alert alert2 = new Alert(2, AlertType.notification, AlertParameter.tweets, '>', user1, person2);
+            Alert alert3 = new Alert(3, AlertType.notification, AlertParameter.tweets, '>', user2, person1);
+            Alert alert4 = new Alert(4, AlertType.notification, AlertParameter.tweets, '>', user2, person4);
             person1.Alerts.Add(alert1);
             person1.Alerts.Add(alert3);
             person2.Alerts.Add(alert2);
@@ -56,6 +52,8 @@ namespace DAL
             user1.Alerts.Add(alert2);
             user2.Alerts.Add(alert3);
             user2.Alerts.Add(alert4);
+
+            //TODO alert1.Notifications.Add(new Notification() { NotificationId = 5, Alert = alert1, DateTime = System.DateTime.Now });
 
             users = new List<User>();
             users.Add(user1);
@@ -79,8 +77,8 @@ namespace DAL
             alerts.Add(alert2);
             alerts.Add(alert3);
             alerts.Add(alert4);
-        }
 
+        }
         
     }
 }

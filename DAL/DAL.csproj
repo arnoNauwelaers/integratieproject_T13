@@ -44,13 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlertRepository.cs" />
-    <Compile Include="IAlertRepository.cs" />
-    <Compile Include="IItemRepository%3b.cs" />
     <Compile Include="ItemRepository.cs" />
     <Compile Include="Read.cs" />
     <Compile Include="SocialMediaRepository.cs" />
     <Compile Include="Memory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">

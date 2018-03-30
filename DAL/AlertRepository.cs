@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class AlertRepository : IAlertRepository
+    public class AlertRepository
     {
-        Memory memory = new Memory();
         List<Alert> Alerts { get; set; }
+        List<Notification> Notifications { get; set; }
 
         public AlertRepository()
         {
-            Alerts = memory.alerts;
+            Alerts = Memory.alerts;
 
         }
 

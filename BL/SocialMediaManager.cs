@@ -22,6 +22,7 @@ namespace BL
 
         public SocialMediaManager()
         {
+            Memory.generateData();
             SocialMediaRepository = new SocialMediaRepository();
             ItemManager = new ItemManager();
             read = new Read();
@@ -40,26 +41,25 @@ namespace BL
         //TODO VerifyCondition
         public Boolean VerifyCondition(Alert alert)
         {
+            int tweetAmount = SocialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
             if (alert.CompareItem == null)
             {
-                int tweetAmount = SocialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
                 int oldTweetAmount = SocialMediaRepository.ReadItemParameter(alert, DateTime.Now.AddHours(-1), DateTime.Now.AddHours(-(FREQUENTIE * 2)));
 
                 if (alert.Condition == '>')
                 {
                     //als een politicus 2 maal zoveel tweets stuurt in het laatste uur als in het vorige uur wordt er een notification gestuurd
-                    return tweetAmount > (oldTweetAmount * 2);
+                    return tweetAmount >= (oldTweetAmount * 2);
                 }
                 return false;
             }
             else
             {
-                int tweetAmount1 = SocialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
                 int tweetAmount2 = SocialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
                 if (alert.Condition == '>')
                 {
                     //als er over een politus meer dan 2 maal zveel getweet is in het afgelopen uur als een ander politici word er een notification gestuurd
-                    return tweetAmount1 > tweetAmount2 * 2;
+                    return tweetAmount >= tweetAmount2 * 2;
                 }
 
             }

@@ -8,21 +8,9 @@
     <div class="col-md-10">
         <h2>Personen</h2>
         <p>
-            <img src="https://informaticalessen.be/wp-content/uploads/2017/01/Oefening-Excel-of-Spreadsheets-Lijndiagram-of-lijngrafiek.png" /><img src="https://informaticalessen.be/wp-content/uploads/2017/01/Oefening-Excel-of-Spreadsheets-Lijndiagram-of-lijngrafiek.png" />
+           
         </p>
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
     </div>
    
 </div>
-
-@*@foreach (var item in Model)
-{
-    <script>
-        var ul = document.getElementById("notificaties");
-        iziToast.info({ title: "Nieuwe melding!", message: "@item.Message", position: "topRight" });
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode("@item.Message"));
-        ul.appendChild(li);
-    </script>
-}*@
-    

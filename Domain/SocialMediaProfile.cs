@@ -10,7 +10,6 @@ namespace BL.Domain
     public class SocialMediaProfile
     {
         public int ProfileId { get; set; }
-        public int Name { get; set; }
         public String Url { get; set; }
         public String Source { get; set; }
 

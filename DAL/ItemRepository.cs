@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace DAL
 {
-    public class ItemRepository : Memory
+    public class ItemRepository
     {
         List<Item> items; 
-        public ItemRepository() : base()
+        public ItemRepository()
         {
-            items = base.items;
+            items = Memory.items;
         }
 
         public List<Item> ReadItems(SocialMediaPost post) //Lees welke items in post steken
