@@ -22,6 +22,7 @@ namespace BL
                 List<Item> items = ItemRepository.ReadItems(post);
                 foreach (var item in items)
                 {
+                    //alteredItems.Add(item);
                     if (!alteredItems.ContainsKey(item.ItemId))
                     {
                         alteredItems.Add(item.ItemId, item);

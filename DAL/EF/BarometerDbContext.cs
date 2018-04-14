@@ -12,7 +12,7 @@ using BL.Domain;
 
 namespace DAL.EF
 {
-    [DbConfigurationType(typeof(DbConfiguration))]
+    [DbConfigurationType(typeof(BarometerDbConfiguration))]
     internal class BarometerDbContext : DbContext /* 'public' for testing with project 'DAL-Testing'! */
     {
         public BarometerDbContext()
@@ -22,7 +22,6 @@ namespace DAL.EF
         }
 
         public DbSet<Alert> Alerts { get; set; }
-        public DbSet<Deelplatform_SocialMediaSource> Deelplatform_SocialMediaSources { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Organization> Organizations { get; set; }

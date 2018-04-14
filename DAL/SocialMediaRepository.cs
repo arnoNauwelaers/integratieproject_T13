@@ -11,12 +11,8 @@ namespace DAL
         public List<SocialMediaPost> posts;
         public List<SocialMediaProfile> socialmediaprofiles;
 
-<<<<<<< HEAD
 
         public SocialMediaRepository2()
-=======
-        public SocialMediaRepository()
->>>>>>> ebd51bc8e207e2e67e55de69ea5588a62435f057
         {
             posts = new List<SocialMediaPost>();
             socialmediaprofiles = Memory.SocialMediaProfiles;

@@ -51,9 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlertRepository.cs" />
-    <Compile Include="EF\DbConfiguration.cs" />
+    <Compile Include="EF\BarometerDbConfiguration.cs" />
     <Compile Include="EF\BarometerDbContext.cs" />
-    <Compile Include="EF\DbInitializer.cs" />
+    <Compile Include="EF\BarometerDbInitializer.cs" />
     <Compile Include="EF\SocialMediaRepository.cs" />
     <Compile Include="ItemRepository.cs" />
     <Compile Include="Read.cs" />

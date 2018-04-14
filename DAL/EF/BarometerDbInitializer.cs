@@ -11,7 +11,7 @@ using DAL;
 
 namespace DAL.EF
 {
-    internal class DbInitializer : CreateDatabaseIfNotExists<BarometerDbContext>
+    internal class BarometerDbInitializer : DropCreateDatabaseIfModelChanges<BarometerDbContext>
     {
         protected override void Seed(BarometerDbContext context)
         {
