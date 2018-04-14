@@ -11,7 +11,6 @@ namespace DAL
 
         public static void generateData()
         {
-
             User user1 = new User() { UserId = 1, Admin = false, UserName = "user1", Password = "poc", Mail = "user1.test@hotmail.com" };
             User user2 = new User() { UserId = 1, Admin = false, UserName = "user2", Password = "poc", Mail = "user2.test@hotmail.com" };
 
@@ -52,8 +51,6 @@ namespace DAL
             user1.Alerts.Add(alert2);
             user2.Alerts.Add(alert3);
             user2.Alerts.Add(alert4);
-
-            //TODO alert1.Notifications.Add(new Notification() { NotificationId = 5, Alert = alert1, DateTime = System.DateTime.Now });
 
             users = new List<User>();
             users.Add(user1);

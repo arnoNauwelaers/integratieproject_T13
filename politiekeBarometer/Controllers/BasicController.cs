@@ -1,7 +1,6 @@
 ﻿using BL;
 using BL.Domain;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Web.Http;
 
 namespace politiekeBarometer.Controllers
@@ -32,8 +31,6 @@ namespace politiekeBarometer.Controllers
 
         }
 
-        //------------------------------------------------------------------------------------------------------------------------------------------------
-        //WEB API
         private static List<Notification> notifications = new List<Notification>();
         public IHttpActionResult Get()
         {
@@ -57,7 +54,6 @@ namespace politiekeBarometer.Controllers
                         tempNotifications.Add(notification);
                         notifications.Add(notification);
                     }
-                    //notification.Read = true;
                 }
             }
             return Ok(tempNotifications);

@@ -11,7 +11,7 @@ namespace DAL
             items = Memory.items;
         }
 
-        public List<Item> ReadItems(SocialMediaPost post) //Lees welke items in post steken
+        public List<Item> ReadItems(SocialMediaPost post) //haalt alle items uit een bepaalde post
         {
             List<Item> usedItems = new List<Item>();
             foreach (var item in items)

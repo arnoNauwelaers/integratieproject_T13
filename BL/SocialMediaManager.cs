@@ -15,11 +15,11 @@ namespace BL
 {
     public class SocialMediaManager
     {
+        private const int FREQUENTIE = 1;
+
         private SocialMediaRepository SocialMediaRepository;
         private ItemManager ItemManager;
         private Read read;
-
-        private const int FREQUENTIE = 1;
 
         public SocialMediaManager()
         {
@@ -39,7 +39,6 @@ namespace BL
             return ItemManager.GetAllItemsFromPosts(data);
         }
 
-        //TODO VerifyCondition
         public Boolean VerifyCondition(Alert alert)
         {
             int tweetAmount = SocialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
