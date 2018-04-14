@@ -28,8 +28,8 @@ namespace BL.Domain
         public string[] Politician { get; set; }
         [JsonProperty("source")]
         public string Source { get; set; }
-        public SocialMediaSource SocialMediaSource { get; set; }
-        public ICollection<SocialMediaProfile> SocialMediaProfiles { get; set; }
+        public virtual SocialMediaSource SocialMediaSource { get; set; }
+        public virtual ICollection<SocialMediaProfile> SocialMediaProfiles { get; set; } = new List<SocialMediaProfile>();
 
     }
 }

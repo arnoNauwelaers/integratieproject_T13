@@ -1,4 +1,5 @@
 ﻿using BL.Domain;
+using DAL.EF;
 using System.Collections.Generic;
 namespace DAL
 {
@@ -8,6 +9,8 @@ namespace DAL
         public static List<SocialMediaProfile> SocialMediaProfiles;
         public static List<Item> items;
         public static List<Alert> alerts;
+        public static List<Person> persons;
+        public static List<Organization> organizations;
 
         public static void generateData()
         {
@@ -39,10 +42,10 @@ namespace DAL
             organization1.persons.Add(person3);
             organization1.persons.Add(person4);
 
-            Alert alert1 = new Alert(1, AlertType.notification, AlertParameter.tweets, '>', user1, person1);
-            Alert alert2 = new Alert(2, AlertType.notification, AlertParameter.tweets, '>', user1, person2);
-            Alert alert3 = new Alert(3, AlertType.notification, AlertParameter.tweets, '>', user2, person1);
-            Alert alert4 = new Alert(4, AlertType.notification, AlertParameter.tweets, '>', user2, person4);
+            Alert alert1 = new Alert(1, AlertType.notification, AlertParameter.tweets, ">", user1, person1);
+            Alert alert2 = new Alert(2, AlertType.notification, AlertParameter.tweets, ">", user1, person2);
+            Alert alert3 = new Alert(3, AlertType.notification, AlertParameter.tweets, ">", user2, person1);
+            Alert alert4 = new Alert(4, AlertType.notification, AlertParameter.tweets, ">", user2, person4);
             person1.Alerts.Add(alert1);
             person1.Alerts.Add(alert3);
             person2.Alerts.Add(alert2);
@@ -68,6 +71,15 @@ namespace DAL
             items.Add(person2);
             items.Add(person3);
             items.Add(person4);
+
+            organizations = new List<Organization>();
+            organizations.Add(organization1);
+
+            persons = new List<Person>();
+            persons.Add(person1);
+            persons.Add(person2);
+            persons.Add(person3);
+            persons.Add(person4);
 
             alerts = new List<Alert>();
             alerts.Add(alert1);

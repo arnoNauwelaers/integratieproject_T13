@@ -11,7 +11,8 @@ using DAL;
 
 namespace DAL.EF
 {
-    internal class BarometerDbInitializer : DropCreateDatabaseIfModelChanges<BarometerDbContext>
+    //TO-DO DropCreateDatabaseIf...
+    internal class BarometerDbInitializer : DropCreateDatabaseAlways<BarometerDbContext>
     {
         protected override void Seed(BarometerDbContext context)
         {
@@ -19,6 +20,32 @@ namespace DAL.EF
             {
                 context.SocialMediaProfiles.Add(profile);
             }
+
+            foreach (User user in Memory.users)
+            {
+                context.Users.Add(user);
+            }
+
+            foreach (Person person in Memory.persons)
+            {
+                context.Persons.Add(person);
+            }
+
+            foreach (Organization organization in Memory.organizations)
+            {
+                context.Organizations.Add(organization);
+            }
+
+            foreach (Item item in Memory.items)
+            {
+                context.Items.Add(item);
+            }
+
+            foreach (Alert alert in Memory.alerts)
+            {
+                context.Alerts.Add(alert);
+            }
+
             context.SaveChanges();
         }
     }

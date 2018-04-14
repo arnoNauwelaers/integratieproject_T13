@@ -5,12 +5,11 @@ namespace BL.Domain
 {
     public class Person : Item
     {
-        public List<SocialMediaProfile> socialMediaProfiles { get; set; }
+        public virtual List<SocialMediaProfile> socialMediaProfiles { get; set; } = new List<SocialMediaProfile>();
         public string FirstName { get; set; }
-        public Organization Organization { get; set; }
+        public virtual Organization Organization { get; set; }
         public Person()
         {
-            socialMediaProfiles = new List<SocialMediaProfile>();
         }
     }
 }

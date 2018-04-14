@@ -31,38 +31,27 @@ namespace politiekeBarometer.Controllers
 
         }
 
-        private static List<Notification> notifications = new List<Notification>();
+        private List<Notification> notifications = new List<Notification>();
         public IHttpActionResult Get()
         {
             SynchronizeDatabase();
             User user = UserManager.GetUser();
-            List<Notification> tempNotifications = new List<Notification>();
-            foreach (var alert in UserManager.GetUser().Alerts)
+            foreach (var alert in user.Alerts)
             {
                 foreach (var notification in alert.Notifications)
                 {
-                    foreach (var notification2 in notifications)
-                    {
-                        if (notification.NotificationId != notification2.NotificationId)
-                        {
-                            tempNotifications.Add(notification);
-                            notifications.Add(notification);
-                        }
-                    }
-                    if (notifications.Count == 0)
-                    {
-                        tempNotifications.Add(notification);
-                        notifications.Add(notification);
-                    }
+                    if (notification.Read == false) { }
+                    notifications.Add(notification);
+                    notification.Read = true;
                 }
             }
-            return Ok(tempNotifications);
+            return Ok(notifications);
         }
 
         [Route("api/Basic/GetNotifications")]
         public IHttpActionResult GetNotifications()
         {
-            return Ok(notifications);
+            return Get();
         }
     }
 }

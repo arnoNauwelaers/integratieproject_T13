@@ -46,7 +46,7 @@ namespace BL
             {
                 int oldTweetAmount = SocialMediaRepository.ReadItemParameter(alert, DateTime.Now.AddHours(-1), DateTime.Now.AddHours(-(FREQUENTIE * 2)));
 
-                if (alert.Condition == '>')
+                if (alert.Condition == ">")
                 {
                     //als een politicus 2 maal zoveel tweets stuurt in het laatste uur als in het vorige uur wordt er een notification gestuurd
                     return tweetAmount >= (oldTweetAmount * 2);
@@ -56,7 +56,7 @@ namespace BL
             else
             {
                 int tweetAmount2 = SocialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
-                if (alert.Condition == '>')
+                if (alert.Condition == ">")
                 {
                     //als er over een politus meer dan 2 maal zveel getweet is in het afgelopen uur als een ander politici word er een notification gestuurd
                     return tweetAmount >= tweetAmount2 * 2;

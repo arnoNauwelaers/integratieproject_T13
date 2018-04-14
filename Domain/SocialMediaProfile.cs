@@ -14,13 +14,12 @@ namespace BL.Domain
         public String Url { get; set; }
         public String Source { get; set; }
 
-        public List<SocialMediaPost> SocialMediaPosts { get; set; }
+        public virtual List<SocialMediaPost> SocialMediaPosts { get; set; } = new List<SocialMediaPost>();
         [Required]
-        public Item Item { get; set; }
+        public virtual Item Item { get; set; }
 
         public SocialMediaProfile()
         {
-            SocialMediaPosts = new List<SocialMediaPost>();
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using DAL;
 using BL.Domain;
+using DAL.EF;
 
 namespace BL
 {

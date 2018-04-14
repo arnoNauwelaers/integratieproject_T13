@@ -15,7 +15,7 @@ namespace BL.Domain
         public string Ip { get; set; }
         public string Name { get; set; }
 
-        public ICollection<SocialMediaPost> SocialMediaPost { get; set; }
+        public virtual ICollection<SocialMediaPost> SocialMediaPost { get; set; } = new List<SocialMediaPost>();
         /*
         public ICollection<Deelplatform_SocialMediaSource> Deelplatform_SocialMediaSource { get; set; }
         */

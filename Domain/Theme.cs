@@ -7,6 +7,6 @@ namespace BL.Domain
     {
         [Key]
         public int ThemeId { get; set; }
-        public ICollection<string> Keywords { get; set; }
+        public ICollection<string> Keywords { get; set; } = new List<string>();
     }
 }

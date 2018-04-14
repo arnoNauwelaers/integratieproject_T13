@@ -12,10 +12,9 @@ namespace BL.Domain
         //public int photo { get; set; }
         //public ICollection<Set> sets { get; set; }
 
-        public List<Alert> Alerts { get; set; }
+        public virtual ICollection<Alert> Alerts { get; set; } = new List<Alert>();
         public Item()
         {
-            Alerts = new List<Alert>();
         }
     }
 }

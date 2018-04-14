@@ -21,8 +21,8 @@ namespace DAL.EF
             //Database.SetInitializer<SupportCenterDbContext>(new SupportCenterDbInitializer()); // moved to 'SupportCenterDbConfiguration'
         }
 
-        public DbSet<Alert> Alerts { get; set; }
         public DbSet<Item> Items { get; set; }
+        public DbSet<Alert> Alerts { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Person> Persons { get; set; }
@@ -33,7 +33,7 @@ namespace DAL.EF
         public DbSet<User> Users { get; set; }
 
 
-        protected void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //base.OnModelCreating(modelBuilder); // does nothing! (empty body)
 
@@ -46,8 +46,20 @@ namespace DAL.EF
 
             // 'Ticket.TicketNumber' as unique identifier
             modelBuilder.Entity<User>().HasKey(u => u.UserId);
+            modelBuilder.Entity<Notification>().HasKey(u => u.NotificationId);
 
-       
+            modelBuilder.Entity<Alert>().HasMany(i => i.Notifications).WithMany();
+            modelBuilder.Entity<Item>().HasMany(i => i.Alerts).WithMany();
+            modelBuilder.Entity<Organization>().HasMany(i => i.persons).WithMany();
+            modelBuilder.Entity<Organization>().HasMany(i => i.socialMediaProfiles).WithMany();
+            modelBuilder.Entity<Person>().HasMany(i => i.socialMediaProfiles).WithMany();
+            modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.SocialMediaProfiles).WithMany();
+            modelBuilder.Entity<SocialMediaProfile>().HasMany(i => i.SocialMediaPosts).WithMany();
+            modelBuilder.Entity<SocialMediaSource>().HasMany(i => i.SocialMediaPost).WithMany();
+            //modelBuilder.Entity<Theme>().HasMany(i => i.Keywords).WithMany();
+            modelBuilder.Entity<User>().HasMany(i => i.Alerts).WithMany();
+
+            
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,12 +20,7 @@ namespace DAL.EF
 
         public IEnumerable<SocialMediaPost> ReadSocialMediaPosts()
         {
-            return ctx.SocialMediaPosts.ToList<SocialMediaPost>();
-        }
-
-        public SocialMediaPost ReadSocialMediaPost(int postId)
-        {
-           return ctx.SocialMediaPosts.Find(postId);
+            return ctx.SocialMediaPosts.Include(a => a.SocialMediaProfiles).ToList<SocialMediaPost>();
         }
 
         public SocialMediaPost CreateSocialMediaPost(SocialMediaPost socialMediaPost)

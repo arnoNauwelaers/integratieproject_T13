@@ -1,5 +1,6 @@
 ﻿using BL.Domain;
 using DAL;
+using DAL.EF;
 using System;
 using System.Collections.Generic;
 
@@ -42,7 +43,9 @@ namespace BL
                 if(type != AlertType.mail)
                 {
                     Notification notification = new Notification() { NotificationId = notificationNmr, DateTime = DateTime.Now, Alert = alert};
+                    alertRepository.CreateNotification(notification);
                     alert.Notifications.Add(notification);
+                    alertRepository.UpdateAlert(alert);
                     notificationNmr++;
                 }
                 if (type != AlertType.notification)
@@ -50,6 +53,11 @@ namespace BL
                     this.sendMail(alert);
                 }
             }
+        }
+
+        public void UpdateNotification(Notification notification)
+        {
+            alertRepository.UpdateNotification(notification);
         }
 
         private void sendMail(Alert alert)

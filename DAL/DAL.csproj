@@ -50,17 +50,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlertRepository.cs" />
+    <Compile Include="EF\AlertRepository.cs" />
     <Compile Include="EF\BarometerDbConfiguration.cs" />
     <Compile Include="EF\BarometerDbContext.cs" />
     <Compile Include="EF\BarometerDbInitializer.cs" />
+    <Compile Include="EF\ItemRepository.cs" />
     <Compile Include="EF\SocialMediaRepository.cs" />
-    <Compile Include="ItemRepository.cs" />
+    <Compile Include="EF\UserRepository.cs" />
     <Compile Include="Read.cs" />
-    <Compile Include="SocialMediaRepository.cs" />
     <Compile Include="Memory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">
