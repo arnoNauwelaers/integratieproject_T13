@@ -1,5 +1,6 @@
 ﻿using BL.Domain;
 using DAL;
+using DAL.EF;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace BL
             List<SocialMediaPost> data = (List<SocialMediaPost>)read.ReadData();
             foreach (var item in data)
             {
-                SocialMediaRepository.Add(item);
+                SocialMediaRepository.CreateSocialMediaPost(item);
             }
             return ItemManager.GetAllItemsFromPosts(data);
         }

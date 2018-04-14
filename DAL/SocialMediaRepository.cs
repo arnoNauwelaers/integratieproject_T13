@@ -4,14 +4,15 @@ using System.Collections.Generic;
 
 namespace DAL
 {
-    public class SocialMediaRepository
+    //TO-DO verwijder klasse en bekijk code van Jordi
+    public class SocialMediaRepository2
     {
 
         public List<SocialMediaPost> posts;
         public List<SocialMediaProfile> socialmediaprofiles;
 
 
-        public SocialMediaRepository()
+        public SocialMediaRepository2()
         {
             posts = new List<SocialMediaPost>();
             socialmediaprofiles = Memory.SocialMediaProfiles;
