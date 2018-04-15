@@ -10,7 +10,7 @@ namespace BL.Domain
         public int AlertId { get; set; }
         public virtual AlertType Type { get; set; }
         public virtual AlertParameter Parameter { get; set; }
-        //TO-DO max length: 1
+        //TODO max length: 1
         public string Condition { get; set; }
         public string Content { get; set; }
         [Required]

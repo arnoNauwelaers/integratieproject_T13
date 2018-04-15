@@ -11,7 +11,7 @@ using DAL;
 
 namespace DAL.EF
 {
-    //TO-DO DropCreateDatabaseIf...
+    //TODO DropCreateDatabaseIf...
     internal class BarometerDbInitializer : DropCreateDatabaseAlways<BarometerDbContext>
     {
         protected override void Seed(BarometerDbContext context)

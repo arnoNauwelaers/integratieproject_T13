@@ -260,3 +260,5 @@ paket-files/
 __pycache__/
 *.pyc
 tijdelijke/app.confi.txt
+UI-MVC/
+tijdelijke/

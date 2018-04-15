@@ -45,6 +45,11 @@ namespace BL
                     Notification notification = new Notification() { NotificationId = notificationNmr, DateTime = DateTime.Now, Alert = alert};
                     alertRepository.CreateNotification(notification);
                     alert.Notifications.Add(notification);
+                    //TODO klopt niet, moet een user wel als attribuut in Alert opgenomen worden?
+                    if (alert.User == null)
+                    {
+                        alert.User = GetUser();
+                    }
                     alertRepository.UpdateAlert(alert);
                     notificationNmr++;
                 }

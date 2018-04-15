@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "politiekeBarometer\UI.csproj", "{C9E0E43E-9E3C-4679-A203-C55FA3A09580}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{6
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{F3909414-8227-4D89-A56D-154E1AF65D0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI-MVC", "UI-MVC\UI-MVC.csproj", "{487AC3C6-44C4-4126-9793-E530C39DF5AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,10 @@ Global
 		{F3909414-8227-4D89-A56D-154E1AF65D0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3909414-8227-4D89-A56D-154E1AF65D0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3909414-8227-4D89-A56D-154E1AF65D0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{487AC3C6-44C4-4126-9793-E530C39DF5AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{487AC3C6-44C4-4126-9793-E530C39DF5AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{487AC3C6-44C4-4126-9793-E530C39DF5AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{487AC3C6-44C4-4126-9793-E530C39DF5AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

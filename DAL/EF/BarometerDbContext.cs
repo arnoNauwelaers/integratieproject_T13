@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using BL.Domain;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DAL.EF
 {
@@ -20,6 +21,7 @@ namespace DAL.EF
         {
             //Database.SetInitializer<SupportCenterDbContext>(new SupportCenterDbInitializer()); // moved to 'SupportCenterDbConfiguration'
         }
+
 
         public DbSet<Item> Items { get; set; }
         public DbSet<Alert> Alerts { get; set; }
@@ -59,7 +61,15 @@ namespace DAL.EF
             //modelBuilder.Entity<Theme>().HasMany(i => i.Keywords).WithMany();
             modelBuilder.Entity<User>().HasMany(i => i.Alerts).WithMany();
 
-            
+            //IDENTITY TABLES
+            //TODO juiste database configureren
+            //modelBuilder.Entity<IdentityUser>().ToTable("MyUsers").Property(p => p.Id).HasColumnName("UserId");
+            //modelBuilder.Entity<User>().ToTable("MyUsers").Property(p => p.UseId).HasColumnName("UserId");
+            //modelBuilder.Entity<IdentityUserRole>().ToTable("MyUserRoles");
+            //modelBuilder.Entity<IdentityUserLogin>().ToTable("MyUserLogins");
+            //modelBuilder.Entity<IdentityUserClaim>().ToTable("MyUserClaims");
+            //modelBuilder.Entity<IdentityRole>().ToTable("MyRoles");
+
         }
     }
 }
