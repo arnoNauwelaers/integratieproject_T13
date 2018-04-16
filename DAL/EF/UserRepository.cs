@@ -14,24 +14,24 @@ namespace DAL.EF
 
         public UserRepository()
         {
-            ctx = BarometerDbContext.CreateContext();
+            ctx = BarometerDbContext.Create();
             ctx.Database.Initialize(false);
         }
 
-        public IEnumerable<User> ReadUsers()
+        public IEnumerable<ApplicationUser> ReadUsers()
         {
-            return ctx.Users.Include(a => a.Alerts).ToList<User>();
+            return ctx.Users.Include(a => a.Alerts).ToList<ApplicationUser>();
         }
 
 
-        public User CreateUser(User user)
+        public ApplicationUser CreateUser(ApplicationUser user)
         {
             ctx.Users.Add(user);
             ctx.SaveChanges();
             return user;
         }
 
-        public void UpdateUser(User user)
+        public void UpdateUser(ApplicationUser user)
         {
             ctx.Entry(user).State = System.Data.Entity.EntityState.Modified;
             ctx.SaveChanges();
@@ -39,14 +39,21 @@ namespace DAL.EF
 
         public void DeleteUser(int userId)
         {
-            User user = ctx.Users.Find(userId);
+            ApplicationUser user = ctx.Users.Find(userId);
             ctx.Users.Remove(user);
             ctx.SaveChanges();
         }
 
-        public User GetUser()
+        public ApplicationUser GetUser(string id = "")
         {
-            return ctx.Users.Include(a => a.Alerts).First();
+            if (!id.Equals(""))
+            {
+                return ctx.Users.Include(a => a.Alerts).Where(u => u.Id == id).First();
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

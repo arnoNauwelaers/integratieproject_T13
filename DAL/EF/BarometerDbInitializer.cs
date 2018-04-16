@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using BL.Domain;
 using DAL.EF;
 using DAL;
@@ -12,19 +11,20 @@ using DAL;
 namespace DAL.EF
 {
     //TODO DropCreateDatabaseIf...
-    internal class BarometerDbInitializer : DropCreateDatabaseAlways<BarometerDbContext>
+    internal class BarometerDbInitializer : DropCreateDatabaseIfModelChanges<BarometerDbContext>
     {
         protected override void Seed(BarometerDbContext context)
         {
+            Memory.generateData();
             foreach (SocialMediaProfile profile in Memory.SocialMediaProfiles)
             {
                 context.SocialMediaProfiles.Add(profile);
             }
 
-            foreach (User user in Memory.users)
-            {
-                context.Users.Add(user);
-            }
+            //foreach (ApplicationUser user in Memory.users)
+            //{
+            //    context.Users.Add(user);
+            //}
 
             foreach (Person person in Memory.persons)
             {

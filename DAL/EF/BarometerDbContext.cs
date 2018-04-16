@@ -14,7 +14,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace DAL.EF
 {
     [DbConfigurationType(typeof(BarometerDbConfiguration))]
-    internal class BarometerDbContext : IdentityDbContext<User> /* 'public' for testing with project 'DAL-Testing'! */
+    public class BarometerDbContext : IdentityDbContext<ApplicationUser> /* 'public' for testing with project 'DAL-Testing'! */
     {
         public BarometerDbContext()
           : base("PolitiekeBarometerDB")
@@ -47,7 +47,7 @@ namespace DAL.EF
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
 
             // 'Ticket.TicketNumber' as unique identifier
-            modelBuilder.Entity<User>().HasKey(u => u.Id);
+            //modelBuilder.Entity<ApplicationUser>().HasKey(u => u.Id);
             modelBuilder.Entity<Notification>().HasKey(u => u.NotificationId);
 
             modelBuilder.Entity<IdentityUserLogin>().HasKey(u => u.UserId);
@@ -65,17 +65,15 @@ namespace DAL.EF
             //modelBuilder.Entity<User>().HasMany(i => i.Alerts).WithMany();
 
             //IDENTITY TABLES
-            //TODO juiste database configureren
-            //modelBuilder.Entity<IdentityUser>().ToTable("User").Property(p => p.Id).HasColumnName("Id");
-            //modelBuilder.Entity<User>().ToTable("User").Property(p => p.Id).HasColumnName("Id");
-            //modelBuilder.Entity<IdentityUserRole>().ToTable("MyUserRoles");
-            //modelBuilder.Entity<IdentityUserLogin>().ToTable("MyUserLogins");
-            //modelBuilder.Entity<IdentityUserClaim>().ToTable("MyUserClaims");
-            //modelBuilder.Entity<IdentityRole>().ToTable("MyRoles");
+            modelBuilder.Entity<IdentityRole>().ToTable("Role");
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaim");
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogin");
+            modelBuilder.Entity<IdentityUserRole>().ToTable("UserRole");
+            modelBuilder.Entity<ApplicationUser>().ToTable("User");
 
         }
 
-        public static BarometerDbContext CreateContext()
+        public static BarometerDbContext Create()
         {
             return new BarometerDbContext();
         }

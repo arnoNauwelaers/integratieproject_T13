@@ -5,7 +5,7 @@ namespace DAL
 {
     public static class Memory
     {
-        public static List<User> users;
+        public static List<ApplicationUser> users;
         public static List<SocialMediaProfile> SocialMediaProfiles;
         public static List<Item> items;
         public static List<Alert> alerts;
@@ -14,8 +14,8 @@ namespace DAL
 
         public static void generateData()
         {
-            User user1 = new User() { Id = "1", Admin = false, UserName = "user1", Password = "poc", Mail = "user1.test@hotmail.com" };
-            User user2 = new User() { Id = "2", Admin = false, UserName = "user2", Password = "poc", Mail = "user2.test@hotmail.com" };
+            ApplicationUser user1 = new ApplicationUser() { Id = "1", Admin = false, UserName = "user1", Mail = "user1.test@hotmail.com" };
+            ApplicationUser user2 = new ApplicationUser() { Id = "2", Admin = false, UserName = "user2", Mail = "user2.test@hotmail.com" };
 
             SocialMediaProfile socialMediaProfile1 = new SocialMediaProfile() { ProfileId = 1, Url = "http://www.twitter.be/AnnouriImade", Source = "twitter" };
             SocialMediaProfile socialMediaProfile2 = new SocialMediaProfile() { ProfileId = 2, Url = "http://www.twitter.be/BastiaensCaroline", Source = "twitter" };
@@ -55,7 +55,7 @@ namespace DAL
             user2.Alerts.Add(alert3);
             user2.Alerts.Add(alert4);
 
-            users = new List<User>();
+            users = new List<ApplicationUser>();
             users.Add(user1);
             users.Add(user2);
 

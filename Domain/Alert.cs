@@ -14,13 +14,13 @@ namespace BL.Domain
         public string Condition { get; set; }
         public string Content { get; set; }
         //[Required] geeft voorlopig error in database
-        public virtual User User { get; set; }
+        public virtual ApplicationUser User { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
         [Required]
         public virtual Item Item { get; set; }
         public virtual Item CompareItem { get; set; }
 
-        public Alert(int alertId, AlertType type, AlertParameter parameter, string condition, User user, Item item, Item compareItem = null)
+        public Alert(int alertId, AlertType type, AlertParameter parameter, string condition, ApplicationUser user, Item item, Item compareItem = null)
         {
             Notifications = new List<Notification>();
             AlertId = alertId;

@@ -4,24 +4,67 @@ using DAL.EF;
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
 
 namespace BL
 {
-    public class UserManager
+    public class ApplicationUserManager : UserManager<ApplicationUser>
     {
         private UserRepository userRepository;
         private AlertRepository alertRepository;
         private SocialMediaManager socialMediaManager;
 
-        public UserManager()
+        //public ApplicationUserManager(SocialMediaManager socialMediaManager)
+        //{
+        //    alertRepository = new AlertRepository();
+        //    userRepository = new UserRepository();
+        //    this.socialMediaManager = socialMediaManager;
+        //}
+
+        public ApplicationUserManager(IUserStore<ApplicationUser> store) : base(store)
         {
+            this.alertRepository = new AlertRepository();
+            userRepository = new UserRepository();
         }
 
-        public UserManager(SocialMediaManager socialMediaManager)
+        public void setSocialMediaManager(SocialMediaManager socialMediaManager)
         {
-            alertRepository = new AlertRepository();
-            userRepository = new UserRepository();
             this.socialMediaManager = socialMediaManager;
+        }
+
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
+        {
+
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<BarometerDbContext>()));
+
+            //USERNAME VALIDATION
+            manager.UserValidator = new UserValidator<ApplicationUser>(manager)
+            {
+                AllowOnlyAlphanumericUserNames = false,
+                RequireUniqueEmail = true
+            };
+
+
+            //PASSWORD VALIDATION
+            manager.PasswordValidator = new PasswordValidator
+            {
+                RequireDigit = false,
+                RequiredLength = 6,
+                RequireLowercase = false,
+                RequireUppercase = false,
+                RequireNonLetterOrDigit = false
+            };
+
+
+            //CONFIGURE LOCKOUT
+            manager.UserLockoutEnabledByDefault = true;
+            manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(15);
+            manager.MaxFailedAccessAttemptsBeforeLockout = 5;
+
+            return manager;
+
         }
 
         public List<Alert> GetAlerts(Item item)
@@ -29,9 +72,9 @@ namespace BL
            return alertRepository.GetAlerts(item);
         }
 
-        public User GetUser()
+        public ApplicationUser GetUser(string id)
         {
-            return userRepository.GetUser();
+            return userRepository.GetUser(id);
         }
 
         public void InspectAlert(Alert alert)

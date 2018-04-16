@@ -10,11 +10,11 @@ namespace politiekeBarometer.Models
     //    public virtual List<Alert> Alerts { get; set; } = new List<Alert>();
     //}
 
-    public class ApplicationDbContext : IdentityDbContext<User>
-    {
-        public ApplicationDbContext()
-            : base("politiekeBarometerDB")
-        {
-        }
-    }
+    //public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    //{
+    //    public ApplicationDbContext()
+    //        : base("politiekeBarometerDB")
+    //    {
+    //    }
+    //}
 }

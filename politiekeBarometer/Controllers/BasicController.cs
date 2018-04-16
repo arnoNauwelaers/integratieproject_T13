@@ -2,18 +2,25 @@
 using BL.Domain;
 using System.Collections.Generic;
 using System.Web.Http;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace politiekeBarometer.Controllers
 {
     public class BasicController : ApiController
     {
         private SocialMediaManager SocialMediaManager;
-        private UserManager UserManager;
+        private ApplicationUserManager UserManager;
 
         protected BasicController()
         {
             SocialMediaManager = new SocialMediaManager();
-            UserManager = new UserManager(SocialMediaManager);
+            UserManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            UserManager.setSocialMediaManager(SocialMediaManager);
         }
 
         public void SynchronizeDatabase()
@@ -31,31 +38,61 @@ namespace politiekeBarometer.Controllers
 
         }
 
-        private List<Notification> notifications = new List<Notification>();
         public IHttpActionResult Get()
         {
+            List<Notification> notifications = new List<Notification>();
             SynchronizeDatabase();
-            User user = UserManager.GetUser();
-            foreach (var alert in user.Alerts)
+            if (User.Identity.GetUserId() != null)
             {
-                foreach (var notification in alert.Notifications)
+                ApplicationUser user = UserManager.GetUser(User.Identity.GetUserId());
+                if (user.Alerts.Count > 0)
                 {
-                    if (notification.Read == false)
+                    foreach (var alert in user.Alerts)
                     {
-                        notifications.Add(notification);
-                        notification.Read = true;
-                        UserManager.UpdateNotification(notification);
+                        foreach (var notification in alert.Notifications)
+                        {
+                            if (notification.Read == false)
+                            {
+                                notifications.Add(notification);
+                                notification.Read = true;
+                                UserManager.UpdateNotification(notification);
+                            }
+                        }
                     }
+
+                    
                 }
+                return Ok(notifications);
             }
-            return Ok(notifications);
+            else
+            {
+                return Ok();
+            }
         }
 
         //TODO return al gelezen notifications van vandaag en ongelezen notifications andere dagen. ReadDate toevoegen aan Notification naast Read boolean?
         [Route("api/Basic/GetNotifications")]
         public IHttpActionResult GetNotifications()
         {
-            return Get();
+            List<Notification> notifications = new List<Notification>();
+            SynchronizeDatabase();
+            if (User.Identity.GetUserId() != null)
+            {
+                ApplicationUser user = UserManager.GetUser(User.Identity.GetUserId());
+                if (user.Alerts.Count > 0)
+                {
+                    foreach (var alert in user.Alerts)
+                    {
+                        foreach (var notification in alert.Notifications)
+                        {
+                                notifications.Add(notification);
+                            }
+                        }
+                    }
+
+
+                }
+                return Ok(notifications);
         }
     }
 }
