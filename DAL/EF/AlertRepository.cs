@@ -20,7 +20,7 @@ namespace DAL.EF
             ctx.Database.Initialize(false);
         }
 
-        public IEnumerable<Alert> ReadAlerts()
+        public List<Alert> ReadAlerts()
         {
             return ctx.Alerts.Include(a => a.Notifications).ToList<Alert>();
         }
@@ -30,6 +30,19 @@ namespace DAL.EF
             ctx.Alerts.Add(alert);
             ctx.SaveChanges();
             return alert;
+        }
+
+        public Boolean NotificationExists(int id)
+        {
+            var todayDate = DateTime.Today;
+            if (ctx.Notifications.Where(n => (n.Alert.AlertId == id) && (n.DateTime.Day == todayDate.Day && n.DateTime.Month == todayDate.Month && n.DateTime.Year == todayDate.Year)).Count() > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void UpdateAlert(Alert alert)
@@ -48,17 +61,6 @@ namespace DAL.EF
         public List<Alert> GetAlerts(Item item)
         {
             List<Alert> usedAlerts = new List<Alert>();
-            foreach (var bla in ctx.Alerts.ToList<Alert>())
-            {
-                if (bla.Item == null)
-                {
-                    Debug.WriteLine("NULL");
-                }
-                else
-                {
-                    Debug.WriteLine(bla.Item.ItemId + " ID");
-                }
-            }
             foreach (var alert in ctx.Alerts.ToList<Alert>())
             {
                 if (alert.Item.ItemId == item.ItemId)

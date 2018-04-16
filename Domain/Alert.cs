@@ -13,7 +13,7 @@ namespace BL.Domain
         //TODO max length: 1
         public string Condition { get; set; }
         public string Content { get; set; }
-        [Required]
+        //[Required] geeft voorlopig error in database
         public virtual User User { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
         [Required]

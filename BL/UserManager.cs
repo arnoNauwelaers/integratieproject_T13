@@ -3,6 +3,7 @@ using DAL;
 using DAL.EF;
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BL
 {
@@ -40,18 +41,17 @@ namespace BL
             if (condionAns == true)
             {
                 AlertType type = alert.Type;
-                if(type != AlertType.mail)
+                if (type != AlertType.mail)
                 {
-                    Notification notification = new Notification() { NotificationId = notificationNmr, DateTime = DateTime.Now, Alert = alert};
-                    alertRepository.CreateNotification(notification);
-                    alert.Notifications.Add(notification);
-                    //TODO klopt niet, moet een user wel als attribuut in Alert opgenomen worden?
-                    if (alert.User == null)
-                    {
-                        alert.User = GetUser();
+                    //TODO controleer of notification al in database is opgenomen
+                    if (!alertRepository.NotificationExists(alert.AlertId)) { 
+                        Notification notification = new Notification() { NotificationId = notificationNmr, DateTime = DateTime.Now, Alert = alert };
+                        alertRepository.CreateNotification(notification);
+                        alert.Notifications.Add(notification);
+                        //TODO klopt niet, moet een user wel als attribuut in Alert opgenomen worden?
+                        alertRepository.UpdateAlert(alert);
+                        notificationNmr++;
                     }
-                    alertRepository.UpdateAlert(alert);
-                    notificationNmr++;
                 }
                 if (type != AlertType.notification)
                 {
