@@ -14,8 +14,8 @@ namespace DAL
 
         public static void generateData()
         {
-            User user1 = new User() { UserId = 1, Admin = false, UserName = "user1", Password = "poc", Mail = "user1.test@hotmail.com" };
-            User user2 = new User() { UserId = 2, Admin = false, UserName = "user2", Password = "poc", Mail = "user2.test@hotmail.com" };
+            User user1 = new User() { Id = "1", Admin = false, UserName = "user1", Password = "poc", Mail = "user1.test@hotmail.com" };
+            User user2 = new User() { Id = "2", Admin = false, UserName = "user2", Password = "poc", Mail = "user2.test@hotmail.com" };
 
             SocialMediaProfile socialMediaProfile1 = new SocialMediaProfile() { ProfileId = 1, Url = "http://www.twitter.be/AnnouriImade", Source = "twitter" };
             SocialMediaProfile socialMediaProfile2 = new SocialMediaProfile() { ProfileId = 2, Url = "http://www.twitter.be/BastiaensCaroline", Source = "twitter" };

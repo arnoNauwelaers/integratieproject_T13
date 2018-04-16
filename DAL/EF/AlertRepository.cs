@@ -6,6 +6,7 @@ using System.Linq;
 using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity.Migrations;
 
 namespace DAL.EF
 {
@@ -15,7 +16,7 @@ namespace DAL.EF
 
         public AlertRepository()
         {
-            ctx = new BarometerDbContext();
+            ctx = BarometerDbContext.CreateContext();
             ctx.Database.Initialize(false);
         }
 
@@ -87,7 +88,8 @@ namespace DAL.EF
 
         public void UpdateNotification(Notification notification)
         {
-            ctx.Entry(notification).State = System.Data.Entity.EntityState.Modified;
+            //ctx.Entry(notification).State = System.Data.Entity.EntityState.Modified;
+            ctx.Set<Notification>().AddOrUpdate(notification);
             ctx.SaveChanges();
         }
 

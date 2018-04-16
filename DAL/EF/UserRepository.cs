@@ -14,7 +14,7 @@ namespace DAL.EF
 
         public UserRepository()
         {
-            ctx = new BarometerDbContext();
+            ctx = BarometerDbContext.CreateContext();
             ctx.Database.Initialize(false);
         }
 

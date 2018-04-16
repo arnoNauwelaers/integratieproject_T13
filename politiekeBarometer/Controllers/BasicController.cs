@@ -40,9 +40,12 @@ namespace politiekeBarometer.Controllers
             {
                 foreach (var notification in alert.Notifications)
                 {
-                    if (notification.Read == false) { }
-                    notifications.Add(notification);
-                    notification.Read = true;
+                    if (notification.Read == false)
+                    {
+                        notifications.Add(notification);
+                        notification.Read = true;
+                        UserManager.UpdateNotification(notification);
+                    }
                 }
             }
             return Ok(notifications);

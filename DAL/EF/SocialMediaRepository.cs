@@ -14,7 +14,7 @@ namespace DAL.EF
 
         public SocialMediaRepository()
         {
-            ctx = new BarometerDbContext();
+            ctx = BarometerDbContext.CreateContext();
             ctx.Database.Initialize(false);
         }
 
@@ -43,7 +43,7 @@ namespace DAL.EF
             ctx.SaveChanges();
         }
 
-        public List<SocialMediaProfile> getProfile(SocialMediaPost post)
+        public List<SocialMediaProfile> GetProfile(SocialMediaPost post)
         {
             List<SocialMediaProfile> tempprofiles = new List<SocialMediaProfile>();
 

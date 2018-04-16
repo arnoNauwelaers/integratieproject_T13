@@ -14,7 +14,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace DAL.EF
 {
     [DbConfigurationType(typeof(BarometerDbConfiguration))]
-    internal class BarometerDbContext : DbContext /* 'public' for testing with project 'DAL-Testing'! */
+    internal class BarometerDbContext : IdentityDbContext<User> /* 'public' for testing with project 'DAL-Testing'! */
     {
         public BarometerDbContext()
           : base("PolitiekeBarometerDB")
@@ -32,7 +32,7 @@ namespace DAL.EF
         public DbSet<SocialMediaProfile> SocialMediaProfiles { get; set; }
         public DbSet<SocialMediaSource> SocialMediaSources { get; set; }
         public DbSet<Theme> Themes { get; set; }
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -47,8 +47,11 @@ namespace DAL.EF
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
 
             // 'Ticket.TicketNumber' as unique identifier
-            modelBuilder.Entity<User>().HasKey(u => u.UserId);
+            modelBuilder.Entity<User>().HasKey(u => u.Id);
             modelBuilder.Entity<Notification>().HasKey(u => u.NotificationId);
+
+            modelBuilder.Entity<IdentityUserLogin>().HasKey(u => u.UserId);
+            modelBuilder.Entity<IdentityUserRole>().HasKey(u => u.RoleId);
 
             modelBuilder.Entity<Alert>().HasMany(i => i.Notifications).WithMany();
             modelBuilder.Entity<Item>().HasMany(i => i.Alerts).WithMany();
@@ -59,17 +62,22 @@ namespace DAL.EF
             modelBuilder.Entity<SocialMediaProfile>().HasMany(i => i.SocialMediaPosts).WithMany();
             modelBuilder.Entity<SocialMediaSource>().HasMany(i => i.SocialMediaPost).WithMany();
             //modelBuilder.Entity<Theme>().HasMany(i => i.Keywords).WithMany();
-            modelBuilder.Entity<User>().HasMany(i => i.Alerts).WithMany();
+            //modelBuilder.Entity<User>().HasMany(i => i.Alerts).WithMany();
 
             //IDENTITY TABLES
             //TODO juiste database configureren
-            //modelBuilder.Entity<IdentityUser>().ToTable("MyUsers").Property(p => p.Id).HasColumnName("UserId");
-            //modelBuilder.Entity<User>().ToTable("MyUsers").Property(p => p.UseId).HasColumnName("UserId");
+            //modelBuilder.Entity<IdentityUser>().ToTable("User").Property(p => p.Id).HasColumnName("Id");
+            //modelBuilder.Entity<User>().ToTable("User").Property(p => p.Id).HasColumnName("Id");
             //modelBuilder.Entity<IdentityUserRole>().ToTable("MyUserRoles");
             //modelBuilder.Entity<IdentityUserLogin>().ToTable("MyUserLogins");
             //modelBuilder.Entity<IdentityUserClaim>().ToTable("MyUserClaims");
             //modelBuilder.Entity<IdentityRole>().ToTable("MyRoles");
 
+        }
+
+        public static BarometerDbContext CreateContext()
+        {
+            return new BarometerDbContext();
         }
     }
 }

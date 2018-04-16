@@ -55,7 +55,7 @@ namespace BL
                 }
                 if (type != AlertType.notification)
                 {
-                    this.sendMail(alert);
+                    this.SendMail(alert);
                 }
             }
         }
@@ -65,7 +65,7 @@ namespace BL
             alertRepository.UpdateNotification(notification);
         }
 
-        private void sendMail(Alert alert)
+        private void SendMail(Alert alert)
         {
             //TODO: implementatie send mail
         }
