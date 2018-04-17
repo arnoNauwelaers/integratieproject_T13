@@ -13,12 +13,13 @@ namespace BL {
     public static Boolean isGenerated = false;
 
     public static void generateMail() {
-      SmtpServer.UseDefaultCredentials = false;
-      SmtpServer.Credentials = new NetworkCredential("politieke.barometer.mail@gmail.com", "Arnoisdebesteteamleader");
-      SmtpServer.Port = 465;
-      SmtpServer.EnableSsl = true;
-      SmtpServer.Host = "smtp.gmail.com";
-      isGenerated = true;
+            SmtpServer = new SmtpClient();
+         SmtpServer.UseDefaultCredentials = false;
+         SmtpServer.Credentials = new NetworkCredential("politieke.barometer.mail@gmail.com", "Arnoisdebesteteamleader");
+         SmtpServer.Port = 587;
+        SmtpServer.EnableSsl = true;
+        SmtpServer.Host = "smtp.gmail.com";
+         isGenerated = true;
     }
 
     public static void sendMail(string to, string subject, string content) {

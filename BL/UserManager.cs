@@ -108,7 +108,7 @@ namespace BL
             alertRepository.UpdateNotification(notification);
         }
 
-        private void SendMail(Alert alert)
+        public void SendMail(Alert alert)
         {
           Mail.sendMail(alert.User.Mail, "Nieuwe melding", alert.Content);
         }

@@ -85,6 +85,7 @@ namespace politiekeBarometer.Controllers
                     {
                         foreach (var notification in alert.Notifications)
                         {
+                                
                                 notifications.Add(notification);
                             }
                         }

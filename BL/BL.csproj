@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mail.cs" />
     <Compile Include="Read.cs" />
     <Compile Include="UserManager.cs" />
     <Compile Include="ItemManager.cs" />
