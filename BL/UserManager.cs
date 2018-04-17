@@ -110,7 +110,7 @@ namespace BL
 
         private void SendMail(Alert alert)
         {
-            //TODO: implementatie send mail
+          Mail.sendMail(alert.User.Mail, "Nieuwe melding", alert.Content);
         }
     }
 }
