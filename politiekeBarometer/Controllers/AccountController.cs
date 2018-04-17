@@ -294,6 +294,12 @@ namespace politiekeBarometer.Controllers
             AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
         }
+        // /Account/LogOut
+        public ActionResult LogOut()
+        {
+            AuthenticationManager.SignOut();
+            return RedirectToAction("Index", "Home");
+        }
 
         //
         // GET: /Account/ExternalLoginFailure

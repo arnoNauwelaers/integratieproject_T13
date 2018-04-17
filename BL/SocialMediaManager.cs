@@ -17,14 +17,14 @@ namespace BL
     {
         private const int FREQUENTIE = 1;
 
-        private SocialMediaRepository SocialMediaRepository;
-        private ItemManager ItemManager;
+        private SocialMediaRepository socialMediaRepository;
+        private ItemManager itemManager;
         private Read read;
 
         public SocialMediaManager()
         {
-            SocialMediaRepository = new SocialMediaRepository();
-            ItemManager = new ItemManager();
+            socialMediaRepository = new SocialMediaRepository();
+            itemManager = new ItemManager();
             read = new Read();
         }
 
@@ -33,17 +33,17 @@ namespace BL
             List<SocialMediaPost> data = (List<SocialMediaPost>)read.ReadData();
             foreach (var item in data)
             {
-                SocialMediaRepository.CreateSocialMediaPost(item);
+                socialMediaRepository.CreateSocialMediaPost(item);
             }
-            return ItemManager.GetAllItemsFromPosts(data);
+            return itemManager.GetAllItemsFromPosts(data);
         }
 
         public Boolean VerifyCondition(Alert alert)
         {
-            int tweetAmount = SocialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
+            int tweetAmount = socialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
             if (alert.CompareItem == null)
             {
-                int oldTweetAmount = SocialMediaRepository.ReadItemParameter(alert, DateTime.Now.AddHours(-1), DateTime.Now.AddHours(-(FREQUENTIE * 2)));
+                int oldTweetAmount = socialMediaRepository.ReadItemParameter(alert, DateTime.Now.AddHours(-1), DateTime.Now.AddHours(-(FREQUENTIE * 2)));
 
                 if (alert.Condition == ">")
                 {
@@ -54,7 +54,7 @@ namespace BL
             }
             else
             {
-                int tweetAmount2 = SocialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
+                int tweetAmount2 = socialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
                 if (alert.Condition == ">")
                 {
                     //als er over een politus meer dan 2 maal zveel getweet is in het afgelopen uur als een ander politici word er een notification gestuurd

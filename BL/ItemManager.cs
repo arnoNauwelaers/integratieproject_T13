@@ -8,11 +8,11 @@ namespace BL
 {
     class ItemManager
     {
-        private ItemRepository ItemRepository;
+        private ItemRepository itemRepository;
 
         public ItemManager()
         {
-            ItemRepository = new ItemRepository();
+            itemRepository = new ItemRepository();
         }
 
         public List<Item> GetAllItemsFromPosts(List<SocialMediaPost> data)
@@ -20,7 +20,7 @@ namespace BL
             Dictionary<int, Item> alteredItems = new Dictionary<int, Item>();
             foreach (var post in data)
             {
-                List<Item> items = ItemRepository.ReadItems(post);
+                List<Item> items = itemRepository.ReadItems(post);
                 foreach (var item in items)
                 {
                     //alteredItems.Add(item);
