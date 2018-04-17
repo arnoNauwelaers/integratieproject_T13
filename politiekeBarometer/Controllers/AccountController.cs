@@ -51,7 +51,7 @@ namespace politiekeBarometer.Controllers
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Dashboard");
                 }
                 else
                 {
@@ -209,7 +209,7 @@ namespace politiekeBarometer.Controllers
             if (user != null)
             {
                 await SignInAsync(user, isPersistent: false);
-                return RedirectToLocal(returnUrl);
+                return RedirectToAction("Index", "Dashboard");
             }
             else
             {
