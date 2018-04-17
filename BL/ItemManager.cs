@@ -6,7 +6,7 @@ using DAL.EF;
 
 namespace BL
 {
-    class ItemManager
+    public class ItemManager
     {
         private ItemRepository itemRepository;
 
@@ -33,5 +33,15 @@ namespace BL
             }
             return alteredItems.Values.ToList();
         }
+    public Person ReadPerson(int id) {
+      return itemRepository.ReadPerson(id);
     }
+    public Organization ReadOrganization(int id) {
+      return itemRepository.ReadOrganization(id);
+    }
+    public Theme ReadTheme(int id) {
+      return itemRepository.ReadTheme(id);
+    }
+
+  }
 }

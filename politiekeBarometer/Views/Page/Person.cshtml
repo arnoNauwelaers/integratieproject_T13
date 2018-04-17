@@ -1,0 +1,12 @@
+﻿@model BL.Domain.Person
+
+@{
+    ViewBag.Title = "Person";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model == null) {
+  <p>Persoon niet gevonden.</p>
+} else {
+  <h1>@Model.FirstName @Model.Name</h1>
+}

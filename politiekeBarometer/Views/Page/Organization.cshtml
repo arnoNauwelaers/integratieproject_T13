@@ -1,0 +1,12 @@
+﻿@model BL.Domain.Organization
+
+@{
+    ViewBag.Title = "Organization";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model == null) {
+  <p>Organisatie niet gevonden.</p>
+} else {
+  <h1>@Model.Name</h1>
+}

@@ -1,0 +1,12 @@
+﻿@model BL.Domain.Theme
+
+@{
+    ViewBag.Title = "Theme";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model == null) {
+  <p>Thema niet gevonden.</p>
+} else {
+  <h1>@Model.Name</h1>
+}

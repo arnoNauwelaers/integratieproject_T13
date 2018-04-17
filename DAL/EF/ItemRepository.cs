@@ -69,5 +69,19 @@ namespace DAL.EF
             }
             return usedItems;
         }
+
+    public Person ReadPerson(int id) {
+      return ctx.Persons.Include(a => a.Alerts).Include(a => a.socialMediaProfiles).ToList().Find(u => u.ItemId == id);
     }
+    public Organization ReadOrganization(int id) {
+      return ctx.Organizations.Include(a => a.Alerts).Include(a => a.socialMediaProfiles).ToList().Find(u => u.ItemId == id);
+    }
+    public Theme ReadTheme(int id) {
+      return ctx.Themes.ToList().Find(u => u.ItemId == id);
+    }
+
+    public Item SearchItem(string Text) {
+      return ctx.Items.ToList().Find(u => u.Name == Text);
+    }
+  }
 }

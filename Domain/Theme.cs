@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BL.Domain
 {
-    public class Theme
+    public class Theme : Item
     {
-        [Key]
-        public int ThemeId { get; set; }
         public ICollection<string> Keywords { get; set; } = new List<string>();
     }
 }
