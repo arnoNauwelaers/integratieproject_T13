@@ -21,7 +21,7 @@ namespace DAL.EF
 
         protected override void Seed(BarometerDbContext context)
         {
-            generateData();
+            GenerateData();
             foreach (SocialMediaProfile profile in SocialMediaProfiles)
             {
                 context.SocialMediaProfiles.Add(profile);
@@ -56,7 +56,7 @@ namespace DAL.EF
 
             context.SaveChanges();
         }
-        public static void generateData()
+        public static void GenerateData()
         {
             ApplicationUser user1 = new ApplicationUser() { Id = "1", Admin = false, UserName = "user1", Mail = "user1.test@hotmail.com" };
             ApplicationUser user2 = new ApplicationUser() { Id = "2", Admin = false, UserName = "user2", Mail = "user2.test@hotmail.com" };
@@ -99,37 +99,49 @@ namespace DAL.EF
             user2.Alerts.Add(alert3);
             user2.Alerts.Add(alert4);
 
-            users = new List<ApplicationUser>();
-            users.Add(user1);
-            users.Add(user2);
+            users = new List<ApplicationUser>
+            {
+                user1,
+                user2
+            };
 
-            SocialMediaProfiles = new List<SocialMediaProfile>();
-            SocialMediaProfiles.Add(socialMediaProfile1);
-            SocialMediaProfiles.Add(socialMediaProfile2);
-            SocialMediaProfiles.Add(socialMediaProfile3);
-            SocialMediaProfiles.Add(socialMediaProfile4);
+            SocialMediaProfiles = new List<SocialMediaProfile>
+            {
+                socialMediaProfile1,
+                socialMediaProfile2,
+                socialMediaProfile3,
+                socialMediaProfile4
+            };
 
-            items = new List<Item>();
-            items.Add(organization1);
-            items.Add(person1);
-            items.Add(person2);
-            items.Add(person3);
-            items.Add(person4);
+            items = new List<Item>
+            {
+                organization1,
+                person1,
+                person2,
+                person3,
+                person4
+            };
 
-            organizations = new List<Organization>();
-            organizations.Add(organization1);
+            organizations = new List<Organization>
+            {
+                organization1
+            };
 
-            persons = new List<Person>();
-            persons.Add(person1);
-            persons.Add(person2);
-            persons.Add(person3);
-            persons.Add(person4);
+            persons = new List<Person>
+            {
+                person1,
+                person2,
+                person3,
+                person4
+            };
 
-            alerts = new List<Alert>();
-            alerts.Add(alert1);
-            alerts.Add(alert2);
-            alerts.Add(alert3);
-            alerts.Add(alert4);
+            alerts = new List<Alert>
+            {
+                alert1,
+                alert2,
+                alert3,
+                alert4
+            };
 
         }
     }

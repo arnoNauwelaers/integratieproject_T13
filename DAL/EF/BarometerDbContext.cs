@@ -77,5 +77,7 @@ namespace DAL.EF
         {
             return new BarometerDbContext();
         }
+
+        //public System.Data.Entity.DbSet<BL.Domain.ApplicationUser> ApplicationUsers { get; set; }
     }
 }
