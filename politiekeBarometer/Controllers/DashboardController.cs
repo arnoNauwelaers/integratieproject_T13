@@ -17,6 +17,7 @@ namespace politiekeBarometer.Controllers
         //private BarometerDbContext db = BarometerDbContext.Create();
 
         // GET: Dashboard
+        [Authorize]
         public ActionResult Index()
         {
             return View();

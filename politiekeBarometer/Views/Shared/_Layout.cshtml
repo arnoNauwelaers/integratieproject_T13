@@ -119,12 +119,15 @@
                         <span class="nav-link-text">Home</span>
                     </a>
                 </li>
+@if (Request.IsAuthenticated)
+{
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link" href="@Url.Action("Index", "Dashboard")">
                         <i class="fa fa-fw fa-dashboard"></i>
                         <span class="nav-link-text">Dashboard</span>
                     </a>
                 </li>
+}
             </ul>
             <ul class="navbar-nav sidenav-toggler">
                 <li class="nav-item">
