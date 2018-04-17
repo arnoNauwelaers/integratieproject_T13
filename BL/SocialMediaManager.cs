@@ -23,7 +23,6 @@ namespace BL
 
         public SocialMediaManager()
         {
-            Memory.generateData();
             SocialMediaRepository = new SocialMediaRepository();
             ItemManager = new ItemManager();
             read = new Read();

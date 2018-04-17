@@ -81,8 +81,6 @@
     <Compile Include="EF\ItemRepository.cs" />
     <Compile Include="EF\SocialMediaRepository.cs" />
     <Compile Include="EF\UserRepository.cs" />
-    <Compile Include="Read.cs" />
-    <Compile Include="Memory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
