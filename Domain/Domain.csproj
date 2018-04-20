@@ -78,6 +78,7 @@
     <Compile Include="Alert.cs" />
     <Compile Include="AlertParameter.cs" />
     <Compile Include="AlertType.cs" />
+    <Compile Include="Applicationuser.cs" />
     <Compile Include="Chart.cs" />
     <Compile Include="ChartType.cs" />
     <Compile Include="Dashboard.cs" />
@@ -93,7 +94,6 @@
     <Compile Include="SocialMediaProfile.cs" />
     <Compile Include="SocialMediaSource.cs" />
     <Compile Include="Theme.cs" />
-    <Compile Include="User.cs" />
     <Compile Include="Zone.cs" />
   </ItemGroup>
   <ItemGroup>
