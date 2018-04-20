@@ -91,6 +91,7 @@ namespace politiekeBarometer.Controllers
         public IHttpActionResult EditChart(string json)
         {
             var Charts = JObject.Parse(json).ToObject<List<TempChart>>();
+
             return Ok();
         }
     }

@@ -10,7 +10,7 @@ using Microsoft.Owin;
 
 namespace BL
 {
-    public class ApplicationUserManager : UserManager<ApplicationUser>
+    public class ApplicationUserManager : UserManager<ApplicationUser>, IAppUserManager
     {
         private UserRepository userRepository;
         private AlertRepository alertRepository;
