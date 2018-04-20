@@ -76,12 +76,11 @@
   <ItemGroup>
     <Compile Include="AlertManager.cs" />
     <Compile Include="AppRoleManager.cs" />
-    <Compile Include="AppUserManager.cs" />
     <Compile Include="EmailSender.cs" />
     <Compile Include="IAppUserManager.cs" />
     <Compile Include="Mail.cs" />
     <Compile Include="Read.cs" />
-    <Compile Include="UserManager.cs" />
+    <Compile Include="ApplicationUserManager.cs" />
     <Compile Include="ItemManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SocialMediaManager.cs" />

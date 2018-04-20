@@ -63,7 +63,15 @@ namespace BL
             manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(15);
             manager.MaxFailedAccessAttemptsBeforeLockout = 5;
 
-            return manager;
+      var dataProtectionProvider = options.DataProtectionProvider;
+      if (dataProtectionProvider != null)
+      {
+        manager.UserTokenProvider =
+            new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
+      }
+      return manager;
+
+     
 
         }
 
@@ -71,10 +79,46 @@ namespace BL
 
         public ApplicationUser GetUser(string id)
         {
-            return userRepository.GetUser(id);
+            return userRepository.ReadUser(id);
         }
 
-        public void SendMail(Alert alert)
+
+    public List<ApplicationUser> GetUsers()
+    {
+      return userRepository.ReadUsers();
+    }
+
+    public List<ApplicationUser> GetUsersFromRole(string roleName)
+    {
+      return userRepository.ReadUsersFromRole(this.GetRoleId(roleName));
+    }
+
+    public List<ApplicationUser> GetUsersWithoutRole(string roleName)
+    {
+      return userRepository.ReadUsersWithoutRole(this.GetRoleId(roleName));
+    }
+
+    public List<IdentityRole> GetRoles()
+    {
+      return userRepository.ReadRoles();
+    }
+
+    public List<IdentityRole> GetSpecificRole(string roleName)
+    {
+      return userRepository.ReadSpecificRole(roleName);
+    }
+
+    public List<IdentityRole> GetRolesWithout(string partRoleName)
+    {
+      return userRepository.ReadRolesWithout(partRoleName);
+    }
+
+    private string GetRoleId(string roleName)
+    {
+      return userRepository.ReadRoleId(roleName);
+    }
+
+    public void SendMail(Alert alert)
         {
           Mail.sendMail(alert.User.Mail, "Nieuwe melding", alert.Content);
         }

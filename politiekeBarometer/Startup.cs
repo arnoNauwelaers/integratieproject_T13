@@ -19,7 +19,7 @@ namespace politiekeBarometer
     private void CreateRolesAndUsers()
     {
       var roleManager = new AppRoleManager();
-      var UserManager = new AppUserManager();
+      var UserManager = new ApplicationUserManager();
       // create superadmin role
       if (!roleManager.RoleExists("SuperAdmin"))
       {
