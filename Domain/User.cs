@@ -22,7 +22,8 @@ namespace BL.Domain
         public int AantalAanmeldingen { get; set; }
         public int TijdActief { get; set; }
         public virtual ICollection<Chart> Dashboard { get; set; } = new List<Chart>();
-        public virtual Dashboard Dashboard { get; set; }
+        //YDC
+        //public virtual Dashboard Dashboard { get; set; }
 
         /*[Required]
         public ICollection<Deelplatform> Deelplatformen { get; set; }*/
