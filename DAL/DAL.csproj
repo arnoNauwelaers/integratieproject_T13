@@ -80,8 +80,10 @@
     <Compile Include="EF\BarometerDbInitializer.cs" />
     <Compile Include="EF\ChartRepository.cs" />
     <Compile Include="EF\ItemRepository.cs" />
+    <Compile Include="EF\PlatformRepository.cs" />
     <Compile Include="EF\SocialMediaRepository.cs" />
     <Compile Include="EF\UserRepository.cs" />
+    <Compile Include="IPlatformRepostiory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserStoreRepository.cs" />
   </ItemGroup>

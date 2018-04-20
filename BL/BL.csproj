@@ -79,7 +79,16 @@
     <Compile Include="AppRoleManager.cs" />
     <Compile Include="EmailSender.cs" />
     <Compile Include="IAppUserManager.cs" />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    <Compile Include="IPlatformManager.cs" />
+=======
+>>>>>>> 41478372a9cfbc853b2d960c245fba92a5c41e0b
+>>>>>>> 932c8be728c05b434fbb7590a82363cdf62f491c
+>>>>>>> 25e2a6a4a9dbcdf7aa0909ae13fbba9a6c9fb744
     <Compile Include="Mail.cs" />
+    <Compile Include="PlatformManager.cs" />
     <Compile Include="Read.cs" />
     <Compile Include="ApplicationUserManager.cs" />
     <Compile Include="ItemManager.cs" />
