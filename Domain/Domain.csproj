@@ -90,7 +90,7 @@
     <Compile Include="SocialMediaProfile.cs" />
     <Compile Include="SocialMediaSource.cs" />
     <Compile Include="Theme.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Applicationuser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

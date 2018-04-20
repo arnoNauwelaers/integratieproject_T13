@@ -75,6 +75,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlertManager.cs" />
+    <Compile Include="AppRoleManager.cs" />
+    <Compile Include="AppUserManager.cs" />
+    <Compile Include="EmailSender.cs" />
+    <Compile Include="IAppUserManager.cs" />
     <Compile Include="Mail.cs" />
     <Compile Include="Read.cs" />
     <Compile Include="UserManager.cs" />
