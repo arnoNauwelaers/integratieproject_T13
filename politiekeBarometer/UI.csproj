@@ -275,6 +275,10 @@
     <Content Include="Views\Page\Person.cshtml" />
     <Content Include="Views\Page\Organization.cshtml" />
     <Content Include="Views\Page\Theme.cshtml" />
+<<<<<<< HEAD
+=======
+    <Content Include="Views\Platform\Create.cshtml" />
+>>>>>>> 065d079f59523e74b211c7408c5e7f32912eb881
     <Content Include="Views\Page\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
