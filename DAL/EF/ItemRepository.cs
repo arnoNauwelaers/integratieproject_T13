@@ -5,6 +5,7 @@ using System.Linq;
 using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace DAL.EF
 {
@@ -80,8 +81,12 @@ namespace DAL.EF
       return ctx.Themes.ToList().Find(u => u.ItemId == id);
     }
 
-    public Item SearchItem(string Text) {
-      return ctx.Items.ToList().Find(u => u.Name == Text);
+    public IEnumerable<Item> SearchItems(string SearchValue) {
+      return ctx.Items.ToList().Where(item => (
+        item.typeInt == 1 && (((Person)item).FirstName.Contains(SearchValue) || item.Name.Contains(SearchValue))) || (
+        item.typeInt == 2 && (item.Name.Contains(SearchValue))) || (
+        item.typeInt == 3 && (item.Name.Contains(SearchValue)))
+       );
     }
   }
 }

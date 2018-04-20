@@ -9,6 +9,7 @@ namespace BL.Domain
         public virtual List<Person> persons { get; set; } = new List<Person>();
         public Organization()
         {
+          typeInt = 2;
         }
     }
 }

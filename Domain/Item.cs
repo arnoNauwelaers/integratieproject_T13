@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BL.Domain
 {
@@ -12,9 +13,16 @@ namespace BL.Domain
         //public int photo { get; set; }
         //public ICollection<Set> sets { get; set; }
 
+        [NotMapped]
+        public int typeInt { get; set; }
+
         public virtual ICollection<Alert> Alerts { get; set; } = new List<Alert>();
         public Item()
         {
+          typeInt = 0;
+          //person = 1
+          //organisation = 2
+          //theme = 3
         }
     }
 }

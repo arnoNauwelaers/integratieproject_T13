@@ -1,0 +1,30 @@
+﻿@model IEnumerable<BL.Domain.Item>
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Search results</h2>
+@if (Model == null || !Model.Any()) {
+  <p>Geen resultaten gevonden.</p>
+} else {
+  <ul>
+    @foreach (var item in Model) {
+      switch (item.typeInt) {
+        case 1:
+          <li>@Html.ActionLink(((BL.Domain.Person)item).FirstName + " " + item.Name + " (Persoon)", "Person", "Page", new { id = item.ItemId }, null)</li>
+          break;
+        case 2:
+          <li>@Html.ActionLink(item.Name + " (Organisatie)", "Organization", "Page", new { id = item.ItemId }, null)</li>
+          break;
+        case 3:
+          <li>@Html.ActionLink(item.Name + " (Thema)", "Theme", "Page", new { id = item.ItemId }, null)</li>
+          break;
+        default:
+          break;
+      }
+    }
+  </ul>
+}
+

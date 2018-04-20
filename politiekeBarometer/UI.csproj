@@ -277,6 +277,7 @@
     <Content Include="Views\Page\Organization.cshtml" />
     <Content Include="Views\Page\Person.cshtml" />
     <Content Include="Views\Page\Theme.cshtml" />
+    <Content Include="Views\Page\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
