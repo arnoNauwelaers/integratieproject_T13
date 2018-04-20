@@ -1,0 +1,40 @@
+﻿@using BL.Domain;
+@model dynamic
+
+@{
+  ViewBag.Title = "Create";
+  List<ApplicationUser> admins = new List<ApplicationUser>(ViewBag.Keywords);
+}
+
+<h2>Maak nieuw Deelplatform</h2>
+<form action="/Platform/Create" method="post">
+         <input type="text" name="platform" /><br>
+        <div class="form-group form-inline">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-search"></span>
+                </span>
+                <input type="search" id="AdminFilter" class="form-control" placeholder="zoek admins" />
+            </div>
+            <select id="adminselect" name="adminchoice" class="form-control">
+                @foreach (ApplicationUser au in admins)
+                {
+                    <option value="@au.Id">@au.UserName</option>
+                }
+            </select>
+        </div>
+    
+    
+    <input type="submit" value="submit" />
+</form>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+

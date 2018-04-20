@@ -33,6 +33,7 @@ namespace DAL.EF
         public DbSet<SocialMediaSource> SocialMediaSources { get; set; }
         public DbSet<Theme> Themes { get; set; }
         public DbSet<Chart> Charts { get; set; }
+        public DbSet<Platform> Platforms { get; set; }
         //public DbSet<User> Users { get; set; }
 
 
@@ -63,6 +64,8 @@ namespace DAL.EF
             modelBuilder.Entity<SocialMediaProfile>().HasMany(i => i.SocialMediaPosts).WithMany();
             modelBuilder.Entity<SocialMediaSource>().HasMany(i => i.SocialMediaPost).WithMany();
             modelBuilder.Entity<Chart>().HasMany(i => i.Items).WithMany();
+            modelBuilder.Entity<Platform>().HasMany(i => i.Users).WithMany();
+            modelBuilder.Entity<Platform>().HasMany(i => i.Sources).WithMany();
             //modelBuilder.Entity<Theme>().HasMany(i => i.Keywords).WithMany();
             //modelBuilder.Entity<User>().HasMany(i => i.Alerts).WithMany();
 
