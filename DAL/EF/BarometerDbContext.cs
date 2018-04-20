@@ -16,8 +16,7 @@ namespace DAL.EF
     [DbConfigurationType(typeof(BarometerDbConfiguration))]
     public class BarometerDbContext : IdentityDbContext<ApplicationUser> /* 'public' for testing with project 'DAL-Testing'! */
     {
-        public BarometerDbContext()
-          : base("PolitiekeBarometerDB")
+        public BarometerDbContext() : base("PolitiekeBarometerDB")
         {
             //Database.SetInitializer<SupportCenterDbContext>(new SupportCenterDbInitializer()); // moved to 'SupportCenterDbConfiguration'
         }
@@ -78,6 +77,7 @@ namespace DAL.EF
 
         }
 
+        
         public static BarometerDbContext Create()
         {
             return new BarometerDbContext();

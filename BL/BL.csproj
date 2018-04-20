@@ -75,10 +75,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlertManager.cs" />
+<<<<<<< HEAD
+    <Compile Include="ChartManager.cs" />
+=======
     <Compile Include="AppRoleManager.cs" />
     <Compile Include="EmailSender.cs" />
     <Compile Include="IAppUserManager.cs" />
+<<<<<<< HEAD
     <Compile Include="IPlatformManager.cs" />
+=======
+>>>>>>> 41478372a9cfbc853b2d960c245fba92a5c41e0b
+>>>>>>> 932c8be728c05b434fbb7590a82363cdf62f491c
     <Compile Include="Mail.cs" />
     <Compile Include="PlatformManager.cs" />
     <Compile Include="Read.cs" />

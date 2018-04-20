@@ -28,9 +28,9 @@ namespace politiekeBarometer.Controllers
       return View(im.ReadTheme(Id));
     }
 
-    public ActionResult Search(string Text) {
-      int Id = 0;
-      return RedirectToAction("Person", "Page", Id);
+    public ActionResult Search(string SearchValue) {
+      ItemManager im = new ItemManager();
+      return View(im.SearchItems(SearchValue));
     }
   }
 }

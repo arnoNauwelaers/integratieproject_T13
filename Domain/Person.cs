@@ -10,6 +10,7 @@ namespace BL.Domain
         public virtual Organization Organization { get; set; }
         public Person()
         {
+          typeInt = 1;
         }
     }
 }
