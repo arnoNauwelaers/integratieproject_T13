@@ -48,6 +48,7 @@ namespace BL
         public List<Item> CreatePosts()
         {
             List<SocialMediaPost> data = (List<SocialMediaPost>)read.ReadData();
+            List<SocialMediaPost> data2 = (List<SocialMediaPost>)read.ReadData2();
             foreach (var item in data)
             {
                 socialMediaRepository.CreateSocialMediaPost(item);

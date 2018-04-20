@@ -10,7 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using politiekeBarometer.Models;
 using BL.Domain;
-using DAL.EF;
+using BL;
 
 namespace politiekeBarometer.Controllers
 {
@@ -18,7 +18,8 @@ namespace politiekeBarometer.Controllers
     public class AccountController : Controller
     {
         public AccountController()
-            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new BarometerDbContext())))
+            //TODO vraag hoe context naar manager verplaatsen (meegeven mag niet)
+            : this(new ApplicationUserManager())
         {
         }
 
