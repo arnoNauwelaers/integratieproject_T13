@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace BL.Domain
 {
-  public class Zone
-  {
-    public int Id { get; set; }
+    public class Zone
+    {
+        public int Id { get; set; }
 
 
-  }
+    }
 }

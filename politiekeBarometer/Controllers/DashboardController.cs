@@ -7,20 +7,27 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using BL.Domain;
 using DAL.EF;
+using BL;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 
 namespace politiekeBarometer.Controllers
 {
     public class DashboardController : Controller
     {
+        private ApplicationUserManager UserManager;
         //private BarometerDbContext db = BarometerDbContext.Create();
-
+        public DashboardController()
+        {
+            
+        }
         // GET: Dashboard
         [Authorize]
         public ActionResult Index()
         {
-            return View();
+            UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            return View(UserManager.GetUser(User.Identity.GetUserId()));
         }
     }
 }

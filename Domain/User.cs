@@ -21,14 +21,14 @@ namespace BL.Domain
         public bool Facebook { get; set; }
         public int AantalAanmeldingen { get; set; }
         public int TijdActief { get; set; }
-        
+        public virtual ICollection<Chart> Dashboard { get; set; } = new List<Chart>();
+        public virtual Dashboard Dashboard { get; set; }
 
         /*[Required]
         public ICollection<Deelplatform> Deelplatformen { get; set; }*/
         /*[Required]
         public ICollection<Dashboard> Dashboards { get; set; }*/
         public virtual List<Alert> Alerts { get; set; } = new List<Alert>();
-        public virtual Dashboard Dashboard { get; set; }
         public ApplicationUser()
         {
         }

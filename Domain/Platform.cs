@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace BL.Domain
 {
-  public class Platform
-  {
-    public int Id { get; set; }
-    public String Name { get; set; }
-    public virtual ICollection<ApplicationUser> Users {get; set;}
-    public virtual ICollection<SocialMediaSource> Sources { get; set; }
-  }
+    public class Platform
+    {
+        public int Id { get; set; }
+        public String Name { get; set; }
+        public virtual ICollection<ApplicationUser> Users { get; set; }
+        public virtual ICollection<SocialMediaSource> Sources { get; set; }
+    }
 }

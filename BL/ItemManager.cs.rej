@@ -1,9 +1,0 @@
-diff a/BL/ItemManager.cs b/BL/ItemManager.cs	(rejected hunks)
-@@ -22,7 +22,6 @@
-                 List<Item> items = ItemRepository.ReadItems(post);
-                 foreach (var item in items)
-                 {
--                    //alteredItems.Add(item);
-                     if (!alteredItems.ContainsKey(item.ItemId))
-                     {
-                         alteredItems.Add(item.ItemId, item);

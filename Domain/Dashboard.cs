@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace BL.Domain
 {
-  public class Dashboard : Page
-  {
-    public int Id { get; set; }
-    
+    public class Dashboard : Page
+    {
+        public int Id { get; set; }
 
-  }
+
+    }
 }
