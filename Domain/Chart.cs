@@ -18,4 +18,14 @@ namespace BL.Domain
         public double Height { get; set; }
         public double Width { get; set; }
     }
+
+    //voor JSON deserializer
+    public class TempChart
+    {
+        public int Id;
+        public int X;
+        public int Y;
+        public double Height;
+        public double Width;
+    }
 }

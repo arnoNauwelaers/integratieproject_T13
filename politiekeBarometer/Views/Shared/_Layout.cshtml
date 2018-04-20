@@ -283,8 +283,9 @@
                 });
                 setTimeout(synchronizeDB, 5000);
             }
-            synchronizeDB();
-            loadNotifications();
+            //TODO STACKOVERflow fixen
+            //synchronizeDB();
+            //loadNotifications();
             var ul = document.getElementById("notifications");
             function loadNotifications() {
                 $.getJSON("/api/Basic/GetNotifications", function (data) {
