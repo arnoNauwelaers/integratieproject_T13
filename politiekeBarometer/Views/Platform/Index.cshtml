@@ -1,0 +1,38 @@
+﻿@model System.Collections.Generic.List<BL.Domain.Platform>
+
+@{
+    ViewBag.Title = "DeelPlatforms";
+}
+
+<h2>Deelplatforms</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Platform
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var platform in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => platform.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = platform.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = platform.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = platform.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+

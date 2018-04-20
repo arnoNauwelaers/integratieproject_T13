@@ -13,5 +13,6 @@ namespace BL
     List<Platform> GetPlatforms();
     void ChangePlatform(Platform p);
     void RemovePlatform(int i);
+    Platform GetPlatform(int id);
   }
 }

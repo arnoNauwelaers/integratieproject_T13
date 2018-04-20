@@ -280,6 +280,8 @@
     <Content Include="Views\Page\Theme.cshtml" />
     <Content Include="Views\Platform\Create.cshtml" />
     <Content Include="Views\Page\Search.cshtml" />
+    <Content Include="Views\Platform\Delete.cshtml" />
+    <Content Include="Views\Platform\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -13,5 +13,6 @@ namespace DAL
     Platform CreatePlatform(Platform p);
     void UpdatePlatform(Platform p);
     void DeletePlatform(int id);
+    Platform ReadPlatform(int id);
   }
 }

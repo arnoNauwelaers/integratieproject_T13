@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BL;
+using BL.Domain;
 
 namespace politiekeBarometer.Controllers
 {
@@ -16,8 +17,9 @@ namespace politiekeBarometer.Controllers
         // GET: Platform
         public ActionResult Index()
         {
-
-            return View();
+      List<Platform> platforms = platformManager.GetPlatforms().ToList();
+      return View(platforms);
+      
         }
       [HttpGet]
       public ActionResult Create()
@@ -25,6 +27,23 @@ namespace politiekeBarometer.Controllers
       ViewBag.Admins = userManager.GetSpecificRole("Admin");
       return View();
       }
-   
+
+     public ActionResult Delete(int id)
+        {
+      Platform p = platformManager.GetPlatform(id);
+            if (p == null)
+            {
+                return HttpNotFound();
+            }
+            return View(id);
+        }
+
+    [HttpPost, ActionName("Delete")]
+    public ActionResult DeleteConfirmed(int id)
+    {
+      platformManager.RemovePlatform(id);
+      return RedirectToAction("Index");
     }
+
+  }
 }

@@ -26,6 +26,11 @@ namespace BL
       repo.UpdatePlatform(p);
     }
 
+    public Platform GetPlatform(int id)
+    {
+      return repo.ReadPlatforms(id);
+    }
+
     public List<Platform> GetPlatforms()
     {
       return repo.ReadPlatforms();
