@@ -27,9 +27,10 @@ namespace BL
             var tweets = JObject.Parse(text).SelectToken("records").ToObject<List<SocialMediaPost>>();
             return (List<SocialMediaPost>) tweets;
         }
-        static async Task RunAsync()
+
+        public IEnumerable<SocialMediaPost> ReadData2()
         {
-            // Update port # in the following line.
+            var tweets = new List<SocialMediaPost>() ;
             string url = "http://kdg.textgain.com/query/";
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Add("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
@@ -37,13 +38,14 @@ namespace BL
             client.DefaultRequestHeaders.Add("Accept", "application/json; charset=utf-8");
             try
             {
-                var text = await client.GetAsync(url);
-                var tweets = JObject.Parse(text.Content.ToString()).SelectToken("records").ToObject<List<SocialMediaPost>>();
+                var text = client.GetAsync(url);
+                tweets = JObject.Parse(text.ToString()).SelectToken("records").ToObject<List<SocialMediaPost>>();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
+            return tweets;
         }
     }
 }
