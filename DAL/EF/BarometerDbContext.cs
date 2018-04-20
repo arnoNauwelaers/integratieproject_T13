@@ -33,11 +33,6 @@ namespace DAL.EF
         public DbSet<SocialMediaSource> SocialMediaSources { get; set; }
         public DbSet<Theme> Themes { get; set; }
         public DbSet<Chart> Charts { get; set; }
-        //Ydc
-        public DbSet<Platform> Platforms { get; set; }
-        public DbSet<Page> Pages { get; set; }
-        public DbSet<Dashboard> Dashboards { get; set; }
-        public DbSet<Zone> Zones { get; set; }
         //public DbSet<User> Users { get; set; }
 
 

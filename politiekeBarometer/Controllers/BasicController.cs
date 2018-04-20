@@ -8,13 +8,14 @@ using Microsoft.Owin.Security;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-
+//TODO meer code van controller naar managers verplaatsen om inhoud minimaal te houden?
 namespace politiekeBarometer.Controllers
 {
     public class BasicController : ApiController
     {
         private SocialMediaManager SocialMediaManager;
         private ApplicationUserManager UserManager;
+        private AlertManager alertManager;
 
         protected BasicController()
         {
@@ -23,25 +24,12 @@ namespace politiekeBarometer.Controllers
             UserManager.setSocialMediaManager(SocialMediaManager);
         }
 
-        public void SynchronizeDatabase()
-        {
-            List<Item> alteredItems = SocialMediaManager.CreatePosts();
-            List<Alert> alerts = new List<Alert>();
-            foreach (var item in alteredItems)
-            {
-                alerts = UserManager.GetAlerts(item);
-                foreach (var alert in alerts)
-                {
-                    UserManager.InspectAlert(alert);
-                }
-            }
-
-        }
+        
 
         public IHttpActionResult Get()
         {
             List<Notification> notifications = new List<Notification>();
-            SynchronizeDatabase();
+            SocialMediaManager.SynchronizeDatabase();
             if (User.Identity.GetUserId() != null)
             {
                 ApplicationUser user = UserManager.GetUser(User.Identity.GetUserId());
@@ -55,7 +43,7 @@ namespace politiekeBarometer.Controllers
                             {
                                 notifications.Add(notification);
                                 notification.Read = true;
-                                UserManager.UpdateNotification(notification);
+                                alertManager.UpdateNotification(notification);
                             }
                         }
                     }
@@ -75,7 +63,7 @@ namespace politiekeBarometer.Controllers
         public IHttpActionResult GetNotifications()
         {
             List<Notification> notifications = new List<Notification>();
-            SynchronizeDatabase();
+            SocialMediaManager.SynchronizeDatabase();
             if (User.Identity.GetUserId() != null)
             {
                 ApplicationUser user = UserManager.GetUser(User.Identity.GetUserId());

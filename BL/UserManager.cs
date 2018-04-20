@@ -67,45 +67,11 @@ namespace BL
 
         }
 
-        public List<Alert> GetAlerts(Item item)
-        {
-           return alertRepository.GetAlerts(item);
-        }
+        
 
         public ApplicationUser GetUser(string id)
         {
             return userRepository.GetUser(id);
-        }
-
-        public void InspectAlert(Alert alert)
-        {
-            bool condionAns = socialMediaManager.VerifyCondition(alert);
-            int notificationNmr = 1;
-            if (condionAns == true)
-            {
-                AlertType type = alert.Type;
-                if (type != AlertType.mail)
-                {
-                    //TODO controleer of notification al in database is opgenomen
-                    if (!alertRepository.NotificationExists(alert.AlertId)) { 
-                        Notification notification = new Notification() { NotificationId = notificationNmr, DateTime = DateTime.Now, Alert = alert };
-                        alertRepository.CreateNotification(notification);
-                        alert.Notifications.Add(notification);
-                        //TODO klopt niet, moet een user wel als attribuut in Alert opgenomen worden?
-                        alertRepository.UpdateAlert(alert);
-                        notificationNmr++;
-                    }
-                }
-                if (type != AlertType.notification)
-                {
-                    this.SendMail(alert);
-                }
-            }
-        }
-
-        public void UpdateNotification(Notification notification)
-        {
-            alertRepository.UpdateNotification(notification);
         }
 
         public void SendMail(Alert alert)

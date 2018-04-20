@@ -18,6 +18,7 @@ namespace BL
         private const int FREQUENTIE = 1;
 
         private SocialMediaRepository socialMediaRepository;
+        private AlertManager alertManager;
         private ItemManager itemManager;
         private Read read;
 
@@ -25,7 +26,23 @@ namespace BL
         {
             socialMediaRepository = new SocialMediaRepository();
             itemManager = new ItemManager();
+            alertManager = new AlertManager();
             read = new Read();
+        }
+
+        public void SynchronizeDatabase()
+        {
+            List<Item> alteredItems = CreatePosts();
+            List<Alert> alerts = new List<Alert>();
+            foreach (var item in alteredItems)
+            {
+                alerts = alertManager.GetAlerts(item);
+                foreach (var alert in alerts)
+                {
+                    alertManager.InspectAlert(alert);
+                }
+            }
+
         }
 
         public List<Item> CreatePosts()

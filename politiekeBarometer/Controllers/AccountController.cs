@@ -18,7 +18,6 @@ namespace politiekeBarometer.Controllers
     public class AccountController : Controller
     {
         public AccountController()
-            //TODO vraag: hoe dbcontext aanspreken
             : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new BarometerDbContext())))
         {
         }

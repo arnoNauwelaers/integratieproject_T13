@@ -244,7 +244,7 @@
             <!-- Breadcrumbs-->
             <div class="row">
                 <div class="col-12">
-                   @RenderBody()
+                    @RenderBody()
                 </div>
             </div>
         </div>
@@ -269,8 +269,10 @@
         <script src="~/Scripts/jquery.easing.min.js"></script>
         <!-- Custom scripts for all pages-->
         <script src="~/Scripts/sb-admin.min.js"></script>
-@if (Request.IsAuthenticated)
-{
+        <script src="~/Scripts/Chart.bundle.min.js"></script>
+        @if (Request.IsAuthenticated)
+    {
+            //TODO Aantal requests limiteren?
         <script>
             function synchronizeDB() {
                 $.getJSON("/api/Basic", function (data) {
