@@ -43,7 +43,7 @@ namespace DAL.EF
 
     public void UpdatePlatform(Platform p)
     {
-      ctx.Entry(p).State = EntityState.Modified
+            ctx.Entry(p).State = EntityState.Modified;
     }
   }
 }

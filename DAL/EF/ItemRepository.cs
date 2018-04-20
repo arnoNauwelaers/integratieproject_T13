@@ -82,10 +82,11 @@ namespace DAL.EF
     }
 
     public IEnumerable<Item> SearchItems(string SearchValue) {
+      string s = SearchValue.ToUpper();
       return ctx.Items.ToList().Where(item => (
-        item.typeInt == 1 && (((Person)item).FirstName.Contains(SearchValue) || item.Name.Contains(SearchValue))) || (
-        item.typeInt == 2 && (item.Name.Contains(SearchValue))) || (
-        item.typeInt == 3 && (item.Name.Contains(SearchValue)))
+        item.typeInt == 1 && (((Person)item).FirstName.ToUpper().Contains(s) || item.Name.ToUpper().Contains(s))) || (
+        item.typeInt == 2 && (item.Name.ToUpper().Contains(s))) || (
+        item.typeInt == 3 && (item.Name.ToUpper().Contains(s)))
        );
     }
   }

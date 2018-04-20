@@ -7,6 +7,7 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace BL
 {
@@ -40,10 +41,14 @@ namespace BL
             {
                 var text = client.GetAsync(url);
                 tweets = JObject.Parse(text.ToString()).SelectToken("records").ToObject<List<SocialMediaPost>>();
+                foreach (var item in tweets)
+                {
+                    Debug.WriteLine(item.PostId + " blabla");
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Debug.WriteLine("blablabla");
             }
             return tweets;
         }
