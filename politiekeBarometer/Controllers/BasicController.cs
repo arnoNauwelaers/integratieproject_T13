@@ -8,6 +8,7 @@ using Microsoft.Owin.Security;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using Newtonsoft.Json.Linq;
 //TODO meer code van controller naar managers verplaatsen om inhoud minimaal te houden?
 namespace politiekeBarometer.Controllers
 {
@@ -82,6 +83,15 @@ namespace politiekeBarometer.Controllers
 
                 }
                 return Ok(notifications);
+        }
+
+        [Route("api/Basic/AddChart")]
+        [HttpPost]
+        [Authorize]
+        public IHttpActionResult EditChart(string json)
+        {
+            var Charts = JObject.Parse(json).ToObject<List<TempChart>>();
+            return Ok();
         }
     }
 }

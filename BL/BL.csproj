@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlertManager.cs" />
+    <Compile Include="ChartManager.cs" />
     <Compile Include="Mail.cs" />
     <Compile Include="Read.cs" />
     <Compile Include="UserManager.cs" />
