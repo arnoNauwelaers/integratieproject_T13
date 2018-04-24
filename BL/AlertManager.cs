@@ -10,18 +10,48 @@ namespace BL
 {
     public class AlertManager
     {
-        private SocialMediaManager socialMediaManager;
+        private const int FREQUENTIE = 1;
+
         private AlertRepository alertRepository;
+        private SocialMediaRepository socialMediaRepository;
+
 
         public AlertManager()
         {
-            this.socialMediaManager = new SocialMediaManager();
+            socialMediaRepository = new SocialMediaRepository();
             this.alertRepository = new AlertRepository();
+        }
+
+        public Boolean VerifyCondition(Alert alert)
+        {
+            int tweetAmount = socialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
+            if (alert.CompareItem == null)
+            {
+                int oldTweetAmount = socialMediaRepository.ReadItemParameter(alert, DateTime.Now.AddHours(-1), DateTime.Now.AddHours(-(FREQUENTIE * 2)));
+
+                if (alert.Condition == ">")
+                {
+                    //als een politicus 2 maal zoveel tweets stuurt in het laatste uur als in het vorige uur wordt er een notification gestuurd
+                    return tweetAmount >= (oldTweetAmount * 2);
+                }
+                return false;
+            }
+            else
+            {
+                int tweetAmount2 = socialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
+                if (alert.Condition == ">")
+                {
+                    //als er over een politus meer dan 2 maal zveel getweet is in het afgelopen uur als een ander politici word er een notification gestuurd
+                    return tweetAmount >= tweetAmount2 * 2;
+                }
+
+            }
+            return false;
         }
 
         public void InspectAlert(Alert alert)
         {
-            bool condionAns = socialMediaManager.VerifyCondition(alert);
+            bool condionAns = VerifyCondition(alert);
             int notificationNmr = 1;
             if (condionAns == true)
             {

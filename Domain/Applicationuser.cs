@@ -26,7 +26,7 @@ namespace BL.Domain
     public ICollection<Deelplatform> Deelplatformen { get; set; }*/
     /*[Required]
     public ICollection<Dashboard> Dashboards { get; set; }*/
-    public virtual List<Alert> Alerts { get; set; } = new List<Alert>();
+    public virtual ICollection<Alert> Alerts { get; set; } = new List<Alert>();
     public ApplicationUser()
     {
       userCounter += 1;

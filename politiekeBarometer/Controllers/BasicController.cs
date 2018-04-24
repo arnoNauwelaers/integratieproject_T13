@@ -16,11 +16,12 @@ namespace politiekeBarometer.Controllers
     {
         private SocialMediaManager SocialMediaManager;
         private ApplicationUserManager UserManager;
-        private AlertManager alertManager;
+        private AlertManager AlertManager;
 
         protected BasicController()
         {
             SocialMediaManager = new SocialMediaManager();
+            AlertManager = new AlertManager();
             UserManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             UserManager.setSocialMediaManager(SocialMediaManager);
         }
@@ -44,7 +45,7 @@ namespace politiekeBarometer.Controllers
                             {
                                 notifications.Add(notification);
                                 notification.Read = true;
-                                alertManager.UpdateNotification(notification);
+                                AlertManager.UpdateNotification(notification);
                             }
                         }
                     }
@@ -94,5 +95,23 @@ namespace politiekeBarometer.Controllers
 
             return Ok();
         }
-    }
+
+        [Route("api/Basic/Login")]
+        [HttpPost]
+        public IHttpActionResult Login() {
+          return Ok();
+        }
+
+        [Route("api/Basic/LoginFacebook")]
+        [HttpPost]
+        public IHttpActionResult LoginFacebook() {
+          return Ok();
+        }
+
+        [Route("api/Basic/LoginGoogle")]
+        [HttpPost]
+        public IHttpActionResult LoginGoogle() {
+          return Ok();
+        }
+  }
 }

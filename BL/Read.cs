@@ -13,6 +13,7 @@ namespace BL
 {
     public class Read
     {
+        private const string URL = "http://kdg.textgain.com/query";
         static HttpClient client = new HttpClient();
         public IEnumerable<SocialMediaPost> ReadData()
         {
@@ -32,25 +33,28 @@ namespace BL
         public IEnumerable<SocialMediaPost> ReadData2()
         {
             var tweets = new List<SocialMediaPost>() ;
-            string url = "http://kdg.textgain.com/query/";
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Add("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
-            client.DefaultRequestHeaders.Add("Content-Type", "application/json; charset=utf-8");
-            client.DefaultRequestHeaders.Add("Accept", "application/json; charset=utf-8");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(URL);
+            const string key = "X-API-Key";
+            httpWebRequest.Headers.Add("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
+            httpWebRequest.ContentType = "application/json; charset=utf-8";
+            httpWebRequest.Accept = "application/json; charset=utf-8";
+            httpWebRequest.Method = "POST";
             try
             {
-                var text = client.GetAsync(url);
-                tweets = JObject.Parse(text.ToString()).SelectToken("records").ToObject<List<SocialMediaPost>>();
-                foreach (var item in tweets)
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException("Something went wrong while reading the server response.")))
                 {
-                    Debug.WriteLine(item.PostId + " blabla");
+                    tweets = JObject.Parse(streamReader.ReadToEnd()).SelectToken("records").ToObject<List<SocialMediaPost>>();
+
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debug.WriteLine("blablabla");
+                Debug.WriteLine("Er is een error opgetreden in de API reader: " + ex.ToString());
             }
             return tweets;
+            
         }
     }
 }
