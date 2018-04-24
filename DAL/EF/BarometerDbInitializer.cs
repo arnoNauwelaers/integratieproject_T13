@@ -69,16 +69,16 @@ namespace DAL.EF
 
             Organization organization1 = new Organization() { ItemId = 1, Name = "NVA" };
 
-            Person person1 = new Person() { ItemId = 2, Name = "Annouri", FirstName = "Imade", Organization = organization1 };
+            Person person1 = new Person() { ItemId = 2, Name = "Imade Annouri", Organization = organization1 };
             person1.socialMediaProfiles.Add(socialMediaProfile1);
             socialMediaProfile1.Item = person1;
-            Person person2 = new Person() { ItemId = 3, Name = "Bastiaens", FirstName = "Caroline", Organization = organization1 };
+            Person person2 = new Person() { ItemId = 3, Name = "Caroline Bastiaens", Organization = organization1 };
             person2.socialMediaProfiles.Add(socialMediaProfile2);
             socialMediaProfile2.Item = person2;
-            Person person3 = new Person() { ItemId = 4, Name = "Bertels", FirstName = "Jan", Organization = organization1 };
+            Person person3 = new Person() { ItemId = 4, Name = "Jan Bertels", Organization = organization1 };
             person3.socialMediaProfiles.Add(socialMediaProfile3);
             socialMediaProfile3.Item = person3;
-            Person person4 = new Person() { ItemId = 5, Name = "De Ridder", FirstName = "Annick", Organization = organization1 };
+            Person person4 = new Person() { ItemId = 5, Name = "De Ridder", Organization = organization1 };
             person4.socialMediaProfiles.Add(socialMediaProfile4);
             socialMediaProfile4.Item = person4;
 

@@ -98,8 +98,16 @@ namespace politiekeBarometer.Controllers
 
         [Route("api/Basic/Login")]
         [HttpPost]
-        public IHttpActionResult Login() {
-          return Ok();
+        public IHttpActionResult Login(string username, string password, string email = "") {
+            var user = UserManager.FindAsync(username, password);
+            if (user != null)
+            {
+                //UserManager.Sig(user, true);
+            }
+            else
+            {
+            }
+            return Ok();
         }
 
         [Route("api/Basic/LoginFacebook")]

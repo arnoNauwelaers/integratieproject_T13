@@ -41,6 +41,11 @@ namespace DAL.EF
             ctx.SocialMediaPosts.Remove(socialMediaPost);
             ctx.SaveChanges();
         }
+        public SocialMediaPost GetLastQueryDate()
+        {
+            return ctx.SocialMediaPosts.ToList().LastOrDefault<SocialMediaPost>();
+
+        }
 
         public List<SocialMediaProfile> GetProfile(SocialMediaPost post)
         {
@@ -48,7 +53,7 @@ namespace DAL.EF
 
             foreach (var profile in ctx.SocialMediaProfiles.ToList<SocialMediaProfile>())
             {
-                if (profile.Item.Name == post.Politician[1])
+                if (profile.Item.Name == post.Person[1])
                 {
                     tempprofiles.Add(profile);
                 }
