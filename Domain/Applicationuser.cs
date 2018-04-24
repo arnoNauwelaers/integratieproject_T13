@@ -20,6 +20,7 @@ namespace BL.Domain
     public int AantalAanmeldingen { get; set; }
     public int TijdActief { get; set; }
     public virtual ICollection<Chart> Dashboard { get; set; } = new List<Chart>();
+    private static int userCounter { get; set; } = 100;
 
     /*[Required]
     public ICollection<Deelplatform> Deelplatformen { get; set; }*/
@@ -28,6 +29,7 @@ namespace BL.Domain
     public virtual List<Alert> Alerts { get; set; } = new List<Alert>();
     public ApplicationUser()
     {
+      userCounter += 1;
     }
 
     public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

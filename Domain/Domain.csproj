@@ -87,7 +87,6 @@
     <Compile Include="Page.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Platform.cs" />
-    <Compile Include="Role.cs" />
     <Compile Include="SocialMediaPost.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

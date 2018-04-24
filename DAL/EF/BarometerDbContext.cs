@@ -38,21 +38,29 @@ namespace DAL.EF
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //base.OnModelCreating(modelBuilder); // does nothing! (empty body)
+            base.OnModelCreating(modelBuilder); // needed
+      // identity
+      modelBuilder.Entity<ApplicationUser>().ToTable("Users");
+      modelBuilder.Entity<IdentityRole>().ToTable("Roles");
+      modelBuilder.Entity<IdentityUserRole>().ToTable("UserRoles");
+      modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogins");
+      modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");
 
-            // Remove pluralizing tablenames
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+      
+
+      // Remove pluralizing tablenames
+      modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             // Remove cascading delete for all required-relationships
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
 
-            // 'Ticket.TicketNumber' as unique identifier
+            
             //modelBuilder.Entity<ApplicationUser>().HasKey(u => u.Id);
             modelBuilder.Entity<Notification>().HasKey(u => u.NotificationId);
 
-            modelBuilder.Entity<IdentityUserLogin>().HasKey(u => u.UserId);
-            modelBuilder.Entity<IdentityUserRole>().HasKey(u => u.RoleId);
+           // modelBuilder.Entity<IdentityUserLogin>().HasKey(u => u.UserId);
+            //modelBuilder.Entity<IdentityUserRole>().HasKey(u => new (u.RoleId, uint.))
 
             modelBuilder.Entity<Alert>().HasMany(i => i.Notifications).WithMany();
             modelBuilder.Entity<Item>().HasMany(i => i.Alerts).WithMany();
@@ -68,12 +76,7 @@ namespace DAL.EF
             //modelBuilder.Entity<Theme>().HasMany(i => i.Keywords).WithMany();
             //modelBuilder.Entity<User>().HasMany(i => i.Alerts).WithMany();
 
-            //IDENTITY TABLES
-            modelBuilder.Entity<IdentityRole>().ToTable("Role");
-            modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaim");
-            modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogin");
-            modelBuilder.Entity<IdentityUserRole>().ToTable("UserRole");
-            modelBuilder.Entity<ApplicationUser>().ToTable("User");
+            
 
         }
 

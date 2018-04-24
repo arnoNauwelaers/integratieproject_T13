@@ -16,6 +16,7 @@ namespace BL
         private UserRepository userRepository;
         private AlertRepository alertRepository;
         private SocialMediaManager socialMediaManager;
+        
 
         //public ApplicationUserManager(SocialMediaManager socialMediaManager)
         //{
@@ -28,6 +29,8 @@ namespace BL
         {
             this.alertRepository = new AlertRepository();
             userRepository = new UserRepository();
+            
+            
         }
 
         public void setSocialMediaManager(SocialMediaManager socialMediaManager)

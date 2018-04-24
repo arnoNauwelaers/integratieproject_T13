@@ -21,14 +21,37 @@ namespace politiekeBarometer.Controllers
       return View(platforms);
       
         }
-      [HttpGet]
-      public ActionResult Create()
-      {
-      ViewBag.Admins = userManager.GetSpecificRole("Admin");
+    // GET: Platform/Create
+    public ActionResult Create()
+    {
+      ViewBag.Admins = userManager.GetUsersFromRole("Admin");
+      
       return View();
-      }
+    }
 
-     public ActionResult Delete(int id)
+    // POST: Platform/Create
+    [HttpPost]
+    public ActionResult Create(FormCollection collection)
+    {
+      ViewBag.Admins = userManager.GetUsersFromRole("Admin");
+      
+      try
+      {
+        Platform p = new Platform();
+        p.Admins = new List<ApplicationUser> { userManager.GetUser(Convert.ToString(collection["admin"])) };
+
+        p.Name = Convert.ToString(collection["name"]);
+        platformManager.AddPlatform(p);
+        
+        return RedirectToAction("Index");
+      }
+      catch(Exception e)
+      {
+        return View("Error: " + e);
+      }
+    }
+
+    public ActionResult Delete(int id)
         {
       Platform p = platformManager.GetPlatform(id);
             if (p == null)
