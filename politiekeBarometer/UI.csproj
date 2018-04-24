@@ -197,6 +197,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PageController.cs" />
+    <Compile Include="Controllers\PlatformController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -275,6 +276,7 @@
     <Content Include="Views\Page\Person.cshtml" />
     <Content Include="Views\Page\Organization.cshtml" />
     <Content Include="Views\Page\Theme.cshtml" />
+    <Content Include="Views\Platform\Create.cshtml" />
     <Content Include="Views\Page\Search.cshtml" />
     <Content Include="Views\Platform\Delete.cshtml" />
     <Content Include="Views\Platform\Index.cshtml" />
