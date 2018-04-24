@@ -49,5 +49,10 @@ namespace BL
     {
       repo.DeletePlatform(i);
     }
+
+    public void RemovePlatform(Platform p)
+    {
+      repo.DeletePlatform(p);
+    }
   }
 }

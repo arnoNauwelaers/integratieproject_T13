@@ -50,22 +50,33 @@ namespace politiekeBarometer.Controllers
         return View("Error: " + e);
       }
     }
-
+    //GET: Platform/Delete
     public ActionResult Delete(int id)
         {
       Platform p = platformManager.GetPlatform(id);
-            if (p == null)
+            if (p.Equals(null))
             {
                 return HttpNotFound();
             }
-            return View(id);
+            return View(p);
         }
-
+    // POST: Platform/Delete
     [HttpPost, ActionName("Delete")]
     public ActionResult DeleteConfirmed(int id)
     {
-      platformManager.RemovePlatform(id);
-      return RedirectToAction("Index");
+
+      try
+      {
+        Platform p = platformManager.GetPlatform(id);
+        platformManager.RemovePlatform(p);
+        return RedirectToAction("Index");
+
+      }
+      catch(Exception e)
+      {
+        Console.WriteLine(e.InnerException);
+        return RedirectToAction("Index");
+      }
     }
 
     public ActionResult Details(int id)
@@ -74,6 +85,9 @@ namespace politiekeBarometer.Controllers
       ViewBag.Admins = p.Admins;
       return View(p);
     }
+
+
+ 
 
     [HttpPost]
     public ActionResult Edit(int id, FormCollection collection)
