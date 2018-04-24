@@ -13,9 +13,10 @@ namespace BL
 {
     public class ApplicationUserManager : UserManager<ApplicationUser>, IAppUserManager
     {
-        private UserRepository userRepository;
+    private UserRepository userRepository;
         private AlertRepository alertRepository;
         private SocialMediaManager socialMediaManager;
+        
 
         //public ApplicationUserManager(SocialMediaManager socialMediaManager)
         //{
@@ -26,8 +27,10 @@ namespace BL
 
         public ApplicationUserManager() : base(new UserStoreRepository())
         {
-            this.alertRepository = new AlertRepository();
-            userRepository = new UserRepository();
+            this.alertRepository = RepositoryFactory.CreateALertRepository();
+              userRepository = RepositoryFactory.CreateUserRepository();
+            
+            
         }
 
         public void setSocialMediaManager(SocialMediaManager socialMediaManager)
@@ -35,34 +38,34 @@ namespace BL
             this.socialMediaManager = socialMediaManager;
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
-        {
+    public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
+    {
 
-            var manager = new ApplicationUserManager();
+      var manager = new ApplicationUserManager();
 
-            //USERNAME VALIDATION
-            manager.UserValidator = new UserValidator<ApplicationUser>(manager)
-            {
-                AllowOnlyAlphanumericUserNames = false,
-                RequireUniqueEmail = true
-            };
-
-
-            //PASSWORD VALIDATION
-            manager.PasswordValidator = new PasswordValidator
-            {
-                RequireDigit = false,
-                RequiredLength = 6,
-                RequireLowercase = false,
-                RequireUppercase = false,
-                RequireNonLetterOrDigit = false
-            };
+      //USERNAME VALIDATION
+      manager.UserValidator = new UserValidator<ApplicationUser>(manager)
+      {
+        AllowOnlyAlphanumericUserNames = false,
+        RequireUniqueEmail = true
+      };
 
 
-            //CONFIGURE LOCKOUT
-            manager.UserLockoutEnabledByDefault = true;
-            manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(15);
-            manager.MaxFailedAccessAttemptsBeforeLockout = 5;
+      //PASSWORD VALIDATION
+      manager.PasswordValidator = new PasswordValidator
+      {
+        RequireDigit = false,
+        RequiredLength = 6,
+        RequireLowercase = false,
+        RequireUppercase = false,
+        RequireNonLetterOrDigit = false
+      };
+
+
+      //CONFIGURE LOCKOUT
+      manager.UserLockoutEnabledByDefault = true;
+      manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(15);
+      manager.MaxFailedAccessAttemptsBeforeLockout = 5;
 
       var dataProtectionProvider = options.DataProtectionProvider;
       if (dataProtectionProvider != null)
@@ -72,13 +75,13 @@ namespace BL
       }
       return manager;
 
-     
 
-        }
 
-        
+    }
 
-        public ApplicationUser GetUser(string id)
+
+
+    public ApplicationUser GetUser(string id)
         {
             return userRepository.ReadUser(id);
         }

@@ -87,6 +87,7 @@
     <Compile Include="ApplicationUserManager.cs" />
     <Compile Include="ItemManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryFactory.cs" />
     <Compile Include="SocialMediaManager.cs" />
   </ItemGroup>
   <ItemGroup>

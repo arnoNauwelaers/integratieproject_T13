@@ -14,7 +14,7 @@ namespace BL
 
         public ChartManager()
         {
-            chartRepository = new ChartRepository();
+            chartRepository = RepositoryFactory.CreateChartRepository();
         }
 
         public void UpdateChart(Chart chart)

@@ -13,10 +13,9 @@ namespace DAL.EF
     {
         private BarometerDbContext ctx;
 
-        public UserRepository()
+        public UserRepository(BarometerDbContext ctx)
         {
-            ctx = BarometerDbContext.Create();
-            ctx.Database.Initialize(false);
+            this.ctx = ctx;
         }
 
         public List<ApplicationUser> ReadUsers()
@@ -78,7 +77,7 @@ namespace DAL.EF
 
     public List<IdentityRole> ReadSpecificRole(string roleName)
     {
-      return ctx.Roles.Where(r => r.Name.Equals(roleName)).ToList();
+      return ctx.Roles.Where(r => r.Name.ToUpper().Equals(roleName.ToUpper())).ToList();
     }
 
     public List<IdentityRole> ReadRolesWithout(string partRoleName)
@@ -88,7 +87,7 @@ namespace DAL.EF
 
     public string ReadRoleId(string roleName)
     {
-      IdentityRole role = ctx.Roles.Where(r => r.Name.Equals(roleName)).First();
+      IdentityRole role = ctx.Roles.Where(r => r.Name.ToUpper().Equals(roleName.ToUpper())).First();
       return role.Id;
     }
   }

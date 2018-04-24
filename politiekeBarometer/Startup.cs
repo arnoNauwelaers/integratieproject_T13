@@ -14,6 +14,7 @@ namespace politiekeBarometer
     public void Configuration(IAppBuilder app)
     {
       ConfigureAuth(app);
+      RepositoryFactory.CreateContext();
       CreateRolesAndUsers();
     }
 

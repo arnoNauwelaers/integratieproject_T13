@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Owin;
 using BL;
 using BL.Domain;
 using politiekeBarometer.Models;
@@ -38,10 +40,11 @@ namespace politiekeBarometer.Controllers
     public async Task<ActionResult> Create(RegisterViewModel model)
     {
 
-      ViewBag.Admins = userManager.GetUsersFromRole("Admin");
+      
 
       ApplicationUser user = new ApplicationUser
       {
+
         UserName = model.UserName,
         Email = model.Email,
 
@@ -49,15 +52,16 @@ namespace politiekeBarometer.Controllers
       var result = await userManager.CreateAsync(user, model.Password);
       if (result.Succeeded)
       {
-        await userManager.AddToRoleAsync(user.Id, "Admin");
-
-        EmailSender.Instance.SendEmail(model.UserName, model.Email, model.Password);
+        var result1 = await userManager.AddToRoleAsync(user.Id, "Admin");
+        if (result1.Succeeded)
+        {
+          EmailSender.Instance.SendEmail(model.UserName, model.Email, model.Password);
+        }
         return RedirectToAction("Index");
       }
       return View(model);
     }
 
-    // GET: Admin/Delete
     public ActionResult Delete(string id)
     {
       ApplicationUser user = userManager.GetUser(id);

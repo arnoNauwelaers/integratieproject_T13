@@ -14,10 +14,9 @@ namespace DAL.EF
     {
         private BarometerDbContext ctx;
 
-        public AlertRepository()
+        public AlertRepository(BarometerDbContext ctx)
         {
-            ctx = BarometerDbContext.Create();
-            ctx.Database.Initialize(false);
+      this.ctx = ctx;
         }
 
         public List<Alert> ReadAlerts()
