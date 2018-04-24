@@ -16,11 +16,12 @@ namespace politiekeBarometer.Controllers
     {
         private SocialMediaManager SocialMediaManager;
         private ApplicationUserManager UserManager;
-        private AlertManager alertManager;
+        private AlertManager AlertManager;
 
         protected BasicController()
         {
             SocialMediaManager = new SocialMediaManager();
+            AlertManager = new AlertManager();
             UserManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             UserManager.setSocialMediaManager(SocialMediaManager);
         }
@@ -44,7 +45,7 @@ namespace politiekeBarometer.Controllers
                             {
                                 notifications.Add(notification);
                                 notification.Read = true;
-                                alertManager.UpdateNotification(notification);
+                                AlertManager.UpdateNotification(notification);
                             }
                         }
                     }

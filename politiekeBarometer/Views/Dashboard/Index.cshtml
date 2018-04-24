@@ -143,7 +143,7 @@
             target.setAttribute('data-y', y);
             target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height);
         });
-
+    $(".grafiek").removeClass("resize-drag");
     $("#editButton").click(function () {
         if ($("#editButton").hasClass("btn-success")) {
             $(".grafiek").removeClass("resize-drag");

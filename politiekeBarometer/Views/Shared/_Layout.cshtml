@@ -288,6 +288,7 @@
             //loadNotifications();
             var ul = document.getElementById("notifications");
             function loadNotifications() {
+                console.log("loadNotifications");
                 $.getJSON("/api/Basic/GetNotifications", function (data) {
                     ul.innerHTML = "";
                     var items = [];
