@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Web.Script.Serialization;
 
 namespace BL
 {
@@ -17,7 +18,7 @@ namespace BL
         static HttpClient client = new HttpClient();
         public IEnumerable<SocialMediaPost> ReadData()
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.bitzfactory.com/json.php");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.bitzfactory.com/textgain.json");
             request.Method = WebRequestMethods.Http.Get;
             request.Accept = "application/json";
             string text;
@@ -26,26 +27,36 @@ namespace BL
             {
                 text = sr.ReadToEnd();
             }
-            var tweets = JObject.Parse(text).SelectToken("records").ToObject<List<SocialMediaPost>>();
+            var tweets = JArray.Parse(text).ToObject<List<SocialMediaPost>>();
             return (List<SocialMediaPost>) tweets;
         }
 
-        public IEnumerable<SocialMediaPost> ReadData2()
+        public IEnumerable<SocialMediaPost> ReadData2(string sinceDate)
         {
             var tweets = new List<SocialMediaPost>() ;
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(URL);
-            const string key = "X-API-Key";
             httpWebRequest.Headers.Add("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Accept = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";
+            if (sinceDate != null)
+            {
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    string json = new JavaScriptSerializer().Serialize(new
+                    {
+                        since = sinceDate
+                    });
+                    //TODO since met json nog catchen met postman
+                    streamWriter.Write(json);
+                }
+            }
             try
             {
                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException("Something went wrong while reading the server response.")))
                 {
-                    tweets = JObject.Parse(streamReader.ReadToEnd()).SelectToken("records").ToObject<List<SocialMediaPost>>();
+                    tweets = JObject.Parse(streamReader.ReadToEnd()).ToObject<List<SocialMediaPost>>();
 
                 }
             }

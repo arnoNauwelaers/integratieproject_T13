@@ -8,10 +8,12 @@ namespace BL.Domain
     public class SocialMediaPost
     {
         [Key]
-        [JsonProperty("id")]
         public long PostId { get; set; }
-        [JsonProperty("geo")]
-        public string Geo { get; set; }
+        [JsonProperty("id")]
+        public string TweetId { get; set; }
+        //TODO geo kan zowel array van double en boolean zijn
+        //[JsonProperty("geo")]
+        //public double[] Geo { get; set; }
         [JsonProperty("retweet")]
         public Boolean Retweet { get; set; }
         [JsonProperty("date")]
@@ -19,15 +21,19 @@ namespace BL.Domain
         [JsonProperty("sentiment")]
         public double[] sentiment { get; set; }
         [JsonProperty("hashtags")]
-        public List<String> Hashtags { get; set; }
+        public string[] Hashtags { get; set; }
         [JsonProperty("urls")]
-        public List<String> Verhalen { get; set; }
+        public string[] Verhalen { get; set; }
         [JsonProperty("words")]
-        public List<String> Words { get; set; }
-        [JsonProperty("politician")]
-        public string[] Politician { get; set; }
+        public string[] Words { get; set; }
+        [JsonProperty("persons")]
+        public string[] Person { get; set; }
+        [JsonProperty("themes")]
+        public string[] Theme { get; set; }
         [JsonProperty("source")]
         public string Source { get; set; }
+        [JsonProperty("profile")]
+        public virtual SocialMediaProfile SocialMediaProfile { get; set; }
         public virtual SocialMediaSource SocialMediaSource { get; set; }
         public virtual ICollection<SocialMediaProfile> SocialMediaProfiles { get; set; } = new List<SocialMediaProfile>();
 

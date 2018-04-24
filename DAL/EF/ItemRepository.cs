@@ -49,7 +49,7 @@ namespace DAL.EF
             List<Item> usedItems = new List<Item>();
             foreach (var item in ctx.Items.ToList<Item>())
             {
-                if (item.Name.ToUpper() == post.Politician[1].ToUpper())
+                if (item.Name.ToUpper() == post.Person[0].ToUpper())
                 {
                     usedItems.Add(item);
                 }
@@ -84,7 +84,7 @@ namespace DAL.EF
     public IEnumerable<Item> SearchItems(string SearchValue) {
       string s = SearchValue.ToUpper();
       return ctx.Items.ToList().Where(item => (
-        item.typeInt == 1 && (((Person)item).FirstName.ToUpper().Contains(s) || item.Name.ToUpper().Contains(s))) || (
+        item.typeInt == 1 && (((Person)item).Name.ToUpper().Contains(s))) || (
         item.typeInt == 2 && (item.Name.ToUpper().Contains(s))) || (
         item.typeInt == 3 && (item.Name.ToUpper().Contains(s)))
        );

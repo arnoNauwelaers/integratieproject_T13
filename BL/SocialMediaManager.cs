@@ -48,7 +48,18 @@ namespace BL
         public List<Item> CreatePosts()
         {
             List<SocialMediaPost> data = (List<SocialMediaPost>)read.ReadData();
-            List<SocialMediaPost> data2 = (List<SocialMediaPost>)read.ReadData2();
+            SocialMediaPost tempPost = socialMediaRepository.GetLastQueryDate();
+            string date;
+            if (tempPost != null)
+            {
+                date = tempPost.Date.ToString();
+            }
+            else
+            {
+                date = "23 Apr 2018 08:49:12";
+            }
+            date = "24 Apr 2018 08:49:12";
+            List<SocialMediaPost> data2 = (List<SocialMediaPost>)read.ReadData2(date);
             foreach (var item in data)
             {
                 socialMediaRepository.CreateSocialMediaPost(item);
