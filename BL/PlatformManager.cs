@@ -12,9 +12,18 @@ namespace BL
   public class PlatformManager : IPlatformManager
   {
     private IPlatformRepostiory repo;
+    private static int idCounter = 0;
     public PlatformManager()
     {
       repo = new PlatformRepository();
+    }
+
+    public Platform MakePlatformWithID()
+    {
+      idCounter += 1;
+      Platform p = new Platform() { Id = idCounter };
+      return p;
+      
     }
     public Platform AddPlatform(Platform p)
     {
@@ -28,7 +37,7 @@ namespace BL
 
     public Platform GetPlatform(int id)
     {
-      return repo.ReadPlatforms(id);
+      return repo.ReadPlatform(id);
     }
 
     public List<Platform> GetPlatforms()

@@ -1,0 +1,28 @@
+﻿@model BL.Domain.ApplicationUser
+
+@{
+    ViewBag.Title = "Een admin verwijderen";
+}
+
+<h2>Admin verwijderen</h2>
+<table style="width:100%">
+    <tr>
+        <th>Id</th>
+        <th>Admin</th>
+        <th>Email</th>
+    </tr>
+    <tr>
+        <td>@Html.DisplayFor(model => model.Id)</td>
+        <td>@Html.DisplayFor(model => model.UserName)</td>
+        <td>@Html.DisplayFor(model => model.Email)</td>
+    </tr>
+    @Html.ActionLink("Back to List", "Index")
+</table>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-actions">
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}

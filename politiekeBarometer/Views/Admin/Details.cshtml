@@ -1,0 +1,20 @@
+﻿@model BL.Domain.ApplicationUser
+
+@{
+    ViewBag.Title = "Details van de admin";
+}
+
+<h2>Partij details</h2>
+<table style="width:100%">
+    <tr>
+        <th>Id</th>
+        <th>Naam</th>
+        <th>Email</th>
+    </tr>
+    <tr>
+        <td>@Html.DisplayFor(model => model.Id)</td>
+        <td>@Html.DisplayFor(model => model.UserName)</td>
+        <td>@Html.DisplayFor(model => model.Email)</td>
+    </tr>
+    @Html.ActionLink("Back to List", "Index")
+</table>

@@ -14,6 +14,7 @@ namespace politiekeBarometer
     public void Configuration(IAppBuilder app)
     {
       ConfigureAuth(app);
+      CreateRolesAndUsers();
     }
 
     private void CreateRolesAndUsers()
@@ -37,7 +38,7 @@ namespace politiekeBarometer
         string userPWD = "superadmin";
 
         var chkUser = UserManager.Create(user, userPWD);
-
+        
         //Add to Role SuperAdmin   
         if (chkUser.Succeeded)
         {
@@ -53,6 +54,13 @@ namespace politiekeBarometer
         var role = new IdentityRole();
         role.Name = "Admin";
         roleManager.Create(role);
+
+        ApplicationUser user2 = new ApplicationUser() { UserName = "TestAdmin", Email = "yagodecuyper@gmail.com" };
+        var chkuser2 = UserManager.Create(user2, "admin2");
+        if (chkuser2.Succeeded)
+        {
+          UserManager.AddToRole(user2.Id, "Admin");
+        }
       }
 
       if (!roleManager.RoleExists("Standard"))

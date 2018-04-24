@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 
+
 namespace BL
 {
     public class ApplicationUserManager : UserManager<ApplicationUser>, IAppUserManager
@@ -120,7 +121,7 @@ namespace BL
 
     public void SendMail(Alert alert)
         {
-          Mail.sendMail(alert.User.Mail, "Nieuwe melding", alert.Content);
+          Mail.sendMail(alert.User.Email, "Nieuwe melding", alert.Content);
         }
     }
 }

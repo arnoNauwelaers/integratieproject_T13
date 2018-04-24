@@ -66,7 +66,8 @@ namespace BL
       sender.Credentials = new NetworkCredential(email, password);
 
       // Send email
-      sender.Send(msg);
+      // krijg nog verbindingsfout oid, voorlopig in commentaar
+      //sender.Send(msg);
     }
   }
 }

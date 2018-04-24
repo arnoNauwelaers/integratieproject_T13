@@ -1,0 +1,24 @@
+﻿@using BL.Domain;
+@model dynamic
+
+
+@{
+    ViewBag.Title = "admin bewerken";
+    ApplicationUser au = ViewBag.Admin;
+}
+
+<h2>bewerken admin</h2>
+@using (Html.BeginForm())
+{
+    <form action="/Admin/Create" method="post">
+        <fieldset>
+            @Html.AntiForgeryToken()
+            Id <input type="text" name="id" readonly="readonly" value="@au.Id" /><br />
+            Username <input type="text" name="username" value="@au.UserName" /><br>
+            Email Adres: <input type="text" name="email" value="@au.Email" /> <br>
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Wijzigen</button>
+    </form>
+}
+@Html.ActionLink("Back to List", "Index")
+

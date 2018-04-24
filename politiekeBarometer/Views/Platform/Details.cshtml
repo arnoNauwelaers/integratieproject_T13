@@ -1,0 +1,68 @@
+﻿@using BL.Domain;
+@model BL.Domain.Platform
+
+@{
+  ViewBag.Title = "Details";
+  List<ApplicationUser> admins = ViewBag.Admins;
+}
+
+<h2>Details Platform</h2>
+
+<div>
+    <h4>Platform</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt> @Html.DisplayNameFor(model => model.Admins)</dt>
+        <dd>
+            @foreach (var admin in admins)
+            {
+            <div>@admin.UserName<hr />
+            </div>
+            }
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+@*@model Domain.PersonaQuestion
+
+@{
+    ViewBag.Title = "QuestionDetail";
+}
+
+<h2>Persona vraag details</h2>
+<div class="container">
+    <div class="row">
+        ID: @Html.DisplayFor(modelItem => modelItem.PersonaQuestionId)
+        Personavraag: @Html.DisplayFor(modelItem => modelItem.QuestionDescr)
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <p>Optie 1: @Html.DisplayFor(modelItem => modelItem.Answer1.PersonaAnswerText)</p>
+            <p>Keyword: @Html.DisplayFor(modelItem => modelItem.Answer1.Keyword.KeywordText)</p>
+        </div>
+        <div class="col-sm-6">
+            <p>Optie 1: @Html.DisplayFor(modelItem => modelItem.Answer2.PersonaAnswerText)</p>
+            <p>Keyword: @Html.DisplayFor(modelItem => modelItem.Answer2.Keyword.KeywordText)</p>
+        </div>
+    </div>
+</div>
+@Html.ActionLink("Back to List", "Index")*@

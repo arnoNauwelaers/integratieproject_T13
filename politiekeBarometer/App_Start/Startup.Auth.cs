@@ -57,9 +57,12 @@ namespace politiekeBarometer
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-                ClientId = "1006596235238-ckdb3qfiq73832o41kpd161e1f0enp5h.apps.googleusercontent.com",
-                ClientSecret = "BwYFD_y1T-WtG7RVjD8X71-Y"
+                ClientId = "493495399898-e194hr67o9dmin0bhs4gpcl98b99rihd.apps.googleusercontent.com",
+                ClientSecret = "i6TEuiVPv1rcJoljZG8a17ut"
             });
+
+            { 
+                }
+            }
         }
     }
-}

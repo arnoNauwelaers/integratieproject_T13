@@ -45,5 +45,32 @@ namespace politiekeBarometer.Controllers
       return RedirectToAction("Index");
     }
 
+    public ActionResult Details(int id)
+    {
+      Platform p = platformManager.GetPlatform(id);
+      ViewBag.Admins = p.Admins;
+      return View(p);
+    }
+
+    [HttpPost]
+    public ActionResult Edit(int id, FormCollection collection)
+    {
+      ViewBag.Platform = platformManager.GetPlatforms();
+      ViewBag.Admins = userManager.GetUsersFromRole("Admin");
+      try
+      {
+        int platformId = Convert.ToInt32(collection["platformid"]);
+        Platform p = platformManager.GetPlatform(platformId);
+        p.Name = Convert.ToString(collection["platformnaam"]);
+        p.Admins.Add(userManager.GetUser(Convert.ToString(collection["admin"])));
+        platformManager.ChangePlatform(p);
+        return RedirectToAction("Index");
+      }
+      catch
+      {
+        return View();
+      }
+    }
+
   }
 }

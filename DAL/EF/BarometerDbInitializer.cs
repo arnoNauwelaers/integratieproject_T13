@@ -58,8 +58,9 @@ namespace DAL.EF
         }
         public static void GenerateData()
         {
-            ApplicationUser user1 = new ApplicationUser() { Id = "1", Admin = false, UserName = "user1", Mail = "user1.test@hotmail.com" };
-            ApplicationUser user2 = new ApplicationUser() { Id = "2", Admin = false, UserName = "user2", Mail = "user2.test@hotmail.com" };
+            ApplicationUser user1 = new ApplicationUser() { Id = "1", UserName = "user1", Email = "user1.test@hotmail.com" };
+            ApplicationUser user2 = new ApplicationUser() { Id = "2", UserName = "user2", Email = "user2.test@hotmail.com" };
+            
 
             SocialMediaProfile socialMediaProfile1 = new SocialMediaProfile() { ProfileId = 1, Url = "http://www.twitter.be/AnnouriImade", Source = "twitter" };
             SocialMediaProfile socialMediaProfile2 = new SocialMediaProfile() { ProfileId = 2, Url = "http://www.twitter.be/BastiaensCaroline", Source = "twitter" };
