@@ -13,9 +13,9 @@ namespace DAL.EF
 
     private BarometerDbContext ctx;
 
-    public PlatformRepository()
+    public PlatformRepository(BarometerDbContext ctx)
     {
-      ctx = new BarometerDbContext();
+      this.ctx = ctx;
     }
     public Platform CreatePlatform(Platform p)
     {

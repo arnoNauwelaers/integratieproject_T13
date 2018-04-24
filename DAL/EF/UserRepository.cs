@@ -13,10 +13,9 @@ namespace DAL.EF
     {
         private BarometerDbContext ctx;
 
-        public UserRepository()
+        public UserRepository(BarometerDbContext ctx)
         {
-            ctx = BarometerDbContext.Create();
-            ctx.Database.Initialize(false);
+            this.ctx = ctx;
         }
 
         public List<ApplicationUser> ReadUsers()

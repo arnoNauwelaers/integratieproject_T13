@@ -18,8 +18,8 @@ namespace BL
 
         public AlertManager()
         {
-            socialMediaRepository = new SocialMediaRepository();
-            this.alertRepository = new AlertRepository();
+      socialMediaRepository = RepositoryFactory.CreateSocialMediaRepository();
+            this.alertRepository = RepositoryFactory.CreateALertRepository();
         }
 
         public Boolean VerifyCondition(Alert alert)

@@ -12,7 +12,7 @@ namespace BL
 
         public ItemManager()
         {
-            itemRepository = new ItemRepository();
+            itemRepository = RepositoryFactory.CreateItemRepository();
         }
 
         public List<Item> GetAllItemsFromPosts(List<SocialMediaPost> data)

@@ -12,10 +12,9 @@ namespace DAL.EF
     {
         private BarometerDbContext ctx;
 
-        public SocialMediaRepository()
+        public SocialMediaRepository(BarometerDbContext ctx)
         {
-            ctx = BarometerDbContext.Create();
-            ctx.Database.Initialize(false);
+      this.ctx = ctx;
         }
 
         public IEnumerable<SocialMediaPost> ReadSocialMediaPosts()

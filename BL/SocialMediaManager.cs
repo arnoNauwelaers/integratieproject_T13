@@ -24,7 +24,7 @@ namespace BL
 
         public SocialMediaManager()
         {
-            socialMediaRepository = new SocialMediaRepository();
+            socialMediaRepository = RepositoryFactory.CreateSocialMediaRepository();
             itemManager = new ItemManager();
             alertManager = new AlertManager();
             read = new Read();

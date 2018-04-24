@@ -14,10 +14,9 @@ namespace DAL.EF
     {
         private BarometerDbContext ctx;
 
-        public ChartRepository()
+        public ChartRepository(BarometerDbContext ctx)
         {
-            ctx = BarometerDbContext.Create();
-            ctx.Database.Initialize(false);
+      this.ctx = ctx;
         }
 
         public List<Chart> ReadCharts()

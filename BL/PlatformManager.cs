@@ -15,7 +15,7 @@ namespace BL
     private static int idCounter = 0;
     public PlatformManager()
     {
-      repo = new PlatformRepository();
+      repo = RepositoryFactory.CreatePlatformRepository();
     }
 
     public Platform MakePlatformWithID()
