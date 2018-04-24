@@ -79,7 +79,10 @@
     <Compile Include="AppRoleManager.cs" />
     <Compile Include="EmailSender.cs" />
     <Compile Include="IAppUserManager.cs" />
+
+    <Compile Include="IPlatformManager.cs" />
     <Compile Include="Mail.cs" />
+    <Compile Include="PlatformManager.cs" />
     <Compile Include="Read.cs" />
     <Compile Include="ApplicationUserManager.cs" />
     <Compile Include="ItemManager.cs" />
