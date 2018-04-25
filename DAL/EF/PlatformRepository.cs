@@ -26,7 +26,12 @@ namespace DAL.EF
 
     public void DeletePlatform(int id)
     {
-      Platform p = ctx.Platforms.Find(id);
+      DeletePlatform(ctx.Platforms.Find(id));
+      
+    }
+
+    public void DeletePlatform(Platform p)
+    {
       ctx.Platforms.Remove(p);
       ctx.SaveChanges();
     }
