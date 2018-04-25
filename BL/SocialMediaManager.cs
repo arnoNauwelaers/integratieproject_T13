@@ -47,19 +47,18 @@ namespace BL
 
         public List<Item> CreatePosts()
         {
-            //List<SocialMediaPost> data = (List<SocialMediaPost>)read.ReadData();
             SocialMediaPost tempPost = socialMediaRepository.GetLastQueryDate();
             string date;
             if (tempPost != null)
             {
-                date = tempPost.Date.ToString();
-                Debug.WriteLine("Datum: " + date);
+                date = tempPost.Date.Day + " " + GetMonthFromInt(tempPost.Date.Month) + " " + tempPost.Date.Year + " " + tempPost.Date.Hour + ":" + tempPost.Date.Minute + ":" + tempPost.Date.Second;
             }
             else
             {
+                //TODO vanaf vorige maand?
                 date = "24 Apr 2018 08:49:12";
             }
-            List<SocialMediaPost> data2 = (List<SocialMediaPost>)read.ReadData2(date);
+            List<SocialMediaPost> data2 = (List<SocialMediaPost>)read.ReadData(date);
             foreach (var item in data2)
             {
                 socialMediaRepository.CreateSocialMediaPost(item);
@@ -94,7 +93,7 @@ namespace BL
             return false;
         }
 
-        public string GetMonthFromInt(int month)
+        private string GetMonthFromInt(int month)
         {
             switch (month)
             {
@@ -107,9 +106,10 @@ namespace BL
                 case 7: return "Jul";
                 case 8: return "Aug";
                 case 9: return "Sep";
-                case 10: return "Nov";
-                case 11: return "Oct";
+                case 10: return "Oct";
+                case 11: return "Nov";
                 case 12: return "Dec";
+                default: return "";
             }
         }
     }

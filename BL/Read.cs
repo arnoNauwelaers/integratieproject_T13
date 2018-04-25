@@ -16,22 +16,9 @@ namespace BL
     {
         private const string URL = "http://kdg.textgain.com/query";
         static HttpClient client = new HttpClient();
-        public IEnumerable<SocialMediaPost> ReadData()
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.bitzfactory.com/textgain.json");
-            request.Method = WebRequestMethods.Http.Get;
-            request.Accept = "application/json";
-            string text;
-            var response = (HttpWebResponse)request.GetResponse();
-            using (var sr = new StreamReader(response.GetResponseStream()))
-            {
-                text = sr.ReadToEnd();
-            }
-            var tweets = JArray.Parse(text).ToObject<List<SocialMediaPost>>();
-            return (List<SocialMediaPost>) tweets;
-        }
-
-        public IEnumerable<SocialMediaPost> ReadData2(string sinceDate)
+        
+        //TODO elke .. minuten uitvoeren
+        public IEnumerable<SocialMediaPost> ReadData(string sinceDate)
         {
             var tweets = new List<SocialMediaPost>() ;
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(URL);
@@ -57,10 +44,6 @@ namespace BL
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException("Something went wrong while reading the server response.")))
                 {
                     tweets = JArray.Parse(streamReader.ReadToEnd()).ToObject<List<SocialMediaPost>>();
-                    foreach (var item in tweets)
-                    {
-                        Debug.WriteLine(item.Date.ToString());
-                    }
                 }
             }
             catch (Exception ex)
