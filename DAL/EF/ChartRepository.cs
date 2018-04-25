@@ -21,7 +21,7 @@ namespace DAL.EF
 
         public List<Chart> ReadCharts()
         {
-            return ctx.Charts.Include(i => i.Items).ToList();
+            return ctx.Charts.Include(i => i.Items).Include(i => i.Data).ToList();
         }
 
         public Chart CreateChart(Chart chart)
@@ -33,7 +33,7 @@ namespace DAL.EF
 
         public Chart ReadChart(int id)
         {
-            return ctx.Charts.Include(i => i.Items).ToList().Find(c => c.ChartId == id);
+            return ctx.Charts.Include(i => i.Items).Include(i => i.Data).ToList().Find(c => c.ChartId == id);
         }
         
 

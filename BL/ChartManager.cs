@@ -39,5 +39,12 @@ namespace BL
                 chartRepository.UpdateChart(chart);
             }
         }
+
+        public void SaveChart(int id)
+        {
+            Chart chart = chartRepository.ReadChart(id);
+            chart.Saved = true;
+            chartRepository.UpdateChart(chart);
+        }
     }
 }
