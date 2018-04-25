@@ -72,7 +72,7 @@ namespace DAL.EF
                     {
                         foreach (var compareprofile in ctx.SocialMediaProfiles.ToList<SocialMediaProfile>())
                         {
-                            if (profile.ProfileId == compareprofile.ProfileId)
+                            if (profile.Id == compareprofile.Id)
                             {
                                 foreach (var post in compareprofile.SocialMediaPosts)
                                 {

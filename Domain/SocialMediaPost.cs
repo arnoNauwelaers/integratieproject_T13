@@ -19,7 +19,7 @@ namespace BL.Domain
         [JsonProperty("date")]
         public DateTime Date { get; set; }
         [JsonProperty("sentiment")]
-        public double[] sentiment { get; set; }
+        public double[] Sentiment { get; set; }
         [JsonProperty("hashtags")]
         public string[] Hashtags { get; set; }
         [JsonProperty("urls")]

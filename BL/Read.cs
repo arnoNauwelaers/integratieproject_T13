@@ -56,8 +56,11 @@ namespace BL
                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException("Something went wrong while reading the server response.")))
                 {
-                    tweets = JObject.Parse(streamReader.ReadToEnd()).ToObject<List<SocialMediaPost>>();
-
+                    tweets = JArray.Parse(streamReader.ReadToEnd()).ToObject<List<SocialMediaPost>>();
+                    foreach (var item in tweets)
+                    {
+                        Debug.WriteLine(item.Date.ToString());
+                    }
                 }
             }
             catch (Exception ex)

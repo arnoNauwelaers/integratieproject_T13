@@ -74,6 +74,11 @@ namespace DAL.EF
             modelBuilder.Entity<Organization>().HasMany(i => i.socialMediaProfiles).WithMany();
             modelBuilder.Entity<Person>().HasMany(i => i.socialMediaProfiles).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.SocialMediaProfiles).WithMany();
+            //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Words).WithMany();
+            //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Person).WithMany();
+            //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Verhalen).WithMany();
+            //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Hashtags).WithMany();
+            //TODO fixen: modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Sentiment).WithMany();
             modelBuilder.Entity<SocialMediaProfile>().HasMany(i => i.SocialMediaPosts).WithMany();
             modelBuilder.Entity<SocialMediaSource>().HasMany(i => i.SocialMediaPost).WithMany();
             modelBuilder.Entity<Chart>().HasMany(i => i.Items).WithMany();
