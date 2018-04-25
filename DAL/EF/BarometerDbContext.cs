@@ -39,6 +39,7 @@ namespace DAL.EF
         public DbSet<Theme> Themes { get; set; }
         public DbSet<Chart> Charts { get; set; }
         public DbSet<Platform> Platforms { get; set; }
+        public DbSet<Data> Data { get; set; }
         //public DbSet<User> Users { get; set; }
 
 
@@ -69,6 +70,8 @@ namespace DAL.EF
             //modelBuilder.Entity<IdentityUserRole>().HasKey(u => new (u.RoleId, uint.))
 
             modelBuilder.Entity<Alert>().HasMany(i => i.Notifications).WithMany();
+            modelBuilder.Entity<Chart>().HasMany(i => i.SavedData).WithMany();
+            modelBuilder.Entity<Chart>().HasMany(i => i.Data).WithMany();
             modelBuilder.Entity<Item>().HasMany(i => i.Alerts).WithMany();
             modelBuilder.Entity<Organization>().HasMany(i => i.persons).WithMany();
             modelBuilder.Entity<Organization>().HasMany(i => i.socialMediaProfiles).WithMany();
