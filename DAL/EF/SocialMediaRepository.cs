@@ -22,9 +22,23 @@ namespace DAL.EF
             return ctx.SocialMediaPosts.Include(a => a.SocialMediaProfiles).ToList<SocialMediaPost>();
         }
 
-        public IEnumerable<SocialMediaPost> ReadSocialMediaPostsSince(DateTime since)
+        public IEnumerable<SocialMediaPost> ReadSocialMediaPostsSince(DateTime since, List<Item> items)
         {
-            return ctx.SocialMediaPosts.Include(a => a.SocialMediaProfiles).ToList().FindAll(i => i.Date > since);
+            List<SocialMediaPost> tempPosts = ctx.SocialMediaPosts.Include(a => a.SocialMediaProfiles).Include(a => a.Woorden).Include(a => a.Hashtags).Include(a => a.Personen).ToList().FindAll(i => i.Date > since);
+            List<SocialMediaPost> posts = new List<SocialMediaPost>();
+            foreach (var post in tempPosts)
+            {
+                post.ListsToArrays();
+            }
+            foreach (var item in items)
+            {
+                List<SocialMediaPost> results = tempPosts.FindAll(i => i.Person.Contains(item.Name));
+                foreach (var result in results)
+                {
+                    posts.Add(result);
+                }
+            }
+            return posts;
         }
 
         public SocialMediaPost CreateSocialMediaPost(SocialMediaPost socialMediaPost)

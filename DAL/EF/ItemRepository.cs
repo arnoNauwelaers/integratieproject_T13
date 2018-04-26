@@ -52,14 +52,14 @@ namespace DAL.EF
                 {
                     usedItems.Add(item);
                 }
-                foreach (var hashtag in post.Hashtags)
+                foreach (var hashtag in post.Hashtag)
                 {
                     if (item.Name.ToUpper() == hashtag.ToUpper())
                     {
                         usedItems.Add(item);
                     }
                 }
-                foreach (var word in post.Words)
+                foreach (var word in post.Word)
                 {
                     if (item.Name.ToUpper() == word.ToUpper())
                     {

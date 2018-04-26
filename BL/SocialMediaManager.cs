@@ -26,6 +26,8 @@ namespace BL
         {
             socialMediaRepository = RepositoryFactory.CreateSocialMediaRepository();
             itemManager = new ItemManager();
+            //TODO weghalen
+            itemManager.AddPerson(new Person() { Name = "Theo Francken" });
             alertManager = new AlertManager();
             read = new Read();
         }
@@ -61,6 +63,7 @@ namespace BL
             List<SocialMediaPost> data2 = (List<SocialMediaPost>)read.ReadData(date);
             foreach (var item in data2)
             {
+                item.ArraysToLists();
                 socialMediaRepository.CreateSocialMediaPost(item);
             }
             return itemManager.GetAllItemsFromPosts(data2);
@@ -113,15 +116,16 @@ namespace BL
             }
         }
 
-        public Dictionary<string, int> GetDataFromPost(DateTime since, ChartValue value)
+        public Dictionary<string, int> GetDataFromPost(DateTime since, ChartValue value, List<Item> items)
         {
             Dictionary<string, int> tempList = new Dictionary<string, int>();
-            List<SocialMediaPost> posts = (List<SocialMediaPost>) socialMediaRepository.ReadSocialMediaPostsSince(since);
+            List<SocialMediaPost> posts = (List<SocialMediaPost>) socialMediaRepository.ReadSocialMediaPostsSince(since, items);
             if (value == ChartValue.hashtags)
             {
                 foreach (var post in posts)
                 {
-                    foreach (var hashtag in post.Hashtags)
+                    post.ListsToArrays();
+                    foreach (var hashtag in post.Hashtag)
                     {
                         if (tempList.ContainsKey(hashtag))
                         {
@@ -157,15 +161,15 @@ namespace BL
             {
                 foreach (var post in posts)
                 {
-                    foreach (var word in post.Words)
+                    foreach (var word in post.Woorden)
                     {
-                        if (tempList.ContainsKey(word))
+                        if (tempList.ContainsKey(word.Value))
                         {
-                            tempList[word]++;
+                            tempList[word.Value]++;
                         }
                         else
                         {
-                            tempList.Add(word, 1);
+                            tempList.Add(word.Value, 1);
                         }
                     }
                 }

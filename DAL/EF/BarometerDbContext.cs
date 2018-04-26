@@ -40,6 +40,11 @@ namespace DAL.EF
         public DbSet<Chart> Charts { get; set; }
         public DbSet<Platform> Platforms { get; set; }
         public DbSet<Data> Data { get; set; }
+        public DbSet<Verhaal> Verhalen { get; set; }
+        public DbSet<Hashtag> Hashtags { get; set; }
+        public DbSet<Woord> Woorden { get; set; }
+        public DbSet<Sentiment> Sentiments { get; set; }
+        public DbSet<Persoon> Personen { get; set; }
         //public DbSet<User> Users { get; set; }
 
 
@@ -66,17 +71,22 @@ namespace DAL.EF
             //modelBuilder.Entity<ApplicationUser>().HasKey(u => u.Id);
             modelBuilder.Entity<Notification>().HasKey(u => u.NotificationId);
 
-           // modelBuilder.Entity<IdentityUserLogin>().HasKey(u => u.UserId);
+            // modelBuilder.Entity<IdentityUserLogin>().HasKey(u => u.UserId);
             //modelBuilder.Entity<IdentityUserRole>().HasKey(u => new (u.RoleId, uint.))
 
             modelBuilder.Entity<Alert>().HasMany(i => i.Notifications).WithMany();
-            modelBuilder.Entity<Chart>().HasMany(i => i.SavedData).WithMany();
             modelBuilder.Entity<Chart>().HasMany(i => i.Data).WithMany();
             modelBuilder.Entity<Item>().HasMany(i => i.Alerts).WithMany();
             modelBuilder.Entity<Organization>().HasMany(i => i.persons).WithMany();
             modelBuilder.Entity<Organization>().HasMany(i => i.socialMediaProfiles).WithMany();
             modelBuilder.Entity<Person>().HasMany(i => i.socialMediaProfiles).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.SocialMediaProfiles).WithMany();
+            modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Woorden).WithMany();
+            modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Verhalen).WithMany();
+            modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Personen).WithMany();
+            modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Hashtags).WithMany();
+            modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Sentiments).WithMany();
+            modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Themas).WithMany();
             //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Words).WithMany();
             //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Person).WithMany();
             //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Verhalen).WithMany();
@@ -90,7 +100,6 @@ namespace DAL.EF
             //modelBuilder.Entity<Theme>().HasMany(i => i.Keywords).WithMany();
             //modelBuilder.Entity<User>().HasMany(i => i.Alerts).WithMany();
 
-            
 
         }
 

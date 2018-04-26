@@ -40,7 +40,7 @@ namespace BL
                 case DateFrequencyType.yearly: since = DateTime.Now.AddYears(-1); break;
             }
             //TODO data toevoegen aan chart
-            Dictionary<string, int> tempData = socialMediaManager.GetDataFromPost(since, chart.ChartValue);
+            Dictionary<string, int> tempData = socialMediaManager.GetDataFromPost(since, chart.ChartValue, (List<Item>) chart.Items);
             foreach (var item in tempData)
             {
                 chart.Data.Add(new Data() { Name = item.Key, Amount = item.Value });

@@ -89,9 +89,9 @@ namespace politiekeBarometer.Controllers
         }
 
         [Route("api/Basic/AddChart")]
+        //TODO 27/04 values worden niet gepost?
         [HttpPost]
-        [Authorize]
-        public IHttpActionResult AddChart(string items, string chartType, string chartValue, string dateFrequency)
+        public IHttpActionResult AddChart( string items, string chartType, string chartValue, string dateFrequency)
         {
             ApplicationUser user = UserManager.GetUser(User.Identity.GetUserId());
             Chart chart = ChartManager.CreateChartFromDashboard(items, chartType, chartValue, dateFrequency);

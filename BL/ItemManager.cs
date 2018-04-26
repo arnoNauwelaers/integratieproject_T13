@@ -44,6 +44,11 @@ namespace BL
         }
         public IEnumerable<Item> SearchItems(string search) {
           return itemRepository.SearchItems(search);
-        }     
-  }
+        }
+
+        public Person AddPerson(Person person)
+        {
+            return (Person) itemRepository.CreateItem(person);
+        }
+    }
 }
