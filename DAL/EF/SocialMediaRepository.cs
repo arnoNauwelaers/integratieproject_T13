@@ -22,6 +22,11 @@ namespace DAL.EF
             return ctx.SocialMediaPosts.Include(a => a.SocialMediaProfiles).ToList<SocialMediaPost>();
         }
 
+        public IEnumerable<SocialMediaPost> ReadSocialMediaPostsSince(DateTime since)
+        {
+            return ctx.SocialMediaPosts.Include(a => a.SocialMediaProfiles).ToList().FindAll(i => i.Date > since);
+        }
+
         public SocialMediaPost CreateSocialMediaPost(SocialMediaPost socialMediaPost)
         {
             ctx.SocialMediaPosts.Add(socialMediaPost);
@@ -91,5 +96,18 @@ namespace DAL.EF
             }
             return aantal;
         }
+
+        //public int ReadAmountHashtags(string hashtag)
+        //{
+        //    return ctx.SocialMediaPosts.ToList<SocialMediaPost>().Count(i => i.Hashtags.Contains(hashtag));
+        //}
+        //public int ReadAmountWords(string word)
+        //{
+        //    return ctx.SocialMediaPosts.ToList<SocialMediaPost>().Count(i => i.Words.Contains(word));
+        //}
+        //public int ReadAmountPersons(string person)
+        //{
+        //    return ctx.SocialMediaPosts.ToList<SocialMediaPost>().Count(i => i.Person.Contains(person));
+        //}
     }
 }

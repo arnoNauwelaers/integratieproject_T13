@@ -112,5 +112,66 @@ namespace BL
                 default: return "";
             }
         }
+
+        public Dictionary<string, int> GetDataFromPost(DateTime since, ChartValue value)
+        {
+            Dictionary<string, int> tempList = new Dictionary<string, int>();
+            List<SocialMediaPost> posts = (List<SocialMediaPost>) socialMediaRepository.ReadSocialMediaPostsSince(since);
+            if (value == ChartValue.hashtags)
+            {
+                foreach (var post in posts)
+                {
+                    foreach (var hashtag in post.Hashtags)
+                    {
+                        if (tempList.ContainsKey(hashtag))
+                        {
+                            tempList[hashtag]++;
+                        }
+                        else
+                        {
+                            tempList.Add(hashtag, 1);
+                        }
+                    }
+                }
+                return tempList;
+            }
+            else if (value == ChartValue.persons)
+            {
+                foreach (var post in posts)
+                {
+                    foreach (var person in post.Person)
+                    {
+                        if (tempList.ContainsKey(person))
+                        {
+                            tempList[person]++;
+                        }
+                        else
+                        {
+                            tempList.Add(person, 1);
+                        }
+                    }
+                }
+                return tempList;
+            }
+            else if (value == ChartValue.words)
+            {
+                foreach (var post in posts)
+                {
+                    foreach (var word in post.Words)
+                    {
+                        if (tempList.ContainsKey(word))
+                        {
+                            tempList[word]++;
+                        }
+                        else
+                        {
+                            tempList.Add(word, 1);
+                        }
+                    }
+                }
+                return tempList;
+            }
+            return null;
+        }
     }
 }

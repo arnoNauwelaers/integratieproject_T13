@@ -13,12 +13,14 @@ namespace BL
         private ChartRepository chartRepository;
         private DataManager dataManager;
         private ItemManager itemManager;
+        private SocialMediaManager socialMediaManager;
 
         public ChartManager()
         {
             chartRepository = RepositoryFactory.CreateChartRepository();
             itemManager = new ItemManager();
             dataManager = new DataManager();
+            socialMediaManager = new SocialMediaManager();
         }
 
         public void UpdateChart(Chart chart)
@@ -28,7 +30,7 @@ namespace BL
 
         public Chart AddChart(Chart chart)
         {
-            DateTime since;
+            DateTime since = DateTime.Now.AddDays(-7);
             switch (chart.FrequencyType)
             {
                 case DateFrequencyType.hourly: since = DateTime.Now.AddMinutes(-60); break;
@@ -37,17 +39,11 @@ namespace BL
                 case DateFrequencyType.monthly: since = DateTime.Now.AddMonths(-1); break;
                 case DateFrequencyType.yearly: since = DateTime.Now.AddYears(-1); break;
             }
-            if (chart.ChartValue == ChartValue.words)
+            //TODO data toevoegen aan chart
+            Dictionary<string, int> tempData = socialMediaManager.GetDataFromPost(since, chart.ChartValue);
+            foreach (var item in tempData)
             {
-                //TODO hoeveelheid per woord tellen
-            }
-            else if(chart.ChartValue == ChartValue.persons)
-            {
-                //hoeveelheid per persoon tellen
-            }
-            else if (chart.ChartValue == ChartValue.hashtags)
-            {
-                //hoeveelheid per hashtags tellen
+                chart.Data.Add(new Data() { Name = item.Key, Amount = item.Value });
             }
             return chartRepository.CreateChart(chart);
         }
@@ -77,8 +73,7 @@ namespace BL
             chartRepository.UpdateChart(chart);
         }
 
-        //TODO lijst data returnen, addchart methode gebruiken om chart terug te krijgen met data er al in
-        public List<Data> CreateChartFromDashboard(string items, string chartType, string chartValue, string dateFrequency)
+        public Chart CreateChartFromDashboard(string items, string chartType, string chartValue, string dateFrequency)
         {
             List<Item> itemList = new List<Item>();
             Chart chart = new Chart();
@@ -92,10 +87,8 @@ namespace BL
             chart.ChartType = (ChartType) Enum.Parse(typeof(ChartType), chartType);
             chart.ChartValue = (ChartValue)Enum.Parse(typeof(ChartValue), chartValue);
             chart.FrequencyType = (DateFrequencyType)Enum.Parse(typeof(DateFrequencyType), dateFrequency);
-            Chart finalChart = chartRepository.CreateChart(chart);
-            return (List<Data>) finalChart.Data;
+            Chart finalChart = AddChart(chart);
+            return finalChart;
         }
-
-
     }
 }

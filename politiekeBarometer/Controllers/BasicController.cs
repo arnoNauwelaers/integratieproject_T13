@@ -91,18 +91,13 @@ namespace politiekeBarometer.Controllers
         [Route("api/Basic/AddChart")]
         [HttpPost]
         [Authorize]
-        public IHttpActionResult AddChart(string items, string chartType, string chartValue, string startDate, string endDate)
+        public IHttpActionResult AddChart(string items, string chartType, string chartValue, string dateFrequency)
         {
-            if (ChartManager.CreateChartFromDashboard(items, chartType, chartValue, startDate, endDate))
-            {
-
-            }
-            else
-            {
-                //moet error returnen
-                return Ok();
-            }
-            return Ok();
+            ApplicationUser user = UserManager.GetUser(User.Identity.GetUserId());
+            Chart chart = ChartManager.CreateChartFromDashboard(items, chartType, chartValue, dateFrequency);
+            user.Dashboard.Add(chart);
+            UserManager.Update(user);
+            return Ok(chart.Data);
         }
 
         [Route("api/Basic/EditChart")]
