@@ -17,6 +17,7 @@ namespace politiekeBarometer.Controllers
         private SocialMediaManager SocialMediaManager;
         private ApplicationUserManager UserManager;
         private AlertManager AlertManager;
+        private ChartManager ChartManager;
 
         protected BasicController()
         {
@@ -24,6 +25,7 @@ namespace politiekeBarometer.Controllers
             AlertManager = new AlertManager();
             UserManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             UserManager.setSocialMediaManager(SocialMediaManager);
+            ChartManager = new ChartManager();
         }
 
         
@@ -87,6 +89,23 @@ namespace politiekeBarometer.Controllers
         }
 
         [Route("api/Basic/AddChart")]
+        [HttpPost]
+        [Authorize]
+        public IHttpActionResult AddChart(string items, string chartType, string chartValue, string startDate, string endDate)
+        {
+            if (ChartManager.CreateChartFromDashboard(items, chartType, chartValue, startDate, endDate))
+            {
+
+            }
+            else
+            {
+                //moet error returnen
+                return Ok();
+            }
+            return Ok();
+        }
+
+        [Route("api/Basic/EditChart")]
         [HttpPost]
         [Authorize]
         public IHttpActionResult EditChart(string json)

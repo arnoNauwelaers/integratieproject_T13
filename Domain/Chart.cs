@@ -13,14 +13,16 @@ namespace BL.Domain
         public int ChartId { get; set; }
         public virtual ICollection<Item> Items { get; set; } = new List<Item>();
         public virtual ChartType ChartType { get; set; }
+        public virtual ChartValue ChartValue { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
         public double Height { get; set; }
         public double Width { get; set; }
         public Boolean Saved { get; set; } = false;
         public virtual ICollection<Data> Data { get; set; } = new List<Data>();
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; } = DateTime.Now;
+        public DateFrequencyType FrequencyType { get; set; }
+        public DateTime? StartDate { get; set; } = null;
+        public DateTime? EndDate { get; set; } = null;
     }
 
     //voor JSON deserializer

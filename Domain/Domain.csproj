@@ -82,6 +82,7 @@
     <Compile Include="Chart.cs" />
     <Compile Include="ChartType.cs" />
     <Compile Include="Dashboard.cs" />
+    <Compile Include="Data.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Page.cs" />
