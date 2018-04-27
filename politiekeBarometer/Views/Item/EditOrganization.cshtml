@@ -1,0 +1,42 @@
+﻿@using BL.Domain;
+@model dynamic
+
+@{
+    ViewBag.Title = "Bewerken organizatie";
+    List<SocialMediaProfile> profiles = new List<SocialMediaProfile>(ViewBag.Profiles);
+    Organization o = ViewBag.Organization;
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    <form action="/Item/EditOrganization" method="post">
+        <fieldset>
+
+            <input type="hidden" name="id" value="@o.ItemId" /><br />
+
+        </fieldset>
+        <fieldset>
+            <legend>SocialMediaProfiel</legend>
+
+            
+            <select id="smc" name="smc">
+                @foreach (SocialMediaProfile smp in profiles )
+                {
+                    if (o.socialMediaProfiles.Count > 0)
+                    {
+                        if (o.ItemId == o.socialMediaProfiles.First().Id)
+                        {
+                            <option selected="selected" value="@smp.Id">@smp.Source</option>
+                        }
+                    }
+                    <option value="@smp.Id">@smp.Source</option>
+                }
+            </select>
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Wijzigen</button>
+    </form>
+    @Html.ActionLink("Back to List", "Index")
+}

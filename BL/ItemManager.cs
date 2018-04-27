@@ -6,8 +6,8 @@ using DAL.EF;
 
 namespace BL
 {
-    public class ItemManager
-    {
+    public class ItemManager : IItemManager
+  {
         private ItemRepository itemRepository;
 
         public ItemManager()
@@ -50,5 +50,25 @@ namespace BL
         {
             return (Person) itemRepository.CreateItem(person);
         }
+
+    public Organization AddOrganization(Organization organization)
+    {
+      return (Organization) itemRepository.CreateItem(organization);
     }
+
+    public void RemoveOrganization(Organization organization)
+    {
+      itemRepository.DeleteItem(organization);
+    }
+
+    public void ChangeItem(Item item)
+    {
+      itemRepository.UpdateItem(item);
+    }
+
+    public void ChangeItem(Organization o)
+    {
+      itemRepository.UpdateItem(o);
+    }
+  }
 }

@@ -111,6 +111,16 @@ namespace DAL.EF
             return aantal;
         }
 
+        public List<SocialMediaProfile> ReadProfiles()
+    {
+      return ctx.SocialMediaProfiles.ToList();
+    }
+
+    public SocialMediaProfile ReadProfile(int id)
+    {
+      return ctx.SocialMediaProfiles.Find(id);
+    }
+
         //public int ReadAmountHashtags(string hashtag)
         //{
         //    return ctx.SocialMediaPosts.ToList<SocialMediaPost>().Count(i => i.Hashtags.Contains(hashtag));

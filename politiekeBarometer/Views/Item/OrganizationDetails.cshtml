@@ -1,0 +1,38 @@
+﻿@using BL.Domain;
+@model BL.Domain.Organization
+
+@{
+  ViewBag.Title = "OrganizationDetails";
+  List<SocialMediaProfile> profiles = ViewBag.Profiles;
+}
+
+<h2>OrganizationDetails</h2>
+
+<div>
+    <h4>Organization</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Name)</dt>
+        <dd>
+            @foreach (var smp in profiles)
+    {
+            <div>
+                @smp.Source | @smp.Url <hr />
+            </div>
+}
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Social Media Profiel", "AddSocialMediaProfile", new { id = Model.ItemId }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ItemId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

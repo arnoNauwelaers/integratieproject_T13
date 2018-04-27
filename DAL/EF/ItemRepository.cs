@@ -88,5 +88,11 @@ namespace DAL.EF
         item.typeInt == 3 && (item.Name.ToUpper().Contains(s)))
        );
     }
+
+    public void DeleteItem(Item i)
+    {
+      ctx.Items.Remove(i);
+      ctx.SaveChanges();
+    }
   }
 }

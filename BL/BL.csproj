@@ -81,6 +81,7 @@
     <Compile Include="DataManager.cs" />
     <Compile Include="EmailSender.cs" />
     <Compile Include="IAppUserManager.cs" />
+    <Compile Include="IItemManager.cs" />
     <Compile Include="IPlatformManager.cs" />
     <Compile Include="Mail.cs" />
     <Compile Include="PlatformManager.cs" />

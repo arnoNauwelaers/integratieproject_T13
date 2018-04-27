@@ -17,9 +17,21 @@ namespace politiekeBarometer.Controllers
         ItemManager im = new ItemManager();
       Person p = im.ReadPerson(id);
       SocialMediaManager sm = new SocialMediaManager();
+      ChartManager cm = new ChartManager();
       List<Item> items = new List<Item>();
       items.Add(p);
-      sm.GetDataFromPost(DateTime.Now.AddDays(-7), ChartValue.persons, items);
+      BL.Domain.Chart chart = new BL.Domain.Chart()
+      {
+        Items = items,
+        ChartType = ChartType.histogram,
+        ChartValue = ChartValue.persons,
+        Height = 400,
+        Width = 600,
+        FrequencyType = DateFrequencyType.weekly,
+      };
+      cm.AddChart(chart);
+
+      
       //System.Web.Helpers.Chart testChart = new System.Web.Helpers.Chart(width: 600, height: 400).AddTitle("Test").AddSeries("Default",chartType: "Column", xValue:)
         return View(p);
         

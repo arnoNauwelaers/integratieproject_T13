@@ -1,0 +1,35 @@
+﻿@model System.Collections.Generic.List<BL.Domain.Organization>
+
+@{
+    ViewBag.Title = "OrganizationIndex";
+}
+
+<h2>OrganizationIndex</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            Platform
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var organization in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => organization.Name)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = organization.ItemId }) |
+                @Html.ActionLink("Details", "Details", new { id = organization.ItemId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = organization.ItemId })
+            </td>
+        </tr>
+    }
+
+</table>
