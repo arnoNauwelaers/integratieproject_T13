@@ -12,7 +12,7 @@ namespace BL.Domain
         [Key]
         public int Id { get; set; }
         public String Name { get; set; }
-        public ICollection<ApplicationUser> Admins { get; set; }
+        public virtual ICollection<ApplicationUser> Admins { get; set; }
         public virtual ICollection<ApplicationUser> Users { get; set; }
         public virtual ICollection<SocialMediaSource> Sources { get; set; }
 

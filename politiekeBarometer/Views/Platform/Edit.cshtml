@@ -2,9 +2,9 @@
 @model dynamic
 
 @{
-  ViewBag.Title = "Bewerken Platform";
-  List<ApplicationUser> admins = new List<ApplicationUser>(ViewBag.Admins);
-  Platform platform = ViewBag.Platform;
+    ViewBag.Title = "Bewerken Platform";
+    List<ApplicationUser> admins = new List<ApplicationUser>(ViewBag.Admins);
+    Platform platform = ViewBag.Platform;
 }
 
 <h2>Edit</h2>
@@ -12,39 +12,31 @@
 
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
+    <form action="/Platform/Edit" method="post">
+        <fieldset>
 
-    <div class="row">
-        <form action="/Platform/Edit" method="post">
-            <div class="form-group">
-                <h3>Platform</h3>
-                <label for="platformid">ID</label>
-                <input type="text" class="form-control" name="id" value="@platform.Id" id="platformid" readonly="readonly"/>
-                <label for="platformnaam">Platformnaam</label>
-                <input type="text" class="form-control" name="platform" value="@platform.Name" id="platformnaam" />
-            </div>
-            <div class="form-group">
-                <h3> Toegewezen Admins</h3>
-                <label for="admin"> Admin: </label>
-                <select name="admin1" class="selectpicker" id="admin" data-live-search="true">
-                    @foreach (ApplicationUser au in admins)
-                    { 
-                    if (platform.Admins.Contains(au))
+            <input type="hidden" name="id" value="@platform.Id" /><br />
+
+        </fieldset>
+        <fieldset>
+            <legend>Admin</legend>
+
+            Admin:
+            <select id="admin" name="admin">
+                @foreach (ApplicationUser adm in admins)
+                {
+                    if (platform.Admins.Count > 0)
                     {
-                            <option data-tokens="@au.UserName" selected="selected" value="@au.Id">@au.UserName</option>
-                        }
-                        else
+                        if (adm.Id == platform.Admins.First().Id)
                         {
-                            <option data-tokens="@au.UserName" value="@au.Id">@au.UserName</option>
+                            <option selected="selected" value="@adm.Id">@adm.UserName</option>
                         }
-
                     }
-                </select>
-            </div>
-        </form>
-    </div>
-}
-
-<div>
+                    <option value="@adm.Id">@adm.UserName</option>
+                }
+            </select>
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Wijzigen</button>
+    </form>
     @Html.ActionLink("Back to List", "Index")
-</div>
+}

@@ -12,10 +12,12 @@ namespace BL
   public class PlatformManager : IPlatformManager
   {
     private IPlatformRepostiory repo;
+    private ApplicationUserManager userManager;
     private static int idCounter = 0;
     public PlatformManager()
     {
       repo = RepositoryFactory.CreatePlatformRepository();
+      userManager = new ApplicationUserManager();
     }
 
     public Platform MakePlatformWithID()
@@ -54,5 +56,12 @@ namespace BL
     {
       repo.DeletePlatform(p);
     }
+
+ 
+
+    
+
+
+
   }
 }

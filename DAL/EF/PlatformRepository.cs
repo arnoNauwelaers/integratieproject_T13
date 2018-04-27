@@ -36,6 +36,8 @@ namespace DAL.EF
       ctx.SaveChanges();
     }
 
+    
+
     public Platform ReadPlatform(int id)
     {
       return ctx.Platforms.Find(id);

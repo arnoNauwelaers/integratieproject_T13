@@ -1,0 +1,37 @@
+﻿@using BL.Domain
+@{
+   
+    Platform platform = ViewBag.Platform;
+    IEnumerable<ApplicationUser> admins = ViewBag.Admins;
+}
+<h2>toevoegen admin aan een platform</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <form action="/Platform/AddAdmin" method="post">
+                <input type="hidden" name="id" value="@platform.Id" />
+                Platform: @platform.Name<br />
+                Beheerd door:<br />
+                <ul>
+                    @foreach (ApplicationUser admin in platform.Admins)
+                    {
+                        <li>@admin.UserName</li>
+                    }
+                </ul>
+                <br />
+                <div class="form-group">
+                    <label for="keyword">Toe te voegen admin</label>
+                    <select class="form-control" id="admin" name="admin">
+                        @foreach (ApplicationUser admin in admins)
+                        {
+                            <option value="@admin.Id">@admin.UserName</option>
+                        }
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Toevoegen</button>
+            </form>
+        </div>
+    </div>
+</div>
+@Html.ActionLink("Back to List", "Index")
+

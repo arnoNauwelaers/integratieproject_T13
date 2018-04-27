@@ -15,5 +15,6 @@ namespace BL
     void RemovePlatform(int i);
     Platform GetPlatform(int id);
     void RemovePlatform(Platform p);
+    
   }
 }

@@ -82,28 +82,64 @@ namespace politiekeBarometer.Controllers
     public ActionResult Details(int id)
     {
       Platform p = platformManager.GetPlatform(id);
-      ViewBag.Admins = p.Admins;
+      ViewBag.Admins = p.Admins.ToList();
       return View(p);
     }
 
 
- 
-
-    [HttpPost]
-    public ActionResult Edit(int id, FormCollection collection)
+    public ActionResult Edit(int id)
     {
-      ViewBag.Platform = platformManager.GetPlatforms();
-      ViewBag.Admins = userManager.GetUsersFromRole("Admin");
+      ViewBag.Platform = platformManager.GetPlatform(id);
+      ViewBag.Admins = userManager.GetUsersFromRole("Admin").ToList();
+
+      return View();
+    }
+    
+    // POST: Profile/Edit
+    [HttpPost]
+    public ActionResult Edit(FormCollection collection)
+    {
+      ViewBag.Admins = userManager.GetUsersFromRole("Admin").ToList();
+      
+      ViewBag.Platform = platformManager.GetPlatform(Convert.ToInt32(collection["id"]));
       try
       {
-        int platformId = Convert.ToInt32(collection["platformid"]);
-        Platform p = platformManager.GetPlatform(platformId);
-        p.Name = Convert.ToString(collection["platformnaam"]);
-        p.Admins.Add(userManager.GetUser(Convert.ToString(collection["admin"])));
-        platformManager.ChangePlatform(p);
+        Platform platform = platformManager.GetPlatform(Convert.ToInt32(collection["id"]));
+        platform.Admins.Add(userManager.GetUser(Convert.ToString(collection["admin"])));
+        platformManager.ChangePlatform(platform);
+
         return RedirectToAction("Index");
       }
       catch
+      {
+        return View();
+      }
+    }
+
+    [HttpGet]
+    public ActionResult AddAdmin(int id)
+    {
+      ViewBag.Platform = platformManager.GetPlatform(id);
+      ViewBag.Admins = userManager.GetUsersFromRole("Admin");
+      return View();
+    }
+    [HttpPost]
+    public ActionResult AddAdmin(FormCollection collection)
+    {
+      ViewBag.Admins = userManager.GetUsersFromRole("Admin");
+      try
+      {
+        int platformId = Convert.ToInt32(collection["id"]);
+        string adminId = Convert.ToString(collection["admin"]);
+        Platform p = platformManager.GetPlatform(platformId);
+        ApplicationUser a = userManager.GetUser(adminId);
+        p.Admins.Add(a);
+        platformManager.ChangePlatform(p);
+        
+
+        return RedirectToAction("Details", new { id = platformId});
+      }
+      catch (Exception)
       {
         return View();
       }
