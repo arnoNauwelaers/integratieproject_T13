@@ -3,8 +3,8 @@
     public enum ChartType : byte
     {
         histogram,
-        cirkel,
-        lijn,
+        circle,
+        line,
         top
     }
 }

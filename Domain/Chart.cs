@@ -26,12 +26,20 @@ namespace BL.Domain
     }
 
     //voor JSON deserializer
-    public class TempChart
+    public class TempChartEdit
     {
         public int Id;
         public int X;
         public int Y;
         public double Height;
         public double Width;
+    }
+
+    public class TempChartAdd
+    {
+        public string Items;
+        public string ChartType;
+        public string ChartValue;
+        public string DateFrequency;
     }
 }

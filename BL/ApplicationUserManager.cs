@@ -123,8 +123,27 @@ namespace BL
     }
 
     public void SendMail(Alert alert)
-        {
+    {
           Mail.sendMail(alert.User.Email, "Nieuwe melding", alert.Content);
+    }
+
+    public List<Item> GetItemsFromUser(string id)
+    {
+        ApplicationUser user = userRepository.ReadUser(id);
+        List<Item> tempItems = new List<Item>();
+        foreach (var alert in user.Alerts)
+        {
+              if (alert.Item != null)
+                {
+                    tempItems.Add(alert.Item);
+                }
+                if (alert.CompareItem != null)
+                {
+                    tempItems.Add(alert.CompareItem);
+                }
+            }
+            return tempItems;
         }
+
     }
 }

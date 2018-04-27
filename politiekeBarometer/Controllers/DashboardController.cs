@@ -11,6 +11,7 @@ using DAL.EF;
 using BL;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
+using BL.Domain;
 
 namespace politiekeBarometer.Controllers
 {
@@ -27,6 +28,28 @@ namespace politiekeBarometer.Controllers
         public ActionResult Index()
         {
             UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            List<Item> Items = UserManager.GetItemsFromUser(User.Identity.GetUserId());
+            List<Person> Persons = new List<Person>();
+            List<Theme> Themes = new List<Theme>();
+            List<Organization> Organizations = new List<Organization>();
+            foreach (var item in Items)
+            {
+                if (item.typeInt == 1)
+                {
+                    Persons.Add((Person)item);
+                }
+                else if (item.typeInt == 2)
+                {
+                    Themes.Add((Theme)item);
+                }
+                else if (item.typeInt == 3)
+                {
+                    Organizations.Add((Organization)item);
+                }
+            }
+            ViewBag.Persons = Persons;
+            ViewBag.Themes = Themes;
+            ViewBag.Organizations = Organizations;
             return View(UserManager.GetUser(User.Identity.GetUserId()));
         }
     }

@@ -215,6 +215,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\iziToast.min.css" />
     <Content Include="Content\sb-admin.css" />
+    <Content Include="Content\selectize.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -249,6 +250,7 @@
     <Content Include="Scripts\sb-admin-charts.min.js" />
     <Content Include="Scripts\sb-admin-datatables.min.js" />
     <Content Include="Scripts\sb-admin.min.js" />
+    <Content Include="Scripts\selectize.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
