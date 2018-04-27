@@ -28,8 +28,8 @@ namespace politiekeBarometer.Controllers
             ChartManager = new ChartManager();
         }
 
-        
 
+        [Authorize]
         public IHttpActionResult Get()
         {
             List<Notification> notifications = new List<Notification>();
@@ -64,6 +64,7 @@ namespace politiekeBarometer.Controllers
 
         //TODO return al gelezen notifications van vandaag en ongelezen notifications andere dagen. ReadDate toevoegen aan Notification naast Read boolean?
         [Route("api/Basic/GetNotifications")]
+        [Authorize]
         public IHttpActionResult GetNotifications()
         {
             List<Notification> notifications = new List<Notification>();
@@ -91,10 +92,12 @@ namespace politiekeBarometer.Controllers
         [Route("api/Basic/AddChart")]
         //TODO 27/04 values worden niet gepost?
         [HttpPost]
-        public IHttpActionResult AddChart( string items, string chartType, string chartValue, string dateFrequency)
+        [Authorize]
+        public IHttpActionResult AddChart(string json)
         {
+            var Chart = JObject.Parse(json).ToObject<TempChartAdd>();
             ApplicationUser user = UserManager.GetUser(User.Identity.GetUserId());
-            Chart chart = ChartManager.CreateChartFromDashboard(items, chartType, chartValue, dateFrequency);
+            Chart chart = ChartManager.CreateChartFromDashboard(Chart.Items, Chart.ChartType, Chart.ChartValue, Chart.DateFrequency);
             user.Dashboard.Add(chart);
             UserManager.Update(user);
             return Ok(chart.Data);
@@ -105,7 +108,7 @@ namespace politiekeBarometer.Controllers
         [Authorize]
         public IHttpActionResult EditChart(string json)
         {
-            var Charts = JObject.Parse(json).ToObject<List<TempChart>>();
+            var Charts = JObject.Parse(json).ToObject<List<TempChartEdit>>();
 
             return Ok();
         }

@@ -476,3 +476,7 @@ footer.sticky-footer {
     width: calc(100% - 55px);
   }
 }
+
+.labelchart {
+    max-width: 100% !important;
+}

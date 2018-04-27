@@ -53,7 +53,7 @@ namespace BL
             return chartRepository.ReadChart(id);
         }
 
-        public void UpdateChartsFromTempChart(List<TempChart> chartList)
+        public void UpdateChartsFromTempChart(List<TempChartEdit> chartList)
         {
             foreach (var tempChart in chartList)
             {

@@ -162,3 +162,7 @@ footer {
 #notificaties {
     padding: 20px;
 }
+
+.labelchart {
+    max-width: 100% !important;
+}
