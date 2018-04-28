@@ -1,92 +1,4 @@
-﻿@*TODO wegdoen indien er niets mist*@
-@*<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Politieke Barometer</title>
-    @Styles.Render("~/Content/css")
-    <link href="/Content/iziToast.min.css" rel="stylesheet" />
-    <script src="~/Scripts/iziToast.min.js" type="text/javascript"></script>
-    @Scripts.Render("~/bundles/modernizr")
-</head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            @Html.ActionLink("Politieke Barometer", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-            <li>Zoeken</li>
-            <li>Alert</li>
-            <li>Account</li>
-            @Html.Partial("_LoginPartial")
-            <a onclick="loadNotifications()" href="#" data-toggle="dropdown"><img width="50px" src="~/Images/bel.png" /></a>
-            <ul id="notificaties" class="dropdown-menu"></ul>
-        </ul>
-    </div>
-    <div class="body-content">
-        <div class="row">
-            <div class="col-md-2" id="vertical-nav">
-                <nav class="navbar navbar-default sidebar" role="navigation">
-                    <div class="container-fluid">
-                        <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
-                            <ul class="nav navbar-nav no-rounding">
-                                <li class="no-rounding">@Html.ActionLink("Home", "Index", "Home")</li>
-                                <li class="no-rounding">@Html.ActionLink("About", "About", "Home")</li>
-                                <li class="no-rounding">@Html.ActionLink("Contact", "Contact", "Home")</li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-            <div class="col-md-9">
-                @RenderBody()
-            </div>
-            <div class="col-md-1"></div>
-        </div>
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-    <script>
-        function synchronizeDB() {
-            $.getJSON("/api/Basic", function (data) {
-                var items = [];
-                $.each(data, function (key, val) {
-                    iziToast.info({ title: "Nieuwe melding!", message: val.Alert.Content, position: "topRight" });
-                });
-            });
-            setTimeout(synchronizeDB, 5000);
-        }
-        synchronizeDB();
-
-        var ul = document.getElementById("notificaties");
-        function loadNotifications() {
-            $.getJSON("/api/Basic/GetNotifications", function (data) {
-                var items = [];
-                ul.innerHTML = "";
-                $.each(data, function (key, val) {
-                    
-                    var li = document.createElement("li");
-                    li.appendChild(document.createTextNode(val.Alert.Content));
-                    ul.appendChild(li);
-                    console.log(val.Alert.Content);
-                });
-            });
-        }
-    </script>
-</body>
-</html>*@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -99,12 +11,15 @@
     <script src="~/Scripts/jquery.min.js"></script>
     <link href="/Content/iziToast.min.css" rel="stylesheet" />
     <script src="~/Scripts/iziToast.min.js" type="text/javascript"></script>
-    
+
+
     <!-- Custom fonts for this template-->
     <link href="/Content/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="/Content/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="/Content/sb-admin.css" rel="stylesheet">
+    <link href="~/Content/select2.min.css" rel="stylesheet" />
+    <script src="~/Scripts/select2.full.min.js"></script>
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
     <!-- Navigation-->
@@ -121,15 +36,15 @@
                         <span class="nav-link-text">Home</span>
                     </a>
                 </li>
-@if (Request.IsAuthenticated)
-{
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                    <a class="nav-link" href="@Url.Action("Index", "Dashboard")">
-                        <i class="fa fa-fw fa-dashboard"></i>
-                        <span class="nav-link-text">Dashboard</span>
-                    </a>
-                </li>
-}
+                @if (Request.IsAuthenticated)
+                {
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                        <a class="nav-link" href="@Url.Action("Index", "Dashboard")">
+                            <i class="fa fa-fw fa-dashboard"></i>
+                            <span class="nav-link-text">Dashboard</span>
+                        </a>
+                    </li>
+                }
             </ul>
             <ul class="navbar-nav sidenav-toggler">
                 <li class="nav-item">
@@ -140,89 +55,89 @@
             </ul>
             <ul class="navbar-nav ml-auto">
                 @*<li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-fw fa-envelope"></i>
-                        <span class="d-lg-none">
-                            Messages
-                            <span class="badge badge-pill badge-primary">12 New</span>
-                        </span>
-                        <span class="indicator text-primary d-none d-lg-block">
-                            <i class="fa fa-fw fa-circle"></i>
-                        </span>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="messagesDropdown">
-                        <h6 class="dropdown-header">New Messages:</h6>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">
-                            <strong>David Miller</strong>
-                            <span class="small float-right text-muted">11:21 AM</span>
-                            <div class="dropdown-message small">Hey there! This new version of SB Admin is pretty awesome! These messages clip off when they reach the end of the box so they don't overflow over to the sides!</div>
+                        <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-fw fa-envelope"></i>
+                            <span class="d-lg-none">
+                                Messages
+                                <span class="badge badge-pill badge-primary">12 New</span>
+                            </span>
+                            <span class="indicator text-primary d-none d-lg-block">
+                                <i class="fa fa-fw fa-circle"></i>
+                            </span>
                         </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">
-                            <strong>Jane Smith</strong>
-                            <span class="small float-right text-muted">11:21 AM</span>
-                            <div class="dropdown-message small">I was wondering if you could meet for an appointment at 3:00 instead of 4:00. Thanks!</div>
+                        <div class="dropdown-menu" aria-labelledby="messagesDropdown">
+                            <h6 class="dropdown-header">New Messages:</h6>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">
+                                <strong>David Miller</strong>
+                                <span class="small float-right text-muted">11:21 AM</span>
+                                <div class="dropdown-message small">Hey there! This new version of SB Admin is pretty awesome! These messages clip off when they reach the end of the box so they don't overflow over to the sides!</div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">
+                                <strong>Jane Smith</strong>
+                                <span class="small float-right text-muted">11:21 AM</span>
+                                <div class="dropdown-message small">I was wondering if you could meet for an appointment at 3:00 instead of 4:00. Thanks!</div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">
+                                <strong>John Doe</strong>
+                                <span class="small float-right text-muted">11:21 AM</span>
+                                <div class="dropdown-message small">I've sent the final files over to you for review. When you're able to sign off of them let me know and we can discuss distribution.</div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item small" href="#">View all messages</a>
+                        </div>
+                    </li>*@
+                @if (Request.IsAuthenticated)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="loadNotifications()">
+                            <i class="fa fa-fw fa-bell"></i>
+                            <span class="d-lg-none">
+                                Alerts
+                                <span class="badge badge-pill badge-warning"></span>
+                            </span>
                         </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">
-                            <strong>John Doe</strong>
-                            <span class="small float-right text-muted">11:21 AM</span>
-                            <div class="dropdown-message small">I've sent the final files over to you for review. When you're able to sign off of them let me know and we can discuss distribution.</div>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item small" href="#">View all messages</a>
-                    </div>
-                </li>*@
-@if (Request.IsAuthenticated)
-{
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="loadNotifications()">
-                        <i class="fa fa-fw fa-bell"></i>
-                        <span class="d-lg-none">
-                            Alerts
-                            <span  class="badge badge-pill badge-warning"></span>
-                        </span>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="alertsDropdown">
-                        <h6 class="dropdown-header">New alerts:</h6>
-                        <span id="notifications">
-                        </span>
-                        @*<div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-            <span class="text-success">
-            <strong>
-                <i class="fa fa-long-arrow-up fa-fw"></i>Status Update
-            </strong>
-            </span>
-            <span class="small float-right text-muted">11:21 AM</span>
-            <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
-            </a>*@
-                        @*<div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-                <span class="text-danger">
-                    <strong>
-                        <i class="fa fa-long-arrow-down fa-fw"></i>Status Update
-                    </strong>
-                </span>
-                <span class="small float-right text-muted">11:21 AM</span>
-                <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-                <span class="text-success">
-                    <strong>
-                        <i class="fa fa-long-arrow-up fa-fw"></i>Status Update
-                    </strong>
-                </span>
-                <span class="small float-right text-muted">11:21 AM</span>
-                <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item small" href="#">View all alerts</a>
-                        *@
-                    </div>
-                </li>
+                        <div class="dropdown-menu" aria-labelledby="alertsDropdown">
+                            <h6 class="dropdown-header">New alerts:</h6>
+                            <span id="notifications">
+                            </span>
+                            @*<div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">
+                                <span class="text-success">
+                                <strong>
+                                    <i class="fa fa-long-arrow-up fa-fw"></i>Status Update
+                                </strong>
+                                </span>
+                                <span class="small float-right text-muted">11:21 AM</span>
+                                <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
+                                </a>*@
+                            @*<div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">
+                                    <span class="text-danger">
+                                        <strong>
+                                            <i class="fa fa-long-arrow-down fa-fw"></i>Status Update
+                                        </strong>
+                                    </span>
+                                    <span class="small float-right text-muted">11:21 AM</span>
+                                    <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">
+                                    <span class="text-success">
+                                        <strong>
+                                            <i class="fa fa-long-arrow-up fa-fw"></i>Status Update
+                                        </strong>
+                                    </span>
+                                    <span class="small float-right text-muted">11:21 AM</span>
+                                    <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item small" href="#">View all alerts</a>
+                            *@
+                        </div>
+                    </li>
                 }
                 <li class="nav-item">
                     <form class="form-inline my-2 my-lg-0 mr-lg-2" action="/Page/Search" method="GET">
@@ -265,7 +180,7 @@
         </a>
         @RenderSection("scripts", required: false)
         <!-- Bootstrap core JavaScript-->
-        
+
         <script src="~/Scripts/bootstrap.bundle.min.js"></script>
         <!-- Core plugin JavaScript-->
         <script src="~/Scripts/jquery.easing.min.js"></script>
@@ -273,36 +188,36 @@
         <script src="~/Scripts/sb-admin.min.js"></script>
         <script src="~/Scripts/Chart.bundle.min.js"></script>
         @if (Request.IsAuthenticated)
-    {
+        {
             //TODO Aantal requests limiteren?
-        <script>
-            function synchronizeDB() {
-                $.getJSON("/api/Basic", function (data) {
-                    var items = [];
-                    $.each(data, function (key, val) {
-                        iziToast.info({ title: "Nieuwe melding!", message: val.Alert.Content, position: "topRight" });
+            <script>
+                function synchronizeDB() {
+                    $.getJSON("/api/Basic", function (data) {
+                        var items = [];
+                        $.each(data, function (key, val) {
+                            iziToast.info({ title: "Nieuwe melding!", message: val.Alert.Content, position: "topRight" });
+                        });
                     });
-                });
-                setTimeout(synchronizeDB, 5000);
-            }
-            //TODO STACKOVERflow fixen
-            //synchronizeDB();
-            //loadNotifications();
-            var ul = document.getElementById("notifications");
-            function loadNotifications() {
-                console.log("loadNotifications");
-                $.getJSON("/api/Basic/GetNotifications", function (data) {
-                    ul.innerHTML = "";
-                    var items = [];
-                    $.each(data, function (key, val) {
-                        var span = document.createElement("span");
-                        span.innerHTML = '<div class="dropdown-divider"></div><a class="dropdown-item" href= "#" ><div class="dropdown-message small">' + val.Alert.Content + '</div></a >';
-                        ul.appendChild(span);
+                    setTimeout(synchronizeDB, 5000);
+                }
+                //TODO STACKOVERflow fixen
+                //synchronizeDB();
+                //loadNotifications();
+                var ul = document.getElementById("notifications");
+                function loadNotifications() {
+                    console.log("loadNotifications");
+                    $.getJSON("/api/Basic/GetNotifications", function (data) {
+                        ul.innerHTML = "";
+                        var items = [];
+                        $.each(data, function (key, val) {
+                            var span = document.createElement("span");
+                            span.innerHTML = '<div class="dropdown-divider"></div><a class="dropdown-item" href= "#" ><div class="dropdown-message small">' + val.Alert.Content + '</div></a >';
+                            ul.appendChild(span);
+                        });
                     });
-                });
-            }
-        </script>
-}
+                }
+            </script>
+        }
     </div>
 </body>
 </html>

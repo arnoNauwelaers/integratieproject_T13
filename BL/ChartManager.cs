@@ -39,11 +39,17 @@ namespace BL
                 case DateFrequencyType.monthly: since = DateTime.Now.AddMonths(-1); break;
                 case DateFrequencyType.yearly: since = DateTime.Now.AddYears(-1); break;
             }
-            //TODO data toevoegen aan chart
-            Dictionary<string, int> tempData = socialMediaManager.GetDataFromPost(since, chart.ChartValue, (List<Item>) chart.Items);
-            foreach (var item in tempData)
+            //TODO fix 28/4
+            Dictionary<string, int> tempData;
+            foreach (var item in chart.Items)
             {
-                chart.Data.Add(new Data() { Name = item.Key, Amount = item.Value });
+                tempData = socialMediaManager.GetDataFromPost(since, chart.ChartValue, item);
+                ChartItemData tempChartItemData = new ChartItemData() { Item = item };
+                foreach (var data in tempData)
+                {
+                    tempChartItemData.Data.Add(new Data() { Name = data.Key, Amount = data.Value });
+                }
+                chart.ChartItemData.Add(tempChartItemData);
             }
             return chartRepository.CreateChart(chart);
         }

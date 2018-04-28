@@ -14,7 +14,7 @@ namespace DAL.EF
 
         public SocialMediaRepository(BarometerDbContext ctx)
         {
-      this.ctx = ctx;
+            this.ctx = ctx;
         }
 
         public IEnumerable<SocialMediaPost> ReadSocialMediaPosts()
@@ -22,7 +22,7 @@ namespace DAL.EF
             return ctx.SocialMediaPosts.Include(a => a.SocialMediaProfiles).ToList<SocialMediaPost>();
         }
 
-        public IEnumerable<SocialMediaPost> ReadSocialMediaPostsSince(DateTime since, List<Item> items)
+        public IEnumerable<SocialMediaPost> ReadSocialMediaPostsSince(DateTime since, Item item)
         {
             List<SocialMediaPost> tempPosts = ctx.SocialMediaPosts.Include(a => a.SocialMediaProfiles).Include(a => a.Woorden).Include(a => a.Hashtags).Include(a => a.Personen).ToList().FindAll(i => i.Date > since);
             List<SocialMediaPost> posts = new List<SocialMediaPost>();
@@ -30,13 +30,11 @@ namespace DAL.EF
             {
                 post.ListsToArrays();
             }
-            foreach (var item in items)
+            //TODO niet alleen voor persoon?
+            List<SocialMediaPost> results = tempPosts.FindAll(i => i.Person.Contains(item.Name));
+            foreach (var result in results)
             {
-                List<SocialMediaPost> results = tempPosts.FindAll(i => i.Person.Contains(item.Name));
-                foreach (var result in results)
-                {
-                    posts.Add(result);
-                }
+                posts.Add(result);
             }
             return posts;
         }
@@ -112,14 +110,14 @@ namespace DAL.EF
         }
 
         public List<SocialMediaProfile> ReadProfiles()
-    {
-      return ctx.SocialMediaProfiles.ToList();
-    }
+        {
+            return ctx.SocialMediaProfiles.ToList();
+        }
 
-    public SocialMediaProfile ReadProfile(int id)
-    {
-      return ctx.SocialMediaProfiles.Find(id);
-    }
+        public SocialMediaProfile ReadProfile(int id)
+        {
+            return ctx.SocialMediaProfiles.Find(id);
+        }
 
         //public int ReadAmountHashtags(string hashtag)
         //{

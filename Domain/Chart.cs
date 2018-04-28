@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BL.Domain
 {
+    //TODO per item een lijst met data kunnen bevatten
     public class Chart
     {
         [Key]
@@ -19,7 +21,10 @@ namespace BL.Domain
         public double Height { get; set; }
         public double Width { get; set; }
         public Boolean Saved { get; set; } = false;
-        public virtual ICollection<Data> Data { get; set; } = new List<Data>();
+        public Boolean MultipleItems { get; set; } = false;
+        [NotMapped]
+        public virtual ICollection<ChartItemData> ChartItemData { get; set; } = new List<ChartItemData>();
+        public virtual ICollection<ChartItemData> SavedChartItemData { get; set; } = new List<ChartItemData>();
         public DateFrequencyType FrequencyType { get; set; }
         public DateTime? StartDate { get; set; } = null;
         public DateTime? EndDate { get; set; } = null;
@@ -42,4 +47,6 @@ namespace BL.Domain
         public string ChartValue;
         public string DateFrequency;
     }
+
+    
 }

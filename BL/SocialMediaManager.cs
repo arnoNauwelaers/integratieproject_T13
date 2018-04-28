@@ -116,10 +116,10 @@ namespace BL
       }
     }
 
-    public Dictionary<string, int> GetDataFromPost(DateTime since, ChartValue value, List<Item> items)
+    public Dictionary<string, int> GetDataFromPost(DateTime since, ChartValue value, Item item)
     {
       Dictionary<string, int> tempList = new Dictionary<string, int>();
-      List<SocialMediaPost> posts = (List<SocialMediaPost>)socialMediaRepository.ReadSocialMediaPostsSince(since, items);
+      List<SocialMediaPost> posts = (List<SocialMediaPost>)socialMediaRepository.ReadSocialMediaPostsSince(since, item);
       if (value == ChartValue.hashtags)
       {
         foreach (var post in posts)

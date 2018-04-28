@@ -80,6 +80,7 @@
     <Compile Include="AlertType.cs" />
     <Compile Include="ApplicationUser.cs" />
     <Compile Include="Chart.cs" />
+    <Compile Include="ChartItemData.cs" />
     <Compile Include="ChartType.cs" />
     <Compile Include="ChartValue.cs" />
     <Compile Include="Dashboard.cs" />

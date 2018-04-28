@@ -27,13 +27,10 @@
     #dashboardTitle {
         display: inline-block;
     }
-
 </style>
-
 <h2 id="dashboardTitle">Dashboard</h2>
-<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Add Chart</button>
+<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#addModal">Add Chart</button>
 <button id="editButton" type="button" class="btn btn-primary btn-lg">Edit</button>
-
 
 <div class="resize-container">
     <div value="1" class="grafiek resize-drag">
@@ -47,9 +44,8 @@
         </div>
     }
 </div>
-
 <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
+<div id="addModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -63,30 +59,33 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2 labelchart" for="items">Items:</label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="items" name="items" onchange="if (this.selectedIndex) addItem();">
+                            <select class="selectModal form-control" id="items" name="items" onchange="addItem()">
+                                <option style="display:none"></option>
                                 @{
                                     <optgroup label="Persons">
                                         @foreach (var item in ViewBag.Persons)
                                         {
-                                        <option value="@item.Name">@item.Name</option>
-                                        }
-                                        </optgroup>
-                                        <optgroup label="Themes">
-                                            @foreach (var item in ViewBag.Themes)
-                                            {
                                             <option value="@item.Name">@item.Name</option>
-                                            }
-                                            </optgroup>
-                                            <optgroup label="Organizations">
-                                                @foreach (var item in ViewBag.Organizations)
-                                                {
-                                                <option value="@item.Name">@item.Name</option>
-                                                }
-                                                </optgroup>
-                                                }
-</select>
+                                        }                                   @*TODO: hardcoded options weghalen*@
+                                        <option value="1">Bart De Wever</option>
+                                        <option value="2">Kris Peeters</option>
+                                    </optgroup>
+                                    <optgroup label="Themes">
+                                        @foreach (var item in ViewBag.Themes)
+                                        {
+                                            <option value="@item.Name">@item.Name</option>
+                                        }
+                                    </optgroup>
+                                    <optgroup label="Organizations">
+                                        @foreach (var item in ViewBag.Organizations)
+                                        {
+                                            <option value="@item.Name">@item.Name</option>
+                                        }
+                                    </optgroup>
+                                }
+                            </select>
                         </div>
-                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2 labelchart" for="type">Type of chart:</label>
                         <div class="col-sm-10">
@@ -97,7 +96,7 @@
                                 <option value="top">Top</option>
                             </select>
                         </div>
-                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2 labelchart" for="value">Which value?</label>
                         <div class="col-sm-10">
@@ -107,7 +106,7 @@
                                 <option value="hashtags">Hashtags</option>
                             </select>
                         </div>
-                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2 labelchart" for="value">Frequency</label>
                         <div class="col-sm-10">
@@ -121,179 +120,18 @@
                         </div>
                     </div>
                     <h3>Toegevoegde items:</h3>
-                    <ul>
-                        <li>test1</li>
-                        <li>test2</li>
+                    <ul id="itemList">
+                        
                     </ul>
-                    </div>
+                </div>
                 <div class="modal-footer">
                     <button type="button" onclick="AddChart()" class="btn btn-success">Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
-                </form>
-</div>
+            </form>
+        </div>
 
     </div>
 </div>
-
 <script src="~/Scripts/interact.min.js"></script>
-<script src="~/Scripts/jquery.min.js"></script>
-
-<script>
-    //alles met klasse .resize-drag kan gesleept en vergroot worden
-    interact('.resize-drag')
-        .draggable({
-            // enable inertial throwing
-            inertia: true,
-            // keep the element within the area of it's parent
-            restrict: {
-                restriction: "parent",
-                endOnly: true,
-                elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-            },
-            // enable autoScroll
-            autoScroll: true,
-
-            // call this function on every dragmove event
-            onmove: dragMoveListener,
-            // call this function on every dragend event
-            onend: function (event) {
-                var textEl = event.target.querySelector('p');
-
-                textEl && (textEl.textContent =
-                    'moved a distance of '
-                    + (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
-                        Math.pow(event.pageY - event.y0, 2) | 0))
-                        .toFixed(2) + 'px');
-            }
-        });
-
-    function dragMoveListener(event) {
-        var target = event.target,
-            // keep the dragged position in the data-x/data-y attributes
-            x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-            y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-
-        // translate the element
-        target.style.webkitTransform =
-            target.style.transform =
-            'translate(' + x + 'px, ' + y + 'px)';
-
-        // update the posiion attributes
-        target.setAttribute('data-x', x);
-        target.setAttribute('data-y', y);
-    }
-
-    // this is used later in the resizing and gesture demos
-    window.dragMoveListener = dragMoveListener;
-
-
-    interact('.resize-drag')
-        .draggable({
-            onmove: window.dragMoveListener,
-            restrict: {
-                restriction: 'parent',
-                elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-            },
-        })
-        .resizable({
-            // resize from all edges and corners
-            edges: { left: true, right: true, bottom: true, top: true },
-
-            // keep the edges inside the parent
-            restrictEdges: {
-                outer: 'parent',
-                endOnly: true,
-            },
-
-            // minimum size
-            restrictSize: {
-                min: { width: 100, height: 50 },
-            },
-
-            inertia: true,
-        })
-        .on('resizemove', function (event) {
-            var target = event.target,
-                x = (parseFloat(target.getAttribute('data-x')) || 0),
-                y = (parseFloat(target.getAttribute('data-y')) || 0);
-
-            // update the element's style
-            target.style.width = event.rect.width + 'px';
-            target.style.height = event.rect.height + 'px';
-
-            // translate when resizing from top or left edges
-            x += event.deltaRect.left;
-            y += event.deltaRect.top;
-
-            target.style.webkitTransform = target.style.transform =
-                'translate(' + x + 'px,' + y + 'px)';
-
-            target.setAttribute('data-x', x);
-            target.setAttribute('data-y', y);
-            target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height);
-        });
-    $(".grafiek").removeClass("resize-drag");
-    $("#editButton").click(function () {
-        if ($("#editButton").hasClass("btn-success")) {
-            $(".grafiek").removeClass("resize-drag");
-            $("#editButton").addClass("btn-primary");
-            $("#editButton").removeClass("btn-success");
-            $("#editButton").html("Edit");
-            SaveCharts();
-        }
-        else {
-            $(".grafiek").addClass("resize-drag");
-            $("#editButton").removeClass("btn-primary");
-            $("#editButton").addClass("btn-success");
-            $("#editButton").html("Save");
-        }
-    });
-
-    function SaveCharts() {
-        var text = '{ "charts" : [';
-        var teller = 0;
-        $(".grafiek").each(function (index) {
-            teller++;
-            var id = $(this).attr("value");
-            var X = $(this).attr("data-x");
-            var Y = $(this).attr("data-y");
-            if (X == null) {
-                X = 0;
-                Y = 0;
-            }
-            var Height = $(this).height();
-            var Width = $(this).width();
-            if (!teller == 1) {
-                text += ',';
-            }
-            text += '{ "Id":"' + id + '" , "X":"' + X + '" , "Y":"' + Y + '" , "Height":"' + Height + '" , "Width":"' + Width + '" }';
-            $(".grafiek")
-        })
-        text += ']}';
-
-        var obj = JSON.parse(text);
-        $.post("/api/Basic/EditChart", { json: obj });
-    }
-
-    var items = "";
-    function AddChart() {
-        var type = $("#type option:selected").text();
-        var value = $("#value option:selected").text();
-        var frequency = $("#frequency option:selected").text();
-        var json = "{" + "\"Items\":\"" + items + "\", \"ChartType\":\"" + type + "\", \"ChartValue\":\"" +  value + "\", \"DateFrequency\":\"" + frequency  + "\"" + "}";
-        console.log(json);
-        items = "";
-    }
-
-    function addItem() {
-        var item = $("#items option:selected").text();
-        if (items != "") {
-            items += " " + item;
-        }
-        else {
-            items = item;
-        }
-    }
-    
-</script>
+<script src="~/Scripts/dashboard.js"></script>

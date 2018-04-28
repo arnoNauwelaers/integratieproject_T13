@@ -26,17 +26,21 @@ namespace politiekeBarometer
       if (!roleManager.RoleExists("SuperAdmin"))
       {
 
-        var role = new IdentityRole();
-        role.Name = "SuperAdmin";
-        roleManager.Create(role);
+                var role = new IdentityRole
+                {
+                    Name = "SuperAdmin"
+                };
+                roleManager.Create(role);
 
-        // make a superadmin to rule them all                   
+                // make a superadmin to rule them all                   
 
-        ApplicationUser user = new ApplicationUser();
-        user.UserName = "SuperAdmin";
-        user.Email = "t13barosuper@gmail.com";
+                ApplicationUser user = new ApplicationUser
+                {
+                    UserName = "SuperAdmin",
+                    Email = "t13barosuper@gmail.com"
+                };
 
-        string userPWD = "superadmin";
+                string userPWD = "superadmin";
 
         var chkUser = UserManager.Create(user, userPWD);
         
@@ -52,9 +56,11 @@ namespace politiekeBarometer
 
       if (!roleManager.RoleExists("Admin"))
       {
-        var role = new IdentityRole();
-        role.Name = "Admin";
-        roleManager.Create(role);
+                var role = new IdentityRole
+                {
+                    Name = "Admin"
+                };
+                roleManager.Create(role);
 
         ApplicationUser user2 = new ApplicationUser() { UserName = "TestAdmin", Email = "yagodecuyper@gmail.com" };
         var chkuser2 = UserManager.Create(user2, "admin2");
@@ -66,9 +72,11 @@ namespace politiekeBarometer
 
       if (!roleManager.RoleExists("Standard"))
       {
-        var role = new IdentityRole();
-        role.Name = "Standard";
-        roleManager.Create(role);
+                var role = new IdentityRole
+                {
+                    Name = "Standard"
+                };
+                roleManager.Create(role);
       }
     }
   }

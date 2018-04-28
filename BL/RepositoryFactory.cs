@@ -19,8 +19,9 @@ namespace BL
     private static ItemRepository itemRepo;
     private static SocialMediaRepository smRepo;
     private static DataRepository dataRepository;
+    private static ChartItemDataRepository chartItemDataRepository;
 
-    public static void CreateContext()
+        public static void CreateContext()
     {
       if (ctx == null)
       {
@@ -32,6 +33,7 @@ namespace BL
         itemRepo = new ItemRepository(ctx);
         smRepo = new SocialMediaRepository(ctx);
         dataRepository = new DataRepository(ctx);
+        chartItemDataRepository = new ChartItemDataRepository(ctx);
       }
       
 
@@ -71,6 +73,11 @@ namespace BL
     public static DataRepository CreateDataRepository()
     {
         return dataRepository;
+    }
+
+    public static ChartItemDataRepository CreateChartItemDataRepository()
+    {
+        return chartItemDataRepository;
     }
 
     }

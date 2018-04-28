@@ -100,7 +100,7 @@ namespace politiekeBarometer.Controllers
             Chart chart = ChartManager.CreateChartFromDashboard(Chart.Items, Chart.ChartType, Chart.ChartValue, Chart.DateFrequency);
             user.Dashboard.Add(chart);
             UserManager.Update(user);
-            return Ok(chart.Data);
+            return Ok(chart.ChartItemData);
         }
 
         [Route("api/Basic/EditChart")]
