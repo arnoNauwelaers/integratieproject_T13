@@ -18,8 +18,8 @@ namespace BL.Domain
         public virtual ChartValue ChartValue { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public double Height { get; set; }
-        public double Width { get; set; }
+        public double Height { get; set; } = 400;
+        public double Width { get; set; } = 530;
         public Boolean Saved { get; set; } = false;
         public Boolean MultipleItems { get; set; } = false;
         [NotMapped]

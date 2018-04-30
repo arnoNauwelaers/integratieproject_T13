@@ -142,9 +142,13 @@ function AddChart() {
     console.log(json);
     items = "";
 }
-
+var ul = document.getElementById("itemList");
 function addItem() {
     var item = $("#items option:selected").val();
+    var itemName = $("#items option:selected").text();
+    var span = document.createElement("span");
+    span.innerHTML = '<li>' + itemName + '</li>';
+    ul.appendChild(span);
     if (items !== "") {
         items += " " + item;
     }
@@ -158,4 +162,9 @@ jQuery(document).ready(function () {
         dropdownParent: $('#addModal'),
         width: '100%'
     });
+});
+
+$('#addModal').on('hidden.bs.modal', function () {
+    items = "";
+    ul.innerHTML = "";
 });
