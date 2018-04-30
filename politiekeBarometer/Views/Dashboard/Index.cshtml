@@ -1,4 +1,4 @@
-﻿@*@model IEnumerable<BL.Domain.ApplicationUser>*@
+﻿@model politiekeBarometer.Models.DashboardModel
 
 @{
     ViewBag.Title = "Dashboard";
@@ -12,8 +12,6 @@
         font-family: sans-serif;
         border-radius: 8px;
         padding: 20px;
-        margin: 30px 20px;
-        width: 120px;
         /* This makes things *much* easier */
         box-sizing: border-box;
     }
@@ -33,14 +31,11 @@
 <button id="editButton" type="button" class="btn btn-primary btn-lg">Edit</button>
 
 <div class="resize-container">
-    <div value="1" class="grafiek resize-drag">
-        Resize from any edge or corner
-    </div>
-    @foreach (Chart chart in Model.Dashboard)
+    @foreach (var chart in Model.Charts)
     {
         //TODO hier code om elke chart in te laden op juiste positie en grootte
-        <div value="@*@chart.ChartId*@" class="grafiek resize-drag">
-            Resize from any edge or corner
+        <div id="@chart.ChartId" data-x="@chart.X" data-y="@chart.Y" value="@chart.ChartId" class="grafiek resize-drag" style="@chart.GetStyle()">
+            @chart.ChartId.ToString();
         </div>
     }
 </div>
@@ -54,16 +49,17 @@
                 <h4 class="modal-title">Add a chart</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <form class="form-horizontal" action="/action_page.php">
+            <form class="form-horizontal" method="post" action="/Dashboard/AddChart">
+                <input type="hidden" value="" name="items" id="itemsHidden" />
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="control-label col-sm-2 labelchart" for="items">Items:</label>
                         <div class="col-sm-10">
-                            <select class="selectModal form-control" id="items" name="items" onchange="addItem()">
+                            <select class="selectModal form-control" id="items" name="itemsSelect" onchange="addItem()">
                                 <option style="display:none"></option>
                                 @{
                                     <optgroup label="Persons">
-                                        @foreach (var item in ViewBag.Persons)
+                                        @foreach (var item in Model.Persons)
                                         {
                                             <option value="@item.Name">@item.Name</option>
                                         }                                   @*TODO: hardcoded options weghalen*@
@@ -71,13 +67,13 @@
                                         <option value="2">Kris Peeters</option>
                                     </optgroup>
                                     <optgroup label="Themes">
-                                        @foreach (var item in ViewBag.Themes)
+                                        @foreach (var item in Model.Themes)
                                         {
                                             <option value="@item.Name">@item.Name</option>
                                         }
                                     </optgroup>
                                     <optgroup label="Organizations">
-                                        @foreach (var item in ViewBag.Organizations)
+                                        @foreach (var item in Model.Organizations)
                                         {
                                             <option value="@item.Name">@item.Name</option>
                                         }
@@ -108,7 +104,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-2 labelchart" for="value">Frequency</label>
+                        <label class="control-label col-sm-2 labelchart" for="frequency">Frequency</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="frequency" name="frequency">
                                 <option value="hourly">Hourly</option>
@@ -120,12 +116,10 @@
                         </div>
                     </div>
                     <h4>Added items:</h4>
-                    <ul id="itemList">
-                        
-                    </ul>
+                    <ul id="itemList"></ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="AddChart()" class="btn btn-success">Save</button>
+                    <button type="submit" class="btn btn-success">Add</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </form>

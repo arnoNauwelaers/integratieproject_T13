@@ -106,10 +106,10 @@ namespace politiekeBarometer.Controllers
         [Route("api/Basic/EditChart")]
         [HttpPost]
         [Authorize]
-        public IHttpActionResult EditChart(string json)
+        public IHttpActionResult EditChart([FromBody] string json)
         {
-            var Charts = JObject.Parse(json).ToObject<List<TempChartEdit>>();
-
+            var Charts = JArray.Parse(json).ToObject<List<TempChartEdit>>();
+            ChartManager.EditCharts(Charts);
             return Ok();
         }
 

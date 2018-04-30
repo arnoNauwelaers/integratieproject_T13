@@ -1,4 +1,8 @@
-﻿interact('.resize-drag')
+﻿var items = "";
+var ul = document.getElementById("itemList");
+var itemsHidden = document.getElementById("itemsHidden");
+
+interact('.resize-drag')
     .draggable({
         // enable inertial throwing
         inertia: true,
@@ -108,41 +112,36 @@ $("#editButton").click(function () {
 });
 
 function SaveCharts() {
-    var text = '{ "charts" : [';
+    var text = '[';
     var teller = 0;
     $(".grafiek").each(function (index) {
         teller++;
         var id = $(this).attr("value");
         var X = $(this).attr("data-x");
         var Y = $(this).attr("data-y");
-        if (X === null) {
+        console.log(X);
+        if (isNaN(X)) {
             X = 0;
             Y = 0;
         }
         var Height = $(this).height();
         var Width = $(this).width();
-        if (!teller === 1) {
+        if (teller !== 1) {
             text += ',';
         }
-        text += '{ "Id":"' + id + '" , "X":"' + X + '" , "Y":"' + Y + '" , "Height":"' + Height + '" , "Width":"' + Width + '" }';
+        text += '{ "Id":"' + id + '" , "X":"' + X + '" , "Y":"' + Y + '" , "Height":"' + (Height + 40) + '" , "Width":"' + (Width + 40) + '" }';
         $(".grafiek")
     })
-    text += ']}';
-
-    var obj = JSON.parse(text);
-    $.post("/api/Basic/EditChart", { json: obj });
+    text += ']';
+    console.log(text);
+    $.ajax({
+        dataType: "json",
+        url: "/api/Basic/EditChart",
+        method: "POST",
+        data: { '': text }
+    });
 }
 
-var items = "";
-function AddChart() {
-    var type = $("#type option:selected").text();
-    var value = $("#value option:selected").text();
-    var frequency = $("#frequency option:selected").text();
-    var json = "{" + "\"Items\":\"" + items + "\", \"ChartType\":\"" + type + "\", \"ChartValue\":\"" + value + "\", \"DateFrequency\":\"" + frequency + "\"" + "}";
-    console.log(json);
-    items = "";
-}
-var ul = document.getElementById("itemList");
 function addItem() {
     var item = $("#items option:selected").val();
     var itemName = $("#items option:selected").text();
@@ -155,6 +154,7 @@ function addItem() {
     else {
         items = item;
     }
+    itemsHidden.value = items;
 }
 
 jQuery(document).ready(function () {
@@ -166,5 +166,6 @@ jQuery(document).ready(function () {
 
 $('#addModal').on('hidden.bs.modal', function () {
     items = "";
+    itemsHidden.value = items;
     ul.innerHTML = "";
 });

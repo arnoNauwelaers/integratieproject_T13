@@ -30,6 +30,14 @@ namespace BL
 
         public Chart AddChart(Chart chart)
         {
+            return chartRepository.CreateChart(chart);
+        }
+
+
+        //Non saved chart -> data realtime ophalen
+        public Chart GetChart(int id)
+        {
+            Chart chart = chartRepository.ReadChart(id);
             DateTime since = DateTime.Now.AddDays(-7);
             switch (chart.FrequencyType)
             {
@@ -39,7 +47,6 @@ namespace BL
                 case DateFrequencyType.monthly: since = DateTime.Now.AddMonths(-1); break;
                 case DateFrequencyType.yearly: since = DateTime.Now.AddYears(-1); break;
             }
-            //TODO fix 28/4
             Dictionary<string, int> tempData;
             foreach (var item in chart.Items)
             {
@@ -51,12 +58,7 @@ namespace BL
                 }
                 chart.ChartItemData.Add(tempChartItemData);
             }
-            return chartRepository.CreateChart(chart);
-        }
-
-        public Chart GetChart(int id)
-        {
-            return chartRepository.ReadChart(id);
+            return chart;
         }
 
         public void UpdateChartsFromTempChart(List<TempChartEdit> chartList)
@@ -95,6 +97,19 @@ namespace BL
             chart.FrequencyType = (DateFrequencyType)Enum.Parse(typeof(DateFrequencyType), dateFrequency);
             Chart finalChart = AddChart(chart);
             return finalChart;
+        }
+
+        public void EditCharts(List<TempChartEdit> charts)
+        {
+            foreach (var chart in charts)
+            {
+                Chart chartObj = chartRepository.ReadChart(chart.Id);
+                chartObj.X = chart.X;
+                chartObj.Y = chart.Y;
+                chartObj.Height = chart.Height;
+                chartObj.Width = chart.Width;
+                chartRepository.UpdateChart(chartObj);
+            }
         }
     }
 }
