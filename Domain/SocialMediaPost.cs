@@ -45,10 +45,10 @@ namespace BL.Domain
         public virtual ICollection<SocialMediaProfile> SocialMediaProfiles { get; set; } = new List<SocialMediaProfile>();
         public virtual ICollection<Sentiment> Sentiments { get; set; } = new List<Sentiment>();
         public virtual ICollection<Hashtag> Hashtags { get; set; } = new List<Hashtag>();
-        public virtual ICollection<Verhaal> Verhalen { get; set; } = new List<Verhaal>();
-        public virtual ICollection<Woord> Woorden { get; set; } = new List<Woord>();
-        public virtual ICollection<Persoon> Personen { get; set; } = new List<Persoon>();
-        public virtual ICollection<Thema> Themas { get; set; } = new List<Thema>();
+        public virtual ICollection<Url> Urls { get; set; } = new List<Url>();
+        public virtual ICollection<Word> Words { get; set; } = new List<Word>();
+        public virtual ICollection<Person> Persons { get; set; } = new List<Person>();
+        public virtual ICollection<Theme> Themes { get; set; } = new List<Theme>();
 
         public void ArraysToLists()
         {
@@ -62,19 +62,19 @@ namespace BL.Domain
             }
             foreach (var item in Verhaal)
             {
-                Verhalen.Add(new Verhaal(item));
+                Urls.Add(new Url(item));
             }
             foreach (var item in Word)
             {
-                Woorden.Add(new Woord(item));
+                Words.Add(new Word(item));
             }
             foreach (var item in Person)
             {
-                Personen.Add(new Persoon(item));
+                Persons.Add(new Person(item));
             }
             foreach (var item in Theme)
             {
-                Themas.Add(new Thema(item));
+                Themes.Add(new Theme(item));
             }
         }
 
@@ -93,25 +93,25 @@ namespace BL.Domain
                 i++;
             }
             i = 0;
-            foreach (var item in Verhalen)
+            foreach (var item in Urls)
             {
                 Verhaal[i] = item.Value;
                 i++;
             }
             i = 0;
-            foreach (var item in Woorden)
+            foreach (var item in Words)
             {
                 Word[i] = item.Value;
                 i++;
             }
             i = 0;
-            foreach (var item in Personen)
+            foreach (var item in Persons)
             {
                 Person[i] = item.Value;
                 i++;
             }
             i = 0;
-            foreach (var item in Themas)
+            foreach (var item in Themes)
             {
                 Theme[i] = item.Value;
                 i++;
@@ -119,94 +119,4 @@ namespace BL.Domain
         }
     }
 
-    public class Hashtag
-    {
-        [Key]
-        public int Id { get; set; }
-        public string Value { get; set; }
-        public Hashtag(string val)
-        {
-            Value = val;
-        }
-
-        public Hashtag()
-        {
-        }
-    }
-
-    public class Verhaal
-    {
-        [Key]
-        public int Id { get; set; }
-        public string Value { get; set; }
-        public Verhaal(string val)
-        {
-            Value = val;
-        }
-
-        public Verhaal()
-        {
-        }
-    }
-
-
-    public class Woord
-    {
-        [Key]
-        public int Id { get; set; }
-        public string Value { get; set; }
-        public Woord(string val)
-        {
-            Value = val;
-        }
-
-        public Woord()
-        {
-        }
-    }
-
-    public class Persoon
-    {
-        [Key]
-        public int Id { get; set; }
-        public string Value { get; set; }
-        public Persoon(string val)
-        {
-            Value = val;
-        }
-
-        public Persoon()
-        {
-        }
-    }
-
-    public class Thema
-    {
-        [Key]
-        public int Id { get; set; }
-        public string Value { get; set; }
-        public Thema(string val)
-        {
-            Value = val;
-        }
-
-        public Thema()
-        {
-        }
-    }
-
-    public class Sentiment
-    {
-        [Key]
-        public int Id { get; set; }
-        public double Value { get; set; }
-        public Sentiment(double val)
-        {
-            Value = val;
-        }
-
-        public Sentiment()
-        {
-        }
-    }
 }

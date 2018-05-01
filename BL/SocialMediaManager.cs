@@ -161,7 +161,7 @@ namespace BL
       {
         foreach (var post in posts)
         {
-          foreach (var word in post.Woorden)
+          foreach (var word in post.Words)
           {
             if (tempList.ContainsKey(word.Value))
             {

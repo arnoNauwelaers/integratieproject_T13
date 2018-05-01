@@ -20,16 +20,6 @@ namespace politiekeBarometer.Controllers
       ChartManager cm = new ChartManager();
       List<Item> items = new List<Item>();
       items.Add(p);
-      BL.Domain.Chart chart = new BL.Domain.Chart()
-      {
-        Items = items,
-        ChartType = ChartType.histogram,
-        ChartValue = ChartValue.persons,
-        Height = 400,
-        Width = 600,
-        FrequencyType = DateFrequencyType.weekly,
-      };
-      cm.AddChart(chart);
 
       
       //System.Web.Helpers.Chart testChart = new System.Web.Helpers.Chart(width: 600, height: 400).AddTitle("Test").AddSeries("Default",chartType: "Column", xValue:)

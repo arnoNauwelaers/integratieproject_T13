@@ -66,10 +66,10 @@ namespace BL
             foreach (var tempChart in chartList)
             {
                 Chart chart = chartRepository.ReadChart(tempChart.Id);
-                chart.X = tempChart.X;
-                chart.Y = tempChart.Y;
-                chart.Width = tempChart.Width;
-                chart.Height = tempChart.Height;
+                chart.Zone.X = tempChart.X;
+                chart.Zone.Y = tempChart.Y;
+                chart.Zone.Width = tempChart.Width;
+                chart.Zone.Height = tempChart.Height;
                 chartRepository.UpdateChart(chart);
             }
         }
@@ -104,10 +104,10 @@ namespace BL
             foreach (var chart in charts)
             {
                 Chart chartObj = chartRepository.ReadChart(chart.Id);
-                chartObj.X = chart.X;
-                chartObj.Y = chart.Y;
-                chartObj.Height = chart.Height;
-                chartObj.Width = chart.Width;
+                chartObj.Zone.X = chart.X;
+                chartObj.Zone.Y = chart.Y;
+                chartObj.Zone.Height = chart.Height;
+                chartObj.Zone.Width = chart.Width;
                 chartRepository.UpdateChart(chartObj);
             }
         }

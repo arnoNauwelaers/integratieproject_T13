@@ -16,10 +16,7 @@ namespace BL.Domain
         public virtual ICollection<Item> Items { get; set; } = new List<Item>();
         public virtual ChartType ChartType { get; set; }
         public virtual ChartValue ChartValue { get; set; }
-        public double X { get; set; } = 10;
-        public double Y { get; set; } = 10;
-        public double Height { get; set; } = 400;
-        public double Width { get; set; } = 530;
+        public virtual Zone Zone { get; set; } = new Zone();
         public Boolean Saved { get; set; } = false;
         public Boolean MultipleItems { get; set; } = false;
         [NotMapped]
@@ -31,7 +28,7 @@ namespace BL.Domain
 
         public string GetStyle()
         {
-            return $"width: {Width}px; height: {Height}px; transform: translate({X}px, {Y}px);";
+            return $"width: {Zone.Width}px; height: {Zone.Height}px; transform: translate({Zone.X}px, {Zone.Y}px);";
         }
     }
 
