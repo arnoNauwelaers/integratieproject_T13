@@ -85,7 +85,7 @@ namespace DAL.EF
             {
                 if (alert.Parameter == AlertParameter.tweets)
                 {
-                    foreach (var profile in ((Person)alert.Item).socialMediaProfiles)
+                    foreach (var profile in ((Person)alert.Item).SocialMediaProfiles)
                     {
                         foreach (var compareprofile in ctx.SocialMediaProfiles.ToList<SocialMediaProfile>())
                         {

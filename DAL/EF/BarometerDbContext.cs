@@ -80,7 +80,7 @@ namespace DAL.EF
             modelBuilder.Entity<Item>().HasMany(i => i.Alerts).WithMany();
             modelBuilder.Entity<Organization>().HasMany(i => i.persons).WithMany();
             modelBuilder.Entity<Organization>().HasMany(i => i.socialMediaProfiles).WithMany();
-            modelBuilder.Entity<Person>().HasMany(i => i.socialMediaProfiles).WithMany();
+            modelBuilder.Entity<Person>().HasMany(i => i.SocialMediaProfiles).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.SocialMediaProfiles).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Words).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Urls).WithMany();

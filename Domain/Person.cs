@@ -9,7 +9,7 @@ namespace BL.Domain
         [Key]
         public int Id { get; set; }
         public string Value { get; set; }
-        public virtual ICollection<SocialMediaProfile> socialMediaProfiles { get; set; } = new List<SocialMediaProfile>();
+        public virtual ICollection<SocialMediaProfile> SocialMediaProfiles { get; set; } = new List<SocialMediaProfile>();
         public virtual Organization Organization { get; set; }
         public Person(string val)
         {

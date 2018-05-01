@@ -34,7 +34,7 @@
     @foreach (var chart in Model.Charts)
     {
         //TODO hier code om elke chart in te laden op juiste positie en grootte
-        <div id="@chart.ChartId" data-x="@chart.X" data-y="@chart.Y" value="@chart.ChartId" class="grafiek resize-drag" style="@chart.GetStyle()">
+        <div id="@chart.ChartId" data-x="@chart.Zone.X" data-y="@chart.Zone.Y" value="@chart.ChartId" class="grafiek resize-drag" style="@chart.GetStyle()">
             @chart.ChartId.ToString();
         </div>
     }

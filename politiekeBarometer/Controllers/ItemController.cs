@@ -125,7 +125,7 @@ namespace politiekeBarometer.Controllers
         Person p = new Person();
         p.Organization = itemManager.ReadOrganization(Convert.ToInt32(collection["organization"]));
         p.Name = collection["name"];
-        p.socialMediaProfiles = new List<SocialMediaProfile>() { new SocialMediaProfile { Url = collection["url"], Source = collection["src"] } };
+        p.SocialMediaProfiles = new List<SocialMediaProfile>() { new SocialMediaProfile { Url = collection["url"], Source = collection["src"] } };
         p.typeInt = 1;
         itemManager.AddPerson(p);
 
