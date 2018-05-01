@@ -57,6 +57,10 @@ namespace politiekeBarometer.Controllers
                 Organizations = Organizations,
                 Charts = UserManager.GetUser(User.Identity.GetUserId()).Dashboard
             };
+            foreach (var chart in Model.Charts)
+            {
+                ChartManager.RetrieveDataChart(chart);
+            }
             return View(Model);
         }
 

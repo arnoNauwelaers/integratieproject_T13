@@ -35,8 +35,32 @@
     {
         //TODO hier code om elke chart in te laden op juiste positie en grootte
         <div id="@chart.ChartId" data-x="@chart.Zone.X" data-y="@chart.Zone.Y" value="@chart.ChartId" class="grafiek resize-drag" style="@chart.GetStyle()">
+            <canvas id="@chart.GetCanvasId()"></canvas>
             @chart.ChartId.ToString();
         </div>
+        <script>
+        var @chart.GetCanvasId() = document.getElementById("@chart.GetCanvasId()").getContext('2d');
+        var myChart = new Chart(@chart.GetCanvasId(), {
+            type: 'bar',
+            data: {
+                labels: [@chart.GetLabels()],
+                datasets: [{
+                        label: '# of Votes',
+                    data: [@chart.GetData()],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+        </script>
     }
 </div>
 <!-- Modal -->
@@ -129,3 +153,4 @@
 </div>
 <script src="~/Scripts/interact.min.js"></script>
 <script src="~/Scripts/dashboard.js"></script>
+<script src="~/Scripts/Chart.bundle.min.js"></script>

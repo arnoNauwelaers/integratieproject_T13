@@ -217,6 +217,7 @@
     <Content Include="Content\iziToast.min.css" />
     <Content Include="Content\sb-admin.css" />
     <Content Include="Content\select2.min.css" />
+    <Content Include="Scripts\Chart.bundle.min.js" />
     <Content Include="Scripts\dashboard.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />

@@ -122,12 +122,14 @@ namespace politiekeBarometer.Controllers
 
       try
       {
-        Person p = new Person();
-        p.Organization = itemManager.ReadOrganization(Convert.ToInt32(collection["organization"]));
-        p.Name = collection["name"];
-        p.SocialMediaProfiles = new List<SocialMediaProfile>() { new SocialMediaProfile { Url = collection["url"], Source = collection["src"] } };
-        p.typeInt = 1;
-        itemManager.AddPerson(p);
+                Person p = new Person
+                {
+                    Organization = itemManager.ReadOrganization(Convert.ToInt32(collection["organization"])),
+                    Name = collection["name"],
+                    SocialMediaProfiles = new List<SocialMediaProfile>() { new SocialMediaProfile { Url = collection["url"], Source = collection["src"] } },
+                    typeInt = 1
+                };
+                itemManager.AddPerson(p);
 
         return RedirectToAction("Index");
 

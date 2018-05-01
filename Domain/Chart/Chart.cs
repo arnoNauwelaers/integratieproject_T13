@@ -30,6 +30,36 @@ namespace BL.Domain
         {
             return $"width: {Zone.Width}px; height: {Zone.Height}px; transform: translate({Zone.X}px, {Zone.Y}px);";
         }
+
+        public string GetCanvasId()
+        {
+            return $"canvas{ChartId}";
+        }
+
+        public string GetLabels()
+        {
+            string labels = "";
+            foreach (var chartItemData in ChartItemData)
+            {
+                foreach (var item in chartItemData.Data)
+                {
+                    labels += "\"" + item.Name + "\",";
+                }
+            }
+            return labels;
+        }
+        public string GetData()
+        {
+            string data = "";
+            foreach (var chartItemData in ChartItemData)
+            {
+                foreach (var item in chartItemData.Data)
+                {
+                    data += item.Amount + ", ";
+                }
+            }
+            return data;
+        }
     }
 
     //voor JSON deserializer
