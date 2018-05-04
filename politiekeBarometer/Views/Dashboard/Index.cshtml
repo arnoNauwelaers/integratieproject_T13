@@ -38,15 +38,16 @@
             <canvas id="@chart.GetCanvasId()"></canvas>
         </div>
         <script>
-            var dataChart = [@chart.GetData()];
+            var dataChart = @chart.GetData();
+            var labelsChart = @chart.GetLabels();
         var @chart.GetCanvasId() = document.getElementById("@chart.GetCanvasId()").getContext('2d');
             var myChart = new Chart(@chart.GetCanvasId(), {
                 type: 'bar',
                 data: {
-                    labels: [@Html.Raw(chart.GetLabels())],
+                    labels: [labelsChart],
                     datasets: [{
                         label: '# of Votes',
-                        data: [dataChart.replace('&quote;', '')],
+                        data: [dataChart],
                         borderWidth: 1
                     }]
                 },

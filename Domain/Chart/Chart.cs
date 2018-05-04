@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -39,28 +40,54 @@ namespace BL.Domain
 
         public string GetLabels()
         {
-            string labels = "";
+            List<string> labels = new List<string>();
             foreach (var chartItemData in ChartItemData)
             {
                 foreach (var item in chartItemData.Data)
                 {
-                    labels += '"' + item.Name + '"' + ",";
+                    labels.Add(item.Name);
                 }
             }
-            return labels;
+            return JsonConvert.SerializeObject(labels);
         }
+
         public string GetData()
         {
-            string data = "";
+            List<int> data = new List<int>();
             foreach (var chartItemData in ChartItemData)
             {
                 foreach (var item in chartItemData.Data)
                 {
-                    data += item.Amount + ", ";
+                    data.Add(item.Amount);
                 }
             }
-            return data;
+            return JsonConvert.SerializeObject(data);
         }
+
+        //public string GetLabels()
+        //{
+        //    string labels = "";
+        //    foreach (var chartItemData in ChartItemData)
+        //    {
+        //        foreach (var item in chartItemData.Data)
+        //        {
+        //            labels += '"' + item.Name + '"' + ",";
+        //        }
+        //    }
+        //    return labels;
+        //}
+        //public string GetData()
+        //{
+        //    string data = "";
+        //    foreach (var chartItemData in ChartItemData)
+        //    {
+        //        foreach (var item in chartItemData.Data)
+        //        {
+        //            data += item.Amount + ", ";
+        //        }
+        //    }
+        //    return data;
+        //}
     }
 
     //voor JSON deserializer
