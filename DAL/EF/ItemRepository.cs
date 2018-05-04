@@ -48,7 +48,7 @@ namespace DAL.EF
             List<Item> usedItems = new List<Item>();
             foreach (var item in ctx.Items.ToList<Item>())
             {
-                if (item.Name.ToUpper() == post.Person[0].ToUpper())
+                if (item.Name.ToUpper() == post.Persons.First().ToString().ToUpper())
                 {
                     usedItems.Add(item);
                 }

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BL.Domain
 {
@@ -43,7 +44,7 @@ namespace BL.Domain
             {
                 foreach (var item in chartItemData.Data)
                 {
-                    labels += "\"" + item.Name + "\",";
+                    labels += '"' + item.Name + '"' + ",";
                 }
             }
             return labels;

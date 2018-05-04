@@ -58,7 +58,7 @@ namespace BL
       else
       {
         //TODO vanaf vorige maand?
-        date = "24 Apr 2018 08:49:12";
+        date = "2 May 2018 08:49:12";
       }
       List<SocialMediaPost> data2 = (List<SocialMediaPost>)read.ReadData(date);
       foreach (var item in data2)
