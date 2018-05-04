@@ -201,6 +201,7 @@
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\PlatformController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -303,6 +304,17 @@
     <Content Include="Views\Item\OrganizationDetails.cshtml" />
     <Content Include="Views\Item\DeleteOrganization.cshtml" />
     <Content Include="Views\Item\EditOrganization.cshtml" />
+    <Content Include="Views\Item\AddSocialMediaProfileToOrganization.cshtml" />
+    <Content Include="Views\Item\PersonIndex.cshtml" />
+    <Content Include="Views\Item\DeletePerson.cshtml" />
+    <Content Include="Views\Item\EditPerson.cshtml" />
+    <Content Include="Views\Item\PersonDetails.cshtml" />
+    <Content Include="Views\Item\AddSocialMediaProfileToPerson.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\Page\OrganizationOverview.cshtml" />
+    <Content Include="Views\Page\PersonOverview.cshtml" />
+    <Content Include="Views\User\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

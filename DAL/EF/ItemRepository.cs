@@ -32,7 +32,7 @@ namespace DAL.EF
 
         public void UpdateItem(Item item)
         {
-            ctx.Entry(item).State = System.Data.Entity.EntityState.Modified;
+            ctx.Entry(item).State = EntityState.Modified;
             ctx.SaveChanges();
         }
 
@@ -93,6 +93,22 @@ namespace DAL.EF
     {
       ctx.Items.Remove(i);
       ctx.SaveChanges();
+    }
+
+
+    public List<Organization> ReadOrganizations()
+    {
+      return ctx.Organizations.ToList();
+    }
+
+    public List<Person> ReadPersons()
+    {
+      return ctx.Persons.ToList();
+    }
+
+    public Item ReadItem(int id)
+    {
+      return ctx.Items.Find(id);
     }
   }
 }

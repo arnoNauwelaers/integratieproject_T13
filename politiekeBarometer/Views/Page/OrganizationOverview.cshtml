@@ -1,0 +1,15 @@
+﻿@using BL.Domain;
+@model dynamic
+@{
+    ViewBag.Title = "OrganizationOverview";
+    List<Organization> org = ViewBag.Organizations;
+}
+
+<h2>List of all organizations:</h2>
+
+@foreach (Organization o in org)
+{
+    <li>@Html.ActionLink(o.Name, "Organization", new { id = o.ItemId }, null)</li>
+   
+}
+

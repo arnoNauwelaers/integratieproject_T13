@@ -1,43 +1,48 @@
-﻿@model BL.Domain.Person
+﻿@using BL.Domain;
+@model dynamic
 
 @{
-    ViewBag.Title = "CreatePerson";
+  ViewBag.Title = "CreatePerson";
+  List<Organization> organizations = ViewBag.Organizations;
 }
 
 <h2>CreatePerson</h2>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Person</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.typeInt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.typeInt, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.typeInt, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="row">
+    <div class="col-md-5">
+        <h2>Maak een nieuwe persoon aan</h2>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+        <form action="/Item/CreatePerson" method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+
+                <label for="name">Naam van persoon:</label>
+                <input type="text" name="name" class="form-control" id="name" placeholder="naam">
             </div>
-        </div>
+            <div class="form-group">
+                <label for="admin">Organizatie van de persoon</label>
+                <select class="form-control" id="organization" name="organization">
+                    @foreach (Organization o in organizations)
+            {
+                <option value="@o.ItemId">@o.Name</option>}
+                </select>
+            </div>
+            <div class="form-group">
+                <fieldset>
+                    <legend>Social Media profiel van de organizatie</legend>
+                    <label for="src">Bron social media profiel</label>
+                    <input type="text" name="src" class="form-control" id="src" placeholder="twitter, facebook..." />
+                    <label for="url">Link naar profiel</label>
+                    <input type="text" name="url" class="form-control" id="url" />
+                </fieldset>
+            </div>
+            <input type="submit" value="submit" />
+        </form>
+
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    <div>
+        @Html.ActionLink("Back to List", "PersonIndex")
+    </div>
 </div>
+

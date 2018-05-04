@@ -37,14 +37,28 @@
                     </a>
                 </li>
                 @if (Request.IsAuthenticated)
-                {
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                        <a class="nav-link" href="@Url.Action("Index", "Dashboard")">
-                            <i class="fa fa-fw fa-dashboard"></i>
-                            <span class="nav-link-text">Dashboard</span>
-                        </a>
-                    </li>
-                }
+    {
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <a class="nav-link" href="@Url.Action("Index", "Dashboard")">
+                    <i class="fa fa-fw fa-dashboard"></i>
+                    <span class="nav-link-text">Dashboard</span>
+                </a>
+            </li>
+}
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+
+                    <a class="nav-link" href="@Url.Action("PersonOverview", "Page")">
+                        <i class="fa fa-fw fa-page"></i>
+                        <span class="nav-link-text">Personen</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+
+                    <a class="nav-link" href="@Url.Action("OrganizationOverview", "Page")">
+                        <i class="fa fa-fw fa-page"></i>
+                        <span class="nav-link-text">Organizaties</span>
+                    </a>
+                </li>
             </ul>
             <ul class="navbar-nav sidenav-toggler">
                 <li class="nav-item">

@@ -1,0 +1,34 @@
+﻿@using BL.Domain
+@{
+
+    Person p = ViewBag.Person;
+
+}
+<h2>toevoegen socialmedia profiel aan @p.Name</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <form action="/Item/AddSocialMediaProfileToPerson" method="post">
+                <input type="hidden" name="id" value="@p.ItemId" />
+                Persoon: @p.Name<br />
+                Bestaande profielen:<br />
+                <ul>
+                    @foreach (SocialMediaProfile smp in p.SocialMediaProfiles)
+                    {
+                        <li>@smp.Source - @smp.Url</li>
+                    }
+                </ul>
+                <br />
+                <div class="form-group">
+                    <h3>toevoegen nieuw profiel</h3>
+                    <label for="src">Bron social media profiel</label>
+                    <input type="text" name="src" class="form-control" id="src" placeholder="twitter, facebook..." />
+                    <label for="url">Link naar profiel</label>
+                    <input type="text" name="url" class="form-control" id="url" />
+                </div>
+                <button type="submit" class="btn btn-primary">Toevoegen</button>
+            </form>
+        </div>
+    </div>
+</div>
+

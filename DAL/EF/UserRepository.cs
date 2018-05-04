@@ -49,6 +49,12 @@ namespace DAL.EF
             ctx.SaveChanges();
         }
 
+        public void DeleteUser(ApplicationUser user)
+    {
+      ctx.Users.Remove(user);
+      ctx.SaveChanges();
+    }
+
         public void DeleteUser(int userId)
         {
             ApplicationUser user = ctx.Users.Find(userId);
@@ -69,6 +75,11 @@ namespace DAL.EF
                 return null;
             }
         }
+
+    public ApplicationUser ReadUserByName(string name)
+    {
+      return ctx.Users.Single(u => u.UserName.Equals(name));
+    }
 
     public List<IdentityRole> ReadRoles()
     {

@@ -1,14 +1,14 @@
-﻿@model BL.Domain.Organization
+﻿@model BL.Domain.Person
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "DeletePerson";
 }
 
 <h2>Delete</h2>
 
-<h3>Zeker dat u deze organizatie wilt verwijderen?</h3>
+<h3>Zeker dat u deze persoon wilt verwijderen?</h3>
 <div>
-    <h4>Organizatie</h4>
+    <h4>Persoon</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -26,9 +26,10 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="DeleteOrganization" class="btn btn-default" /> |
+            <input type="submit" value="DeletePerson" class="btn btn-default" /> |
 
         </div>
     }
-    @Html.ActionLink("Back to List", "OrganizationIndex")
+    @Html.ActionLink("Back to List", "PersonIndex")
 </div>
+

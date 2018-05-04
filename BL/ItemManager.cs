@@ -67,9 +67,24 @@ namespace BL
       itemRepository.UpdateItem(item);
     }
 
-    public void ChangeItem(Organization o)
+    public List<Organization> GetOrganizations()
     {
-      itemRepository.UpdateItem(o);
+      return itemRepository.ReadOrganizations();
+    }
+
+    public List<Person> GetPersons()
+    {
+      return itemRepository.ReadPersons();
+    }
+
+    public void RemoveItem(Item i)
+    {
+      itemRepository.DeleteItem(i);
+    }
+
+    public Item GetItem(int id)
+    {
+      return itemRepository.ReadItem(id);
     }
   }
 }

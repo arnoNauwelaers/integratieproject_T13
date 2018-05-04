@@ -20,7 +20,7 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
 
-        <dt>@Html.DisplayNameFor(model => model.Name)</dt>
+        <dt>@Html.DisplayNameFor(model => model.socialMediaProfiles)</dt>
         <dd>
             @foreach (var smp in profiles)
     {
@@ -32,7 +32,7 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Social Media Profiel", "AddSocialMediaProfile", new { id = Model.ItemId }) |
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ItemId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Voeg Social Media Profiel Toe", "AddSocialMediaProfileToOrganization", new { id = Model.ItemId }) |
+    @Html.ActionLink("Edit", "EditOrganization", new { id = Model.ItemId }) |
+    @Html.ActionLink("Back to List", "OrganizationIndex")
 </p>

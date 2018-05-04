@@ -18,7 +18,9 @@ namespace BL.Domain
     public bool Google { get; set; }
     public bool Facebook { get; set; }
     public int AantalAanmeldingen { get; set; }
+    public DateTime? LastActivityDate { get; set; }
     public int TijdActief { get; set; }
+    public virtual ICollection<Item> followedItems { get; set; } = new List<Item>();
     public virtual ICollection<Chart> Dashboard { get; set; } = new List<Chart>();
 
     /*[Required]

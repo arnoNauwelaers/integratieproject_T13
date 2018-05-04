@@ -1,0 +1,16 @@
+﻿@using BL.Domain;
+@model dynamic
+@{
+    ViewBag.Title = "PersonOverview";
+    List<Person> pers = ViewBag.Persons;
+}
+
+<h2>List of all persons:</h2>
+
+@foreach (Person p in pers)
+{
+    
+    if(!String.IsNullOrEmpty(p.Name))
+    {<li>@Html.ActionLink(p.Name, "Person", new { id = p.ItemId }, null)</li>}
+
+}

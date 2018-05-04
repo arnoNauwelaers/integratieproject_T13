@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using politiekeBarometer.Models;
 using BL.Domain;
 using BL;
+using System.Data.Entity;
 
 namespace politiekeBarometer.Controllers
 {
@@ -328,9 +329,19 @@ namespace politiekeBarometer.Controllers
             base.Dispose(disposing);
         }
 
-        #region Helpers
-        // Used for XSRF protection when adding external logins
-        private const string XsrfKey = "XsrfId";
+    public virtual ActionResult UpdateLastActivityDate(string userName)
+    {
+      ApplicationUserManager userManager = new ApplicationUserManager();
+      ApplicationUser user = userManager.GetUserByName(userName);
+      user.LastActivityDate = DateTime.Now;
+      userManager.ChangeUser(user);
+
+      return new EmptyResult();
+    }
+
+    #region Helpers
+    // Used for XSRF protection when adding external logins
+    private const string XsrfKey = "XsrfId";
 
         private IAuthenticationManager AuthenticationManager
         {
