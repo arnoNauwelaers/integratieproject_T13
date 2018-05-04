@@ -110,5 +110,10 @@ namespace DAL.EF
     {
       return ctx.Items.Find(id);
     }
+
+    public List<Theme> ReadThemes()
+    {
+      return ctx.Themes.ToList();
+    }
   }
 }

@@ -82,7 +82,7 @@ namespace politiekeBarometer.Controllers
         foreach (Item i in au.followedItems)
         {
           sb.Append(i.Name);
-          sb.Append(" ");
+          sb.Append("; ");
         }
         myExport["gevolgde paginas:"] = sb.ToString();
         
