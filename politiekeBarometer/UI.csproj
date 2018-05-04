@@ -315,6 +315,7 @@
     <Content Include="Views\Page\OrganizationOverview.cshtml" />
     <Content Include="Views\Page\PersonOverview.cshtml" />
     <Content Include="Views\User\Delete.cshtml" />
+    <Content Include="Views\Page\ThemeOverview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

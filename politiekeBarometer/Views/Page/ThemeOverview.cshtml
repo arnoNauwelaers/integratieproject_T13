@@ -1,0 +1,14 @@
+﻿@using BL.Domain;
+@model dynamic
+@{
+    ViewBag.Title = "ThemeOverview";
+    List<Theme> Themes = ViewBag.Themes;
+}
+
+<h2>themas:</h2>
+
+@foreach (Theme t in Themes)
+{
+    <li>@Html.ActionLink(t.Name, "Theme", new { id = t.ItemId }, null)</li>
+
+}

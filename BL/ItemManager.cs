@@ -86,5 +86,10 @@ namespace BL
     {
       return itemRepository.ReadItem(id);
     }
+
+    public List<Theme> GetThemes()
+    {
+      return itemRepository.ReadThemes();
+    }
   }
 }

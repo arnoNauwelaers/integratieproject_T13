@@ -119,6 +119,8 @@ namespace DAL.EF
             return ctx.SocialMediaProfiles.Find(id);
         }
 
+        
+
         //public int ReadAmountHashtags(string hashtag)
         //{
         //    return ctx.SocialMediaPosts.ToList<SocialMediaPost>().Count(i => i.Hashtags.Contains(hashtag));

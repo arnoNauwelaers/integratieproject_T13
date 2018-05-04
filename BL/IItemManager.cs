@@ -16,6 +16,7 @@ namespace BL
 void ChangeItem(Item i);
     List<Organization> GetOrganizations();
     List<Person> GetPersons();
+    List<Theme> GetThemes();
     void RemoveItem(Item i);
     Item GetItem(int id);
   }

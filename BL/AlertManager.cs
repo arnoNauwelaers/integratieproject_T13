@@ -61,7 +61,7 @@ namespace BL
                     //TODO controleer of notification al in database is opgenomen
                     if (!alertRepository.NotificationExists(alert.AlertId))
                     {
-                        Notification notification = new Notification() { NotificationId = notificationNmr, DateTime = DateTime.Now, Alert = alert };
+                        Notification notification = new Notification() { NotificationId = notificationNmr, DateTime = DateTime.Now, Alert = alert };                                                
                         alertRepository.CreateNotification(notification);
                         alert.Notifications.Add(notification);
                         //TODO klopt niet, moet een user wel als attribuut in Alert opgenomen worden?

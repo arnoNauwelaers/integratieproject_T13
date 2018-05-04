@@ -12,11 +12,13 @@ namespace politiekeBarometer.Controllers
     {
     IPlatformManager platformManager = new PlatformManager();
     IAppUserManager userManager = new ApplicationUserManager();
+    
    
       
         // GET: Platform
         public ActionResult Index()
         {
+      
       List<Platform> platforms = platformManager.GetPlatforms().ToList();
       return View(platforms);
       
@@ -24,6 +26,7 @@ namespace politiekeBarometer.Controllers
     // GET: Platform/Create
     public ActionResult Create()
     {
+     
       ViewBag.Admins = userManager.GetUsersFromRole("Admin");
       
       return View();
@@ -41,6 +44,7 @@ namespace politiekeBarometer.Controllers
         p.Admins = new List<ApplicationUser> { userManager.GetUser(Convert.ToString(collection["admin"])) };
 
         p.Name = Convert.ToString(collection["name"]);
+        p.Interval = Convert.ToInt32(collection["interval"]);
         platformManager.AddPlatform(p);
         
         return RedirectToAction("Index");
@@ -106,6 +110,8 @@ namespace politiekeBarometer.Controllers
       {
         Platform platform = platformManager.GetPlatform(Convert.ToInt32(collection["id"]));
         platform.Admins.Add(userManager.GetUser(Convert.ToString(collection["admin"])));
+        platform.Name = Convert.ToString(collection["name"]);
+        platform.Interval = Convert.ToInt32(collection["interval"]);
         platformManager.ChangePlatform(platform);
 
         return RedirectToAction("Index");

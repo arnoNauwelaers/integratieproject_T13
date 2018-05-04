@@ -7,7 +7,6 @@ using System.Data.Entity.Infrastructure.Annotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using BL.Domain;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -46,6 +45,8 @@ namespace DAL.EF
         public DbSet<Sentiment> Sentiments { get; set; }
         public DbSet<ChartItemData> ChartItemDatas { get; set; }
         public DbSet<Zone> Zones { get; set; }
+        
+
         //public DbSet<User> Users { get; set; }
 
 

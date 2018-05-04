@@ -328,8 +328,8 @@ namespace politiekeBarometer.Controllers
             }
             base.Dispose(disposing);
         }
-
-    public virtual ActionResult UpdateLastActivityDate(string userName)
+    [HttpPost]
+    public ActionResult UpdateLastActivityDate(string userName)
     {
       ApplicationUserManager userManager = new ApplicationUserManager();
       ApplicationUser user = userManager.GetUserByName(userName);

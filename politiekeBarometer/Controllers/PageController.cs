@@ -51,6 +51,13 @@ namespace politiekeBarometer.Controllers
       return View();
     }
 
+    public ActionResult ThemeOverview()
+    {
+      List<Theme> themes = im.GetThemes();
+      ViewBag.Themes = themes;
+      return View();
+    }
+
     // GET: Page
     public ActionResult Theme(int Id) {
       
