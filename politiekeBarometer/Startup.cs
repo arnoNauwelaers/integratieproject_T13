@@ -62,8 +62,9 @@ namespace politiekeBarometer
                 };
                 roleManager.Create(role);
 
-        ApplicationUser user2 = new ApplicationUser() { UserName = "TestAdmin", Email = "yagodecuyper@gmail.com" };
-        var chkuser2 = UserManager.Create(user2, "admin2");
+        ApplicationUser user2 = new ApplicationUser() { UserName = "TestAdmin", Email = "yagodecuyper@gmail.com"};
+        
+        var chkuser2 = UserManager.Create(user2, "testadmin");
         if (chkuser2.Succeeded)
         {
           UserManager.AddToRole(user2.Id, "Admin");

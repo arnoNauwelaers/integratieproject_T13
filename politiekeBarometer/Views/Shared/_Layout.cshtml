@@ -45,20 +45,57 @@
                 </a>
             </li>
 }
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Persons">
 
                     <a class="nav-link" href="@Url.Action("PersonOverview", "Page")">
                         <i class="fa fa-fw fa-page"></i>
                         <span class="nav-link-text">Personen</span>
                     </a>
                 </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Organizations">
 
                     <a class="nav-link" href="@Url.Action("OrganizationOverview", "Page")">
                         <i class="fa fa-fw fa-page"></i>
                         <span class="nav-link-text">Organizaties</span>
                     </a>
                 </li>
+                @if (HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        BL.ApplicationUserManager userManager = new BL.ApplicationUserManager();
+        if (userManager.GetUsersFromRole("Admin").Contains(userManager.GetUserByName(HttpContext.Current.User.Identity.Name)))
+        {
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
+                <a class="nav-link" href="@Url.Action("Index","User")">
+                    <i class="fa fa-fw fa-user"></i>
+                    <span class="nav-link-text">Gebruikers</span>
+                </a>
+
+            </li>
+}
+
+}
+                @if (HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        BL.ApplicationUserManager userManager = new BL.ApplicationUserManager();
+        if (userManager.GetUsersFromRole("SuperAdmin").Contains(userManager.GetUserByName(HttpContext.Current.User.Identity.Name)))
+        {
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Admins">
+                <a class="nav-link" href="@Url.Action("Index","Admin")">
+                    <i class="fa fa-fw fa-admin"></i>
+                    <span class="nav-link-text">Admins</span>
+                </a>
+
+            </li>
+
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Platforms">
+                <a class="nav-link" href="@Url.Action("Index","Platform")">
+                    <i class="fa fa-fw fa-platform"></i>
+                    <span class="nav-link-text">Platforms</span>
+                </a>
+
+            </li>
+}
+}
             </ul>
             <ul class="navbar-nav sidenav-toggler">
                 <li class="nav-item">
@@ -200,13 +237,30 @@
         <script src="~/Scripts/jquery.easing.min.js"></script>
         <!-- Custom scripts for all pages-->
         <script src="~/Scripts/sb-admin.min.js"></script>
+        <script>
+            $(document).ready((function () {
+               
+                var isUserAuthenticated = @User.Identity.IsAuthenticated.ToString().ToLower();
+                
+
+                if (isUserAuthenticated) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("UpdateLastActivityDate","Account")',
+                        data: { userName: '@User.Identity.Name' },
+                        cache: false
+                    });
+                }
+
+            }));</script>
         @if (Request.IsAuthenticated)
-        {
-            //TODO Aantal requests limiteren?
+    {
+        //TODO Aantal requests limiteren?
 
 
-<script src="~/Scripts/notifications.js" ></script>
-        }
+        <script src="~/Scripts/notifications.js"></script>
+}
     </div>
 </body>
 </html>

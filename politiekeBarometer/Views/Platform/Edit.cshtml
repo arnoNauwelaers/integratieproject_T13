@@ -16,12 +16,13 @@
         <fieldset>
 
             <input type="hidden" name="id" value="@platform.Id" /><br />
-
+            <label for="name">Naam:</label>
+            <input type="text" name="name" id="name" placeholder="@platform.Name"/> <br />
+            <label for="interval">interval data ophalen in minuten</label>
+            <input type="text" name="interval" id="interval" placeholder="@platform.Interval" />
         </fieldset>
         <fieldset>
             <legend>Admin</legend>
-
-            Admin:
             <select id="admin" name="admin">
                 @foreach (ApplicationUser adm in admins)
                 {

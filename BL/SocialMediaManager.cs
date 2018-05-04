@@ -21,6 +21,7 @@ namespace BL
     private AlertManager alertManager;
     private ItemManager itemManager;
     private Read read;
+    
 
     public SocialMediaManager()
     {
@@ -189,6 +190,8 @@ namespace BL
       return socialMediaRepository.ReadProfile(id);
 
     }
+
+  
 
   }
 }
