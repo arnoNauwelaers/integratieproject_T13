@@ -38,6 +38,11 @@ namespace BL.Domain
             return $"canvas{ChartId}";
         }
 
+        public string GetChartName()
+        {
+            return $"chart{ChartId}";
+        }
+
         public string GetLabels()
         {
             List<string> labels = new List<string>();

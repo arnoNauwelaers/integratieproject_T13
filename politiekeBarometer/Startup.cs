@@ -9,22 +9,30 @@ using BL.Domain;
 [assembly: OwinStartupAttribute(typeof(politiekeBarometer.Startup))]
 namespace politiekeBarometer
 {
-  public partial class Startup
-  {
-    public void Configuration(IAppBuilder app)
+    public partial class Startup
     {
-      ConfigureAuth(app);
-      RepositoryFactory.CreateContext();
-      CreateRolesAndUsers();
-    }
+        public void Configuration(IAppBuilder app)
+        {
+            ConfigureAuth(app);
+            RepositoryFactory.CreateContext();
+            CreateRolesAndUsers();
+            ActivateApi();
+        }
 
-    private void CreateRolesAndUsers()
-    {
-      var roleManager = new AppRoleManager();
-      var UserManager = new ApplicationUserManager();
-      // create superadmin role
-      if (!roleManager.RoleExists("SuperAdmin"))
-      {
+        private void ActivateApi()
+        {
+            var SocialMediaManager = new SocialMediaManager();
+            //TODO int moet configureerbaar zijn
+            SocialMediaManager.ActivateAPI(5);
+        }
+
+        private void CreateRolesAndUsers()
+        {
+            var roleManager = new AppRoleManager();
+            var UserManager = new ApplicationUserManager();
+            // create superadmin role
+            if (!roleManager.RoleExists("SuperAdmin"))
+            {
 
                 var role = new IdentityRole
                 {
@@ -42,43 +50,43 @@ namespace politiekeBarometer
 
                 string userPWD = "superadmin";
 
-        var chkUser = UserManager.Create(user, userPWD);
-        
-        //Add to Role SuperAdmin   
-        if (chkUser.Succeeded)
-        {
-          var result1 = UserManager.AddToRole(user.Id, "SuperAdmin");
-          EmailSender.Instance.SendEmail("Gebruiker", user.Email, userPWD);
-        }
+                var chkUser = UserManager.Create(user, userPWD);
+
+                //Add to Role SuperAdmin   
+                if (chkUser.Succeeded)
+                {
+                    var result1 = UserManager.AddToRole(user.Id, "SuperAdmin");
+                    EmailSender.Instance.SendEmail("Gebruiker", user.Email, userPWD);
+                }
 
 
-      }
+            }
 
-      if (!roleManager.RoleExists("Admin"))
-      {
+            if (!roleManager.RoleExists("Admin"))
+            {
                 var role = new IdentityRole
                 {
                     Name = "Admin"
                 };
                 roleManager.Create(role);
 
-        ApplicationUser user2 = new ApplicationUser() { UserName = "TestAdmin", Email = "yagodecuyper@gmail.com"};
-        
-        var chkuser2 = UserManager.Create(user2, "testadmin");
-        if (chkuser2.Succeeded)
-        {
-          UserManager.AddToRole(user2.Id, "Admin");
-        }
-      }
+                ApplicationUser user2 = new ApplicationUser() { UserName = "TestAdmin", Email = "yagodecuyper@gmail.com" };
 
-      if (!roleManager.RoleExists("Standard"))
-      {
+                var chkuser2 = UserManager.Create(user2, "testadmin");
+                if (chkuser2.Succeeded)
+                {
+                    UserManager.AddToRole(user2.Id, "Admin");
+                }
+            }
+
+            if (!roleManager.RoleExists("Standard"))
+            {
                 var role = new IdentityRole
                 {
                     Name = "Standard"
                 };
                 roleManager.Create(role);
-      }
+            }
+        }
     }
-  }
 }

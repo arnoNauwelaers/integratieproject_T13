@@ -16,11 +16,11 @@ namespace BL
     {
         private const string URL = "http://kdg.textgain.com/query";
         static HttpClient client = new HttpClient();
-        
+
         //TODO elke .. minuten uitvoeren
         public IEnumerable<SocialMediaPost> ReadData(string sinceDate)
         {
-            var tweets = new List<SocialMediaPost>() ;
+            var tweets = new List<SocialMediaPost>();
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(URL);
             httpWebRequest.Headers.Add("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
             httpWebRequest.ContentType = "application/json; charset=utf-8";
@@ -51,7 +51,7 @@ namespace BL
                 Debug.WriteLine("Er is een error opgetreden in de API reader: " + ex.ToString());
             }
             return tweets;
-            
+
         }
     }
 }

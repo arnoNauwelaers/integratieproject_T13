@@ -33,7 +33,6 @@ namespace politiekeBarometer.Controllers
         public IHttpActionResult Get()
         {
             List<Notification> notifications = new List<Notification>();
-            SocialMediaManager.SynchronizeDatabase();
             if (User.Identity.GetUserId() != null)
             {
                 ApplicationUser user = UserManager.GetUser(User.Identity.GetUserId());

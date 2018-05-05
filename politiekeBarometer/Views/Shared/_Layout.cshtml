@@ -260,7 +260,32 @@
                     });
                 }
 
-            }));</script>
+            }));
+
+            function createChart(name, canvasName, labels, data, type, title) {
+                var name = new Chart(canvasName, {
+                    type: type,
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: title,
+                            data: data,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+
+        </script>
         @if (Request.IsAuthenticated)
     {
         //TODO Aantal requests limiteren?
