@@ -199,8 +199,6 @@ namespace BL
             TimeSpan.Zero,
             TimeSpan.FromMinutes(minutes));
         }
-
-
-
     }
 }
+

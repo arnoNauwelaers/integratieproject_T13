@@ -45,8 +45,7 @@ namespace DAL.EF
         public DbSet<Sentiment> Sentiments { get; set; }
         public DbSet<ChartItemData> ChartItemDatas { get; set; }
         public DbSet<Zone> Zones { get; set; }
-        
-
+        public DbSet<Keyword> Keywords { get; set; }
         //public DbSet<User> Users { get; set; }
 
 
@@ -89,6 +88,8 @@ namespace DAL.EF
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Hashtags).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Sentiments).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Themes).WithMany();
+            //modelBuilder.Entity<Theme>().HasMany(i => i.Keywords).WithMany();
+            modelBuilder.Entity<Keyword>().HasOptional(k => k.Theme);
             modelBuilder.Entity<ChartItemData>().HasMany(i => i.Data).WithMany();
             //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Words).WithMany();
             //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Person).WithMany();

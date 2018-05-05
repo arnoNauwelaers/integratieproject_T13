@@ -208,6 +208,8 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ItemCreateViewModel.cs" />
+    <Compile Include="Models\ItemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -304,6 +306,12 @@
     <Content Include="Views\Item\OrganizationDetails.cshtml" />
     <Content Include="Views\Item\DeleteOrganization.cshtml" />
     <Content Include="Views\Item\EditOrganization.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Organization.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Person.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Theme.cshtml" />
+    <Content Include="Views\Item\AdminItemIndex.cshtml" />
+    <Content Include="Views\Item\AdminItemCreate.cshtml" />
+    <Content Include="Views\Item\AdminItemEdit.cshtml" />
     <Content Include="Views\Item\AddSocialMediaProfileToOrganization.cshtml" />
     <Content Include="Views\Item\PersonIndex.cshtml" />
     <Content Include="Views\Item\DeletePerson.cshtml" />

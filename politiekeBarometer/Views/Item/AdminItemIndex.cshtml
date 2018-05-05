@@ -1,0 +1,97 @@
+﻿@model politiekeBarometer.Models.ItemViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+
+    @using (Html.BeginForm("Upload", "Item", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+
+        <div class="form-group">
+            <input type="file" id="dataFile" name="upload" />
+            <input type="submit" value="Upload" class="btn btn-default" />
+            @if (Model.fileError != null)
+            {
+                <p>@Model.fileError</p>
+            }
+        </div>
+    }
+
+    <table class="table">
+        <tr>
+            <th>
+                Persoon  (@Html.ActionLink("Toevoegen", "AdminItemCreate"))
+            </th>
+            <th>
+                Organisatie
+            </th>
+            <th>
+                Actie
+            </th>
+        </tr>
+        @Html.DisplayFor(m => m.Persons)
+
+        @if (Model.Persons.Count == 0)
+        {
+            <tr>
+                <td colspan="3">Nog geen personen toegevoegd</td>
+            </tr>
+        }
+
+
+        <tr>
+            <th colspan="2">
+                Organisatie  (@Html.ActionLink("Toevoegen", "AdminItemCreate"))
+            </th>
+            <th>
+                Actie
+            </th>
+        </tr>
+
+        @Html.DisplayFor(m => m.organizations)
+
+        @if (Model.organizations.Count == 0)
+        {
+            <tr>
+                <td colspan="3">Nog geen organisaties toegevoegd</td>
+            </tr>
+        }
+
+        <tr>
+            <th>
+                Thema  (@Html.ActionLink("Toevoegen", "AdminItemCreate"))
+            </th>
+            <th>
+                Trefwoorden
+            </th>
+            <th>
+                Actie
+            </th>
+        </tr>
+
+       @Html.DisplayFor(m => m.themes)
+
+
+        @if (Model.themes.Count == 0)
+        {
+            <tr>
+                <td colspan="3">Nog geen themas toegevoegd</td>
+            </tr>
+        }
+
+    </table>
+
+
+</body>
+</html>

@@ -89,6 +89,7 @@
     <Compile Include="Chart\DateFrequencyType.cs" />
     <Compile Include="SocialMediaPost\Hashtag.cs" />
     <Compile Include="Item.cs" />
+    <Compile Include="Keyword.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="SocialMediaPost\Person.cs" />

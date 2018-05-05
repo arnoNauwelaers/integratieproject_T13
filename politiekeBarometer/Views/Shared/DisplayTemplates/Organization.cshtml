@@ -1,0 +1,12 @@
+﻿@model BL.Domain.Organization
+
+
+<tr>
+    <td colspan="2">
+        @Html.DisplayFor(p => p.Name)
+    </td>
+    <td>
+        @Html.ActionLink("Wijzig", "AdminItemEdit", new { Model.ItemId }) |
+        @Html.ActionLink("Verwijder", "AdminItemDelete", new { Model.ItemId })
+    </td>
+</tr>

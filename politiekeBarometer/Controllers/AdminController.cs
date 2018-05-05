@@ -28,9 +28,6 @@ namespace politiekeBarometer.Controllers
     // GET: Admin/Create
     public ActionResult Create()
     {
-
-
-
       return View();
     }
 

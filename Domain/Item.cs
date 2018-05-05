@@ -10,13 +10,17 @@ namespace BL.Domain
         [Key]
         public int ItemId { get; set; }
         public string Name { get; set; }
+
+        public virtual ICollection<Alert> Alerts { get; set; } = new List<Alert>();
+
+
+        //TODO delete
         //public int photo { get; set; }
         //public ICollection<Set> sets { get; set; }
 
         [NotMapped]
         public int typeInt { get; set; }
 
-        public virtual ICollection<Alert> Alerts { get; set; } = new List<Alert>();
         public Item()
         {
           typeInt = 0;

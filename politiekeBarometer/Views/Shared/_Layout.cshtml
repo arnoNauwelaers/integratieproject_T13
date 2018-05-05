@@ -37,14 +37,24 @@
                     </a>
                 </li>
                 @if (Request.IsAuthenticated)
-    {
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                <a class="nav-link" href="@Url.Action("Index", "Dashboard")">
-                    <i class="fa fa-fw fa-dashboard"></i>
-                    <span class="nav-link-text">Dashboard</span>
-                </a>
-            </li>
-}
+                {
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                        <a class="nav-link" href="@Url.Action("Index", "Dashboard")">
+                            <i class="fa fa-fw fa-dashboard"></i>
+                            <span class="nav-link-text">Dashboard</span>
+                        </a>
+                    </li>
+                }
+                @if (Request.IsAuthenticated && this.User.IsInRole("Admin"))
+                {
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                        <a class="nav-link" href="@Url.Action("AdminItemIndex", "Item")">
+                            <i class="fa fa-fw fa-unlock-alt"></i>
+                            <span class="nav-link-text">Edit Items</span>
+                        </a>
+                    </li>
+                }
+
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Persons">
 
                     <a class="nav-link" href="@Url.Action("PersonOverview", "Page")">
@@ -66,8 +76,7 @@
                         <span class="nav-link-text">Themas</span>
                     </a>
                 </li>
-                @if (HttpContext.Current.User.Identity.IsAuthenticated)
-    {
+
         BL.ApplicationUserManager userManager = new BL.ApplicationUserManager();
         if (userManager.GetUsersFromRole("Admin").Contains(userManager.GetUserByName(HttpContext.Current.User.Identity.Name)))
         {
@@ -78,11 +87,9 @@
                 </a>
 
             </li>
-}
+		}
 
-}
-                @if (HttpContext.Current.User.Identity.IsAuthenticated)
-    {
+
         BL.ApplicationUserManager userManager = new BL.ApplicationUserManager();
         if (userManager.GetUsersFromRole("SuperAdmin").Contains(userManager.GetUserByName(HttpContext.Current.User.Identity.Name)))
         {
@@ -101,8 +108,7 @@
                 </a>
 
             </li>
-}
-}
+
             </ul>
             <ul class="navbar-nav sidenav-toggler">
                 <li class="nav-item">
