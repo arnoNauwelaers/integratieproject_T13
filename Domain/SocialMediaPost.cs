@@ -105,15 +105,17 @@ namespace BL.Domain
                 i++;
             }
             i = 0;
+            /*TODO Mathijs vragen
             foreach (var item in Persons)
             {
                 Person[i] = item.Value;
                 i++;
             }
+            */
             i = 0;
             foreach (var item in Themes)
             {
-                Theme[i] = item.Value;
+                Theme[i] = item.Name;
                 i++;
             }
         }

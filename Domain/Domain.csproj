@@ -88,6 +88,7 @@
     <Compile Include="DateFrequencyType.cs" />
     <Compile Include="Hashtag.cs" />
     <Compile Include="Item.cs" />
+    <Compile Include="Keyword.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Person.cs" />

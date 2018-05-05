@@ -27,7 +27,6 @@ namespace BL
       socialMediaRepository = RepositoryFactory.CreateSocialMediaRepository();
       itemManager = new ItemManager();
       //TODO weghalen
-      itemManager.AddPerson(new Person() { Name = "Theo Francken" });
       alertManager = new AlertManager();
       read = new Read();
     }

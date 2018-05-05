@@ -1,0 +1,85 @@
+﻿@model politiekeBarometer.Models.ItemViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <table class="table">
+        <tr>
+            <td colspan="3">@Html.ActionLink("Toevoegen", "Create")</td>
+        </tr>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Firstname
+            </th>
+            <th>
+                Organisatie
+            </th>
+            <th>
+                Actie
+            </th>
+        </tr>
+
+        @for (var i = 0; i < Model.Items.Count; i++)
+        {
+            if (Model.Items[i].GetType().ToString().Contains("Person"))
+            {
+                @Html.DisplayFor(m => m.Items[i])
+            }
+        }
+
+
+        <tr>
+            <td colspan="3">@Html.ActionLink("Toevoegen", "Create")</td>
+        </tr>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Actie
+                </th>
+            </tr>
+
+            @for (var i = 0; i < Model.Items.Count; i++)
+            {
+                if (Model.Items[i].GetType().ToString().Contains("Organization"))
+                {
+                    @Html.DisplayFor(m => m.Items[i])
+                }
+            }
+
+        <tr>
+            <td colspan="3">@Html.ActionLink("Toevoegen", "Create")</td>
+        </tr>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Actie
+                </th>
+            </tr>
+
+            @for (var i = 0; i < Model.Items.Count; i++)
+            {
+                if (Model.Items[i].GetType().ToString().Contains("Theme"))
+                {
+                    @Html.DisplayFor(m => m.Items[i])
+                }
+            }
+        </table>
+
+</body>
+</html>

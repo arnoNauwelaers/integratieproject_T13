@@ -1,0 +1,20 @@
+﻿@model BL.Domain.Theme
+
+@{String keywords = null;}
+@foreach (BL.Domain.Keyword keyword in Model.Keywords)
+{
+    keywords +=  keyword.Value + ",";
+}
+
+<tr>
+    <td>
+        @Html.DisplayFor(p => p.Name)
+    </td>
+    <td>
+        @keywords
+    </td>
+    <td>
+        @Html.ActionLink("Wijzig", "AdminItemEdit", new { Model.ItemId }) |
+        @Html.ActionLink("Verwijder", "AdminItemDelete", new { Model.ItemId })
+    </td>
+</tr>

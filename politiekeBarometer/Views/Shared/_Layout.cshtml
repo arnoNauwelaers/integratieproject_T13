@@ -45,6 +45,15 @@
                         </a>
                     </li>
                 }
+                @if (Request.IsAuthenticated && this.User.IsInRole("Admin"))
+                {
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                        <a class="nav-link" href="@Url.Action("AdminItemIndex", "Item")">
+                            <i class="fa fa-fw fa-unlock-alt"></i>
+                            <span class="nav-link-text">Edit Items</span>
+                        </a>
+                    </li>
+                }
             </ul>
             <ul class="navbar-nav sidenav-toggler">
                 <li class="nav-item">

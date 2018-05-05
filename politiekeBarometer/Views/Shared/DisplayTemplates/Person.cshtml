@@ -1,0 +1,14 @@
+﻿@model BL.Domain.Person
+
+<tr>
+    <td>
+        @Html.DisplayFor(p => p.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(p => p.Organization.Name)
+    </td>
+    <td>
+        @Html.ActionLink("Wijzig", "AdminItemEdit", new { Model.ItemId }) |
+        @Html.ActionLink("Verwijder", "AdminItemDelete", new { Model.ItemId })
+    </td>
+</tr>
