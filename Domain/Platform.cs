@@ -12,6 +12,8 @@ namespace BL.Domain
         [Key]
         public int Id { get; set; }
         public String Name { get; set; }
+        // amount of minutes between API calls
+        public int Interval { get; set; }
         public virtual ICollection<ApplicationUser> Admins { get; set; }
         public virtual ICollection<ApplicationUser> Users { get; set; }
         public virtual ICollection<SocialMediaSource> Sources { get; set; }

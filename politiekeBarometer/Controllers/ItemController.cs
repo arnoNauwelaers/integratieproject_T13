@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Web.Mvc;
 using BL.Domain;
 using BL;
@@ -177,8 +177,41 @@ namespace politiekeBarometer.Controllers
                 return View();
             }
         }
+		
+		public ActionResult PersonDetails(int id)
+    {
+      Person p = itemManager.ReadPerson(id);
+      ViewBag.Profiles = p.SocialMediaProfiles;
+      return View(p);
+
+    }
+
+    [HttpGet]
+    public ActionResult AddSocialmediaProfileToPerson(int id)
+    {
+      ViewBag.Person = itemManager.ReadPerson(id);
+      return View();
+
+    }
+
+    [HttpPost]
+    public ActionResult AddSocialMediaProfileToPerson(FormCollection collection)
+    {
+      try
+      {
+        Person p = itemManager.ReadPerson(Convert.ToInt32(collection["id"]));
+        SocialMediaProfile smp = new SocialMediaProfile { Url = collection["url"], Source = collection["src"] };
+        p.SocialMediaProfiles.Add(smp);
+        itemManager.ChangeItem(p);
+        return RedirectToAction("PersonIndex");
+      }
+      catch (Exception e)
+      {
+        return View(e);
+      }
 
 
+    }
 
 
         /*public ActionResult OrganizationIndex()

@@ -38,6 +38,12 @@ namespace BL
         public Chart GetChart(int id)
         {
             Chart chart = chartRepository.ReadChart(id);
+            RetrieveDataChart(chart);
+            return chart;
+        }
+
+        public void RetrieveDataChart(Chart chart)
+        {
             DateTime since = DateTime.Now.AddDays(-7);
             switch (chart.FrequencyType)
             {
@@ -58,7 +64,6 @@ namespace BL
                 }
                 chart.ChartItemData.Add(tempChartItemData);
             }
-            return chart;
         }
 
         public void UpdateChartsFromTempChart(List<TempChartEdit> chartList)

@@ -78,6 +78,7 @@
     <Compile Include="AlertManager.cs" />
     <Compile Include="ChartManager.cs" />
     <Compile Include="AppRoleManager.cs" />
+    <Compile Include="CsvExport.cs" />
     <Compile Include="DataManager.cs" />
     <Compile Include="EmailSender.cs" />
     <Compile Include="IAppUserManager.cs" />

@@ -21,12 +21,12 @@ namespace BL
     private AlertManager alertManager;
     private ItemManager itemManager;
     private Read read;
+    
 
     public SocialMediaManager()
     {
       socialMediaRepository = RepositoryFactory.CreateSocialMediaRepository();
       itemManager = new ItemManager();
-      //TODO weghalen
       alertManager = new AlertManager();
       read = new Read();
     }
@@ -34,7 +34,7 @@ namespace BL
     public void SynchronizeDatabase()
     {
       List<Item> alteredItems = CreatePosts();
-      List<Alert> alerts = new List<Alert>();
+      List<Alert> alerts = new List<Alert>();                                           
       foreach (var item in alteredItems)
       {
         alerts = alertManager.GetAlerts(item);
@@ -57,8 +57,9 @@ namespace BL
       else
       {
         //TODO vanaf vorige maand?
-        date = "24 Apr 2018 08:49:12";
+        date = "2 May 2018 08:49:12";
       }
+
       List<SocialMediaPost> data2 = (List<SocialMediaPost>)read.ReadData(date);
       foreach (var item in data2)
       {
@@ -188,6 +189,5 @@ namespace BL
       return socialMediaRepository.ReadProfile(id);
 
     }
-
   }
 }

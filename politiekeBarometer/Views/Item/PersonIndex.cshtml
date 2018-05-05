@@ -1,0 +1,37 @@
+﻿@model IEnumerable<BL.Domain.Person>
+
+@{
+    ViewBag.Title = "PersonIndex";
+}
+
+<h2>PersonIndex</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreatePerson")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+       <td>
+           @Html.DisplayFor(modelItem => item.Organization.Name)
+       </td>
+        <td>
+            @Html.ActionLink("Edit", "EditPerson", new { id=item.ItemId }) |
+            @Html.ActionLink("Details", "PersonDetails", new { id=item.ItemId }) |
+            @Html.ActionLink("Delete", "DeletePerson", new { Id=item.ItemId})
+        </td>
+    </tr>
+}
+
+</table>

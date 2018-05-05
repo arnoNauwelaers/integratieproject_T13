@@ -7,7 +7,6 @@ using System.Data.Entity.Infrastructure.Annotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using BL.Domain;
 using Microsoft.AspNet.Identity.EntityFramework;
 

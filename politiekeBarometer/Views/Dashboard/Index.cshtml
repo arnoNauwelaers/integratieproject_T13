@@ -29,14 +29,39 @@
 <h2 id="dashboardTitle">Dashboard</h2>
 <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#addModal">Add Chart</button>
 <button id="editButton" type="button" class="btn btn-primary btn-lg">Edit</button>
-
+<script type="text/javascript" src="~/Scripts/Chart.bundle.min.js"></script>
 <div class="resize-container">
     @foreach (var chart in Model.Charts)
     {
         //TODO hier code om elke chart in te laden op juiste positie en grootte
         <div id="@chart.ChartId" data-x="@chart.Zone.X" data-y="@chart.Zone.Y" value="@chart.ChartId" class="grafiek resize-drag" style="@chart.GetStyle()">
-            @chart.ChartId.ToString();
+            <canvas id="@chart.GetCanvasId()"></canvas>
         </div>
+        <script>
+            var dataChart = @chart.GetData();
+            var labelsChart = @chart.GetLabels();
+        var @chart.GetCanvasId() = document.getElementById("@chart.GetCanvasId()").getContext('2d');
+            var myChart = new Chart(@chart.GetCanvasId(), {
+                type: 'bar',
+                data: {
+                    labels: [labelsChart],
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [dataChart],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        </script>
     }
 </div>
 <!-- Modal -->

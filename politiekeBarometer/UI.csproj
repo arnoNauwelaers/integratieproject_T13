@@ -201,6 +201,7 @@
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\PlatformController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -219,6 +220,7 @@
     <Content Include="Content\iziToast.min.css" />
     <Content Include="Content\sb-admin.css" />
     <Content Include="Content\select2.min.css" />
+    <Content Include="Scripts\Chart.bundle.min.js" />
     <Content Include="Scripts\dashboard.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -310,6 +312,18 @@
     <Content Include="Views\Item\AdminItemIndex.cshtml" />
     <Content Include="Views\Item\AdminItemCreate.cshtml" />
     <Content Include="Views\Item\AdminItemEdit.cshtml" />
+    <Content Include="Views\Item\AddSocialMediaProfileToOrganization.cshtml" />
+    <Content Include="Views\Item\PersonIndex.cshtml" />
+    <Content Include="Views\Item\DeletePerson.cshtml" />
+    <Content Include="Views\Item\EditPerson.cshtml" />
+    <Content Include="Views\Item\PersonDetails.cshtml" />
+    <Content Include="Views\Item\AddSocialMediaProfileToPerson.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\Page\OrganizationOverview.cshtml" />
+    <Content Include="Views\Page\PersonOverview.cshtml" />
+    <Content Include="Views\User\Delete.cshtml" />
+    <Content Include="Views\Page\ThemeOverview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

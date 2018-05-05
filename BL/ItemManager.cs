@@ -232,10 +232,28 @@ namespace BL
             itemRepository.UpdateItem(item);
         }
 
+    public List<Organization> GetOrganizations()
+    {
+      return itemRepository.ReadOrganizations();
+    }
 
-        public void ChangeItem(Organization o)
-        {
-            itemRepository.UpdateItem(o);
-        }
+    public List<Person> GetPersons()
+    {
+      return itemRepository.ReadPersons();
+    }
+
+    public void RemoveItem(Item i)
+    {
+      itemRepository.DeleteItem(i);
+    }
+
+    public Item GetItem(int id)
+    {
+      return itemRepository.ReadItem(id);
+    }
+
+    public List<Theme> GetThemes()
+    {
+      return itemRepository.ReadThemes();
     }
 }

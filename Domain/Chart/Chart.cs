@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BL.Domain
 {
@@ -30,6 +32,62 @@ namespace BL.Domain
         {
             return $"width: {Zone.Width}px; height: {Zone.Height}px; transform: translate({Zone.X}px, {Zone.Y}px);";
         }
+
+        public string GetCanvasId()
+        {
+            return $"canvas{ChartId}";
+        }
+
+        public string GetLabels()
+        {
+            List<string> labels = new List<string>();
+            foreach (var chartItemData in ChartItemData)
+            {
+                foreach (var item in chartItemData.Data)
+                {
+                    labels.Add(item.Name);
+                }
+            }
+            return JsonConvert.SerializeObject(labels);
+        }
+
+        public string GetData()
+        {
+            List<int> data = new List<int>();
+            foreach (var chartItemData in ChartItemData)
+            {
+                foreach (var item in chartItemData.Data)
+                {
+                    data.Add(item.Amount);
+                }
+            }
+            return JsonConvert.SerializeObject(data);
+        }
+
+        //public string GetLabels()
+        //{
+        //    string labels = "";
+        //    foreach (var chartItemData in ChartItemData)
+        //    {
+        //        foreach (var item in chartItemData.Data)
+        //        {
+        //            labels += '"' + item.Name + '"' + ",";
+        //        }
+        //    }
+        //    return labels;
+        //}
+        //public string GetData()
+        //{
+        //    string data = "";
+        //    foreach (var chartItemData in ChartItemData)
+        //    {
+        //        foreach (var item in chartItemData.Data)
+        //        {
+        //            data += item.Amount + ", ";
+        //        }
+        //    }
+        //    return data;
+        //}
     }
 
     //voor JSON deserializer

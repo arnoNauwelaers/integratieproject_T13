@@ -1,5 +1,5 @@
 ﻿var items = "";
-var ul = document.getElementById("itemList");
+
 var itemsHidden = document.getElementById("itemsHidden");
 
 interact('.resize-drag')
@@ -18,15 +18,7 @@ interact('.resize-drag')
         // call this function on every dragmove event
         onmove: dragMoveListener,
         // call this function on every dragend event
-        onend: function (event) {
-            var textEl = event.target.querySelector('p');
-
-            textEl && (textEl.textContent =
-                'moved a distance of '
-                + (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
-                    Math.pow(event.pageY - event.y0, 2) | 0))
-                    .toFixed(2) + 'px');
-        }
+        
     });
 
 function dragMoveListener(event) {
@@ -92,7 +84,6 @@ interact('.resize-drag')
 
         target.setAttribute('data-x', x);
         target.setAttribute('data-y', y);
-        target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height);
     });
 $(".grafiek").removeClass("resize-drag");
 $("#editButton").click(function () {
@@ -143,6 +134,7 @@ function SaveCharts() {
 }
 
 function addItem() {
+    var ul = document.getElementById("itemList");
     var item = $("#items option:selected").val();
     var itemName = $("#items option:selected").text();
     var span = document.createElement("span");
@@ -167,5 +159,6 @@ jQuery(document).ready(function () {
 $('#addModal').on('hidden.bs.modal', function () {
     items = "";
     itemsHidden.value = items;
+    var ul = document.getElementById("itemList");
     ul.innerHTML = "";
 });

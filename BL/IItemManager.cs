@@ -13,6 +13,11 @@ namespace BL
     IEnumerable<Item> SearchItems(string search);
     Organization AddOrganization(Organization organization);
     void RemoveOrganization(Organization organization);
-void ChangeItem(Organization o);
+void ChangeItem(Item i);
+    List<Organization> GetOrganizations();
+    List<Person> GetPersons();
+    List<Theme> GetThemes();
+    void RemoveItem(Item i);
+    Item GetItem(int id);
   }
 }

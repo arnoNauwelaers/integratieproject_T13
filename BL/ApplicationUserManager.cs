@@ -79,6 +79,21 @@ namespace BL
 
     }
 
+    public void ChangeUser(ApplicationUser u)
+    {
+      userRepository.UpdateUser(u);
+    }
+
+    public ApplicationUser GetUserByName(string name)
+    {
+      return userRepository.ReadUserByName(name);
+    }
+
+    public void RemoveUser(ApplicationUser user)
+    {
+      userRepository.DeleteUser(user);
+    }
+
 
 
     public ApplicationUser GetUser(string id)

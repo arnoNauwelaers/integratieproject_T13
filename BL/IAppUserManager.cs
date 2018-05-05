@@ -16,5 +16,6 @@ namespace BL
     List<ApplicationUser> GetUsersFromRole(string roleName);
     ApplicationUser GetUser(string id);
     List<ApplicationUser> GetUsers();
+    void RemoveUser(ApplicationUser user);
   }
 }

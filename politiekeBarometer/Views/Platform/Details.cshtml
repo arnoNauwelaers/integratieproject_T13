@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "Details";
     List<ApplicationUser> admins = ViewBag.Admins;
+    
 }
 
 <h2>Details Platform</h2>
@@ -25,6 +26,8 @@
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
+        <dt>@Html.DisplayNameFor(model => model.Interval)</dt>
+        <dd>@Html.DisplayFor(model => model.Interval)</dd>
         <dt> @Html.DisplayNameFor(model => model.Admins)</dt>
         <dd>
             @foreach (var admin in admins)

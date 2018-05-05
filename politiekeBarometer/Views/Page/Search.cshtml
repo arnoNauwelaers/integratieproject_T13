@@ -13,7 +13,7 @@
     @foreach (var item in Model) {
       switch (item.typeInt) {
         case 1:
-          <li>@Html.ActionLink(((BL.Domain.Person)item).Firstname + " " + item.Name + " (Persoon)", "Person", "Page", new { id = item.ItemId }, null)</li>
+          <li>@Html.ActionLink(item.Name + " (Persoon)", "Person", "Page", new { id = item.ItemId }, null)</li>
           break;
         case 2:
           <li>@Html.ActionLink(item.Name + " (Organisatie)", "Organization", "Page", new { id = item.ItemId }, null)</li>

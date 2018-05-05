@@ -98,6 +98,8 @@ namespace DAL.EF
             foreach (var hashtag in post.Hashtag)
             {
                 if (item.Name.ToUpper() == hashtag.ToUpper())
+                if (item.Name.ToUpper() == post.Persons.First().ToString().ToUpper())
+
                 {
                     usedItems.Add(item);
                 }
@@ -170,5 +172,25 @@ namespace DAL.EF
         ctx.Items.Remove(i);
         ctx.SaveChanges();
     }
-}
+
+    public List<Organization> ReadOrganizations()
+    {
+      return ctx.Organizations.ToList();
+    }
+
+    public List<Person> ReadPersons()
+    {
+      return ctx.Persons.ToList();
+    }
+
+    public Item ReadItem(int id)
+    {
+      return ctx.Items.Find(id);
+    }
+
+    public List<Theme> ReadThemes()
+    {
+      return ctx.Themes.ToList();
+    }
+  }
 }
