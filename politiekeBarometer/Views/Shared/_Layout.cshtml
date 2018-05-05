@@ -53,7 +53,7 @@
                             <span class="nav-link-text">Edit Items</span>
                         </a>
                     </li>
-                }
+
 
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Persons">
 
@@ -76,8 +76,7 @@
                         <span class="nav-link-text">Themas</span>
                     </a>
                 </li>
-                @if (Request.IsAuthenticated && this.User.IsInRole("Admin"))
-                {
+
 
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
                         <a class="nav-link" href="@Url.Action("Index", "User")">
@@ -89,7 +88,7 @@
 
                 }
 
-                @if (Request.IsAuthenticated && this.User.IsInRole("Admin"))
+                @if (Request.IsAuthenticated && this.User.IsInRole("SuperAdmin"))
                 {
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Admins">
                         <a class="nav-link" href="@Url.Action("Index", "Admin")">
@@ -98,16 +97,17 @@
                         </a>
 
                     </li>
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Platforms">
+                        <a class="nav-link" href="@Url.Action("Index","Platform")">
+                            <i class="fa fa-fw fa-platform"></i>
+                            <span class="nav-link-text">Platforms</span>
+                        </a>
+
+                    </li>
 
                 }
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Platforms">
-                    <a class="nav-link" href="@Url.Action("Index","Platform")">
-                        <i class="fa fa-fw fa-platform"></i>
-                        <span class="nav-link-text">Platforms</span>
-                    </a>
-
-                </li>
+                
 
             </ul>
             <ul class="navbar-nav sidenav-toggler">
