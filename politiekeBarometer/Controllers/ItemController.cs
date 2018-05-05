@@ -18,27 +18,30 @@ namespace politiekeBarometer.Controllers
 
         public ActionResult AdminItemIndex()
         {
-            var model = new ItemViewModel();
-            model.Persons = itemManager.getPersons().ToList();
-            model.organizations = itemManager.getOrganizations().ToList();
-            model.themes = itemManager.getThemes().ToList();
-            model.fileError = null;
+            var model = new ItemViewModel
+            {
+                Persons = itemManager.GetPersons().ToList(),
+                organizations = itemManager.GetOrganizations().ToList(),
+                themes = itemManager.GetThemes().ToList(),
+                fileError = null
+            };
             return View(model);
         }
 
         public ActionResult AdminItemCreate()
         {
             var model = new ItemCreateViewModel();
-            var organizationSelect = itemManager.getOrganizations().Select(x => new SelectListItem { Value = x.ItemId.ToString(), Text = x.Name});
+            var organizationSelect = itemManager.GetOrganizations().Select(x => new SelectListItem { Value = x.ItemId.ToString(), Text = x.Name});
             model.Organizations = new SelectList(organizationSelect, "Value", "Text");
             return View(model);
-        }
+        }
+
         [HttpPost]
         public ActionResult AdminItemCreate(ItemCreateViewModel newItem)
         {
             try
             {
-                itemManager.addItem(newItem.Name,newItem.type,newItem.SelectedOrganizationId,newItem.StringKeywords);
+                itemManager.AddItem(newItem.Name,newItem.type,newItem.SelectedOrganizationId,newItem.StringKeywords);
                 return RedirectToAction("AdminItemIndex");
             }
             catch
@@ -65,7 +68,7 @@ namespace politiekeBarometer.Controllers
             Item item = itemManager.ReadItem(ItemId);
 
             var model = new ItemCreateViewModel();
-            var organizaionsSelect = itemManager.getOrganizations().Select(x => new SelectListItem { Value = x.ItemId.ToString(), Text = x.Name });
+            var organizaionsSelect = itemManager.GetOrganizations().Select(x => new SelectListItem { Value = x.ItemId.ToString(), Text = x.Name });
             model.Organizations = new SelectList(organizaionsSelect, "Value", "Text");
             model.ItemId = item.ItemId;
             model.Name = item.Name;
@@ -93,7 +96,7 @@ namespace politiekeBarometer.Controllers
         [HttpPost]
         public ActionResult AdminItemEdit(int ItemId, ItemCreateViewModel editItem)
         {
-            itemManager.editItem(ItemId, editItem.Name, editItem.type, editItem.SelectedOrganizationId, editItem.SelectedKeywords, editItem.StringKeywords);
+            itemManager.EditItem(ItemId, editItem.Name, editItem.type, editItem.SelectedOrganizationId, editItem.SelectedKeywords, editItem.StringKeywords);
             return RedirectToAction("AdminItemIndex");
         }
 
@@ -114,7 +117,7 @@ namespace politiekeBarometer.Controllers
                         try
                         {
                             itemString = (line.Split(';').ToList<string>());
-                            itemManager.addItem(itemString[0], itemString[1], itemString[2], itemString[3]);
+                            itemManager.AddItem(itemString[0], itemString[1], itemString[2], itemString[3]);
                         }
                         catch
                         {
@@ -133,9 +136,9 @@ namespace politiekeBarometer.Controllers
                 model.fileError = "(je hebt geen file geselecteerd of deze file is leeg)";
             }
             
-            model.Persons = itemManager.getPersons().ToList();
-            model.organizations = itemManager.getOrganizations().ToList();
-            model.themes = itemManager.getThemes().ToList();
+            model.Persons = itemManager.GetPersons().ToList();
+            model.organizations = itemManager.GetOrganizations().ToList();
+            model.themes = itemManager.GetThemes().ToList();
             return View("AdminItemIndex",model);
         }
 

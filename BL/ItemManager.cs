@@ -7,7 +7,7 @@ using System;
 
 namespace BL
 {
-    public class ItemManager : IItemManager
+    public class ItemManager
     {
         private ItemRepository itemRepository;
 
@@ -21,22 +21,22 @@ namespace BL
             return itemRepository.ReadItems();
         }
 
-        public IEnumerable<Person> getPersons()
+        public IEnumerable<Person> GetPersons()
         {
             return itemRepository.ReadPersons();
         }
 
-        public IEnumerable<Organization> getOrganizations()
+        public IEnumerable<Organization> GetOrganizations()
         {
             return itemRepository.ReadOrganizations();
         }
 
-        public IEnumerable<Theme> getThemes()
+        public IEnumerable<Theme> GetThemes()
         {
             return itemRepository.ReadThemes();
         }
 
-        public void addItem(string name, string type, int selectedOrganizationId, string keywords)
+        public void AddItem(string name, string type, int selectedOrganizationId, string keywords)
         {
             if (type == "Person")
             {
@@ -65,12 +65,12 @@ namespace BL
             }
         }
 
-        public void addItem(string name, string type, string organization, string keywords)
+        public void AddItem(string name, string type, string organization, string keywords)
         {
             if (type.ToUpper() == "PERSOON" || type.ToUpper() == "PERSON")
             {
                 List<Organization> tempOrganization = itemRepository.ReadOrganization(organization);
-                if(tempOrganization.Count() == 0)
+                if (tempOrganization.Count() == 0)
                 {
                     Organization newOrganization = new Organization() { Name = organization };
                     itemRepository.CreateItem(newOrganization);
@@ -82,7 +82,7 @@ namespace BL
                     Person person = new Person() { Name = name, Organization = tempOrganization[0] };
                     itemRepository.CreateItem(person);
                 }
-                
+
             }
             else if (type.ToUpper() == "ORGANISATIE" || type.ToUpper() == "ORGANIZATION")
             {
@@ -94,7 +94,7 @@ namespace BL
             }
             else if (type.ToUpper() == "THEMA" || type.ToUpper() == "THEME")
             {
-                if(itemRepository.ReadTheme(name).Count() == 0)
+                if (itemRepository.ReadTheme(name).Count() == 0)
                 {
                     List<string> keywordsStringList = (keywords.Replace(" ", "").Split(',').ToList<string>());
                     List<Keyword> keywordsList = new List<Keyword>();
@@ -120,7 +120,7 @@ namespace BL
             return itemRepository.ReadItem(id);
         }
 
-        public void editItem(int id, string name, string type, int selectedOrganizationId, IEnumerable<int> selectedKeywords, string stringKeywords)
+        public void EditItem(int id, string name, string type, int selectedOrganizationId, IEnumerable<int> selectedKeywords, string stringKeywords)
         {
             if (type == "Persoon")
             {
@@ -148,7 +148,7 @@ namespace BL
                     }
                 }
 
-                if(selectedKeywords != null)
+                if (selectedKeywords != null)
                 {
                     foreach (int KeywordId in selectedKeywords)
                     {
@@ -160,7 +160,7 @@ namespace BL
 
                     }
                 }
-                
+
                 Theme theme = new Theme() { ItemId = id, Name = name, Keywords = keywordsList };
                 itemRepository.UpdateItem(theme);
 
@@ -232,28 +232,18 @@ namespace BL
             itemRepository.UpdateItem(item);
         }
 
-    public List<Organization> GetOrganizations()
-    {
-      return itemRepository.ReadOrganizations();
-    }
+        
 
-    public List<Person> GetPersons()
-    {
-      return itemRepository.ReadPersons();
-    }
+        public void RemoveItem(Item i)
+        {
+            itemRepository.DeleteItem(i);
+        }
 
-    public void RemoveItem(Item i)
-    {
-      itemRepository.DeleteItem(i);
-    }
+        public Item GetItem(int id)
+        {
+            return itemRepository.ReadItem(id);
+        }
 
-    public Item GetItem(int id)
-    {
-      return itemRepository.ReadItem(id);
-    }
 
-    public List<Theme> GetThemes()
-    {
-      return itemRepository.ReadThemes();
     }
 }

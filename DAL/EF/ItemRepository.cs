@@ -23,17 +23,17 @@ namespace DAL.EF
             return ctx.Items.Include(a => a.Alerts).ToList<Item>();
         }
 
-        public IEnumerable<Person> ReadPersons()
+        public IEnumerable<Person> GetPersons()
         {
             return ctx.Items.OfType<Person>().ToList<Person>();
         }
 
-        public IEnumerable<Organization> ReadOrganizations()
+        public IEnumerable<Organization> GetOrganizations()
         {
             return ctx.Items.OfType<Organization>().ToList<Organization>();
         }
 
-        public IEnumerable<Theme> ReadThemes()
+        public IEnumerable<Theme> GetThemes()
         {
             return ctx.Items.OfType<Theme>().Include(k => k.Keywords).ToList<Theme>();
         }
@@ -183,10 +183,6 @@ namespace DAL.EF
       return ctx.Persons.ToList();
     }
 
-    public Item ReadItem(int id)
-    {
-      return ctx.Items.Find(id);
-    }
 
     public List<Theme> ReadThemes()
     {
