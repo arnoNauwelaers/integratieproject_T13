@@ -17,23 +17,24 @@ namespace politiekeBarometer.Controllers
   public class AdminController : Controller
   {
     private static ApplicationUserManager userManager = new ApplicationUserManager();
-    // GET: Admin
-    public ActionResult Index()
+        // GET: Admin
+        [Authorize(Roles = "SuperAdmin")]
+        public ActionResult Index()
     {
       
         return View(userManager.GetUsersFromRole("Admin"));
       
     }
 
-    // GET: Admin/Create
-    public ActionResult Create()
+        // GET: Admin/Create
+        [Authorize(Roles = "SuperAdmin")]
+        public ActionResult Create()
     {
       return View();
     }
 
     // POST: Admin/Create
-    [HttpPost]
-    [ValidateAntiForgeryToken]
+    [HttpPost, ValidateAntiForgeryToken,  Authorize(Roles = "SuperAdmin")]
     public async Task<ActionResult> Create(RegisterViewModel model)
     {
 
@@ -59,14 +60,15 @@ namespace politiekeBarometer.Controllers
       return View(model);
     }
 
-    public ActionResult Delete(string id)
+        [Authorize(Roles = "SuperAdmin")]
+        public ActionResult Delete(string id)
     {
       ApplicationUser user = userManager.GetUser(id);
       return View(user);
     }
 
     // POST: Party/Delete
-    [HttpPost]
+    [HttpPost, Authorize(Roles = "SuperAdmin")]
     public ActionResult Delete(string id, FormCollection collection)
     {
       try
@@ -82,14 +84,16 @@ namespace politiekeBarometer.Controllers
       }
     }
 
-    // GET: Admin/Details
-    public ActionResult Details(string id)
+        // GET: Admin/Details
+        [Authorize(Roles = "SuperAdmin")]
+        public ActionResult Details(string id)
     {
       return View(userManager.GetUser(id));
     }
 
-    // GET: Admin/Edit
-    public ActionResult Edit(string id)
+        // GET: Admin/Edit
+        [Authorize(Roles = "SuperAdmin")]
+        public ActionResult Edit(string id)
     {
 
       @ViewBag.Admin = userManager.GetUser(id);
@@ -97,8 +101,7 @@ namespace politiekeBarometer.Controllers
     }
 
     // POST: Admin/Edit
-    [HttpPost]
-    [ValidateAntiForgeryToken]
+    [HttpPost, ValidateAntiForgeryToken, Authorize(Roles = "SuperAdmin")]
     public ActionResult Edit(string id, FormCollection collection)
     {
 
