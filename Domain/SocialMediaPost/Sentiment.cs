@@ -6,14 +6,19 @@ namespace BL.Domain
     {
         [Key]
         public int Id { get; set; }
-        public double Value { get; set; }
-        public Sentiment(double val)
+        public double Polarity { get; set; }
+        public double Subjectivity { get; set; }
+        public Sentiment(double pol, double sub)
         {
-            Value = val;
+          Polarity = pol;
+          Subjectivity = sub;
         }
 
-        public Sentiment()
+        public double GetSentiment()
         {
+          // not sure how to calculate this correctly, this should be enough for now
+          return Polarity * Subjectivity;
+
         }
     }
 }

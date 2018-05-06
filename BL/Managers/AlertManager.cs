@@ -28,9 +28,9 @@ namespace BL.Managers
 
               switch (alert.Parameter)
                 {
-        case AlertParameter.compared: CompareMentions(alert); break;
+        case AlertParameter.compared: CompareNrOfPosts(alert); break;
         case AlertParameter.comparedSentiment:CompareSentiment(alert); break;
-        case AlertParameter.mentions:  CompareMentionsWithSelf(alert); break;
+        case AlertParameter.mentions:  CompareNrOfPostsWithSelf(alert); break;
         case AlertParameter.sentiment:  CompareSentimentWithSelf(alert); break;
         
               }
@@ -64,32 +64,62 @@ namespace BL.Managers
 
     private void CompareSentimentWithSelf(Alert alert)
     {
-      throw new NotImplementedException();
+      double newSentiment = socialMediaRepository.ReadAverageSentimentFromItem(alert.Item, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
+      double oldSentiment = socialMediaRepository.ReadAverageSentimentFromItem(alert.Item, DateTime.Now.AddHours(-FREQUENTIE), DateTime.Now.AddHours(-(FREQUENTIE * 2)));
+      if (newSentiment >= oldSentiment * (alert.ConditionPerc / 100))
+      {
+        Notification n = new Notification() { DateTime = DateTime.Now, Alert = alert };
+        n.Content = String.Format("{0} wordt nu {1}% positiever gezien dan eerder", alert.Item.Name, alert.ConditionPerc);
+        alertRepository.CreateNotification(n);
+        alert.Notifications.Add(n);
+        alertRepository.UpdateAlert(alert);
+        SendAlert(alert, n);
+      } ;
     }
 
     private void CompareSentiment(Alert alert)
     {
-      throw new NotImplementedException();
+      double s1 = socialMediaRepository.ReadAverageSentimentFromItem(alert.Item, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
+      double s2 = socialMediaRepository.ReadAverageSentimentFromItem(alert.CompareItem, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
+      if (s1 >= s2 * (alert.ConditionPerc / 100))
+      {
+        Notification n = new Notification() { DateTime = DateTime.Now, Alert = alert };
+        n.Content = String.Format("{0} wordt nu {1}% zo positief als {2} gezien", alert.Item.Name, alert.ConditionPerc, alert.CompareItem.Name);
+        alertRepository.CreateNotification(n);
+        alert.Notifications.Add(n);
+        alertRepository.UpdateAlert(alert);
+        SendAlert(alert, n);
+      }
     }
 
-    private void CompareMentions(Alert alert)
+    private void CompareNrOfPosts(Alert alert)
     {
-      throw new NotImplementedException();
+      int tweetAmountItem1 = socialMediaRepository.ReadNrOfPostsFromItem(alert.Item, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
+      int tweetAmountItem2 = socialMediaRepository.ReadNrOfPostsFromItem(alert.CompareItem, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
+      if(tweetAmountItem1 >= tweetAmountItem2 * (alert.ConditionPerc / 100))
+      {
+        Notification n = new Notification() { DateTime = DateTime.Now, Alert = alert };
+        n.Content = String.Format("{0} is nu meer dan {1}% zo populair als {2}",alert.Item.Name,alert.ConditionPerc,alert.CompareItem.Name);
+        alertRepository.CreateNotification(n);
+        alert.Notifications.Add(n);
+        alertRepository.UpdateAlert(alert);
+        SendAlert(alert, n);
+      }
     }
 
-    private void CompareMentionsWithSelf(Alert alert)
+    private void CompareNrOfPostsWithSelf(Alert alert)
     {
       int tweetAmount = socialMediaRepository.ReadNrOfPostsFromItem(alert.Item, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
-      int oldTweetAmount = socialMediaRepository.ReadNrOfPostsFromItem(alert.Item, DateTime.Now.AddHours(-1), DateTime.Now.AddHours(-(FREQUENTIE * 2)));
+      int oldTweetAmount = socialMediaRepository.ReadNrOfPostsFromItem(alert.Item, DateTime.Now.AddHours(-FREQUENTIE), DateTime.Now.AddHours(-(FREQUENTIE * 2)));
 
-      if (alert.ConditionPerc > 0)
+      if (alert.ConditionPerc > 100)
       {
-        if (tweetAmount >= oldTweetAmount + oldTweetAmount * (alert.ConditionPerc / 100))
+        if (tweetAmount >=oldTweetAmount * (alert.ConditionPerc / 100))
         {
           if (!alertRepository.NotificationExists(alert.AlertId))
           {
             Notification notification = new Notification() { DateTime = DateTime.Now, Alert = alert };
-            notification.Content = String.Format("{0} is populairder geworden", alert.Item.Name);
+            notification.Content = String.Format("Er wordt meer over {0} gepraat op sociale media", alert.Item.Name);
             alertRepository.CreateNotification(notification);
             alert.Notifications.Add(notification);
             alertRepository.UpdateAlert(alert);
@@ -102,12 +132,12 @@ namespace BL.Managers
       }
       else
       {
-        if (tweetAmount <= oldTweetAmount - oldTweetAmount * (alert.ConditionPerc / 100))
+        if (tweetAmount <= oldTweetAmount  * (alert.ConditionPerc / 100))
         {
           if (!alertRepository.NotificationExists(alert.AlertId))
           {
             Notification notification = new Notification() { DateTime = DateTime.Now, Alert = alert };
-            notification.Content = String.Format("{0} is minder populair geworden", alert.Item.Name);
+            notification.Content = String.Format("Er wordt minder over {0} gepraat op sociale media", alert.Item.Name);
             alertRepository.CreateNotification(notification);
             alert.Notifications.Add(notification);
             alertRepository.UpdateAlert(alert);

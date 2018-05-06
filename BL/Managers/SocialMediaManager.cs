@@ -203,10 +203,9 @@ namespace BL.Managers
 
         public void ArraysToLists(SocialMediaPost post)
         {
-            foreach (var item in post.Sentiment)
-            {
-                post.Sentiments.Add(new Sentiment(item));
-            }
+            Sentiment s = new Sentiment(post.Sentiment[0], post.Sentiment[1]);
+            post.PostSentiment = s;
+            
             foreach (var item in post.Hashtag)
             {
                 post.Hashtags.Add(new Hashtag(item));

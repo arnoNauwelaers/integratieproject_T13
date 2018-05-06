@@ -43,7 +43,7 @@ namespace BL.Domain
         public virtual SocialMediaProfile SocialMediaProfile { get; set; }
         public virtual SocialMediaSource SocialMediaSource { get; set; }
         public virtual ICollection<SocialMediaProfile> SocialMediaProfiles { get; set; } = new List<SocialMediaProfile>();
-        public virtual ICollection<Sentiment> Sentiments { get; set; } = new List<Sentiment>();
+        public virtual Sentiment PostSentiment { get; set; }
         public virtual ICollection<Hashtag> Hashtags { get; set; } = new List<Hashtag>();
         public virtual ICollection<Url> Urls { get; set; } = new List<Url>();
         public virtual ICollection<Word> Words { get; set; } = new List<Word>();
@@ -52,13 +52,10 @@ namespace BL.Domain
 
         public void ListsToArrays()
         {
+            
+            Sentiment[0] = PostSentiment.Polarity;
+            Sentiment[1] = PostSentiment.Subjectivity;
             int i = 0;
-            foreach (var item in Sentiments)
-            {
-                Sentiment[i] = item.Value;
-                i++;
-            }
-            i = 0;
             foreach (var item in Hashtags)
             {
                 Hashtag[i] = item.Value;

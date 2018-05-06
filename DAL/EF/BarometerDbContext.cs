@@ -41,7 +41,7 @@ namespace DAL.EF
         public DbSet<Data> Data { get; set; }
         public DbSet<Url> Urls { get; set; }
         public DbSet<Hashtag> Hashtags { get; set; }
-        public DbSet<Word> Woorden { get; set; }
+        public DbSet<Word> Words { get; set; }
         public DbSet<Sentiment> Sentiments { get; set; }
         public DbSet<ChartItemData> ChartItemDatas { get; set; }
         public DbSet<Zone> Zones { get; set; }
@@ -86,7 +86,7 @@ namespace DAL.EF
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Urls).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Persons).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Hashtags).WithMany();
-            modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Sentiments).WithMany();
+            modelBuilder.Entity<SocialMediaPost>().HasOptional(i => i.PostSentiment).WithOptionalDependent().WillCascadeOnDelete(true);
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Themes).WithMany();
             //modelBuilder.Entity<Theme>().HasMany(i => i.Keywords).WithMany();
             modelBuilder.Entity<Keyword>().HasOptional(k => k.Theme);
