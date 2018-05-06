@@ -63,26 +63,12 @@ namespace BL.Managers
             foreach (var item in data2)
             {
                 ArraysToLists(item);
-                LinkPersons(item);
                 socialMediaRepository.CreateSocialMediaPost(item);
             }
             return itemManager.GetAllItemsFromPosts(data2);
         }
 
-        private void LinkPersons(SocialMediaPost post)
-    {
-      //foreach(var v in post.Person)
-      //{
-      //  Person p = (Person)itemManager.GetItem(v);
-      //  if (!p.Equals(null))
-      //  {
-      //    post.Persons.Add(p);
-          
-      //  }
         
-      //}
-      socialMediaRepository.UpdateSocialMediaPost(post);
-    }
         // dubbel? staat ook in alertmanager
         //public Boolean VerifyCondition(Alert alert)
         //{

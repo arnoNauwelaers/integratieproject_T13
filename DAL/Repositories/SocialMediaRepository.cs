@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity.Migrations;
 using DAL.EF;
+using System.Diagnostics;
 
 namespace DAL.Repositories
 {
@@ -28,17 +29,18 @@ namespace DAL.Repositories
         {
             List<SocialMediaPost> tempPosts = ctx.SocialMediaPosts.Where(i => i.Date > since).Include(a => a.SocialMediaProfiles).Include(a => a.Words).Include(a => a.Hashtags).Include(a => a.Persons).ToList();
             List<SocialMediaPost> posts = new List<SocialMediaPost>();
+            List<SocialMediaPost> results = new List<SocialMediaPost>();
+            //TODO 6/05 geen iteration?
             foreach (var post in tempPosts)
             {
                 post.ListsToArrays();
+                Debug.WriteLine(post.Person[0]);
+                if (post.Person.Contains(item.Name))
+                {
+                    results.Add(post);
+                }
             }
-            //TODO niet alleen voor persoon?
-            List<SocialMediaPost> results = tempPosts.FindAll(i => i.Person.Contains(item.Name));
-            foreach (var result in results)
-            {
-                posts.Add(result);
-            }
-            return posts;
+            return results;
         }
 
         public SocialMediaPost CreateSocialMediaPost(SocialMediaPost socialMediaPost)

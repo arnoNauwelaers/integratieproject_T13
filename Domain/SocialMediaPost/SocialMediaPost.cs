@@ -77,13 +77,11 @@ namespace BL.Domain
                 i++;
             }
             i = 0;
-            ///*TODO Mathijs vragen
-            //foreach (var item in Persons)
-            //{
-            //    Person[i] = item.Value;
-            //    i++;
-            //}
-            //*/
+            foreach (var item in Persons)
+            {
+                Person[i] = item.Name;
+                i++;
+            }
             i = 0;
             foreach (var item in Themes)
             {

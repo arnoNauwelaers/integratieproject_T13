@@ -34,21 +34,24 @@
     @foreach (var chart in Model.Charts)
     {
         //TODO hier code om elke chart in te laden op juiste positie en grootte
-        <div id="@chart.ChartId" data-x="@chart.Zone.X" data-y="@chart.Zone.Y" value="@chart.ChartId" class="grafiek resize-drag" style="@chart.GetStyle()">
+        <div data-x="@chart.Zone.X" data-y="@chart.Zone.Y" value="@chart.ChartId" class="grafiek resize-drag" style="@chart.GetStyle()">
+            <form id="@chart.ChartId" class="form-horizontal deleteForm" method="post" action="/Dashboard/DeleteChart">
+                <a onclick="deleteChart(@chart.ChartId)" href="#"><i class="fa fa-fw fa-trash" style="float:right"><input type="hidden" value="@chart.ChartId" name="id" /></i></a>
+            </form>
             <canvas id="@chart.GetCanvasId()"></canvas>
         </div>
         <script>
-            
+
             var dataChart = @chart.GetData();
-            var labelsChart = @chart.GetLabels();
-        var @chart.GetCanvasId() = document.getElementById("@chart.GetCanvasId()").getContext('2d');
+            var labelsChart = @Html.Raw(chart.GetLabels());
+            var @chart.GetCanvasId() = document.getElementById("@chart.GetCanvasId()").getContext('2d');
             var myChart = new Chart(@chart.GetCanvasId(), {
                 type: 'bar',
                 data: {
-                    labels: [labelsChart],
+                    labels: labelsChart,
                     datasets: [{
                         label: '# of Votes',
-                        data: [dataChart],
+                        data: dataChart,
                         borderWidth: 1
                     }]
                 },

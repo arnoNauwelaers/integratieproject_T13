@@ -1,4 +1,5 @@
 ﻿var items = "";
+HideDelete();
 
 var itemsHidden = document.getElementById("itemsHidden");
 
@@ -18,7 +19,7 @@ interact('.resize-drag')
         // call this function on every dragmove event
         onmove: dragMoveListener,
         // call this function on every dragend event
-        
+
     });
 
 function dragMoveListener(event) {
@@ -88,19 +89,37 @@ interact('.resize-drag')
 $(".grafiek").removeClass("resize-drag");
 $("#editButton").click(function () {
     if ($("#editButton").hasClass("btn-success")) {
-        $(".grafiek").removeClass("resize-drag");
-        $("#editButton").addClass("btn-primary");
-        $("#editButton").removeClass("btn-success");
-        $("#editButton").html("Edit");
-        SaveCharts();
+        ButtonToEdit();
     }
     else {
-        $(".grafiek").addClass("resize-drag");
-        $("#editButton").removeClass("btn-primary");
-        $("#editButton").addClass("btn-success");
-        $("#editButton").html("Save");
+        ButtonToSave();
     }
 });
+
+function ButtonToEdit() {
+    $(".grafiek").removeClass("resize-drag");
+    $("#editButton").addClass("btn-primary");
+    $("#editButton").removeClass("btn-success");
+    $("#editButton").html("Edit");
+    SaveCharts();
+    HideDelete();
+}
+
+function ButtonToSave() {
+    $(".grafiek").addClass("resize-drag");
+    $("#editButton").removeClass("btn-primary");
+    $("#editButton").addClass("btn-success");
+    $("#editButton").html("Save");
+    ShowDelete();
+}
+
+function HideDelete() {
+    $(".deleteForm").hide();
+}
+
+function ShowDelete() {
+    $(".deleteForm").show();
+}
 
 function SaveCharts() {
     var text = '[';
@@ -162,3 +181,8 @@ $('#addModal').on('hidden.bs.modal', function () {
     var ul = document.getElementById("itemList");
     ul.innerHTML = "";
 });
+
+function deleteChart(id) {
+    var form = document.getElementById(id);
+    form.submit();
+}

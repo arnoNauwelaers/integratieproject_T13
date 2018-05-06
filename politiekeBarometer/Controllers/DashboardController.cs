@@ -67,8 +67,7 @@ namespace politiekeBarometer.Controllers
         }
 
         //TODO 27/04 values worden niet gepost?
-        [HttpPost]
-        [Authorize]
+        [HttpPost, Authorize]
         public ActionResult AddChart(string items, string type, string value, string frequency)
         {
             UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -76,6 +75,20 @@ namespace politiekeBarometer.Controllers
             Chart chart = ChartManager.CreateChartFromDashboard(items, type, value, frequency);
             user.Dashboard.Add(chart);
             UserManager.Update(user);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost, Authorize]
+        public ActionResult DeleteChart(int id)
+        {
+            Chart chart = ChartManager.GetChart(id);
+            UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser user = UserManager.GetUser(User.Identity.GetUserId());
+            if (user.Dashboard.Contains(chart))
+            {
+                user.Dashboard.Remove(chart);
+                UserManager.Update(user);
+            }
             return RedirectToAction("Index");
         }
     }
