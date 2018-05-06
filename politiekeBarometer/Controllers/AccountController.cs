@@ -12,6 +12,7 @@ using politiekeBarometer.Models;
 using BL.Domain;
 using BL;
 using System.Data.Entity;
+using BL.Managers;
 
 namespace politiekeBarometer.Controllers
 {

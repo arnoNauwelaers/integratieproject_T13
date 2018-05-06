@@ -1,12 +1,13 @@
 ﻿using BL.Domain;
 using DAL.EF;
+using DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL
+namespace BL.Managers
 {
     public class DataManager
     {

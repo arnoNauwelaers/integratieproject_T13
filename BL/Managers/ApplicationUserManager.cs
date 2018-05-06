@@ -1,17 +1,17 @@
 ﻿using BL.Domain;
 using DAL;
-using DAL.EF;
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using DAL.EF;
+using DAL.Repositories;
 
-
-namespace BL
+namespace BL.Managers
 {
-    public class ApplicationUserManager : UserManager<ApplicationUser>, IAppUserManager
+    public class ApplicationUserManager : UserManager<ApplicationUser>
     {
     private UserRepository userRepository;
         private AlertRepository alertRepository;
@@ -27,8 +27,8 @@ namespace BL
 
         public ApplicationUserManager() : base(new UserStoreRepository())
         {
-            this.alertRepository = RepositoryFactory.CreateAlertRepository();
-              userRepository = RepositoryFactory.CreateUserRepository();
+            alertRepository = RepositoryFactory.CreateAlertRepository();
+            userRepository = RepositoryFactory.CreateUserRepository();
             
             
         }

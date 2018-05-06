@@ -6,8 +6,9 @@ using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using DAL.EF;
 
-namespace DAL.EF
+namespace DAL.Repositories
 {
     public class ItemRepository
     {

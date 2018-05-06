@@ -11,6 +11,7 @@ using DAL.EF;
 using Microsoft.AspNet.Identity.Owin;
 using BL.Domain;
 using System;
+using BL.Managers;
 
 namespace politiekeBarometer
 {

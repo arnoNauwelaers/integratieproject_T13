@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using BL.Domain;
 using BL;
+using BL.Managers;
 
 namespace politiekeBarometer
 {

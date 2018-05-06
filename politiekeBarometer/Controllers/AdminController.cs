@@ -10,7 +10,7 @@ using BL.Domain;
 using politiekeBarometer.Models;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
-
+using BL.Managers;
 
 namespace politiekeBarometer.Controllers
 {

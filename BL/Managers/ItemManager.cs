@@ -4,8 +4,9 @@ using DAL;
 using BL.Domain;
 using DAL.EF;
 using System;
+using DAL.Repositories;
 
-namespace BL
+namespace BL.Managers
 {
     public class ItemManager
     {

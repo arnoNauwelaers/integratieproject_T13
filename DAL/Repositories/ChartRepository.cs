@@ -7,8 +7,9 @@ using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity.Migrations;
+using DAL.EF;
 
-namespace DAL.EF
+namespace DAL.Repositories
 {
     public class ChartRepository
     {

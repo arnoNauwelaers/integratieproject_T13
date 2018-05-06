@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using DAL.EF;
 using DAL;
 
-namespace BL
+namespace DAL.Repositories
 {
-  public static class RepositoryFactory
+    public static class RepositoryFactory
   {
 
     private static BarometerDbContext ctx;
-    private static IPlatformRepostiory platformRepo;
+    private static PlatformRepository platformRepo;
     private static UserRepository userRepo;
     private static AlertRepository alertRepo;
     private static ChartRepository chartRepo;
@@ -39,7 +39,7 @@ namespace BL
 
     }
 
-    public static IPlatformRepostiory CreatePlatformRepository()
+    public static PlatformRepository CreatePlatformRepository()
     {
       return platformRepo;
     }

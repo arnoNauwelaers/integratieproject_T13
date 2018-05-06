@@ -5,13 +5,14 @@ using System.Web;
 using System.Web.Mvc;
 using BL;
 using BL.Domain;
+using BL.Managers;
 
 namespace politiekeBarometer.Controllers
 {
     public class PlatformController : Controller
     {
-        IPlatformManager platformManager = new PlatformManager();
-        IAppUserManager userManager = new ApplicationUserManager();
+        PlatformManager platformManager = new PlatformManager();
+        ApplicationUserManager userManager = new ApplicationUserManager();
 
 
 
@@ -42,11 +43,12 @@ namespace politiekeBarometer.Controllers
 
             try
             {
-                Platform p = new Platform();
-                p.Admins = new List<ApplicationUser> { userManager.GetUser(Convert.ToString(collection["admin"])) };
-
-                p.Name = Convert.ToString(collection["name"]);
-                p.Interval = Convert.ToInt32(collection["interval"]);
+                Platform p = new Platform
+                {
+                    Admins = new List<ApplicationUser> { userManager.GetUser(Convert.ToString(collection["admin"])) },
+                    Name = Convert.ToString(collection["name"]),
+                    Interval = Convert.ToInt32(collection["interval"])
+                };
                 platformManager.AddPlatform(p);
 
                 return RedirectToAction("Index");

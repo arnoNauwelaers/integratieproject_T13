@@ -6,8 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
+using DAL.EF;
 
-namespace DAL.EF
+namespace DAL.Repositories
 {
     public class UserRepository
     {

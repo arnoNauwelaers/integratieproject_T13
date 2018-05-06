@@ -6,13 +6,14 @@ using System.Web.Mvc;
 using System.Text;
 using BL;
 using BL.Domain;
+using BL.Managers;
 
 namespace politiekeBarometer.Controllers
 {
     public class UserController : Controller
     {
 
-        IAppUserManager userManager = new ApplicationUserManager();
+        ApplicationUserManager userManager = new ApplicationUserManager();
         // GET: User
         public ActionResult Index()
         {

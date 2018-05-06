@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using BL.Domain;
 using DAL;
 using DAL.EF;
+using DAL.Repositories;
 
-namespace BL
+namespace BL.Managers
 {
-  public class PlatformManager : IPlatformManager
+  public class PlatformManager
   {
-    private IPlatformRepostiory repo;
+    private PlatformRepository repo;
     private ApplicationUserManager userManager;
     private static int idCounter = 0;
     public PlatformManager()

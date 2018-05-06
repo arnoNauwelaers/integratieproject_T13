@@ -14,6 +14,7 @@ using Microsoft.AspNet.Identity;
 using BL.Domain;
 using Newtonsoft.Json.Linq;
 using politiekeBarometer.Models;
+using BL.Managers;
 
 namespace politiekeBarometer.Controllers
 {

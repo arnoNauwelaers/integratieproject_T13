@@ -74,20 +74,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EF\AlertRepository.cs" />
+    <Compile Include="Repositories\AlertRepository.cs" />
     <Compile Include="EF\BarometerDbConfiguration.cs" />
     <Compile Include="EF\BarometerDbContext.cs" />
     <Compile Include="EF\BarometerDbInitializer.cs" />
-    <Compile Include="EF\ChartItemDataRepository.cs" />
-    <Compile Include="EF\ChartRepository.cs" />
-    <Compile Include="EF\DataRepository.cs" />
-    <Compile Include="EF\ItemRepository.cs" />
-    <Compile Include="EF\PlatformRepository.cs" />
-    <Compile Include="EF\SocialMediaRepository.cs" />
-    <Compile Include="EF\UserRepository.cs" />
-    <Compile Include="IPlatformRepostiory.cs" />
+    <Compile Include="Repositories\ChartItemDataRepository.cs" />
+    <Compile Include="Repositories\ChartRepository.cs" />
+    <Compile Include="Repositories\DataRepository.cs" />
+    <Compile Include="Repositories\ItemRepository.cs" />
+    <Compile Include="Repositories\PlatformRepository.cs" />
+    <Compile Include="Repositories\RepositoryFactory.cs" />
+    <Compile Include="Repositories\SocialMediaRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserStoreRepository.cs" />
+    <Compile Include="Repositories\UserStoreRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">

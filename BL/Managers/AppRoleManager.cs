@@ -7,7 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using DAL.EF;
 
-namespace BL
+namespace BL.Managers
 {
   public class AppRoleManager : RoleManager<IdentityRole>
   {

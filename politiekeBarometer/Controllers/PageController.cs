@@ -8,6 +8,7 @@ using BL;
 using DAL.EF;
 using System.Web.Helpers;
 using BL.Domain;
+using BL.Managers;
 
 namespace politiekeBarometer.Controllers
 {

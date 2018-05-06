@@ -1,10 +1,12 @@
 ﻿using System;
 using Microsoft.Owin;
 using Owin;
-using BL;
+using BL.Managers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using BL.Domain;
+using DAL.Repositories;
+using BL;
 
 [assembly: OwinStartupAttribute(typeof(politiekeBarometer.Startup))]
 namespace politiekeBarometer

@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using BL.Domain;
 using System.Data.Entity;
+using DAL.EF;
 
-namespace DAL.EF
+namespace DAL.Repositories
 {
-  public class PlatformRepository : IPlatformRepostiory
+    public class PlatformRepository
   {
 
     private BarometerDbContext ctx;
