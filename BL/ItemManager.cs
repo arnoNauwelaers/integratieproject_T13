@@ -244,6 +244,11 @@ namespace BL
             return itemRepository.ReadItem(id);
         }
 
+    public Item GetItem(string s)
+    {
+      return itemRepository.ReadItem(s);
+    }
+
 
     }
 }

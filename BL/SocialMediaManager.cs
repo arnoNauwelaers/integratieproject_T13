@@ -37,12 +37,10 @@ namespace BL
             List<Alert> alerts = new List<Alert>();
             foreach (var item in alteredItems)
             {
-                alerts = alertManager.GetAlerts(item);
-                foreach (var alert in alerts)
-                {
-                    alertManager.InspectAlert(alert);
-                }
+                alerts.AddRange(item.Alerts);
             }
+
+          alertManager.HandleAlerts(alerts);
 
         }
 
@@ -64,37 +62,53 @@ namespace BL
             foreach (var item in data2)
             {
                 item.ArraysToLists();
+                LinkPersons(item);
                 socialMediaRepository.CreateSocialMediaPost(item);
             }
             return itemManager.GetAllItemsFromPosts(data2);
         }
 
-        public Boolean VerifyCondition(Alert alert)
+        private void LinkPersons(SocialMediaPost post)
+    {
+      foreach(var v in post.Person)
+      {
+        Person p = (Person)itemManager.GetItem(v);
+        if (!p.Equals(null))
         {
-            int tweetAmount = socialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
-            if (alert.CompareItem == null)
-            {
-                int oldTweetAmount = socialMediaRepository.ReadItemParameter(alert, DateTime.Now.AddHours(-1), DateTime.Now.AddHours(-(FREQUENTIE * 2)));
-
-                if (alert.Condition == ">")
-                {
-                    //als een politicus 2 maal zoveel tweets stuurt in het laatste uur als in het vorige uur wordt er een notification gestuurd
-                    return tweetAmount >= (oldTweetAmount * 2);
-                }
-                return false;
-            }
-            else
-            {
-                int tweetAmount2 = socialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
-                if (alert.Condition == ">")
-                {
-                    //als er over een politus meer dan 2 maal zveel getweet is in het afgelopen uur als een ander politici word er een notification gestuurd
-                    return tweetAmount >= tweetAmount2 * 2;
-                }
-
-            }
-            return false;
+          post.Persons.Add(p);
+          
         }
+        
+      }
+      socialMediaRepository.UpdateSocialMediaPost(post);
+    }
+        // dubbel? staat ook in alertmanager
+        //public Boolean VerifyCondition(Alert alert)
+        //{
+        //    int tweetAmount = socialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
+        //    if (alert.CompareItem == null)
+        //    {
+        //        int oldTweetAmount = socialMediaRepository.ReadItemParameter(alert, DateTime.Now.AddHours(-1), DateTime.Now.AddHours(-(FREQUENTIE * 2)));
+
+        //        if (alert.Condition == ">")
+        //        {
+        //            //als een politicus 2 maal zoveel tweets stuurt in het laatste uur als in het vorige uur wordt er een notification gestuurd
+        //            return tweetAmount >= (oldTweetAmount * 2);
+        //        }
+        //        return false;
+        //    }
+        //    else
+        //    {
+        //        int tweetAmount2 = socialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
+        //        if (alert.Condition == ">")
+        //        {
+        //            //als er over een politus meer dan 2 maal zveel getweet is in het afgelopen uur als een ander politici word er een notification gestuurd
+        //            return tweetAmount >= tweetAmount2 * 2;
+        //        }
+
+        //    }
+        //    return false;
+        //}
 
         private string GetMonthFromInt(int month)
         {

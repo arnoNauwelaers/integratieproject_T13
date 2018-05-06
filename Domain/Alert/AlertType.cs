@@ -6,6 +6,6 @@ namespace BL.Domain
     {
         notification = 0,
         mail,
-        notificationMail
+        pushbericht
     }
 }

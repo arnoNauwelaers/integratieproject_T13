@@ -84,6 +84,11 @@ namespace DAL.EF
             ctx.SaveChanges();
     }
 
+    public Item ReadItem(string s)
+    {
+      return ctx.Items.FirstOrDefault(i => i.Name.Contains(s));
+    }
+
 
 
     public List<Item> ReadItems(SocialMediaPost post)

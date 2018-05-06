@@ -83,7 +83,7 @@ namespace DAL.EF
             int aantal = 0;
             if (alert.Item.GetType() == typeof(Person))
             {
-                if (alert.Parameter == AlertParameter.tweets)
+                if (alert.Parameter == AlertParameter.mentions)
                 {
                     foreach (var profile in ((Person)alert.Item).SocialMediaProfiles)
                     {
@@ -108,6 +108,11 @@ namespace DAL.EF
             }
             return aantal;
         }
+
+        public int ReadNrOfPostsFromItem(Item i, DateTime end, DateTime start)
+    {
+      return ctx.SocialMediaPosts.Count(smp => smp.Persons.Contains(i));
+    }
 
         public List<SocialMediaProfile> ReadProfiles()
         {

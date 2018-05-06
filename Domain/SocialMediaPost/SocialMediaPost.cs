@@ -68,10 +68,11 @@ namespace BL.Domain
             {
                 Words.Add(new Word(item));
             }
-            foreach (var item in Person)
-            {
-                Persons.Add(new Person(item));
-            }
+            // er horen geen nieuwe personen aangemaakt te worden, ze moeten gelinkt worden aan al bestaande personen. Nu gelinkt in SMManager
+            //foreach (var item in Person)
+            //{
+            //    Persons.Add(new Person(item));
+            //}
             foreach (var item in Theme)
             {
                 Themes.Add(new Theme(item));
@@ -105,13 +106,13 @@ namespace BL.Domain
                 i++;
             }
             i = 0;
-            /*TODO Mathijs vragen
-            foreach (var item in Persons)
-            {
-                Person[i] = item.Value;
-                i++;
-            }
-            */
+            ///*TODO Mathijs vragen
+            //foreach (var item in Persons)
+            //{
+            //    Person[i] = item.Value;
+            //    i++;
+            //}
+            //*/
             i = 0;
             foreach (var item in Themes)
             {

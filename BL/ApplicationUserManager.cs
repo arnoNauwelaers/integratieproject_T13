@@ -137,9 +137,9 @@ namespace BL
       return userRepository.ReadRoleId(roleName);
     }
 
-    public void SendMail(Alert alert)
+    public void SendMail(ApplicationUser u,Notification n)
     {
-          Mail.sendMail(alert.User.Email, "Nieuwe melding", alert.Content);
+          Mail.sendMail(u.Email, "Nieuwe melding", n.Content);
     }
 
     public List<Item> GetItemsFromUser(string id)
