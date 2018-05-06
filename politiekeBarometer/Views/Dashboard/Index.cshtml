@@ -87,21 +87,19 @@
                                     <optgroup label="Persons">
                                         @foreach (var item in Model.Persons)
                                         {
-                                            <option value="@item.Name">@item.Name</option>
+                                            <option value="@item.ItemId">@item.Name</option>
                                         }                                   @*TODO: hardcoded options weghalen*@
-                                        <option value="1">Bart De Wever</option>
-                                        <option value="2">Kris Peeters</option>
                                     </optgroup>
                                     <optgroup label="Themes">
                                         @foreach (var item in Model.Themes)
                                         {
-                                            <option value="@item.Name">@item.Name</option>
+                                            <option value="@item.ItemId">@item.Name</option>
                                         }
                                     </optgroup>
                                     <optgroup label="Organizations">
                                         @foreach (var item in Model.Organizations)
                                         {
-                                            <option value="@item.Name">@item.Name</option>
+                                            <option value="@item.ItemId">@item.Name</option>
                                         }
                                     </optgroup>
                                 }

@@ -26,7 +26,7 @@ namespace DAL.Repositories
 
         public IEnumerable<SocialMediaPost> ReadSocialMediaPostsSince(DateTime since, Item item)
         {
-            List<SocialMediaPost> tempPosts = ctx.SocialMediaPosts.Include(a => a.SocialMediaProfiles).Include(a => a.Words).Include(a => a.Hashtags).Include(a => a.Persons).ToList().FindAll(i => i.Date > since);
+            List<SocialMediaPost> tempPosts = ctx.SocialMediaPosts.Where(i => i.Date > since).Include(a => a.SocialMediaProfiles).Include(a => a.Words).Include(a => a.Hashtags).Include(a => a.Persons).ToList();
             List<SocialMediaPost> posts = new List<SocialMediaPost>();
             foreach (var post in tempPosts)
             {

@@ -32,11 +32,12 @@ namespace politiekeBarometer.Controllers
         public ActionResult Index()
         {
             UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            List<Item> Items = UserManager.GetItemsFromUser(User.Identity.GetUserId());
+            ApplicationUser user = UserManager.GetUser(User.Identity.GetUserId());
+            List<Item> Items = UserManager.GetItemsFromUser(user);
             List<Person> Persons = new List<Person>();
             List<Theme> Themes = new List<Theme>();
             List<Organization> Organizations = new List<Organization>();
-            foreach (var item in Items)
+            foreach (var item in user.FollowedItems)
             {
                 if (item.TypeInt == 1)
                 {

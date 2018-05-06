@@ -142,9 +142,9 @@ namespace BL.Managers
           Mail.sendMail(u.Email, "Nieuwe melding", n.Content);
     }
 
-    public List<Item> GetItemsFromUser(string id)
+    public List<Item> GetItemsFromUser(ApplicationUser userO)
     {
-        ApplicationUser user = userRepository.ReadUser(id);
+            ApplicationUser user = userO;
         List<Item> tempItems = new List<Item>();
         foreach (var alert in user.Alerts)
         {

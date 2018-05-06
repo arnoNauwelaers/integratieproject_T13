@@ -12,7 +12,7 @@ using BL.Managers;
 
 namespace politiekeBarometer.Controllers
 {
-
+    //TODO YAGO: AUTHORIZATION DINGES
     public class PageController : Controller
     {
         ItemManager im = new ItemManager();
@@ -70,11 +70,12 @@ namespace politiekeBarometer.Controllers
             return View(im.ReadTheme(Id));
         }
 
+        
         public ActionResult AddItem(FormCollection collection)
         {
             ApplicationUser u = userManager.GetUser(System.Web.HttpContext.Current.User.Identity.GetUserId());
             Item i = im.GetItem(Convert.ToInt32(collection["id"]));
-            u.followedItems.Add(i);
+            u.FollowedItems.Add(i);
             userManager.ChangeUser(u);
             if (i.TypeInt == 1) { return RedirectToAction("Person", new { id = i.ItemId }); }
             else

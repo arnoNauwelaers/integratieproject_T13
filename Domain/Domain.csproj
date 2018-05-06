@@ -84,7 +84,6 @@
     <Compile Include="Chart\ChartItemData.cs" />
     <Compile Include="Chart\ChartType.cs" />
     <Compile Include="Chart\ChartValue.cs" />
-    <Compile Include="Dashboard.cs" />
     <Compile Include="Chart\Data.cs" />
     <Compile Include="Chart\DateFrequencyType.cs" />
     <Compile Include="SocialMediaPost\Hashtag.cs" />
@@ -92,7 +91,7 @@
     <Compile Include="Keyword.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Page.cs" />
-    <Compile Include="SocialMediaPost\Person.cs" />
+    <Compile Include="Person.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="SocialMediaPost\Sentiment.cs" />
     <Compile Include="SocialMediaPost\SocialMediaPost.cs" />

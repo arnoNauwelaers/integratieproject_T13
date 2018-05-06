@@ -37,77 +37,78 @@
                     </a>
                 </li>
                 @if (Request.IsAuthenticated)
-                {
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                        <a class="nav-link" href="@Url.Action("Index", "Dashboard")">
-                            <i class="fa fa-fw fa-dashboard"></i>
-                            <span class="nav-link-text">Dashboard</span>
-                        </a>
-                    </li>
-                }
+    {
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <a class="nav-link" href="@Url.Action("Index", "Dashboard")">
+                    <i class="fa fa-fw fa-dashboard"></i>
+                    <span class="nav-link-text">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Persons">
+
+                <a class="nav-link" href="@Url.Action("PersonOverview", "Page")">
+                    <i class="fa fa-fw fa-page"></i>
+                    <span class="nav-link-text">Personen</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Organizations">
+
+                <a class="nav-link" href="@Url.Action("OrganizationOverview", "Page")">
+                    <i class="fa fa-fw fa-page"></i>
+                    <span class="nav-link-text">Organisaties</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Theme">
+
+                <a class="nav-link" href="@Url.Action("ThemeOverview", "Page")">
+                    <i class="fa fa-fw fa-page"></i>
+                    <span class="nav-link-text">Themas</span>
+                </a>
+            </li>
+}
                 @if (Request.IsAuthenticated && this.User.IsInRole("Admin"))
-                {
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                        <a class="nav-link" href="@Url.Action("AdminItemIndex", "Item")">
-                            <i class="fa fa-fw fa-unlock-alt"></i>
-                            <span class="nav-link-text">Edit Items</span>
-                        </a>
-                    </li>
+    {
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <a class="nav-link" href="@Url.Action("AdminItemIndex", "Item")">
+                    <i class="fa fa-fw fa-unlock-alt"></i>
+                    <span class="nav-link-text">Edit Items</span>
+                </a>
+            </li>
 
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Persons">
-
-                    <a class="nav-link" href="@Url.Action("PersonOverview", "Page")">
-                        <i class="fa fa-fw fa-page"></i>
-                        <span class="nav-link-text">Personen</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Organizations">
-
-                    <a class="nav-link" href="@Url.Action("OrganizationOverview", "Page")">
-                        <i class="fa fa-fw fa-page"></i>
-                        <span class="nav-link-text">Organisaties</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Theme">
-
-                    <a class="nav-link" href="@Url.Action("ThemeOverview", "Page")">
-                        <i class="fa fa-fw fa-page"></i>
-                        <span class="nav-link-text">Themas</span>
-                    </a>
-                </li>
 
 
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
-                        <a class="nav-link" href="@Url.Action("Index", "User")">
-                            <i class="fa fa-fw fa-user"></i>
-                            <span class="nav-link-text">Gebruikers</span>
-                        </a>
 
-                    </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
+                <a class="nav-link" href="@Url.Action("Index", "User")">
+                    <i class="fa fa-fw fa-user"></i>
+                    <span class="nav-link-text">Gebruikers</span>
+                </a>
 
-                }
+            </li>
+
+}
 
                 @if (Request.IsAuthenticated && this.User.IsInRole("SuperAdmin"))
-                {
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Admins">
-                        <a class="nav-link" href="@Url.Action("Index", "Admin")">
-                            <i class="fa fa-fw fa-admin"></i>
-                            <span class="nav-link-text">Admins</span>
-                        </a>
+    {
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Admins">
+                <a class="nav-link" href="@Url.Action("Index", "Admin")">
+                    <i class="fa fa-fw fa-admin"></i>
+                    <span class="nav-link-text">Admins</span>
+                </a>
 
-                    </li>
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Platforms">
-                        <a class="nav-link" href="@Url.Action("Index","Platform")">
-                            <i class="fa fa-fw fa-platform"></i>
-                            <span class="nav-link-text">Platforms</span>
-                        </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Platforms">
+                <a class="nav-link" href="@Url.Action("Index","Platform")">
+                    <i class="fa fa-fw fa-platform"></i>
+                    <span class="nav-link-text">Platforms</span>
+                </a>
 
-                    </li>
+            </li>
 
-                }
+}
 
-                
+
 
             </ul>
             <ul class="navbar-nav sidenav-toggler">

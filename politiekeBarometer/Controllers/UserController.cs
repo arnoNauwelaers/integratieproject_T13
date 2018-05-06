@@ -83,7 +83,7 @@ namespace politiekeBarometer.Controllers
                 myExport["telefoon"] = au.PhoneNumber;
                 myExport["2 factor"] = au.TwoFactorEnabled;
                 StringBuilder sb = new StringBuilder();
-                foreach (Item i in au.followedItems)
+                foreach (Item i in au.FollowedItems)
                 {
                     sb.Append(i.Name);
                     sb.Append("; ");
