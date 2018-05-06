@@ -75,10 +75,10 @@ namespace politiekeBarometer.Controllers
             Item i = im.GetItem(Convert.ToInt32(collection["id"]));
             u.followedItems.Add(i);
             userManager.ChangeUser(u);
-            if (i.typeInt == 1) { return RedirectToAction("Person", new { id = i.ItemId }); }
+            if (i.TypeInt == 1) { return RedirectToAction("Person", new { id = i.ItemId }); }
             else
             {
-                return RedirectToAction(i.typeInt == 2 ? "Organization" : "Theme", new { id = i.ItemId });
+                return RedirectToAction(i.TypeInt == 2 ? "Organization" : "Theme", new { id = i.ItemId });
             }
         }
 

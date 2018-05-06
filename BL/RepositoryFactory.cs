@@ -55,7 +55,7 @@ namespace BL
       return smRepo;
     }
 
-    public static AlertRepository CreateALertRepository()
+    public static AlertRepository CreateAlertRepository()
     {
       return alertRepo;
     }

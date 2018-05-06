@@ -12,12 +12,13 @@ namespace BL.Domain
         //TODO delete
         public Person(string val)
         {
-            typeInt = 1;
+            Name = val;
+            TypeInt = 1;
         }
 
         public Person()
         {
-            typeInt = 1;
+            TypeInt = 1;
         }
     }
 }

@@ -36,6 +36,11 @@ namespace BL
             return itemRepository.ReadThemes();
         }
 
+        public Person CreatePersonIfNotExists(string name)
+        {
+            return itemRepository.CreatePersonIfNotExists(name);
+        }
+
         public void AddItem(string name, string type, int selectedOrganizationId, string keywords)
         {
             if (type == "Person")

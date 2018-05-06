@@ -50,35 +50,6 @@ namespace BL.Domain
         public virtual ICollection<Person> Persons { get; set; } = new List<Person>();
         public virtual ICollection<Theme> Themes { get; set; } = new List<Theme>();
 
-        public void ArraysToLists()
-        {
-            foreach (var item in Sentiment)
-            {
-                Sentiments.Add(new Sentiment(item));
-            }
-            foreach (var item in Hashtag)
-            {
-                Hashtags.Add(new Hashtag(item));
-            }
-            foreach (var item in Verhaal)
-            {
-                Urls.Add(new Url(item));
-            }
-            foreach (var item in Word)
-            {
-                Words.Add(new Word(item));
-            }
-            // er horen geen nieuwe personen aangemaakt te worden, ze moeten gelinkt worden aan al bestaande personen. Nu gelinkt in SMManager
-            //foreach (var item in Person)
-            //{
-            //    Persons.Add(new Person(item));
-            //}
-            foreach (var item in Theme)
-            {
-                Themes.Add(new Theme(item));
-            }
-        }
-
         public void ListsToArrays()
         {
             int i = 0;

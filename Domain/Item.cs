@@ -19,11 +19,11 @@ namespace BL.Domain
         //public ICollection<Set> sets { get; set; }
 
         [NotMapped]
-        public int typeInt { get; set; }
+        public int TypeInt { get; set; }
 
         public Item()
         {
-          typeInt = 0;
+          TypeInt = 0;
           //person = 1
           //organisation = 2
           //theme = 3

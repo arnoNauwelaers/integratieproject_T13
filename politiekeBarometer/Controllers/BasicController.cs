@@ -24,7 +24,7 @@ namespace politiekeBarometer.Controllers
             SocialMediaManager = new SocialMediaManager();
             AlertManager = new AlertManager();
             UserManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            UserManager.setSocialMediaManager(SocialMediaManager);
+            UserManager.SetSocialMediaManager(SocialMediaManager);
             ChartManager = new ChartManager();
         }
 

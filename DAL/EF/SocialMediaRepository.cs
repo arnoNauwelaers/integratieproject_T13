@@ -5,6 +5,7 @@ using System.Linq;
 using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity.Migrations;
 
 namespace DAL.EF
 {
@@ -48,7 +49,7 @@ namespace DAL.EF
 
         public void UpdateSocialMediaPost(SocialMediaPost socialMediaPost)
         {
-            ctx.Entry(socialMediaPost).State = System.Data.Entity.EntityState.Modified;
+            ctx.Set<SocialMediaPost>().AddOrUpdate(socialMediaPost);
             ctx.SaveChanges();
         }
 

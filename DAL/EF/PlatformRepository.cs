@@ -27,7 +27,6 @@ namespace DAL.EF
     public void DeletePlatform(int id)
     {
       DeletePlatform(ctx.Platforms.Find(id));
-      
     }
 
     public void DeletePlatform(Platform p)
@@ -51,6 +50,7 @@ namespace DAL.EF
     public void UpdatePlatform(Platform p)
     {
             ctx.Entry(p).State = EntityState.Modified;
+            ctx.SaveChanges(); //WTF
     }
   }
 }

@@ -10,7 +10,7 @@ namespace BL.Domain
 
         public Organization()
         {
-          typeInt = 2;
+          TypeInt = 2;
         }
     }
 }

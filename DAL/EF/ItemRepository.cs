@@ -45,6 +45,18 @@ namespace DAL.EF
             return item;
         }
 
+        public Person CreatePersonIfNotExists(string name)
+        {
+            if (ctx.Persons.Where(p => p.Name == name).Count() > 0)
+            {
+                return ctx.Persons.First(p => p.Name == name);
+            }
+            else
+            {
+                return new Person(name);
+            }
+        }
+
         public Item ReadItem(int id)
         {
             return ctx.Items.Find(id);
@@ -93,6 +105,7 @@ namespace DAL.EF
 
     public List<Item> ReadItems(SocialMediaPost post)
     {
+            post.ListsToArrays();
         List<Item> usedItems = new List<Item>();
         foreach (var item in ctx.Items.ToList<Item>())
         {
@@ -166,9 +179,9 @@ namespace DAL.EF
     {
         string s = SearchValue.ToUpper();
         return ctx.Items.ToList().Where(item => (
-          item.typeInt == 1 && (((Person)item).Name.ToUpper().Contains(s))) || (
-          item.typeInt == 2 && (item.Name.ToUpper().Contains(s))) || (
-          item.typeInt == 3 && (item.Name.ToUpper().Contains(s)))
+          item.TypeInt == 1 && (((Person)item).Name.ToUpper().Contains(s))) || (
+          item.TypeInt == 2 && (item.Name.ToUpper().Contains(s))) || (
+          item.TypeInt == 3 && (item.Name.ToUpper().Contains(s)))
          );
     }
 
@@ -193,5 +206,7 @@ namespace DAL.EF
     {
       return ctx.Themes.ToList();
     }
+
+
   }
 }

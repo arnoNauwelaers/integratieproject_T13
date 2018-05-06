@@ -55,13 +55,13 @@ namespace BL
             else
             {
                 //TODO vanaf vorige maand?
-                date = "2 May 2018 08:49:12";
+                date = "28 Apr 2018 08:49:12";
             }
 
             List<SocialMediaPost> data2 = (List<SocialMediaPost>)read.ReadData(date);
             foreach (var item in data2)
             {
-                item.ArraysToLists();
+                ArraysToLists(item);
                 LinkPersons(item);
                 socialMediaRepository.CreateSocialMediaPost(item);
             }
@@ -70,16 +70,16 @@ namespace BL
 
         private void LinkPersons(SocialMediaPost post)
     {
-      foreach(var v in post.Person)
-      {
-        Person p = (Person)itemManager.GetItem(v);
-        if (!p.Equals(null))
-        {
-          post.Persons.Add(p);
+      //foreach(var v in post.Person)
+      //{
+      //  Person p = (Person)itemManager.GetItem(v);
+      //  if (!p.Equals(null))
+      //  {
+      //    post.Persons.Add(p);
           
-        }
+      //  }
         
-      }
+      //}
       socialMediaRepository.UpdateSocialMediaPost(post);
     }
         // dubbel? staat ook in alertmanager
@@ -212,6 +212,34 @@ namespace BL
             null,
             TimeSpan.Zero,
             TimeSpan.FromMinutes(minutes));
+        }
+
+        public void ArraysToLists(SocialMediaPost post)
+        {
+            foreach (var item in post.Sentiment)
+            {
+                post.Sentiments.Add(new Sentiment(item));
+            }
+            foreach (var item in post.Hashtag)
+            {
+                post.Hashtags.Add(new Hashtag(item));
+            }
+            foreach (var item in post.Verhaal)
+            {
+                post.Urls.Add(new Url(item));
+            }
+            foreach (var item in post.Word)
+            {
+                post.Words.Add(new Word(item));
+            }
+            foreach (var item in post.Person)
+            {
+                post.Persons.Add(itemManager.CreatePersonIfNotExists(item));
+            }
+            foreach (var item in post.Theme)
+            {
+                post.Themes.Add(new Theme(item));
+            }
         }
     }
 }

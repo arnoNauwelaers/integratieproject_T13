@@ -27,13 +27,13 @@ namespace BL
 
         public ApplicationUserManager() : base(new UserStoreRepository())
         {
-            this.alertRepository = RepositoryFactory.CreateALertRepository();
+            this.alertRepository = RepositoryFactory.CreateAlertRepository();
               userRepository = RepositoryFactory.CreateUserRepository();
             
             
         }
 
-        public void setSocialMediaManager(SocialMediaManager socialMediaManager)
+        public void SetSocialMediaManager(SocialMediaManager socialMediaManager)
         {
             this.socialMediaManager = socialMediaManager;
         }

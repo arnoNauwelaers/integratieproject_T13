@@ -19,7 +19,7 @@ namespace BL
         public AlertManager()
         {
       socialMediaRepository = RepositoryFactory.CreateSocialMediaRepository();
-            this.alertRepository = RepositoryFactory.CreateALertRepository();
+            this.alertRepository = RepositoryFactory.CreateAlertRepository();
         }
 
         public void VerifyCondition(Alert alert)
@@ -167,21 +167,21 @@ namespace BL
         switch (t)
         {
           case AlertType.mail: SendMail(a.User, n); break;
-          case AlertType.notification: sendNotification(a.User, n); break;
-          case AlertType.pushbericht: sendPush(a.User, n); break;
+          case AlertType.notification: SendNotification(a.User, n); break;
+          case AlertType.pushbericht: SendPush(a.User, n); break;
 
         }
       }
     }
 
-    private void sendPush(ApplicationUser u, Notification n)
+    private void SendPush(ApplicationUser u, Notification n)
     {
 
       // push bericht naar android, TODO
       throw new NotImplementedException();
     }
 
-    private void sendNotification(ApplicationUser u, Notification n)
+    private void SendNotification(ApplicationUser u, Notification n)
     {
       throw new NotImplementedException();
     }

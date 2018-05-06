@@ -37,15 +37,15 @@ namespace politiekeBarometer.Controllers
             List<Organization> Organizations = new List<Organization>();
             foreach (var item in Items)
             {
-                if (item.typeInt == 1)
+                if (item.TypeInt == 1)
                 {
                     Persons.Add((Person)item);
                 }
-                else if (item.typeInt == 2)
+                else if (item.TypeInt == 2)
                 {
                     Themes.Add((Theme)item);
                 }
-                else if (item.typeInt == 3)
+                else if (item.TypeInt == 3)
                 {
                     Organizations.Add((Organization)item);
                 }
