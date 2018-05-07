@@ -112,5 +112,31 @@ namespace politiekeBarometer.Controllers
             ChartManager.EditCharts(Charts);
             return Ok();
         }
+
+        [Route("api/Basic/Login")]
+        [HttpPost]
+        public IHttpActionResult Login(string username, string password, string email = "") {
+            var user = UserManager.FindAsync(username, password);
+            if (user != null)
+            {
+                //UserManager.Sig(user, true);
+            }
+            else
+            {
+            }
+            return Ok();
+        }
+
+        [Route("api/Basic/LoginFacebook")]
+        [HttpPost]
+        public IHttpActionResult LoginFacebook() {
+          return Ok();
+        }
+
+        [Route("api/Basic/LoginGoogle")]
+        [HttpPost]
+        public IHttpActionResult LoginGoogle() {
+          return Ok();
+        }
   }
 }
