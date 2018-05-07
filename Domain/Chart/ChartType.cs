@@ -2,9 +2,10 @@
 {
     public enum ChartType : byte
     {
-        histogram,
-        circle,
+        bar,
+        radar,
         line,
-        top
+        pie,
+        polarArea
     }
 }

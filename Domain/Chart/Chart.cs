@@ -27,10 +27,65 @@ namespace BL.Domain
         public DateFrequencyType FrequencyType { get; set; }
         public DateTime? StartDate { get; set; } = null;
         public DateTime? EndDate { get; set; } = null;
+        //Nodig voor Colors
+        [NotMapped]
+        Random rnd = new Random();
 
         public string GetStyle()
         {
             return $"transform: translate({Zone.X}px, {Zone.Y}px);";
+        }
+
+        public List<string> GetRgbas()
+        {
+            List<string> rgbas = new List<string>();
+            if (ChartType == ChartType.pie)
+            {
+                foreach (var item in ChartItemData)
+                {
+                    foreach (var data in item.Data)
+                    {
+                        rgbas.Add(GenerateRandomRGBA());
+                    }
+                }
+            }
+            else if (ChartType == ChartType.bar)
+            {
+                foreach (var item in ChartItemData)
+                {
+                    string tempRgba = GenerateRandomRGBA();
+                    foreach (var data in item.Data)
+                    {
+                        rgbas.Add(tempRgba);
+                    }
+                }
+            }
+
+            return rgbas;
+        }
+
+        public string GetDataSets()
+        {
+            List<ChartDataSet> DataSets = new List<ChartDataSet>();
+            foreach (var item in ChartItemData)
+            {
+                List<int> data = new List<int>();
+                foreach (var itemData in item.Data)
+                {
+                    data.Add(itemData.Amount);
+                }
+                DataSets.Add(new ChartDataSet(GetTitle(), GetRgbas(), 1, data));
+            }
+            return JsonConvert.SerializeObject(DataSets);
+        }
+
+        public string GenerateRandomRGBA()
+        {
+            int r = rnd.Next(0, 256);
+            int g = rnd.Next(0, 256);
+            int b = rnd.Next(0, 256);
+            string opacity = "0.6";
+            return $"rgba({r}, {g}, {b}, {opacity})";
         }
 
         public string GetWidth()
@@ -71,6 +126,7 @@ namespace BL.Domain
             return JsonConvert.SerializeObject(labels);
         }
 
+        //overbodig nieuwe functie GetDataSets?
         public string GetData()
         {
             List<int> data = new List<int>();
@@ -121,5 +177,19 @@ namespace BL.Domain
         public string DateFrequency;
     }
 
-    
+    public class ChartDataSet
+    {
+        public string label;
+        public List<string> backgroundColor;
+        public int borderWidth;
+        public List<int> data;
+
+        public ChartDataSet(string label, List<string> backgroundColor, int borderWidth, List<int> data)
+        {
+            this.label = label;
+            this.backgroundColor = backgroundColor;
+            this.borderWidth = borderWidth;
+            this.data = data;
+        }
+    }
 }

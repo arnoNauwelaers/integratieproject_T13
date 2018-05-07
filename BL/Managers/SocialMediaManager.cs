@@ -68,35 +68,6 @@ namespace BL.Managers
             return itemManager.GetAllItemsFromPosts(data2);
         }
 
-        
-        // dubbel? staat ook in alertmanager
-        //public Boolean VerifyCondition(Alert alert)
-        //{
-        //    int tweetAmount = socialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
-        //    if (alert.CompareItem == null)
-        //    {
-        //        int oldTweetAmount = socialMediaRepository.ReadItemParameter(alert, DateTime.Now.AddHours(-1), DateTime.Now.AddHours(-(FREQUENTIE * 2)));
-
-        //        if (alert.Condition == ">")
-        //        {
-        //            //als een politicus 2 maal zoveel tweets stuurt in het laatste uur als in het vorige uur wordt er een notification gestuurd
-        //            return tweetAmount >= (oldTweetAmount * 2);
-        //        }
-        //        return false;
-        //    }
-        //    else
-        //    {
-        //        int tweetAmount2 = socialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
-        //        if (alert.Condition == ">")
-        //        {
-        //            //als er over een politus meer dan 2 maal zveel getweet is in het afgelopen uur als een ander politici word er een notification gestuurd
-        //            return tweetAmount >= tweetAmount2 * 2;
-        //        }
-
-        //    }
-        //    return false;
-        //}
-
         private string GetMonthFromInt(int month)
         {
             switch (month)
@@ -138,7 +109,7 @@ namespace BL.Managers
                         }
                     }
                 }
-                return tempList;
+                return tempList.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
             }
             else if (value == ChartValue.persons)
             {
@@ -156,7 +127,7 @@ namespace BL.Managers
                         }
                     }
                 }
-                return tempList;
+                return tempList.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
             }
             else if (value == ChartValue.words)
             {

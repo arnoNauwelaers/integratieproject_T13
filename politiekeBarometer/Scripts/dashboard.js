@@ -135,7 +135,7 @@ function SaveCharts() {
             X = 0;
             Y = 0;
         }
-        var Width = parentWidth / ($(this).css("width").replace("px", "") - 40);
+        var Width = parentWidth / ($(this).css("width").replace("px", "") - 20);
         if (teller !== 1) {
             text += ',';
         }
