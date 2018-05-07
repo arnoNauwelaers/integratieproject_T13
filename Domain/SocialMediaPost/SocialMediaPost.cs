@@ -52,9 +52,11 @@ namespace BL.Domain
 
         public void ListsToArrays()
         {
-            
-            Sentiment[0] = PostSentiment.Polarity;
-            Sentiment[1] = PostSentiment.Subjectivity;
+            if (PostSentiment != null)
+            {
+                Sentiment[0] = PostSentiment.Polarity;
+                Sentiment[1] = PostSentiment.Subjectivity;
+            }
             int i = 0;
             foreach (var item in Hashtags)
             {

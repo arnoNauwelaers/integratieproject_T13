@@ -17,7 +17,7 @@ namespace BL.Managers
     public class SocialMediaManager
     {
         private const int FREQUENTIE = 1;
-
+        private const int AMOUNT_OF_ELEMENTS = 20;
         private SocialMediaRepository socialMediaRepository;
         private AlertManager alertManager;
         private ItemManager itemManager;
@@ -174,7 +174,7 @@ namespace BL.Managers
                         }
                     }
                 }
-                return tempList;
+                return tempList.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
             }
             return null;
         }
@@ -203,28 +203,45 @@ namespace BL.Managers
 
         public void ArraysToLists(SocialMediaPost post)
         {
-            Sentiment s = new Sentiment(post.Sentiment[0], post.Sentiment[1]);
-            post.PostSentiment = s;
+            if (post.Sentiment.Count() > 0)
+            {
+                post.PostSentiment = new Sentiment(post.Sentiment[0], post.Sentiment[1]);
+            }
             
             foreach (var item in post.Hashtag)
             {
-                post.Hashtags.Add(new Hashtag(item));
+                if (item != null)
+                {
+                    post.Hashtags.Add(new Hashtag(item));
+                }
             }
             foreach (var item in post.Verhaal)
             {
-                post.Urls.Add(new Url(item));
+                if (item != null)
+                {
+                    post.Urls.Add(new Url(item));
+                }
             }
             foreach (var item in post.Word)
             {
-                post.Words.Add(new Word(item));
+                if (item != null)
+                {
+                    post.Words.Add(new Word(item));
+                }
             }
             foreach (var item in post.Person)
             {
-                post.Persons.Add(itemManager.CreatePersonIfNotExists(item));
+                if (item != null)
+                {
+                    post.Persons.Add(itemManager.CreatePersonIfNotExists(item));
+                }
             }
             foreach (var item in post.Theme)
             {
-                post.Themes.Add(new Theme(item));
+                if (item != null)
+                {
+                    post.Themes.Add(new Theme(item));
+                }
             }
         }
     }

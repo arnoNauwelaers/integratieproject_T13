@@ -1,4 +1,6 @@
-﻿function synchronizeDB() {
+﻿//TODO checken en vanaf begin ophalen?
+
+function synchronizeDB() {
     $.getJSON("/api/Basic", function (data) {
         var items = [];
         $.each(data, function (key, val) {
@@ -7,7 +9,6 @@
     });
     setTimeout(synchronizeDB, 5000);
 }
-//TODO STACKOVERflow fixen
 //synchronizeDB();
 //loadNotifications();
 var ul = document.getElementById("notifications");

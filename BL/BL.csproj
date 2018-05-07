@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DictionaryExtensions.cs" />
     <Compile Include="Managers\AlertManager.cs" />
     <Compile Include="Managers\ChartManager.cs" />
     <Compile Include="Managers\AppRoleManager.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="EmailSender.cs" />
     <Compile Include="Mail.cs" />
     <Compile Include="Managers\PlatformManager.cs" />
+    <Compile Include="Managers\ZoneManager.cs" />
     <Compile Include="Read.cs" />
     <Compile Include="Managers\ApplicationUserManager.cs" />
     <Compile Include="Managers\ItemManager.cs" />

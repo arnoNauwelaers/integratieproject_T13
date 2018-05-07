@@ -11,9 +11,9 @@ namespace BL.Domain
     {
         [Key]
         public int Id { get; set; }
-        public double X { get; set; } = 10;
-        public double Y { get; set; } = 10;
-        public double Height { get; set; } = 400;
-        public double Width { get; set; } = 530;
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double Height { get; set; }
+        public double Width { get; set; }
     }
 }

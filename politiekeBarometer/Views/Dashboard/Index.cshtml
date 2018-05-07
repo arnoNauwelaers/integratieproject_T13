@@ -14,6 +14,7 @@
         padding: 20px;
         /* This makes things *much* easier */
         box-sizing: border-box;
+        border: 2px solid black;
     }
 
     .resize-container {
@@ -34,7 +35,7 @@
     @foreach (var chart in Model.Charts)
     {
         //TODO hier code om elke chart in te laden op juiste positie en grootte
-        <div data-x="@chart.Zone.X" data-y="@chart.Zone.Y" value="@chart.ChartId" class="grafiek resize-drag" style="@chart.GetStyle()">
+        <div id="@chart.GetDivId()" data-x="@chart.Zone.X" data-y="@chart.Zone.Y" value="@chart.ChartId" class="grafiek resize-drag" style="@chart.GetStyle()">
             <form id="@chart.ChartId" class="form-horizontal deleteForm" method="post" action="/Dashboard/DeleteChart">
                 <a onclick="deleteChart(@chart.ChartId)" href="#"><i class="fa fa-fw fa-trash" style="float:right"><input type="hidden" value="@chart.ChartId" name="id" /></i></a>
             </form>
@@ -50,9 +51,10 @@
                 data: {
                     labels: labelsChart,
                     datasets: [{
-                        label: '# of Votes',
+                        label: '@chart.GetTitle()',
                         data: dataChart,
-                        borderWidth: 1
+                        borderWidth: 1,
+                        backgroundColor: 'rgba(0, 255, 0, 0.6)'
                     }]
                 },
                 options: {
@@ -65,6 +67,11 @@
                     }
                 }
             });
+
+        $(document).ready(function () {
+            $("#@chart.GetDivId()").width($(".resize-container").css("width").replace("px", "") / @chart.GetWidth());
+        });
+
         </script>
     }
 </div>

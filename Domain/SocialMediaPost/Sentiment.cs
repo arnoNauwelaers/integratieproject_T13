@@ -14,6 +14,11 @@ namespace BL.Domain
           Subjectivity = sub;
         }
 
+        public Sentiment()
+        {
+
+        }
+
         public double GetSentiment()
         {
           // not sure how to calculate this correctly, this should be enough for now

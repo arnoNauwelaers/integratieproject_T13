@@ -18,7 +18,7 @@ namespace BL.Domain
         public virtual ICollection<Item> Items { get; set; } = new List<Item>();
         public virtual ChartType ChartType { get; set; }
         public virtual ChartValue ChartValue { get; set; }
-        public virtual Zone Zone { get; set; } = new Zone();
+        public virtual Zone Zone { get; set; }
         public Boolean Saved { get; set; } = false;
         public Boolean MultipleItems { get; set; } = false;
         [NotMapped]
@@ -30,7 +30,17 @@ namespace BL.Domain
 
         public string GetStyle()
         {
-            return $"width: {Zone.Width}px; height: {Zone.Height}px; transform: translate({Zone.X}px, {Zone.Y}px);";
+            return $"transform: translate({Zone.X}px, {Zone.Y}px);";
+        }
+
+        public string GetWidth()
+        {
+            return Zone.Width.ToString().Replace(',', '.');
+        }
+
+        public string GetHeight()
+        {
+            return Zone.Height.ToString().Replace(',', '.');
         }
 
         public string GetCanvasId()
@@ -41,6 +51,11 @@ namespace BL.Domain
         public string GetChartName()
         {
             return $"chart{ChartId}";
+        }
+
+        public string GetDivId()
+        {
+            return $"div{ChartId}";
         }
 
         public string GetLabels()
@@ -69,30 +84,24 @@ namespace BL.Domain
             return JsonConvert.SerializeObject(data);
         }
 
-        //public string GetLabels()
-        //{
-        //    string labels = "";
-        //    foreach (var chartItemData in ChartItemData)
-        //    {
-        //        foreach (var item in chartItemData.Data)
-        //        {
-        //            labels += '"' + item.Name + '"' + ",";
-        //        }
-        //    }
-        //    return labels;
-        //}
-        //public string GetData()
-        //{
-        //    string data = "";
-        //    foreach (var chartItemData in ChartItemData)
-        //    {
-        //        foreach (var item in chartItemData.Data)
-        //        {
-        //            data += item.Amount + ", ";
-        //        }
-        //    }
-        //    return data;
-        //}
+        public string GetTitle()
+        {
+            string title =  $"Amount of {ChartValue} of ";
+            int i = 1;
+            foreach (var item in ChartItemData)
+            {
+                if (i == 1)
+                {
+                    title += item.Item.Name;
+                }
+                else
+                {
+                    title += $" & {item.Item.Name}";
+                }
+                i++;
+            }
+            return title;
+        }
     }
 
     //voor JSON deserializer
@@ -101,7 +110,6 @@ namespace BL.Domain
         public int Id;
         public double X;
         public double Y;
-        public double Height;
         public double Width;
     }
 

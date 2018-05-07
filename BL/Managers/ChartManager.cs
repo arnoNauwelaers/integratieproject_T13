@@ -15,6 +15,7 @@ namespace BL.Managers
         private DataManager dataManager;
         private ItemManager itemManager;
         private SocialMediaManager socialMediaManager;
+        private ZoneManager zoneManager;
 
         public ChartManager()
         {
@@ -22,6 +23,7 @@ namespace BL.Managers
             itemManager = new ItemManager();
             dataManager = new DataManager();
             socialMediaManager = new SocialMediaManager();
+            zoneManager = new ZoneManager();
         }
 
         public void UpdateChart(Chart chart)
@@ -55,6 +57,7 @@ namespace BL.Managers
                 case DateFrequencyType.yearly: since = DateTime.Now.AddYears(-1); break;
             }
             Dictionary<string, int> tempData;
+            chart.ChartItemData = new List<ChartItemData>();
             foreach (var item in chart.Items)
             {
                 tempData = socialMediaManager.GetDataFromPost(since, chart.ChartValue, item);
@@ -75,7 +78,6 @@ namespace BL.Managers
                 chart.Zone.X = tempChart.X;
                 chart.Zone.Y = tempChart.Y;
                 chart.Zone.Width = tempChart.Width;
-                chart.Zone.Height = tempChart.Height;
                 chartRepository.UpdateChart(chart);
             }
         }
@@ -101,6 +103,7 @@ namespace BL.Managers
             chart.ChartType = (ChartType) Enum.Parse(typeof(ChartType), chartType);
             chart.ChartValue = (ChartValue)Enum.Parse(typeof(ChartValue), chartValue);
             chart.FrequencyType = (DateFrequencyType)Enum.Parse(typeof(DateFrequencyType), dateFrequency);
+            chart.Zone = new Zone() { Width = 530, Height = 400, X = 10, Y = 10 };
             Chart finalChart = AddChart(chart);
             return finalChart;
         }
@@ -112,8 +115,8 @@ namespace BL.Managers
                 Chart chartObj = chartRepository.ReadChart(chart.Id);
                 chartObj.Zone.X = chart.X;
                 chartObj.Zone.Y = chart.Y;
-                chartObj.Zone.Height = chart.Height;
                 chartObj.Zone.Width = chart.Width;
+                zoneManager.UpdateZone(chartObj.Zone);
                 chartRepository.UpdateChart(chartObj);
             }
         }
