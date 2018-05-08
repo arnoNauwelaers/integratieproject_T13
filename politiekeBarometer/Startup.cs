@@ -4,6 +4,7 @@ using Owin;
 using BL.Managers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.IdentityModel.Tokens;
 using BL.Domain;
 using DAL.Repositories;
 using BL;
