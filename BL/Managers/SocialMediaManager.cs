@@ -88,7 +88,7 @@ namespace BL.Managers
             }
         }
 
-        public Dictionary<string, int> GetDataFromPost(DateTime since, ChartValue value, Item item)
+        public Dictionary<string, int> GetDataFromPost(DateTime since, ChartValue value, Item item = null)
         {
             List<SocialMediaPost> posts = (List<SocialMediaPost>)socialMediaRepository.ReadSocialMediaPostsSince(since, item);
             if (value == ChartValue.hashtags)
@@ -97,13 +97,37 @@ namespace BL.Managers
             }
             else if (value == ChartValue.persons)
             {
-                GetPersonData(posts);
+                return GetPersonData(posts);
             }
             else if (value == ChartValue.words)
             {
                 return GetWordData(posts);
             }
+            else if (value == ChartValue.trendPersons)
+            {
+                return GetTrendPersonData(posts);
+            }
             return null;
+        }
+
+        //TODO AFMAKEN
+        public List<Item> GetItemsFromChartWithoutItems(ChartValue value, DateTime since)
+        {
+            List<Item> items = new List<Item>();
+            List<SocialMediaPost> posts = (List<SocialMediaPost>) socialMediaRepository.ReadSocialMediaPostsSince(since);
+            if (value == ChartValue.trendPersons)
+            {
+                
+            }
+            else if (value == ChartValue.trendOrganizations)
+            {
+
+            }
+            else if (value == ChartValue.trendThemes)
+            {
+
+            }
+            return items;
         }
 
         public Dictionary<string, int> GetHashtagData(List<SocialMediaPost> posts)
@@ -121,6 +145,26 @@ namespace BL.Managers
                     else
                     {
                         list.Add(hashtag, 1);
+                    }
+                }
+            }
+            return list.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+        }
+
+        public Dictionary<string, int> GetTrendPersonData(List<SocialMediaPost> posts)
+        {
+            Dictionary<string, int> list = new Dictionary<string, int>();
+            foreach (var post in posts)
+            {
+                foreach (var person in post.Persons)
+                {
+                    if (list.ContainsKey(person.Name))
+                    {
+                        list[person.Name]++;
+                    }
+                    else
+                    {
+                        list.Add(person.Name, 1);
                     }
                 }
             }

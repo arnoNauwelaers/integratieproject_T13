@@ -45,6 +45,7 @@ namespace BL.Managers
             return chart;
         }
 
+        //TODO kijken of extra nodig is
         public void RetrieveDataChart(Chart chart)
         {
             DateTime since = DateTime.Now.AddDays(-7);
@@ -58,6 +59,11 @@ namespace BL.Managers
             }
             Dictionary<string, int> tempData;
             chart.ChartItemData = new List<ChartItemData>();
+            if (chart.Items.Count == 0)
+            {
+
+                tempData = socialMediaManager.GetDataFromPost(since, chart.ChartValue);
+            }
             foreach (var item in chart.Items)
             {
                 tempData = socialMediaManager.GetDataFromPost(since, chart.ChartValue, item);
@@ -95,11 +101,14 @@ namespace BL.Managers
             Chart chart = new Chart();
             char[] whitespace = new char[] { ' ', '\t' };
             string[] itemIds = items.Split(whitespace);
-            foreach (var id in itemIds)
+            if (items != "")
             {
-                itemList.Add(itemManager.ReadPerson(Int32.Parse(id)));
+                foreach (var id in itemIds)
+                {
+                    itemList.Add(itemManager.ReadPerson(Int32.Parse(id)));
+                }
+                chart.Items = itemList;
             }
-            chart.Items = itemList;
             chart.ChartType = (ChartType) Enum.Parse(typeof(ChartType), chartType);
             chart.ChartValue = (ChartValue)Enum.Parse(typeof(ChartValue), chartValue);
             chart.FrequencyType = (DateFrequencyType)Enum.Parse(typeof(DateFrequencyType), dateFrequency);

@@ -66,7 +66,6 @@ namespace politiekeBarometer.Controllers
             return View(Model);
         }
 
-        //TODO 27/04 values worden niet gepost?
         [HttpPost, Authorize]
         public ActionResult AddChart(string items, string type, string value, string frequency)
         {

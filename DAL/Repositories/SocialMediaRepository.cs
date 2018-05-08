@@ -25,7 +25,7 @@ namespace DAL.Repositories
             return ctx.SocialMediaPosts.Include(a => a.SocialMediaProfiles).ToList<SocialMediaPost>();
         }
 
-        public IEnumerable<SocialMediaPost> ReadSocialMediaPostsSince(DateTime since, Item item)
+        public IEnumerable<SocialMediaPost> ReadSocialMediaPostsSince(DateTime since, Item item = null)
         {
             List<SocialMediaPost> tempPosts = ctx.SocialMediaPosts.Where(i => i.Date > since).Include(a => a.SocialMediaProfiles).Include(a => a.Words).Include(a => a.Hashtags).Include(a => a.Persons).ToList();
             List<SocialMediaPost> posts = new List<SocialMediaPost>();
@@ -34,8 +34,14 @@ namespace DAL.Repositories
             foreach (var post in tempPosts)
             {
                 post.ListsToArrays();
-                Debug.WriteLine(post.Person[0]);
-                if (post.Person.Contains(item.Name))
+                if (item != null)
+                {
+                    if (post.Person.Contains(item.Name))
+                    {
+                        results.Add(post);
+                    }
+                }
+                else
                 {
                     results.Add(post);
                 }
@@ -59,7 +65,7 @@ namespace DAL.Repositories
         public void DeleteSocialMediaPost(int postId)
         {
             SocialMediaPost socialMediaPost = ctx.SocialMediaPosts.Find(postId);
-            
+
             ctx.SocialMediaPosts.Remove(socialMediaPost);
             ctx.SaveChanges();
         }
@@ -114,95 +120,95 @@ namespace DAL.Repositories
             return aantal;
         }
 
-    public int ReadNrOfPostsFromItem(Item i, DateTime end, DateTime start)
-    {
-      if(i is Person) { return ReadNrOfPostsFromPerson((Person)i, end, start); }
-      if(i is Organization) { return ReadNrOfPostsFromOrganization((Organization)i, end, start); }
-      else { return ReadNrOfPostsFromTheme((Theme)i, end, start); }
-    }
+        public int ReadNrOfPostsFromItem(Item i, DateTime end, DateTime start)
+        {
+            if (i is Person) { return ReadNrOfPostsFromPerson((Person)i, end, start); }
+            if (i is Organization) { return ReadNrOfPostsFromOrganization((Organization)i, end, start); }
+            else { return ReadNrOfPostsFromTheme((Theme)i, end, start); }
+        }
 
         private int ReadNrOfPostsFromPerson(Person p, DateTime end, DateTime start)
-    {
-      return ctx.SocialMediaPosts.Count(smp => smp.Persons.Contains(p) && end >= smp.Date && start <= smp.Date);
-      
-    }
+        {
+            return ctx.SocialMediaPosts.Count(smp => smp.Persons.Contains(p) && end >= smp.Date && start <= smp.Date);
 
-    private int ReadNrOfPostsFromOrganization(Organization o, DateTime end, DateTime start)
-    {
-      int total = 0;
-      foreach(Person p in o.persons)
-      {
-        total += ReadNrOfPostsFromPerson(p, end, start);
-      }
-      return total;
-    }
+        }
 
-    private int ReadNrOfPostsFromTheme(Theme t, DateTime end, DateTime start)
-    {
-      int total = 0;
-      total += ctx.SocialMediaPosts.Count(smp => smp.Themes.Contains(t));
-      foreach (Keyword k in t.Keywords)
-      { total += ctx.SocialMediaPosts.Count(smp => !smp.Themes.Contains(t) && smp.Words.Contains(ReadWord(k.Value))); }
-      return total;
-    }
+        private int ReadNrOfPostsFromOrganization(Organization o, DateTime end, DateTime start)
+        {
+            int total = 0;
+            foreach (Person p in o.persons)
+            {
+                total += ReadNrOfPostsFromPerson(p, end, start);
+            }
+            return total;
+        }
 
-    public double ReadAverageSentimentFromItem(Item i, DateTime end,DateTime start)
-    {
-      if(i is Person) { return ReadAverageSentimentFromPerson((Person)i, end, start); }
-      if(i is Organization) { return ReadAverageSentimentFromOrganization((Organization)i, end, start); }
-      else { return ReadAverageSentimentFromTheme((Theme)i, end, start); }
-    }
+        private int ReadNrOfPostsFromTheme(Theme t, DateTime end, DateTime start)
+        {
+            int total = 0;
+            total += ctx.SocialMediaPosts.Count(smp => smp.Themes.Contains(t));
+            foreach (Keyword k in t.Keywords)
+            { total += ctx.SocialMediaPosts.Count(smp => !smp.Themes.Contains(t) && smp.Words.Contains(ReadWord(k.Value))); }
+            return total;
+        }
 
-    private double ReadAverageSentimentFromPerson(Person p,DateTime end,DateTime start)
-    {
-      List<SocialMediaPost> posts = ctx.SocialMediaPosts.Where(smp => smp.Persons.Contains(p) && end >= smp.Date && start <= smp.Date).Include(smp => smp.PostSentiment).ToList();
-      double average = 0.00;
-      foreach(SocialMediaPost post in posts)
-      {
-        average += post.PostSentiment.GetSentiment();
-      }
-      average /= posts.Count;
-      return average;
-    }
+        public double ReadAverageSentimentFromItem(Item i, DateTime end, DateTime start)
+        {
+            if (i is Person) { return ReadAverageSentimentFromPerson((Person)i, end, start); }
+            if (i is Organization) { return ReadAverageSentimentFromOrganization((Organization)i, end, start); }
+            else { return ReadAverageSentimentFromTheme((Theme)i, end, start); }
+        }
 
-    private double ReadAverageSentimentFromOrganization(Organization o,DateTime end, DateTime start)
-    {
-      double average = 0.00;
-      foreach(Person p in o.persons)
-      {
-        average += ReadAverageSentimentFromPerson(p, end, start);
-      }
-      return average;
-    }
+        private double ReadAverageSentimentFromPerson(Person p, DateTime end, DateTime start)
+        {
+            List<SocialMediaPost> posts = ctx.SocialMediaPosts.Where(smp => smp.Persons.Contains(p) && end >= smp.Date && start <= smp.Date).Include(smp => smp.PostSentiment).ToList();
+            double average = 0.00;
+            foreach (SocialMediaPost post in posts)
+            {
+                average += post.PostSentiment.GetSentiment();
+            }
+            average /= posts.Count;
+            return average;
+        }
 
-    private double ReadAverageSentimentFromTheme(Theme t,DateTime end,DateTime start)
-    {
-      double average = 0.00;
-      int amount = 0;
-      List<SocialMediaPost> posts = ctx.SocialMediaPosts.Where(smp => smp.Themes.Contains(t) && end >= smp.Date && start <= smp.Date).Include(smp => smp.PostSentiment).ToList();
-      foreach (SocialMediaPost post in posts)
-      {
-        average += post.PostSentiment.GetSentiment();
-      }
-      amount += posts.Count;
-      foreach (Keyword k in t.Keywords)
-      {
-        posts = ctx.SocialMediaPosts.Where(smp => !(smp.Themes.Contains(t) && smp.Words.Contains(ReadWord(k.Value)) && end >= smp.Date && start <= smp.Date)).Include(smp => smp.PostSentiment).ToList();
-        foreach(SocialMediaPost post in posts) { average += post.PostSentiment.GetSentiment(); }
-        amount += posts.Count;
-      }
-      return average;
+        private double ReadAverageSentimentFromOrganization(Organization o, DateTime end, DateTime start)
+        {
+            double average = 0.00;
+            foreach (Person p in o.persons)
+            {
+                average += ReadAverageSentimentFromPerson(p, end, start);
+            }
+            return average;
+        }
 
-    }
+        private double ReadAverageSentimentFromTheme(Theme t, DateTime end, DateTime start)
+        {
+            double average = 0.00;
+            int amount = 0;
+            List<SocialMediaPost> posts = ctx.SocialMediaPosts.Where(smp => smp.Themes.Contains(t) && end >= smp.Date && start <= smp.Date).Include(smp => smp.PostSentiment).ToList();
+            foreach (SocialMediaPost post in posts)
+            {
+                average += post.PostSentiment.GetSentiment();
+            }
+            amount += posts.Count;
+            foreach (Keyword k in t.Keywords)
+            {
+                posts = ctx.SocialMediaPosts.Where(smp => !(smp.Themes.Contains(t) && smp.Words.Contains(ReadWord(k.Value)) && end >= smp.Date && start <= smp.Date)).Include(smp => smp.PostSentiment).ToList();
+                foreach (SocialMediaPost post in posts) { average += post.PostSentiment.GetSentiment(); }
+                amount += posts.Count;
+            }
+            return average;
+
+        }
 
 
 
-    private Word ReadWord(string value)
-    {
-      return ctx.Words.Single(w => w.Value == value);
-    }
+        private Word ReadWord(string value)
+        {
+            return ctx.Words.Single(w => w.Value == value);
+        }
 
-    
+
 
         public List<SocialMediaProfile> ReadProfiles()
         {
@@ -214,7 +220,7 @@ namespace DAL.Repositories
             return ctx.SocialMediaProfiles.Find(id);
         }
 
-        
+
 
         //public int ReadAmountHashtags(string hashtag)
         //{
@@ -230,6 +236,6 @@ namespace DAL.Repositories
         //}
 
 
-    
+
     }
 }
