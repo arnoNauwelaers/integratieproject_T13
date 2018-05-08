@@ -339,6 +339,7 @@
     <Content Include="Views\Page\ThemeOverview.cshtml" />
     <Content Include="Views\Page\_1.cshtml" />
     <Content Include="Views\Page\CreateAlert.cshtml" />
+    <Content Include="Views\Page\AlertOverview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

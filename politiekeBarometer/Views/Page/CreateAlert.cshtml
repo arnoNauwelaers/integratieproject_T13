@@ -1,6 +1,7 @@
 ﻿@model politiekeBarometer.Models.AlertCreateViewModel
 
 @{
+    
     ViewBag.Title = "CreateAlert";
 }
 <!DOCTYPE html>
@@ -39,7 +40,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CompareOn)
             <div class="col-md-10">
+                @Html.LabelFor(model => model.CompareOn,"aantal")
                 @Html.RadioButtonFor(model => model.CompareOn, "aantal")
+                @Html.LabelFor(model => model.CompareOn,"")
                 @Html.RadioButtonFor(model => model.CompareOn,"sentiment")
             </div>
             </div>
@@ -49,8 +52,8 @@
                 <div class="col-md-10">
                     @Html.DropDownListFor(model => model.CompareWith, new List<SelectListItem>
    {
-            new SelectListItem { Text = "Self", Value = "Self"},
-            new SelectListItem { Text = "Other", Value = "Other" },
+            new SelectListItem { Text = "Vroeger", Value = "Self"},
+            new SelectListItem { Text = "Ander", Value = "Other" },
 
    }, new { @id = "comparewith" })
                 </div>

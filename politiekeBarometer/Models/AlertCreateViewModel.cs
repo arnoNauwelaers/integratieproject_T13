@@ -19,8 +19,9 @@ namespace politiekeBarometer.Models
     [Display(Name = "Vergelijk met")]
     public string CompareWith { get; set; }
     public int CompareId { get; set; }
+    [Display(Name = "Vergelijken op aantal posts of het publieke sentiment")]
     public string CompareOn { get; set; }
-    [Display(Name = "vergeleken met")]
+    [Display(Name = "Vergeleken met")]
     public string CompareItem { get; set; }
 
   }

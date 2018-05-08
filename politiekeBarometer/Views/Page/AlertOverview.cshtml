@@ -1,0 +1,33 @@
+﻿@model IEnumerable<BL.Domain.Alert>
+
+@{
+    ViewBag.Title = "AlertOverview";
+}
+
+<h2>AlertOverview</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ConditionPerc)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ConditionPerc)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AlertId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AlertId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AlertId })
+        </td>
+    </tr>
+}
+
+</table>
