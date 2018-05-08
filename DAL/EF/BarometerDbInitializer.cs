@@ -11,12 +11,9 @@ using System.Diagnostics;
 
 namespace DAL.EF
 {
-    internal class BarometerDbInitializer : DropCreateDatabaseIfModelChanges<BarometerDbContext>
+    internal class BarometerDbInitializer : MigrateDatabaseToLatestVersion<BarometerDbContext,Migrations.Configuration>
     {
 
-        protected override void Seed(BarometerDbContext context)
-        {
-
-        }
+        
     }
 }

@@ -19,7 +19,7 @@ namespace DAL.EF
 
         public BarometerDbContext() : base("PolitiekeBarometerDB")
         {
-            //Database.SetInitializer<SupportCenterDbContext>(new SupportCenterDbInitializer()); // moved to 'SupportCenterDbConfiguration'
+          //  Database.SetInitializer<BarometerDbContext>(new BarometerDbInitializer()); // moved to 'SupportCenterDbConfiguration'
         }
 
         public static BarometerDbContext Create()

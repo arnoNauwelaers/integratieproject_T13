@@ -24,6 +24,13 @@ namespace DAL.Repositories
             return ctx.Items.Include(a => a.Alerts).ToList<Item>();
         }
 
+        public List<Item> ReadItems(string s)
+    {
+      return ctx.Items.Where(i => i.Name.ToUpper()
+                        .Contains(s.ToUpper()))
+                        .ToList();
+    }
+
         public IEnumerable<Person> GetPersons()
         {
             return ctx.Items.OfType<Person>().ToList<Person>();
