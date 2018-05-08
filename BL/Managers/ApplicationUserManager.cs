@@ -38,6 +38,7 @@ namespace BL.Managers
             this.socialMediaManager = socialMediaManager;
         }
 
+
     public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
     {
 

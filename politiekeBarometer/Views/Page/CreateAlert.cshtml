@@ -1,0 +1,87 @@
+﻿@model politiekeBarometer.Models.AlertCreateViewModel
+
+@{
+    ViewBag.Title = "CreateAlert";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Instellen alert</title>
+    `<script type="text/javascript" src="~/Scripts/chosen.jquery.js"></script>
+    
+</head>
+<body>
+    <h2>Stel alert in</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.ItemName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="form-group">
+                @Html.DropDownListFor(model => model.Id, Model.Items, "", new { @id = "itemname" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Percentage, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Percentage, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CompareOn)
+            <div class="col-md-10">
+                @Html.RadioButtonFor(model => model.CompareOn, "aantal")
+                @Html.RadioButtonFor(model => model.CompareOn,"sentiment")
+            </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompareWith, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CompareWith, new List<SelectListItem>
+   {
+            new SelectListItem { Text = "Self", Value = "Self"},
+            new SelectListItem { Text = "Other", Value = "Other" },
+
+   }, new { @id = "comparewith" })
+                </div>
+            </div>
+
+            <div class="form-group" id="compareitem">
+                @Html.LabelFor(model => model.CompareItem, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Id, Model.Items, "", new { @id = "compareitemname" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+            }
+
+            <script>
+                document.getElementById('comparewith').addEventListener("change", hideElements);
+                hideElements();
+                function hideElements() {
+                    if ($("#comparewith option:selected").val() == "Self") {
+                        $("#compareitem").hide();
+                    }
+                    else {
+                        $("#compareitem").show();
+                    }
+                }
+            </script>
+
+</body>
+</html>

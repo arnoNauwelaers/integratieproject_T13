@@ -1,0 +1,69 @@
+﻿@using BL.Domain;
+@model politiekeBarometer.Models.AlertCreateViewModel
+
+@{
+  ViewBag.Title = "CreateAlert";
+  Item i = ViewBag.Item;
+  
+}
+
+<h2>CreateAlert</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Stel nieuwe Alert in</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label for="item">Waar wil je een alert op ontvangen? </label>
+            <input type="text" name="item" value="@i.Name" />
+        </div>
+        <div class="form-group">
+            
+            @Html.LabelFor(model => model.ConditionPerc, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ConditionPerc, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ConditionPerc, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="CreateAlert" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Terug", "Index")
+</div>
+<script>$(document).ready(function () {
+    $("#item").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '@Url.Action("GetVisitCustomer", "Home")',
+                datatype: "json",
+                data: {
+                    Areas: 'Sales',
+                    term: request.term
+                },
+                success: function (data) {
+                    response($.map(data, function (val, item) {
+                        return {
+                            label: val.Name,
+                            value: val.Name,
+                            customerId: val.ID
+                        }
+                    }))
+                }
+            })
+        },
+        select: function (event, ui) {
+            $("#CustomerID").val(ui.item.customerId);
+        }
+    });
+});</script>

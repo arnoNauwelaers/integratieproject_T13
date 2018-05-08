@@ -5,8 +5,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (Model == null) {
-  <p>Thema niet gevonden.</p>
-} else {
-  <h1>@Model.Name</h1>
+@if (Model == null)
+{
+    <p>Thema niet gevonden.</p>
 }
+else
+{
+    <h1>@Model.Name</h1>
+}
+@using (Html.BeginForm("AddItem", "Page"))
+{
+    <input type="text" style="visibility:hidden" name="id" id="id" value="@Model.ItemId" />
+    <input type="submit" value="Volg" />
+
+}
+@Html.ActionLink("Stel alert in", "CreateAlert");
+@Html.ActionLink("Alle themas", "ThemeOverview")

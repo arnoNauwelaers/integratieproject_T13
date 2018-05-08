@@ -22,6 +22,11 @@ namespace BL.Managers
             return itemRepository.ReadItems();
         }
 
+        public List<Item> GetItems(string s)
+    {
+      return itemRepository.ReadItems(s);
+    }
+
         public IEnumerable<Person> GetPersons()
         {
             return itemRepository.ReadPersons();
