@@ -22,7 +22,8 @@ namespace politiekeBarometer
             ActivateApi();
         }
 
-        private void ActivateApi()
+
+    private void ActivateApi()
         {
             var SocialMediaManager = new SocialMediaManager();
             //TODO int moet configureerbaar zijn
