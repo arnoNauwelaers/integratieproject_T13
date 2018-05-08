@@ -47,7 +47,6 @@ namespace politiekeBarometer.Controllers
                 {
                     Admins = new List<ApplicationUser> { userManager.GetUser(Convert.ToString(collection["admin"])) },
                     Name = Convert.ToString(collection["name"]),
-                    Interval = Convert.ToInt32(collection["interval"])
                 };
                 platformManager.AddPlatform(p);
 
@@ -117,7 +116,6 @@ namespace politiekeBarometer.Controllers
                 Platform platform = platformManager.GetPlatform(Convert.ToInt32(collection["id"]));
                 platform.Admins.Add(userManager.GetUser(Convert.ToString(collection["admin"])));
                 platform.Name = Convert.ToString(collection["name"]);
-                platform.Interval = Convert.ToInt32(collection["interval"]);
                 platformManager.ChangePlatform(platform);
 
                 return RedirectToAction("Index");

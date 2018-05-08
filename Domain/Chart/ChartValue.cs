@@ -10,6 +10,9 @@ namespace BL.Domain
     {
         words,
         persons,
-        hashtags
+        hashtags,
+        trendPersons,
+        trendThemes,
+        trendOrganizations
     }
 }

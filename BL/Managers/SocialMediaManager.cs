@@ -11,7 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-
+//TODO query's in repository?
 namespace BL.Managers
 {
     public class SocialMediaManager
@@ -90,64 +90,81 @@ namespace BL.Managers
 
         public Dictionary<string, int> GetDataFromPost(DateTime since, ChartValue value, Item item)
         {
-            Dictionary<string, int> tempList = new Dictionary<string, int>();
             List<SocialMediaPost> posts = (List<SocialMediaPost>)socialMediaRepository.ReadSocialMediaPostsSince(since, item);
             if (value == ChartValue.hashtags)
             {
-                foreach (var post in posts)
-                {
-                    post.ListsToArrays();
-                    foreach (var hashtag in post.Hashtag)
-                    {
-                        if (tempList.ContainsKey(hashtag))
-                        {
-                            tempList[hashtag]++;
-                        }
-                        else
-                        {
-                            tempList.Add(hashtag, 1);
-                        }
-                    }
-                }
-                return tempList.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+                return GetHashtagData(posts);
             }
             else if (value == ChartValue.persons)
             {
-                foreach (var post in posts)
-                {
-                    foreach (var person in post.Person)
-                    {
-                        if (tempList.ContainsKey(person))
-                        {
-                            tempList[person]++;
-                        }
-                        else
-                        {
-                            tempList.Add(person, 1);
-                        }
-                    }
-                }
-                return tempList.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+                GetPersonData(posts);
             }
             else if (value == ChartValue.words)
             {
-                foreach (var post in posts)
-                {
-                    foreach (var word in post.Words)
-                    {
-                        if (tempList.ContainsKey(word.Value))
-                        {
-                            tempList[word.Value]++;
-                        }
-                        else
-                        {
-                            tempList.Add(word.Value, 1);
-                        }
-                    }
-                }
-                return tempList.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+                return GetWordData(posts);
             }
             return null;
+        }
+
+        public Dictionary<string, int> GetHashtagData(List<SocialMediaPost> posts)
+        {
+            Dictionary<string, int> list = new Dictionary<string, int>();
+            foreach (var post in posts)
+            {
+                post.ListsToArrays();
+                foreach (var hashtag in post.Hashtag)
+                {
+                    if (list.ContainsKey(hashtag))
+                    {
+                        list[hashtag]++;
+                    }
+                    else
+                    {
+                        list.Add(hashtag, 1);
+                    }
+                }
+            }
+            return list.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+        }
+
+        public Dictionary<string, int> GetPersonData(List<SocialMediaPost> posts)
+        {
+            Dictionary<string, int> list = new Dictionary<string, int>();
+            foreach (var post in posts)
+            {
+                foreach (var person in post.Persons)
+                {
+                    if (list.ContainsKey(person.Name))
+                    {
+                        list[person.Name]++;
+                    }
+                    else
+                    {
+                        list.Add(person.Name, 1);
+                    }
+                }
+            }
+            return list.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+        }
+
+            public Dictionary<string, int> GetWordData(List<SocialMediaPost> posts)
+        {
+            Dictionary<string, int> list = new Dictionary<string, int>();
+            foreach (var post in posts)
+            {
+                foreach (var word in post.Words)
+                {
+                    if (list.ContainsKey(word.Value))
+                    {
+                        list[word.Value]++;
+                    }
+                    else
+                    {
+                        list.Add(word.Value, 1);
+                    }
+                }
+            }
+            return list.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
         }
 
         public List<SocialMediaProfile> GetSocialMediaProfiles()

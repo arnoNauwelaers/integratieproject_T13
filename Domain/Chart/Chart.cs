@@ -39,7 +39,7 @@ namespace BL.Domain
         public List<string> GetRgbas()
         {
             List<string> rgbas = new List<string>();
-            if (ChartType == ChartType.pie)
+            if (ChartType == ChartType.pie || ChartType == ChartType.polarArea)
             {
                 foreach (var item in ChartItemData)
                 {
@@ -49,7 +49,7 @@ namespace BL.Domain
                     }
                 }
             }
-            else if (ChartType == ChartType.bar)
+            else if (ChartType == ChartType.bar || ChartType == ChartType.radar || ChartType == ChartType.line)
             {
                 foreach (var item in ChartItemData)
                 {
@@ -60,7 +60,6 @@ namespace BL.Domain
                     }
                 }
             }
-
             return rgbas;
         }
 
