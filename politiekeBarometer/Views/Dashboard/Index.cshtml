@@ -6,14 +6,15 @@
 }
 <style>
     .grafiek {
-        background-color: #ecedee;
+        background-color: #f7f7f7;
         color: black;
         font-size: 20px;
         font-family: sans-serif;
         border-radius: 8px;
-        padding: 20px;
+        padding: 10px;
         /* This makes things *much* easier */
         box-sizing: border-box;
+        border: 2px solid black;
     }
 
     .resize-container {
@@ -34,7 +35,7 @@
     @foreach (var chart in Model.Charts)
     {
         //TODO hier code om elke chart in te laden op juiste positie en grootte
-        <div data-x="@chart.Zone.X" data-y="@chart.Zone.Y" value="@chart.ChartId" class="grafiek resize-drag" style="@chart.GetStyle()">
+        <div id="@chart.GetDivId()" data-x="@chart.Zone.X" data-y="@chart.Zone.Y" value="@chart.ChartId" class="grafiek resize-drag" style="@chart.GetStyle()">
             <form id="@chart.ChartId" class="form-horizontal deleteForm" method="post" action="/Dashboard/DeleteChart">
                 <a onclick="deleteChart(@chart.ChartId)" href="#"><i class="fa fa-fw fa-trash" style="float:right"><input type="hidden" value="@chart.ChartId" name="id" /></i></a>
             </form>
@@ -46,14 +47,10 @@
             var labelsChart = @Html.Raw(chart.GetLabels());
             var @chart.GetCanvasId() = document.getElementById("@chart.GetCanvasId()").getContext('2d');
             var myChart = new Chart(@chart.GetCanvasId(), {
-                type: 'bar',
+                type: '@chart.ChartType.ToString()',
                 data: {
                     labels: labelsChart,
-                    datasets: [{
-                        label: '# of Votes',
-                        data: dataChart,
-                        borderWidth: 1
-                    }]
+                    datasets: @Html.Raw(chart.GetDataSets())
                 },
                 options: {
                     scales: {
@@ -65,6 +62,11 @@
                     }
                 }
             });
+
+        $(document).ready(function () {
+            $("#@chart.GetDivId()").width($(".resize-container").css("width").replace("px", "") / @chart.GetWidth());
+        });
+
         </script>
     }
 </div>
@@ -113,10 +115,11 @@
                         <label class="control-label col-sm-2 labelchart" for="type">Type of chart:</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="type" name="type">
-                                <option value="histogram">Histogram</option>
-                                <option value="circle">Circle</option>
+                                <option value="bar">Bar</option>
+                                <option value="radar">Radar</option>
                                 <option value="line">Line</option>
-                                <option value="top">Top</option>
+                                <option value="pie">Pie</option>
+                                <option value="polarArea">Polar Area</option>
                             </select>
                         </div>
                     </div>

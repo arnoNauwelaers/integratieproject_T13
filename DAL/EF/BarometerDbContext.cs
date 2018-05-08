@@ -46,6 +46,7 @@ namespace DAL.EF
         public DbSet<ChartItemData> ChartItemDatas { get; set; }
         public DbSet<Zone> Zones { get; set; }
         public DbSet<Keyword> Keywords { get; set; }
+        public DbSet<Settings> Settings { get; set; }
         //public DbSet<User> Users { get; set; }
 
 

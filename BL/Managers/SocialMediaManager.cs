@@ -11,13 +11,13 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-
+//TODO query's in repository?
 namespace BL.Managers
 {
     public class SocialMediaManager
     {
         private const int FREQUENTIE = 1;
-
+        private const int AMOUNT_OF_ELEMENTS = 20;
         private SocialMediaRepository socialMediaRepository;
         private AlertManager alertManager;
         private ItemManager itemManager;
@@ -68,35 +68,6 @@ namespace BL.Managers
             return itemManager.GetAllItemsFromPosts(data2);
         }
 
-        
-        // dubbel? staat ook in alertmanager
-        //public Boolean VerifyCondition(Alert alert)
-        //{
-        //    int tweetAmount = socialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
-        //    if (alert.CompareItem == null)
-        //    {
-        //        int oldTweetAmount = socialMediaRepository.ReadItemParameter(alert, DateTime.Now.AddHours(-1), DateTime.Now.AddHours(-(FREQUENTIE * 2)));
-
-        //        if (alert.Condition == ">")
-        //        {
-        //            //als een politicus 2 maal zoveel tweets stuurt in het laatste uur als in het vorige uur wordt er een notification gestuurd
-        //            return tweetAmount >= (oldTweetAmount * 2);
-        //        }
-        //        return false;
-        //    }
-        //    else
-        //    {
-        //        int tweetAmount2 = socialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
-        //        if (alert.Condition == ">")
-        //        {
-        //            //als er over een politus meer dan 2 maal zveel getweet is in het afgelopen uur als een ander politici word er een notification gestuurd
-        //            return tweetAmount >= tweetAmount2 * 2;
-        //        }
-
-        //    }
-        //    return false;
-        //}
-
         private string GetMonthFromInt(int month)
         {
             switch (month)
@@ -119,64 +90,81 @@ namespace BL.Managers
 
         public Dictionary<string, int> GetDataFromPost(DateTime since, ChartValue value, Item item)
         {
-            Dictionary<string, int> tempList = new Dictionary<string, int>();
             List<SocialMediaPost> posts = (List<SocialMediaPost>)socialMediaRepository.ReadSocialMediaPostsSince(since, item);
             if (value == ChartValue.hashtags)
             {
-                foreach (var post in posts)
-                {
-                    post.ListsToArrays();
-                    foreach (var hashtag in post.Hashtag)
-                    {
-                        if (tempList.ContainsKey(hashtag))
-                        {
-                            tempList[hashtag]++;
-                        }
-                        else
-                        {
-                            tempList.Add(hashtag, 1);
-                        }
-                    }
-                }
-                return tempList;
+                return GetHashtagData(posts);
             }
             else if (value == ChartValue.persons)
             {
-                foreach (var post in posts)
-                {
-                    foreach (var person in post.Person)
-                    {
-                        if (tempList.ContainsKey(person))
-                        {
-                            tempList[person]++;
-                        }
-                        else
-                        {
-                            tempList.Add(person, 1);
-                        }
-                    }
-                }
-                return tempList;
+                GetPersonData(posts);
             }
             else if (value == ChartValue.words)
             {
-                foreach (var post in posts)
-                {
-                    foreach (var word in post.Words)
-                    {
-                        if (tempList.ContainsKey(word.Value))
-                        {
-                            tempList[word.Value]++;
-                        }
-                        else
-                        {
-                            tempList.Add(word.Value, 1);
-                        }
-                    }
-                }
-                return tempList;
+                return GetWordData(posts);
             }
             return null;
+        }
+
+        public Dictionary<string, int> GetHashtagData(List<SocialMediaPost> posts)
+        {
+            Dictionary<string, int> list = new Dictionary<string, int>();
+            foreach (var post in posts)
+            {
+                post.ListsToArrays();
+                foreach (var hashtag in post.Hashtag)
+                {
+                    if (list.ContainsKey(hashtag))
+                    {
+                        list[hashtag]++;
+                    }
+                    else
+                    {
+                        list.Add(hashtag, 1);
+                    }
+                }
+            }
+            return list.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+        }
+
+        public Dictionary<string, int> GetPersonData(List<SocialMediaPost> posts)
+        {
+            Dictionary<string, int> list = new Dictionary<string, int>();
+            foreach (var post in posts)
+            {
+                foreach (var person in post.Persons)
+                {
+                    if (list.ContainsKey(person.Name))
+                    {
+                        list[person.Name]++;
+                    }
+                    else
+                    {
+                        list.Add(person.Name, 1);
+                    }
+                }
+            }
+            return list.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+        }
+
+            public Dictionary<string, int> GetWordData(List<SocialMediaPost> posts)
+        {
+            Dictionary<string, int> list = new Dictionary<string, int>();
+            foreach (var post in posts)
+            {
+                foreach (var word in post.Words)
+                {
+                    if (list.ContainsKey(word.Value))
+                    {
+                        list[word.Value]++;
+                    }
+                    else
+                    {
+                        list.Add(word.Value, 1);
+                    }
+                }
+            }
+            return list.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
         }
 
         public List<SocialMediaProfile> GetSocialMediaProfiles()
@@ -203,28 +191,45 @@ namespace BL.Managers
 
         public void ArraysToLists(SocialMediaPost post)
         {
-            Sentiment s = new Sentiment(post.Sentiment[0], post.Sentiment[1]);
-            post.PostSentiment = s;
+            if (post.Sentiment.Count() > 0)
+            {
+                post.PostSentiment = new Sentiment(post.Sentiment[0], post.Sentiment[1]);
+            }
             
             foreach (var item in post.Hashtag)
             {
-                post.Hashtags.Add(new Hashtag(item));
+                if (item != null)
+                {
+                    post.Hashtags.Add(new Hashtag(item));
+                }
             }
             foreach (var item in post.Verhaal)
             {
-                post.Urls.Add(new Url(item));
+                if (item != null)
+                {
+                    post.Urls.Add(new Url(item));
+                }
             }
             foreach (var item in post.Word)
             {
-                post.Words.Add(new Word(item));
+                if (item != null)
+                {
+                    post.Words.Add(new Word(item));
+                }
             }
             foreach (var item in post.Person)
             {
-                post.Persons.Add(itemManager.CreatePersonIfNotExists(item));
+                if (item != null)
+                {
+                    post.Persons.Add(itemManager.CreatePersonIfNotExists(item));
+                }
             }
             foreach (var item in post.Theme)
             {
-                post.Themes.Add(new Theme(item));
+                if (item != null)
+                {
+                    post.Themes.Add(new Theme(item));
+                }
             }
         }
     }

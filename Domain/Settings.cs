@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace BL.Domain
 {
-    public class Zone
+    public class Settings
     {
         [Key]
         public int Id { get; set; }
-        public double X { get; set; }
-        public double Y { get; set; }
-        public double Height { get; set; }
-        public double Width { get; set; }
+        public int ApiFrequency { get; set; } //aantal minuten?
+        public string ApiUrl { get; set; }
+        public string ApiPort { get; set; }
+        public int DataLifetime { get; set; } //aantal dagen?
     }
 }

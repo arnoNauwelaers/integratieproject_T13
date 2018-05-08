@@ -9,76 +9,83 @@ using DAL;
 namespace DAL.Repositories
 {
     public static class RepositoryFactory
-  {
+    {
 
-    private static BarometerDbContext ctx;
-    private static PlatformRepository platformRepo;
-    private static UserRepository userRepo;
-    private static AlertRepository alertRepo;
-    private static ChartRepository chartRepo;
-    private static ItemRepository itemRepo;
-    private static SocialMediaRepository smRepo;
-    private static DataRepository dataRepository;
-    private static ChartItemDataRepository chartItemDataRepository;
+        private static BarometerDbContext ctx;
+        private static PlatformRepository platformRepo;
+        private static UserRepository userRepo;
+        private static AlertRepository alertRepo;
+        private static ChartRepository chartRepo;
+        private static ItemRepository itemRepo;
+        private static SocialMediaRepository smRepo;
+        private static DataRepository dataRepository;
+        private static ChartItemDataRepository chartItemDataRepository;
+        private static ZoneRepository zoneRepository;
 
         public static void CreateContext()
-    {
-      if (ctx == null)
-      {
-        ctx = new BarometerDbContext();
-        platformRepo = new PlatformRepository(ctx);
-        userRepo = new UserRepository(ctx);
-        alertRepo = new AlertRepository(ctx);
-        chartRepo = new ChartRepository(ctx);
-        itemRepo = new ItemRepository(ctx);
-        smRepo = new SocialMediaRepository(ctx);
-        dataRepository = new DataRepository(ctx);
-        chartItemDataRepository = new ChartItemDataRepository(ctx);
-      }
-      
+        {
+            if (ctx == null)
+            {
+                ctx = new BarometerDbContext();
+                platformRepo = new PlatformRepository(ctx);
+                userRepo = new UserRepository(ctx);
+                alertRepo = new AlertRepository(ctx);
+                chartRepo = new ChartRepository(ctx);
+                itemRepo = new ItemRepository(ctx);
+                smRepo = new SocialMediaRepository(ctx);
+                dataRepository = new DataRepository(ctx);
+                chartItemDataRepository = new ChartItemDataRepository(ctx);
+                zoneRepository = new ZoneRepository(ctx);
+            }
 
-    }
 
-    public static PlatformRepository CreatePlatformRepository()
-    {
-      return platformRepo;
-    }
+        }
 
-    public static UserRepository CreateUserRepository()
-    {
-      return userRepo;
-    }
+        public static PlatformRepository CreatePlatformRepository()
+        {
+            return platformRepo;
+        }
 
-  
-    public static SocialMediaRepository CreateSocialMediaRepository()
-    {
-      return smRepo;
-    }
+        public static UserRepository CreateUserRepository()
+        {
+            return userRepo;
+        }
 
-    public static AlertRepository CreateAlertRepository()
-    {
-      return alertRepo;
-    }
 
-    public static ChartRepository CreateChartRepository()
-    {
-      return chartRepo;
-    }
+        public static SocialMediaRepository CreateSocialMediaRepository()
+        {
+            return smRepo;
+        }
 
-    public static ItemRepository CreateItemRepository()
-    {
-      return itemRepo;
-    }
+        public static AlertRepository CreateAlertRepository()
+        {
+            return alertRepo;
+        }
 
-    public static DataRepository CreateDataRepository()
-    {
-        return dataRepository;
-    }
+        public static ChartRepository CreateChartRepository()
+        {
+            return chartRepo;
+        }
 
-    public static ChartItemDataRepository CreateChartItemDataRepository()
-    {
-        return chartItemDataRepository;
-    }
+        public static ItemRepository CreateItemRepository()
+        {
+            return itemRepo;
+        }
+
+        public static DataRepository CreateDataRepository()
+        {
+            return dataRepository;
+        }
+
+        public static ChartItemDataRepository CreateChartItemDataRepository()
+        {
+            return chartItemDataRepository;
+        }
+
+        public static ZoneRepository CreateZoneRepository()
+        {
+            return zoneRepository;
+        }
 
     }
 }

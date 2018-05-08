@@ -102,5 +102,13 @@ namespace DAL.Repositories
       IdentityRole role = ctx.Roles.Where(r => r.Name.ToUpper().Equals(roleName.ToUpper())).First();
       return role.Id;
     }
+
+    public ApplicationUser GetUserByToken(string token) {
+      if(ctx.Users.Any(u => u.AppToken == token)) {
+        return ctx.Users.First(u => u.AppToken == token);
+      }else{
+        return null;
+      }
+    }
   }
 }

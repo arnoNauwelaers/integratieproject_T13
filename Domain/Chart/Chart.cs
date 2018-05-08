@@ -18,7 +18,7 @@ namespace BL.Domain
         public virtual ICollection<Item> Items { get; set; } = new List<Item>();
         public virtual ChartType ChartType { get; set; }
         public virtual ChartValue ChartValue { get; set; }
-        public virtual Zone Zone { get; set; } = new Zone();
+        public virtual Zone Zone { get; set; }
         public Boolean Saved { get; set; } = false;
         public Boolean MultipleItems { get; set; } = false;
         [NotMapped]
@@ -27,10 +27,74 @@ namespace BL.Domain
         public DateFrequencyType FrequencyType { get; set; }
         public DateTime? StartDate { get; set; } = null;
         public DateTime? EndDate { get; set; } = null;
+        //Nodig voor Colors
+        [NotMapped]
+        Random rnd = new Random();
 
         public string GetStyle()
         {
-            return $"width: {Zone.Width}px; height: {Zone.Height}px; transform: translate({Zone.X}px, {Zone.Y}px);";
+            return $"transform: translate({Zone.X}px, {Zone.Y}px);";
+        }
+
+        public List<string> GetRgbas()
+        {
+            List<string> rgbas = new List<string>();
+            if (ChartType == ChartType.pie || ChartType == ChartType.polarArea)
+            {
+                foreach (var item in ChartItemData)
+                {
+                    foreach (var data in item.Data)
+                    {
+                        rgbas.Add(GenerateRandomRGBA());
+                    }
+                }
+            }
+            else if (ChartType == ChartType.bar || ChartType == ChartType.radar || ChartType == ChartType.line)
+            {
+                foreach (var item in ChartItemData)
+                {
+                    string tempRgba = GenerateRandomRGBA();
+                    foreach (var data in item.Data)
+                    {
+                        rgbas.Add(tempRgba);
+                    }
+                }
+            }
+            return rgbas;
+        }
+
+        public string GetDataSets()
+        {
+            List<ChartDataSet> DataSets = new List<ChartDataSet>();
+            foreach (var item in ChartItemData)
+            {
+                List<int> data = new List<int>();
+                foreach (var itemData in item.Data)
+                {
+                    data.Add(itemData.Amount);
+                }
+                DataSets.Add(new ChartDataSet(GetTitle(), GetRgbas(), 1, data));
+            }
+            return JsonConvert.SerializeObject(DataSets);
+        }
+
+        public string GenerateRandomRGBA()
+        {
+            int r = rnd.Next(0, 256);
+            int g = rnd.Next(0, 256);
+            int b = rnd.Next(0, 256);
+            string opacity = "0.6";
+            return $"rgba({r}, {g}, {b}, {opacity})";
+        }
+
+        public string GetWidth()
+        {
+            return Zone.Width.ToString().Replace(',', '.');
+        }
+
+        public string GetHeight()
+        {
+            return Zone.Height.ToString().Replace(',', '.');
         }
 
         public string GetCanvasId()
@@ -41,6 +105,11 @@ namespace BL.Domain
         public string GetChartName()
         {
             return $"chart{ChartId}";
+        }
+
+        public string GetDivId()
+        {
+            return $"div{ChartId}";
         }
 
         public string GetLabels()
@@ -56,6 +125,7 @@ namespace BL.Domain
             return JsonConvert.SerializeObject(labels);
         }
 
+        //overbodig nieuwe functie GetDataSets?
         public string GetData()
         {
             List<int> data = new List<int>();
@@ -69,30 +139,24 @@ namespace BL.Domain
             return JsonConvert.SerializeObject(data);
         }
 
-        //public string GetLabels()
-        //{
-        //    string labels = "";
-        //    foreach (var chartItemData in ChartItemData)
-        //    {
-        //        foreach (var item in chartItemData.Data)
-        //        {
-        //            labels += '"' + item.Name + '"' + ",";
-        //        }
-        //    }
-        //    return labels;
-        //}
-        //public string GetData()
-        //{
-        //    string data = "";
-        //    foreach (var chartItemData in ChartItemData)
-        //    {
-        //        foreach (var item in chartItemData.Data)
-        //        {
-        //            data += item.Amount + ", ";
-        //        }
-        //    }
-        //    return data;
-        //}
+        public string GetTitle()
+        {
+            string title =  $"Amount of {ChartValue} of ";
+            int i = 1;
+            foreach (var item in ChartItemData)
+            {
+                if (i == 1)
+                {
+                    title += item.Item.Name;
+                }
+                else
+                {
+                    title += $" & {item.Item.Name}";
+                }
+                i++;
+            }
+            return title;
+        }
     }
 
     //voor JSON deserializer
@@ -101,7 +165,6 @@ namespace BL.Domain
         public int Id;
         public double X;
         public double Y;
-        public double Height;
         public double Width;
     }
 
@@ -113,5 +176,19 @@ namespace BL.Domain
         public string DateFrequency;
     }
 
-    
+    public class ChartDataSet
+    {
+        public string label;
+        public List<string> backgroundColor;
+        public int borderWidth;
+        public List<int> data;
+
+        public ChartDataSet(string label, List<string> backgroundColor, int borderWidth, List<int> data)
+        {
+            this.label = label;
+            this.backgroundColor = backgroundColor;
+            this.borderWidth = borderWidth;
+            this.data = data;
+        }
+    }
 }

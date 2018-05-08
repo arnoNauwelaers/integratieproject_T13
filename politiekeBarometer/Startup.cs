@@ -4,6 +4,7 @@ using Owin;
 using BL.Managers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.IdentityModel.Tokens;
 using BL.Domain;
 using DAL.Repositories;
 using BL;
@@ -21,7 +22,8 @@ namespace politiekeBarometer
             ActivateApi();
         }
 
-        private void ActivateApi()
+
+    private void ActivateApi()
         {
             var SocialMediaManager = new SocialMediaManager();
             //TODO int moet configureerbaar zijn

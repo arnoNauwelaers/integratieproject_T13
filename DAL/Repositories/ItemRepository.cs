@@ -55,7 +55,7 @@ namespace DAL.Repositories
 
         public Person CreatePersonIfNotExists(string name)
         {
-            if (ctx.Persons.Where(p => p.Name == name).Count() > 0)
+            if (ctx.Persons.Any(p => p.Name == name))
             {
                 return ctx.Persons.First(p => p.Name == name);
             }

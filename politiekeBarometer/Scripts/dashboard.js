@@ -122,6 +122,7 @@ function ShowDelete() {
 }
 
 function SaveCharts() {
+    var parentWidth = $(".resize-container").width();
     var text = '[';
     var teller = 0;
     $(".grafiek").each(function (index) {
@@ -134,12 +135,11 @@ function SaveCharts() {
             X = 0;
             Y = 0;
         }
-        var Height = $(this).height();
-        var Width = $(this).width();
+        var Width = parentWidth / ($(this).css("width").replace("px", "") - 20);
         if (teller !== 1) {
             text += ',';
         }
-        text += '{ "Id":"' + id + '" , "X":"' + X + '" , "Y":"' + Y + '" , "Height":"' + (Height + 40) + '" , "Width":"' + (Width + 40) + '" }';
+        text += '{ "Id":"' + id + '" , "X":"' + X + '" , "Y":"' + Y + '" , "Width":"' + Width + '" }';
         $(".grafiek")
     })
     text += ']';

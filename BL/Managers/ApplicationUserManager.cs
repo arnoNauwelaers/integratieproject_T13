@@ -80,6 +80,10 @@ namespace BL.Managers
 
     }
 
+    public ApplicationUser GetUserByToken(string token) {
+      return userRepository.GetUserByToken(token);
+    }
+
     public void ChangeUser(ApplicationUser u)
     {
       userRepository.UpdateUser(u);
