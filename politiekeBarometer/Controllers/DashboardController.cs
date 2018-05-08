@@ -21,11 +21,13 @@ namespace politiekeBarometer.Controllers
     public class DashboardController : Controller
     {
         private ApplicationUserManager UserManager;
+        private ItemManager itemManager;
         private ChartManager ChartManager;
         //private BarometerDbContext db = BarometerDbContext.Create();
         public DashboardController()
         {
             ChartManager = new ChartManager();
+            itemManager = new ItemManager();
         }
         // GET: Dashboard
         [Authorize]
@@ -33,25 +35,9 @@ namespace politiekeBarometer.Controllers
         {
             UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = UserManager.GetUser(User.Identity.GetUserId());
-            List<Item> Items = UserManager.GetItemsFromUser(user);
-            List<Person> Persons = new List<Person>();
-            List<Theme> Themes = new List<Theme>();
-            List<Organization> Organizations = new List<Organization>();
-            foreach (var item in user.FollowedItems)
-            {
-                if (item.TypeInt == 1)
-                {
-                    Persons.Add((Person)item);
-                }
-                else if (item.TypeInt == 2)
-                {
-                    Themes.Add((Theme)item);
-                }
-                else if (item.TypeInt == 3)
-                {
-                    Organizations.Add((Organization)item);
-                }
-            }
+            List<Person> Persons = (List<Person>) itemManager.GetPersons();
+            List<Theme> Themes = (List<Theme>) itemManager.GetThemes();
+            List<Organization> Organizations = (List<Organization>) itemManager.GetOrganizations();
             DashboardModel Model = new DashboardModel
             {
                 Persons = Persons,

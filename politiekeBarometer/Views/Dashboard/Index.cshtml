@@ -28,8 +28,8 @@
     }
 </style>
 <h2 id="dashboardTitle">Dashboard</h2>
-<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#addModal">Add Chart</button>
-<button id="editButton" type="button" class="btn btn-primary btn-lg">Edit</button>
+<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#addModal">Voeg grafiek toe</button>
+<button id="editButton" type="button" class="btn btn-primary btn-lg">Wijzigen</button>
 <script type="text/javascript" src="~/Scripts/Chart.bundle.min.js"></script>
 <div class="resize-container">
     @foreach (var chart in Model.Charts)
@@ -77,7 +77,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Add a chart</h4>
+                <h4 class="modal-title">Voeg grafiek toe</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <form class="form-horizontal" method="post" action="/Dashboard/AddChart">
@@ -89,19 +89,19 @@
                             <select class="selectModal form-control" id="items" name="itemsSelect" onchange="addItem()">
                                 <option style="display:none"></option>
                                 @{
-                                    <optgroup label="Persons">
+                                    <optgroup label="Personen">
                                         @foreach (var item in Model.Persons)
                                         {
                                             <option value="@item.ItemId">@item.Name</option>
                                         }                                   @*TODO: hardcoded options weghalen*@
                                     </optgroup>
-                                    <optgroup label="Themes">
+                                    <optgroup label="Themas">
                                         @foreach (var item in Model.Themes)
                                         {
                                             <option value="@item.ItemId">@item.Name</option>
                                         }
                                     </optgroup>
-                                    <optgroup label="Organizations">
+                                    <optgroup label="Organisaties">
                                         @foreach (var item in Model.Organizations)
                                         {
                                             <option value="@item.ItemId">@item.Name</option>
@@ -112,46 +112,46 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-2 labelchart" for="type">Type of chart:</label>
+                        <label class="control-label col-sm-2 labelchart" for="type">Welke representatie?</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="type" name="type">
-                                <option value="bar">Bar</option>
-                                <option value="radar">Radar</option>
-                                <option value="line">Line</option>
-                                <option value="pie">Pie</option>
-                                <option value="polarArea">Polar Area</option>
+                                <option value="bar">Bar Grafiek</option>
+                                <option value="radar">Radar Grafiek</option>
+                                <option value="line">Lijn Grafiek</option>
+                                <option value="pie">Taart Grafiek</option>
+                                <option value="polarArea">Polar Area Grafiek</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-2 labelchart" for="value">Which value?</label>
+                        <label class="control-label col-sm-2 labelchart" for="value">Type van grafiek</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="value" name="value">
-                                <option value="words">Words</option>
-                                <option value="persons">Persons</option>
-                                <option value="hashtags">Hashtags</option>
+                                <option value="words">Meest voorkomende woorden</option>
+                                <option value="persons">Meest voorkomende personen</option>
+                                <option value="hashtags">Meest voorkomende hashtags</option>
                                 <option value="trendPersons">Trends personen</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-2 labelchart" for="frequency">Frequency</label>
+                        <label class="control-label col-sm-2 labelchart" for="frequency">Frequentie</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="frequency" name="frequency">
-                                <option value="hourly">Hourly</option>
-                                <option value="daily">Daily</option>
-                                <option value="weekly">Weekly</option>
-                                <option value="monthly">Monthly</option>
-                                <option value="yearly">Yearly</option>
+                                <option value="hourly">Per uur</option>
+                                <option value="daily">Per dag</option>
+                                <option value="weekly">Per week</option>
+                                <option value="monthly">Per maand</option>
+                                <option value="yearly">Per jaar</option>
                             </select>
                         </div>
                     </div>
-                    <h4>Added items:</h4>
+                    <h4>Toegevoegde items:</h4>
                     <ul id="itemList"></ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Add</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Toevoegen</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
                 </div>
             </form>
         </div>
