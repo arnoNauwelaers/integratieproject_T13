@@ -82,6 +82,10 @@
     <Compile Include="Migrations\201805081104472_test.Designer.cs">
       <DependentUpon>201805081104472_test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805081234105_legeUpdate.cs" />
+    <Compile Include="Migrations\201805081234105_legeUpdate.Designer.cs">
+      <DependentUpon>201805081234105_legeUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\AlertRepository.cs" />
     <Compile Include="EF\BarometerDbConfiguration.cs" />
@@ -115,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805081104472_test.resx">
       <DependentUpon>201805081104472_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805081234105_legeUpdate.resx">
+      <DependentUpon>201805081234105_legeUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
