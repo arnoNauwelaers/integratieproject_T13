@@ -11,7 +11,7 @@ using System.Diagnostics;
 
 namespace DAL.EF
 {
-    internal class BarometerDbInitializer : MigrateDatabaseToLatestVersion<BarometerDbContext,Migrations.Configuration>
+    internal class BarometerDbInitializer : DropCreateDatabaseIfModelChanges<DbContext>
     {
 
         
