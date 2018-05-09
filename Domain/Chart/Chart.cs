@@ -29,7 +29,7 @@ namespace BL.Domain
         public DateTime? EndDate { get; set; } = null;
         //Nodig voor Colors
         [NotMapped]
-        Random rnd = new Random();
+        private static readonly Random rnd = new Random();
 
         public string GetStyle()
         {
@@ -92,11 +92,6 @@ namespace BL.Domain
             return Zone.Width.ToString().Replace(',', '.');
         }
 
-        public string GetHeight()
-        {
-            return Zone.Height.ToString().Replace(',', '.');
-        }
-
         public string GetCanvasId()
         {
             return $"canvas{ChartId}";
@@ -141,19 +136,39 @@ namespace BL.Domain
 
         public string GetTitle()
         {
-            string title =  $"Amount of {ChartValue} of ";
-            int i = 1;
-            foreach (var item in ChartItemData)
+            string title = "";
+            if (ChartValue == ChartValue.hashtags || ChartValue == ChartValue.words || ChartValue == ChartValue.persons)
             {
-                if (i == 1)
+                title = $"Aantal {ChartValue} van ";
+                int i = 1;
+                foreach (var item in ChartItemData)
                 {
-                    title += item.Item.Name;
+                    if (i == 1)
+                    {
+                        title += item.Item.Name;
+                    }
+                    else
+                    {
+                        title += $" & {item.Item.Name}";
+                    }
+                    i++;
                 }
-                else
+            }
+            else
+            {
+                title = $"Aantal posts per ";
+                if (ChartValue == ChartValue.trendPersons)
                 {
-                    title += $" & {item.Item.Name}";
+                    title += "persoon";
                 }
-                i++;
+                else if (ChartValue == ChartValue.trendOrganizations)
+                {
+                    title += "organisatie";
+                }
+                else if (ChartValue == ChartValue.trendThemes)
+                {
+                    title += "thema";
+                }
             }
             return title;
         }

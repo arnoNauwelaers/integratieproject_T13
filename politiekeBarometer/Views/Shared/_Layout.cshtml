@@ -222,13 +222,9 @@
         </div>
     </nav>
     <div class="content-wrapper">
-        <div class="container-fluid">
+        <div id="page-wrapper"
             <!-- Breadcrumbs-->
-            <div class="row">
-                <div class="col-12">
-                    @RenderBody()
-                </div>
-            </div>
+            @RenderBody()
         </div>
         <!-- /.container-fluid-->
         <!-- /.content-wrapper-->
@@ -243,6 +239,7 @@
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fa fa-angle-up"></i>
         </a>
+        </div>
         @RenderSection("scripts", required: false)
         <!-- Bootstrap core JavaScript-->
 
@@ -300,6 +297,5 @@
 
             <script src="~/Scripts/notifications.js"></script>
         }
-    </div>
 </body>
 </html>

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BL.Domain;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity.Infrastructure;
 
 namespace DAL.EF
 {
@@ -61,9 +62,10 @@ namespace DAL.EF
       modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");
 
       
+        
 
-      // Remove pluralizing tablenames
-      modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+        // Remove pluralizing tablenames
+        modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             // Remove cascading delete for all required-relationships
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();

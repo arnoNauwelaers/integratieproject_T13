@@ -13,11 +13,6 @@ namespace BL.Domain
 
         public virtual ICollection<Alert> Alerts { get; set; } = new List<Alert>();
 
-
-        //TODO delete
-        //public int photo { get; set; }
-        //public ICollection<Set> sets { get; set; }
-
         [NotMapped]
         public int TypeInt { get; set; }
 

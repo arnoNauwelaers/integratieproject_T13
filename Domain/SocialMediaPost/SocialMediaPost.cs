@@ -21,7 +21,7 @@ namespace BL.Domain
         public DateTime Date { get; set; }
         [JsonProperty("sentiment")]
         [NotMapped]
-        public double[] Sentiment { get; set; } = new double[10];
+        public double[] Sentiment { get; set; } = new double[2];
         [JsonProperty("hashtags")]
         [NotMapped]
         public string[] Hashtag { get; set; } = new string[10];
@@ -30,10 +30,10 @@ namespace BL.Domain
         public string[] Verhaal { get; set; } = new string[10];
         [JsonProperty("words")]
         [NotMapped]
-        public string[] Word { get; set; } = new string[10];
+        public string[] Word { get; set; } = new string[30];
         [JsonProperty("persons")]
         [NotMapped]
-        public string[] Person { get; set; } = new string[10];
+        public string[] Person { get; set; } = new string[30];
         [JsonProperty("themes")]
         [NotMapped]
         public string[] Theme { get; set; } = new string[10];

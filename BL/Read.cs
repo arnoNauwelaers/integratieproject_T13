@@ -14,7 +14,7 @@ namespace BL
 {
     public class Read
     {
-        private const string URL = "http://kdg.textgain.com/query";
+        private const string URL = "https://kdg.textgain.com/query";
         static HttpClient client = new HttpClient();
 
         //TODO elke .. minuten uitvoeren

@@ -48,6 +48,8 @@ namespace BL.Managers
         //TODO kijken of extra nodig is
         public void RetrieveDataChart(Chart chart)
         {
+            Boolean trend = false;
+            Dictionary<Item, int> itemData = new Dictionary<Item, int>();
             DateTime since = DateTime.Now.AddDays(-7);
             switch (chart.FrequencyType)
             {
@@ -61,16 +63,29 @@ namespace BL.Managers
             chart.ChartItemData = new List<ChartItemData>();
             if (chart.Items.Count == 0)
             {
-
-                tempData = socialMediaManager.GetDataFromPost(since, chart.ChartValue);
+                trend = true;
+                itemData = socialMediaManager.GetItemsFromChartWithoutItems(since, chart.ChartValue);
             }
-            foreach (var item in chart.Items)
+            if (trend == false)
             {
-                tempData = socialMediaManager.GetDataFromPost(since, chart.ChartValue, item);
-                ChartItemData tempChartItemData = new ChartItemData() { Item = item };
-                foreach (var data in tempData)
+                foreach (var item in chart.Items)
                 {
-                    tempChartItemData.Data.Add(new Data() { Name = data.Key, Amount = data.Value });
+                    tempData = socialMediaManager.GetDataFromPost(since, chart.ChartValue, item);
+                    ChartItemData tempChartItemData = new ChartItemData() { Item = item };
+                    foreach (var data in tempData)
+                    {
+                        tempChartItemData.Data.Add(new Data() { Name = data.Key, Amount = data.Value });
+                    }
+                    chart.ChartItemData.Add(tempChartItemData);
+                }
+            }
+            else if (trend == true)
+            {
+                ChartItemData tempChartItemData = new ChartItemData();
+                foreach (var item in itemData)
+                {
+                    tempChartItemData.Item = item.Key;
+                    tempChartItemData.Data.Add(new Data() { Name = item.Key.Name, Amount = item.Value });
                 }
                 chart.ChartItemData.Add(tempChartItemData);
             }
@@ -109,10 +124,10 @@ namespace BL.Managers
                 }
                 chart.Items = itemList;
             }
-            chart.ChartType = (ChartType) Enum.Parse(typeof(ChartType), chartType);
+            chart.ChartType = (ChartType)Enum.Parse(typeof(ChartType), chartType);
             chart.ChartValue = (ChartValue)Enum.Parse(typeof(ChartValue), chartValue);
             chart.FrequencyType = (DateFrequencyType)Enum.Parse(typeof(DateFrequencyType), dateFrequency);
-            chart.Zone = new Zone() { Width = 530, Height = 400, X = 10, Y = 10 };
+            chart.Zone = new Zone() { Width = 2.43, X = 10, Y = 10 };
             Chart finalChart = AddChart(chart);
             return finalChart;
         }

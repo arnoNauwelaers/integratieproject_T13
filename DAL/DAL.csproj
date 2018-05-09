@@ -74,19 +74,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201805062352586_InitialCreate.cs" />
-    <Compile Include="Migrations\201805062352586_InitialCreate.Designer.cs">
-      <DependentUpon>201805062352586_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805081104472_test.cs" />
-    <Compile Include="Migrations\201805081104472_test.Designer.cs">
-      <DependentUpon>201805081104472_test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805081234105_legeUpdate.cs" />
-    <Compile Include="Migrations\201805081234105_legeUpdate.Designer.cs">
-      <DependentUpon>201805081234105_legeUpdate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\AlertRepository.cs" />
     <Compile Include="EF\BarometerDbConfiguration.cs" />
     <Compile Include="EF\BarometerDbContext.cs" />
@@ -112,17 +99,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201805062352586_InitialCreate.resx">
-      <DependentUpon>201805062352586_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805081104472_test.resx">
-      <DependentUpon>201805081104472_test.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805081234105_legeUpdate.resx">
-      <DependentUpon>201805081234105_legeUpdate.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

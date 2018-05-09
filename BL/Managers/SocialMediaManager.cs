@@ -56,7 +56,7 @@ namespace BL.Managers
             else
             {
                 //TODO vanaf vorige maand?
-                date = "28 Apr 2018 08:49:12";
+                date = "8 May 2018 08:49:12";
             }
 
             List<SocialMediaPost> data2 = (List<SocialMediaPost>)read.ReadData(date);
@@ -91,6 +91,22 @@ namespace BL.Managers
         public Dictionary<string, int> GetDataFromPost(DateTime since, ChartValue value, Item item = null)
         {
             List<SocialMediaPost> posts = (List<SocialMediaPost>)socialMediaRepository.ReadSocialMediaPostsSince(since, item);
+            List<SocialMediaPost> results = new List<SocialMediaPost>();
+            foreach (var post in posts)
+            {
+                post.ListsToArrays();
+                if (item != null)
+                {
+                    if (post.Persons.Contains(item))
+                    {
+                        results.Add(post);
+                    }
+                }
+            }
+            if (results.Count > 0)
+            {
+                posts = results;
+            }
             if (value == ChartValue.hashtags)
             {
                 return GetHashtagData(posts);
@@ -103,31 +119,47 @@ namespace BL.Managers
             {
                 return GetWordData(posts);
             }
-            else if (value == ChartValue.trendPersons)
-            {
-                return GetTrendPersonData(posts);
-            }
             return null;
         }
 
-        //TODO AFMAKEN
-        public List<Item> GetItemsFromChartWithoutItems(ChartValue value, DateTime since)
+        //TODO uitbreiden voor organisaties en themas
+        public Dictionary<Item, int> GetItemsFromChartWithoutItems(DateTime since, ChartValue value)
         {
-            List<Item> items = new List<Item>();
             List<SocialMediaPost> posts = (List<SocialMediaPost>) socialMediaRepository.ReadSocialMediaPostsSince(since);
             if (value == ChartValue.trendPersons)
             {
-                
+                return GetTrendPersonData(posts);
             }
             else if (value == ChartValue.trendOrganizations)
             {
-
+                
             }
             else if (value == ChartValue.trendThemes)
             {
 
             }
-            return items;
+            return null;
+        }
+
+        public Dictionary<Item, int> GetTrendPersonData(List<SocialMediaPost> posts)
+        {
+            Dictionary<Item, int> list = new Dictionary<Item, int>();
+            foreach (var post in posts)
+            {
+                post.ListsToArrays();
+                foreach (var person in post.Persons)
+                {
+                    if (list.ContainsKey(person))
+                    {
+                        list[person]++;
+                    }
+                    else
+                    {
+                        list.Add(person, 1);
+                    }
+                }
+            }
+            return list.OrderByDescending(i => i.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
         }
 
         public Dictionary<string, int> GetHashtagData(List<SocialMediaPost> posts)
@@ -145,26 +177,6 @@ namespace BL.Managers
                     else
                     {
                         list.Add(hashtag, 1);
-                    }
-                }
-            }
-            return list.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
-        }
-
-        public Dictionary<string, int> GetTrendPersonData(List<SocialMediaPost> posts)
-        {
-            Dictionary<string, int> list = new Dictionary<string, int>();
-            foreach (var post in posts)
-            {
-                foreach (var person in post.Persons)
-                {
-                    if (list.ContainsKey(person.Name))
-                    {
-                        list[person.Name]++;
-                    }
-                    else
-                    {
-                        list.Add(person.Name, 1);
                     }
                 }
             }

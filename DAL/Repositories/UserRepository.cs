@@ -24,20 +24,20 @@ namespace DAL.Repositories
             return ctx.Users.Include(a => a.Alerts).ToList<ApplicationUser>();
         }
 
-    public List<ApplicationUser> ReadUsersFromRole(string roleId)
-    {
-      List<ApplicationUser> usersInRole = ctx.Users.Where(u => u.Roles.Select(r => r.RoleId).Contains(roleId)).ToList();
-      return usersInRole;
-    }
+        public List<ApplicationUser> ReadUsersFromRole(string roleId)
+        {
+            List<ApplicationUser> usersInRole = ctx.Users.Where(u => u.Roles.Select(r => r.RoleId).Contains(roleId)).ToList();
+            return usersInRole;
+        }
 
-    public List<ApplicationUser> ReadUsersWithoutRole(string roleId)
-    {
-      List<ApplicationUser> usersInRole = ctx.Users.Where(u => u.Roles.Select(r => r.RoleId).Contains(roleId)).ToList();
-      return usersInRole;
-    }
+        public List<ApplicationUser> ReadUsersWithoutRole(string roleId)
+        {
+            List<ApplicationUser> usersInRole = ctx.Users.Where(u => u.Roles.Select(r => r.RoleId).Contains(roleId)).ToList();
+            return usersInRole;
+        }
 
 
-    public ApplicationUser CreateUser(ApplicationUser user)
+        public ApplicationUser CreateUser(ApplicationUser user)
         {
             ctx.Users.Add(user);
             ctx.SaveChanges();
@@ -51,10 +51,10 @@ namespace DAL.Repositories
         }
 
         public void DeleteUser(ApplicationUser user)
-    {
-      ctx.Users.Remove(user);
-      ctx.SaveChanges();
-    }
+        {
+            ctx.Users.Remove(user);
+            ctx.SaveChanges();
+        }
 
         public void DeleteUser(int userId)
         {
@@ -63,7 +63,7 @@ namespace DAL.Repositories
             ctx.SaveChanges();
         }
 
-      
+
 
         public ApplicationUser ReadUser(string id = "")
         {
@@ -77,38 +77,49 @@ namespace DAL.Repositories
             }
         }
 
-    public ApplicationUser ReadUserByName(string name)
-    {
-      return ctx.Users.Single(u => u.UserName.Equals(name));
-    }
+        public ApplicationUser ReadUserByName(string name)
+        {
+            if (ctx.Users.Any(u => u.UserName.Equals(name)))
+            {
+                return ctx.Users.Single(u => u.UserName.Equals(name));
+            }
+            else
+            {
+                return null;
+            }
+        }
 
-    public List<IdentityRole> ReadRoles()
-    {
-      return ctx.Roles.ToList();
-    }
+        public List<IdentityRole> ReadRoles()
+        {
+            return ctx.Roles.ToList();
+        }
 
-    public List<IdentityRole> ReadSpecificRole(string roleName)
-    {
-      return ctx.Roles.Where(r => r.Name.ToUpper().Equals(roleName.ToUpper())).ToList();
-    }
+        public List<IdentityRole> ReadSpecificRole(string roleName)
+        {
+            return ctx.Roles.Where(r => r.Name.ToUpper().Equals(roleName.ToUpper())).ToList();
+        }
 
-    public List<IdentityRole> ReadRolesWithout(string partRoleName)
-    {
-      return ctx.Roles.Where(r => !r.Name.Contains(partRoleName)).ToList();
-    }
+        public List<IdentityRole> ReadRolesWithout(string partRoleName)
+        {
+            return ctx.Roles.Where(r => !r.Name.Contains(partRoleName)).ToList();
+        }
 
-    public string ReadRoleId(string roleName)
-    {
-      IdentityRole role = ctx.Roles.Where(r => r.Name.ToUpper().Equals(roleName.ToUpper())).First();
-      return role.Id;
-    }
+        public string ReadRoleId(string roleName)
+        {
+            IdentityRole role = ctx.Roles.Where(r => r.Name.ToUpper().Equals(roleName.ToUpper())).First();
+            return role.Id;
+        }
 
-    public ApplicationUser GetUserByToken(string token) {
-      if(ctx.Users.Any(u => u.AppToken == token)) {
-        return ctx.Users.First(u => u.AppToken == token);
-      }else{
-        return null;
-      }
+        public ApplicationUser GetUserByToken(string token)
+        {
+            if (ctx.Users.Any(u => u.AppToken == token))
+            {
+                return ctx.Users.First(u => u.AppToken == token);
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
-  }
 }

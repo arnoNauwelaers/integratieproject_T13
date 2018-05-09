@@ -9,7 +9,7 @@ namespace DAL.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "DAL.EF.BarometerDbContext";
         }
 

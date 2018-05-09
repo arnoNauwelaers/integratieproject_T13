@@ -27,26 +27,7 @@ namespace DAL.Repositories
 
         public IEnumerable<SocialMediaPost> ReadSocialMediaPostsSince(DateTime since, Item item = null)
         {
-            List<SocialMediaPost> tempPosts = ctx.SocialMediaPosts.Where(i => i.Date > since).Include(a => a.SocialMediaProfiles).Include(a => a.Words).Include(a => a.Hashtags).Include(a => a.Persons).ToList();
-            List<SocialMediaPost> posts = new List<SocialMediaPost>();
-            List<SocialMediaPost> results = new List<SocialMediaPost>();
-            //TODO 6/05 geen iteration?
-            foreach (var post in tempPosts)
-            {
-                post.ListsToArrays();
-                if (item != null)
-                {
-                    if (post.Person.Contains(item.Name))
-                    {
-                        results.Add(post);
-                    }
-                }
-                else
-                {
-                    results.Add(post);
-                }
-            }
-            return results;
+            return ctx.SocialMediaPosts.Where(i => i.Date > since).Include(a => a.SocialMediaProfiles).Include(a => a.Words).Include(a => a.Hashtags).Include(a => a.Persons).ToList();
         }
 
         public SocialMediaPost CreateSocialMediaPost(SocialMediaPost socialMediaPost)
@@ -219,23 +200,5 @@ namespace DAL.Repositories
         {
             return ctx.SocialMediaProfiles.Find(id);
         }
-
-
-
-        //public int ReadAmountHashtags(string hashtag)
-        //{
-        //    return ctx.SocialMediaPosts.ToList<SocialMediaPost>().Count(i => i.Hashtags.Contains(hashtag));
-        //}
-        //public int ReadAmountWords(string word)
-        //{
-        //    return ctx.SocialMediaPosts.ToList<SocialMediaPost>().Count(i => i.Words.Contains(word));
-        //}
-        //public int ReadAmountPersons(string person)
-        //{
-        //    return ctx.SocialMediaPosts.ToList<SocialMediaPost>().Count(i => i.Person.Contains(person));
-        //}
-
-
-
     }
 }
