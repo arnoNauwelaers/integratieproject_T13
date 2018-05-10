@@ -16,6 +16,7 @@ namespace BL.Managers
         private ItemManager itemManager;
         private SocialMediaManager socialMediaManager;
         private ZoneManager zoneManager;
+        private static Dictionary<string, Chart> standardCharts = new Dictionary<string, Chart>();
 
         public ChartManager()
         {
@@ -24,6 +25,30 @@ namespace BL.Managers
             dataManager = new DataManager();
             socialMediaManager = new SocialMediaManager();
             zoneManager = new ZoneManager();
+        }
+
+        public Dictionary<string, Chart> GetStandardChart()
+        {
+            CreateStandardChartsIfNotExists();
+            return standardCharts;
+        }
+
+        public void CreateStandardChartsIfNotExists()
+        {
+            if (standardCharts.Count == 0 && chartRepository.ReadStandardCharts() == null)
+            {
+                Chart trendingPersonWeek = new Chart() { Standard = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendPersons, FrequencyType = DateFrequencyType.weekly };
+                Chart trendingPersonMonth = new Chart() { Standard = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendPersons, FrequencyType = DateFrequencyType.monthly };
+
+                standardCharts.Add("trendingPersonWeek", chartRepository.CreateChart(trendingPersonWeek));
+                standardCharts.Add("trendingPersonMonth", chartRepository.CreateChart(trendingPersonMonth));
+            }
+            else if (standardCharts.Count == 0)
+            {
+                List<Chart> tempStandardCharts = chartRepository.ReadStandardCharts();
+                standardCharts.Add("trendingPersonWeek", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendPersons && c.FrequencyType == DateFrequencyType.weekly));
+                standardCharts.Add("trendingPersonMonth", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendPersons && c.FrequencyType == DateFrequencyType.monthly));
+            }
         }
 
         public void UpdateChart(Chart chart)

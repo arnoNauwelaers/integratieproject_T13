@@ -15,6 +15,7 @@ namespace BL.Domain
     {
         [Key]
         public int ChartId { get; set; }
+        public Boolean Standard { get; set; } = false; //standard zijn charts op bv. homepage
         public virtual ICollection<Item> Items { get; set; } = new List<Item>();
         public virtual ChartType ChartType { get; set; }
         public virtual ChartValue ChartValue { get; set; }

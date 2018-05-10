@@ -17,7 +17,7 @@ namespace DAL.Repositories
 
         public ChartRepository(BarometerDbContext ctx)
         {
-      this.ctx = ctx;
+            this.ctx = ctx;
         }
 
         public List<Chart> ReadCharts()
@@ -32,11 +32,23 @@ namespace DAL.Repositories
             return chart;
         }
 
+        public List<Chart> ReadStandardCharts()
+        {
+            if (ctx.Charts.Any(c => c.Standard == true))
+            {
+                return ctx.Charts.Where(c => c.Standard == true).ToList();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public Chart ReadChart(int id)
         {
             return ctx.Charts.Include(i => i.Items).Include(i => i.SavedChartItemData).ToList().Find(c => c.ChartId == id);
         }
-        
+
 
         public void UpdateChart(Chart chart)
         {
@@ -51,6 +63,6 @@ namespace DAL.Repositories
             ctx.SaveChanges();
         }
 
-        
+
     }
 }

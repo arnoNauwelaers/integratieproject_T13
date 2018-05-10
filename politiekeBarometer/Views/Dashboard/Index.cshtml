@@ -20,17 +20,19 @@
     .resize-container {
         display: inline-block;
         width: 100%;
-        height: 250%;
+        height: 1000px;
     }
 
     #dashboardTitle {
         display: inline-block;
     }
 </style>
+<script>
+    
+</script>
 <h2 id="dashboardTitle">Dashboard</h2>
 <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#addModal">Voeg grafiek toe</button>
 <button id="editButton" type="button" class="btn btn-primary btn-lg">Wijzigen</button>
-<script type="text/javascript" src="~/Scripts/Chart.bundle.min.js"></script>
 <div class="resize-container">
     @foreach (var chart in Model.Charts)
     {
@@ -42,27 +44,13 @@
             <canvas id="@chart.GetCanvasId()"></canvas>
         </div>
         <script>
-
-            var dataChart = @chart.GetData();
+            var typeChart = '@chart.ChartType.ToString()';
             var labelsChart = @Html.Raw(chart.GetLabels());
-            var @chart.GetCanvasId() = document.getElementById("@chart.GetCanvasId()").getContext('2d');
-            var myChart = new Chart(@chart.GetCanvasId(), {
-                type: '@chart.ChartType.ToString()',
-                data: {
-                    labels: labelsChart,
-                    datasets: @Html.Raw(chart.GetDataSets())
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    }
-                }
-            });
-
+            var canvasId = document.getElementById("@chart.GetCanvasId()").getContext('2d');
+            var dataSets = @Html.Raw(chart.GetDataSets());
+            
+            
+            CreateChart(canvasId, typeChart, labelsChart, dataSets);
         $(document).ready(function () {
             $("#@chart.GetDivId()").width($(".resize-container").css("width").replace("px", "") / @chart.GetWidth());
         });

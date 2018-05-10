@@ -130,7 +130,6 @@ function SaveCharts() {
         var id = $(this).attr("value");
         var X = $(this).attr("data-x");
         var Y = $(this).attr("data-y");
-        console.log(X);
         if (isNaN(X)) {
             X = 0;
             Y = 0;
@@ -143,7 +142,6 @@ function SaveCharts() {
         $(".grafiek")
     })
     text += ']';
-    console.log(text);
     $.ajax({
         dataType: "json",
         url: "/api/Basic/EditChart",

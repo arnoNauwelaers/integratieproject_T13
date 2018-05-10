@@ -15,5 +15,6 @@ namespace BL.Domain
         public string ApiUrl { get; set; }
         public string ApiPort { get; set; }
         public int DataLifetime { get; set; } //aantal dagen?
+        public List<Chart> standardCharts { get; set; } = new List<Chart>();
     }
 }

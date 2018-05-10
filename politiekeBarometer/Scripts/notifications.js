@@ -1,6 +1,4 @@
-﻿//TODO checken en vanaf begin ophalen?
-
-function synchronizeDB() {
+﻿function synchronizeDB() {
     $.getJSON("/api/Basic", function (data) {
         var items = [];
         $.each(data, function (key, val) {
@@ -13,7 +11,6 @@ function synchronizeDB() {
 //loadNotifications();
 var ul = document.getElementById("notifications");
 function loadNotifications() {
-    console.log("loadNotifications");
     $.getJSON("/api/Basic/GetNotifications", function (data) {
         ul.innerHTML = "";
         var items = [];

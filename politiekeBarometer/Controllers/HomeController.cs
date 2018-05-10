@@ -1,4 +1,6 @@
 ﻿using BL.Domain;
+using BL.Managers;
+using politiekeBarometer.Models;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -7,14 +9,24 @@ namespace politiekeBarometer.Controllers
 {
     public class HomeController : Controller
     {
-        
-        public ActionResult Index()
+        private ChartManager chartManager;
+        public HomeController()
         {
-            List<Notification> model = new List<Notification>();
-            return View(model);
+            chartManager = new ChartManager();
         }
 
-        public ActionResult About()
+        public ActionResult Index()
+        {
+            HomeViewModel viewModel = new HomeViewModel();
+            viewModel.Charts = chartManager.GetStandardChart();
+            foreach (var chart in viewModel.Charts)
+            {
+                chartManager.RetrieveDataChart(chart.Value);
+            }
+            return View(viewModel);
+        }
+
+        public ActionResult Faq()
         {
             ViewBag.Message = "Your application description page.";
 

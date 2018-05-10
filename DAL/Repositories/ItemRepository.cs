@@ -57,7 +57,8 @@ namespace DAL.Repositories
         {
             if (ctx.Persons.Any(p => p.Name == name))
             {
-                return ctx.Persons.First(p => p.Name == name);
+                Person person = ctx.Persons.First(p => p.Name == name);
+                return person;
             }
             else
             {

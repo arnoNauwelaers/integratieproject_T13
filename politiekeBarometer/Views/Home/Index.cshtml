@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BL.Domain.Notification>
+﻿@model politiekeBarometer.Models.HomeViewModel
 
 @{
     ViewBag.Title = "Home Page";
@@ -11,7 +11,15 @@
                 <h5>Trending personen van deze week</h5>
             </div>
             <div class="panel-body text-center">
-                <p>HIER KOMT GRAFIEK</p>
+                <canvas id="@Model.Charts["trendingPersonWeek"].GetCanvasId()"></canvas>
+                <script>
+                    var typeChart = '@Model.Charts["trendingPersonWeek"].ChartType.ToString()';
+                    var labelsChart = @Html.Raw(@Model.Charts["trendingPersonWeek"].GetLabels());
+                    var canvasId = document.getElementById("@Model.Charts["trendingPersonWeek"].GetCanvasId()").getContext('2d');
+                    var dataSets = @Html.Raw(@Model.Charts["trendingPersonWeek"].GetDataSets());
+
+                    CreateChart(canvasId, typeChart, labelsChart, dataSets);
+                </script>
             </div>
         </div>
     </div>
@@ -21,7 +29,15 @@
                 <h5>Trending personen van deze maand</h5>
             </div>
             <div class="panel-body text-center">
-                <p>HIER KOMT GRAFIEK</p>
+                <canvas id="@Model.Charts["trendingPersonMonth"].GetCanvasId()"></canvas>
+                <script>
+                    var typeChart = '@Model.Charts["trendingPersonMonth"].ChartType.ToString()';
+                    var labelsChart = @Html.Raw(@Model.Charts["trendingPersonMonth"].GetLabels());
+                    var canvasId = document.getElementById("@Model.Charts["trendingPersonMonth"].GetCanvasId()").getContext('2d');
+                    var dataSets = @Html.Raw(@Model.Charts["trendingPersonMonth"].GetDataSets());
+
+                    CreateChart(canvasId, typeChart, labelsChart, dataSets);
+                </script>
             </div>
         </div>
     </div>
