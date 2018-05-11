@@ -37,6 +37,7 @@ namespace DAL.Repositories
             return socialMediaPost;
         }
 
+
         public void UpdateSocialMediaPost(SocialMediaPost socialMediaPost)
         {
             ctx.Set<SocialMediaPost>().AddOrUpdate(socialMediaPost);
@@ -117,7 +118,7 @@ namespace DAL.Repositories
         private int ReadNrOfPostsFromOrganization(Organization o, DateTime end, DateTime start)
         {
             int total = 0;
-            foreach (Person p in o.persons)
+            foreach (Person p in o.Persons)
             {
                 total += ReadNrOfPostsFromPerson(p, end, start);
             }
@@ -155,7 +156,7 @@ namespace DAL.Repositories
         private double ReadAverageSentimentFromOrganization(Organization o, DateTime end, DateTime start)
         {
             double average = 0.00;
-            foreach (Person p in o.persons)
+            foreach (Person p in o.Persons)
             {
                 average += ReadAverageSentimentFromPerson(p, end, start);
             }
@@ -199,6 +200,11 @@ namespace DAL.Repositories
         public SocialMediaProfile ReadProfile(int id)
         {
             return ctx.SocialMediaProfiles.Find(id);
+        }
+
+        public void SaveDatabase()
+        {
+            ctx.SaveChanges();
         }
     }
 }

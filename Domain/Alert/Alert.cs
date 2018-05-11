@@ -24,8 +24,10 @@ namespace BL.Domain
         {
             
             AlertId = alertId;
-            Type = new List<AlertType>();
-            Type.Add(type);
+            Type = new List<AlertType>
+            {
+                type
+            };
             Parameter = parameter;
             //Condition = condition;
           ConditionPerc = perc;

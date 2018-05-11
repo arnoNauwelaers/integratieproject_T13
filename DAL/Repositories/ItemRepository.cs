@@ -144,7 +144,7 @@ namespace DAL.Repositories
 
         public Organization ReadOrganization(int id)
         {
-            return ctx.Organizations.Include(a => a.Alerts).Include(a => a.socialMediaProfiles).ToList().Find(u => u.ItemId == id);
+            return ctx.Organizations.Include(a => a.Alerts).Include(a => a.SocialMediaProfiles).ToList().Find(u => u.ItemId == id);
         }
 
         public List<Organization> ReadOrganization(string name)

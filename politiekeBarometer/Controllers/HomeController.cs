@@ -17,8 +17,10 @@ namespace politiekeBarometer.Controllers
 
         public ActionResult Index()
         {
-            HomeViewModel viewModel = new HomeViewModel();
-            viewModel.Charts = chartManager.GetStandardChart();
+            HomeViewModel viewModel = new HomeViewModel
+            {
+                Charts = chartManager.GetStandardChart()
+            };
             foreach (var chart in viewModel.Charts)
             {
                 chartManager.RetrieveDataChart(chart.Value);

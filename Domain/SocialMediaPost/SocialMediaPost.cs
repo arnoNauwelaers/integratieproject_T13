@@ -10,7 +10,7 @@ namespace BL.Domain
     {
         [Key]
         public long PostId { get; set; }
-        [JsonProperty("id")]
+        [JsonProperty("id"), StringLength(450), Index(IsUnique = true)]
         public string TweetId { get; set; }
         //TODO geo kan zowel array van double en boolean zijn
         //[JsonProperty("geo")]
@@ -24,10 +24,10 @@ namespace BL.Domain
         public double[] Sentiment { get; set; } = new double[2];
         [JsonProperty("hashtags")]
         [NotMapped]
-        public string[] Hashtag { get; set; } = new string[10];
+        public string[] Hashtag { get; set; } = new string[30];
         [JsonProperty("urls")]
         [NotMapped]
-        public string[] Verhaal { get; set; } = new string[10];
+        public string[] Verhaal { get; set; } = new string[30];
         [JsonProperty("words")]
         [NotMapped]
         public string[] Word { get; set; } = new string[30];
@@ -36,7 +36,7 @@ namespace BL.Domain
         public string[] Person { get; set; } = new string[30];
         [JsonProperty("themes")]
         [NotMapped]
-        public string[] Theme { get; set; } = new string[10];
+        public string[] Theme { get; set; } = new string[30];
         [JsonProperty("source")]
         public string Source { get; set; }
         [JsonProperty("profile")]

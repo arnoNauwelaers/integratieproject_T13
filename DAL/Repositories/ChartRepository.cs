@@ -40,7 +40,7 @@ namespace DAL.Repositories
             }
             else
             {
-                return null;
+               return new List<Chart>();
             }
         }
 

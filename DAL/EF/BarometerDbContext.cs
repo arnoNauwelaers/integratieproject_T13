@@ -81,8 +81,8 @@ namespace DAL.EF
             modelBuilder.Entity<Alert>().HasMany(i => i.Notifications).WithMany();
             modelBuilder.Entity<Chart>().HasMany(i => i.SavedChartItemData).WithMany();
             modelBuilder.Entity<Item>().HasMany(i => i.Alerts).WithMany();
-            modelBuilder.Entity<Organization>().HasMany(i => i.persons).WithMany();
-            modelBuilder.Entity<Organization>().HasMany(i => i.socialMediaProfiles).WithMany();
+            modelBuilder.Entity<Organization>().HasMany(i => i.Persons).WithMany();
+            modelBuilder.Entity<Organization>().HasMany(i => i.SocialMediaProfiles).WithMany();
             modelBuilder.Entity<Person>().HasMany(i => i.SocialMediaProfiles).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.SocialMediaProfiles).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Words).WithMany();

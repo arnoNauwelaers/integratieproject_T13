@@ -5,8 +5,8 @@ namespace BL.Domain
 {
     public class Organization : Item
     {
-        public virtual ICollection<SocialMediaProfile> socialMediaProfiles { get; set; } = new List<SocialMediaProfile>();
-        public virtual ICollection<Person> persons { get; set; } = new List<Person>();
+        public virtual ICollection<SocialMediaProfile> SocialMediaProfiles { get; set; } = new List<SocialMediaProfile>();
+        public virtual ICollection<Person> Persons { get; set; } = new List<Person>();
 
         public Organization()
         {

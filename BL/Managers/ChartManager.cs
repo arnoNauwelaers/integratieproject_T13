@@ -35,19 +35,28 @@ namespace BL.Managers
 
         public void CreateStandardChartsIfNotExists()
         {
-            if (standardCharts.Count == 0 && chartRepository.ReadStandardCharts() == null)
+            int amountStandardCharts = 4;
+            if (standardCharts.Count < amountStandardCharts && chartRepository.ReadStandardCharts().Count < amountStandardCharts)
             {
+                standardCharts = new Dictionary<string, Chart>();
                 Chart trendingPersonWeek = new Chart() { Standard = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendPersons, FrequencyType = DateFrequencyType.weekly };
                 Chart trendingPersonMonth = new Chart() { Standard = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendPersons, FrequencyType = DateFrequencyType.monthly };
+                Chart trendingOrganizationWeek = new Chart() { Standard = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendOrganizations, FrequencyType = DateFrequencyType.weekly };
+                Chart trendingOrganizationMonth = new Chart() { Standard = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendOrganizations, FrequencyType = DateFrequencyType.monthly };
 
                 standardCharts.Add("trendingPersonWeek", chartRepository.CreateChart(trendingPersonWeek));
                 standardCharts.Add("trendingPersonMonth", chartRepository.CreateChart(trendingPersonMonth));
+                standardCharts.Add("trendingOrganizationWeek", chartRepository.CreateChart(trendingOrganizationWeek));
+                standardCharts.Add("trendingorganizationMonth", chartRepository.CreateChart(trendingOrganizationMonth));
             }
-            else if (standardCharts.Count == 0)
+            else if (standardCharts.Count < amountStandardCharts)
             {
+                standardCharts = new Dictionary<string, Chart>();
                 List<Chart> tempStandardCharts = chartRepository.ReadStandardCharts();
                 standardCharts.Add("trendingPersonWeek", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendPersons && c.FrequencyType == DateFrequencyType.weekly));
                 standardCharts.Add("trendingPersonMonth", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendPersons && c.FrequencyType == DateFrequencyType.monthly));
+                standardCharts.Add("trendingOrganizationWeek", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendOrganizations && c.FrequencyType == DateFrequencyType.weekly));
+                standardCharts.Add("trendingorganizationMonth", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendOrganizations && c.FrequencyType == DateFrequencyType.monthly));
             }
         }
 
@@ -145,7 +154,7 @@ namespace BL.Managers
             {
                 foreach (var id in itemIds)
                 {
-                    itemList.Add(itemManager.ReadPerson(Int32.Parse(id)));
+                    itemList.Add(itemManager.ReadItem(Int32.Parse(id)));
                 }
                 chart.Items = itemList;
             }
