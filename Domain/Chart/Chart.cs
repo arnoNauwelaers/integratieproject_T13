@@ -37,6 +37,23 @@ namespace BL.Domain
             return $"transform: translate({Zone.X}px, {Zone.Y}px);";
         }
 
+        public string GetItemNames()
+        {
+            string itemNames = "";
+            if (Items.Count > 0)
+            {
+                foreach (var item in Items)
+                {
+                    itemNames += item.Name;
+                    if (item != Items.Last())
+                    {
+                        itemNames += ",";
+                    }
+                }
+            }
+            return itemNames;
+        }
+
         public List<string> GetRgbas()
         {
             List<string> rgbas = new List<string>();

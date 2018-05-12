@@ -28,7 +28,7 @@
     }
 </style>
 <script>
-    
+
 </script>
 <h2 id="dashboardTitle">Dashboard</h2>
 <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#addModal">Voeg grafiek toe</button>
@@ -37,19 +37,20 @@
     @foreach (var chart in Model.Charts)
     {
         //TODO hier code om elke chart in te laden op juiste positie en grootte
-        <div id="@chart.GetDivId()" data-x="@chart.Zone.X" data-y="@chart.Zone.Y" value="@chart.ChartId" class="grafiek resize-drag" style="@chart.GetStyle()">
-            <form id="@chart.ChartId" class="form-horizontal deleteForm" method="post" action="/Dashboard/DeleteChart">
-                <a onclick="deleteChart(@chart.ChartId)" href="#"><i class="fa fa-fw fa-trash" style="float:right"><input type="hidden" value="@chart.ChartId" name="id" /></i></a>
-            </form>
-            <canvas id="@chart.GetCanvasId()"></canvas>
-        </div>
+    <div id="@chart.GetDivId()" data-x="@chart.Zone.X" data-y="@chart.Zone.Y" value="@chart.ChartId" class="grafiek resize-drag" style="@chart.GetStyle()">
+        <i class="fa fa-fw fa-edit editForm" id="editFormButton" style="float:right" data-toggle="modal" data-target="#editModal" onclick="fillEditItems('@chart.GetItemNames()', @chart.ChartId)"></i>
+        <form id="@chart.ChartId" class="form-horizontal deleteForm" method="post" action="/Dashboard/DeleteChart">
+            <a onclick="deleteChart(@chart.ChartId)"><i class="fa fa-fw fa-trash" style="float:right"><input type="hidden" value="@chart.ChartId" name="id" /></i></a>
+        </form>
+        <canvas id="@chart.GetCanvasId()"></canvas>
+    </div>
         <script>
             var typeChart = '@chart.ChartType.ToString()';
             var labelsChart = @Html.Raw(chart.GetLabels());
             var canvasId = document.getElementById("@chart.GetCanvasId()").getContext('2d');
             var dataSets = @Html.Raw(chart.GetDataSets());
-            
-            
+
+
             CreateChart(canvasId, typeChart, labelsChart, dataSets);
         $(document).ready(function () {
             $("#@chart.GetDivId()").width($(".resize-container").css("width").replace("px", "") / @chart.GetWidth());
@@ -139,6 +140,84 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Toevoegen</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<div id="editModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Wijzig grafiek</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <form class="form-horizontal" method="post" action="/Dashboard/EditChart">
+                <input type="hidden" value="" name="chartid" id="chartId" />
+                <input type="hidden" value="" name="items" id="itemsHiddenEdit" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2 labelchart" for="items">Items:</label>
+                        <div class="col-sm-10">
+                            <select class="selectModal form-control" id="itemsEdit" name="itemsSelect" onchange="addItemEdit()">
+                                <option style="display:none"></option>
+                                @{
+                                    <optgroup label="Personen">
+                                        @foreach (var item in Model.Persons)
+                                        {
+                                            <option value="@item.ItemId">@item.Name</option>
+                                        }                                   @*TODO: hardcoded options weghalen*@
+                                    </optgroup>
+                                    <optgroup label="Themas">
+                                        @foreach (var item in Model.Themes)
+                                        {
+                                            <option value="@item.ItemId">@item.Name</option>
+                                        }
+                                    </optgroup>
+                                    <optgroup label="Organisaties">
+                                        @foreach (var item in Model.Organizations)
+                                        {
+                                            <option value="@item.ItemId">@item.Name</option>
+                                        }
+                                    </optgroup>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2 labelchart" for="type">Welke representatie?</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="typeEdit" name="type">
+                                <option value="bar">Bar Grafiek</option>
+                                <option value="radar">Radar Grafiek</option>
+                                <option value="line">Lijn Grafiek</option>
+                                <option value="pie">Taart Grafiek</option>
+                                <option value="polarArea">Polar Area Grafiek</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2 labelchart" for="frequency">Frequentie</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="frequencyEdit" name="frequency">
+                                <option value="hourly">Per uur</option>
+                                <option value="daily">Per dag</option>
+                                <option value="weekly">Per week</option>
+                                <option value="monthly">Per maand</option>
+                                <option value="yearly">Per jaar</option>
+                            </select>
+                        </div>
+                    </div>
+                    <h4>Toegevoegde items:</h4>
+                    <ul id="itemListEdit"></ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Wijzigen</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
                 </div>
             </form>

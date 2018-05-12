@@ -178,5 +178,24 @@ namespace BL.Managers
                 chartRepository.UpdateChart(chartObj);
             }
         }
+
+        //TODO Mathijs; afmaken
+        public void EditChartFromDashboard(int id, string items, string type, string frequency)
+        {
+            Chart chart = chartRepository.ReadChart(id);
+            List<Item> itemList = new List<Item>();
+            char[] whitespace = new char[] { ' ', '\t' };
+            string[] itemIds = items.Split(whitespace);
+            if (items != "")
+            {
+                foreach (var itemid in itemIds)
+                {
+                    chart.Items.Add(itemManager.ReadItem(Int32.Parse(itemid)));
+                }
+            }
+            chart.ChartType = (ChartType)Enum.Parse(typeof(ChartType), type);
+            chart.FrequencyType = (DateFrequencyType)Enum.Parse(typeof(DateFrequencyType), frequency);
+            chartRepository.UpdateChart(chart);
+        }
     }
 }
