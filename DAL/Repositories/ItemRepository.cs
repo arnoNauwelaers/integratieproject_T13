@@ -25,11 +25,11 @@ namespace DAL.Repositories
         }
 
         public List<Item> ReadItems(string s)
-    {
-      return ctx.Items.Where(i => i.Name.ToUpper()
-                        .Contains(s.ToUpper()))
-                        .ToList();
-    }
+        {
+            return ctx.Items.Where(i => i.Name.ToUpper()
+                              .Contains(s.ToUpper()))
+                              .ToList();
+        }
 
         public IEnumerable<Person> GetPersons()
         {
@@ -66,12 +66,25 @@ namespace DAL.Repositories
             }
         }
 
+        public SocialMediaProfile createSocialmediaprofile(SocialMediaProfile socialMediaProfile)
+        {
+            ctx.SocialMediaProfiles.Add(socialMediaProfile);
+            ctx.SaveChanges();
+            return socialMediaProfile;
+        }
+
+        public void deleteProfile(int profileId)
+        {
+            ctx.SocialMediaProfiles.Remove(ctx.SocialMediaProfiles.Find(profileId));
+            ctx.SaveChanges();
+        }
+
         public Item ReadItem(int id)
         {
             return ctx.Items.Find(id);
         }
 
-        public void UpdateItem(Item changedItem)
+        public Item UpdateItem(Item changedItem)
         {
             Item item = ctx.Items.Find(changedItem.ItemId);
             if (item.Name != changedItem.Name)
@@ -84,6 +97,17 @@ namespace DAL.Repositories
                 {
                     ((Person)item).Organization = ((Person)changedItem).Organization;
                 }
+                if (((Person)changedItem).SocialMediaProfiles.Count != 0)
+                {
+                    ((Person)item).SocialMediaProfiles = ((Person)changedItem).SocialMediaProfiles;
+                }
+            }
+            if (changedItem.GetType().ToString().Contains("Organization"))
+            {
+                if (((Organization)changedItem).SocialMediaProfiles.Count != 0)
+                {
+                    ((Organization)item).SocialMediaProfiles = ((Organization)changedItem).SocialMediaProfiles;
+                }
             }
             if (changedItem.GetType().ToString().Contains("Theme"))
             {
@@ -91,60 +115,70 @@ namespace DAL.Repositories
             }
             ctx.Entry(item).State = System.Data.Entity.EntityState.Modified;
             ctx.SaveChanges();
+            return item;
         }
 
-    public void DeleteItem(int itemId)
-    {
-        Item item = ctx.Items.Find(itemId);
-            if (item.GetType().ToString().Contains("Theme"))
+
+
+        public void DeleteItem(int itemId)
+        {
+            Item item = ctx.Items.Find(itemId);
+            if (item.GetType().ToString().Contains("Person"))
+            {
+                ctx.SocialMediaProfiles.RemoveRange(ctx.SocialMediaProfiles.Where(smp => smp.Item.ItemId == item.ItemId));
+            }
+            else if (item.GetType().ToString().Contains("Organization"))
+            {
+                ctx.SocialMediaProfiles.RemoveRange(ctx.SocialMediaProfiles.Where(smp => smp.Item.ItemId == item.ItemId));
+            }
+            else if (item.GetType().ToString().Contains("Theme"))
             {
                 ctx.Keywords.RemoveRange(ctx.Keywords.Where(k => k.Theme.ItemId == item.ItemId));
             }
-            
             ctx.Items.Remove(item);
             ctx.SaveChanges();
-    }
-
-    public Item ReadItem(string s)
-    {
-      return ctx.Items.FirstOrDefault(i => i.Name.Contains(s));
-    }
-
-
-
-    public List<Item> ReadItems(SocialMediaPost post)
-    {
-            post.ListsToArrays();
-        List<Item> usedItems = new List<Item>();
-        foreach (var item in ctx.Items.ToList<Item>())
-        {
-            if (item.Name.ToUpper() == post.Person[0].ToUpper())
-            {
-                usedItems.Add(item);
-            }
-            foreach (var hashtag in post.Hashtag)
-            {
-                if (item.Name.ToUpper() == hashtag.ToUpper())
-                if (item.Name.ToUpper() == post.Persons.First().ToString().ToUpper())
-
-                {
-                    usedItems.Add(item);
-                }
-            }
-            foreach (var word in post.Word)
-            {
-                if (item.Name.ToUpper() == word.ToUpper())
-                {
-                    usedItems.Add(item);
-                }
-            }
         }
-        return usedItems;
-    }
+
+        public Item ReadItem(string s)
+        {
+            return ctx.Items.FirstOrDefault(i => i.Name.Contains(s));
+        }
+
+
+
+        public List<Item> ReadItems(SocialMediaPost post)
+        {
+            post.ListsToArrays();
+            List<Item> usedItems = new List<Item>();
+            foreach (var item in ctx.Items.ToList<Item>())
+            {
+                if (item.Name.ToUpper() == post.Person[0].ToUpper())
+                {
+                    usedItems.Add(item);
+                }
+                foreach (var hashtag in post.Hashtag)
+                {
+                    if (item.Name.ToUpper() == hashtag.ToUpper())
+                        if (item.Name.ToUpper() == post.Persons.First().ToString().ToUpper())
+
+                        {
+                            usedItems.Add(item);
+                        }
+                }
+                foreach (var word in post.Word)
+                {
+                    if (item.Name.ToUpper() == word.ToUpper())
+                    {
+                        usedItems.Add(item);
+                    }
+                }
+            }
+            return usedItems;
+        }
 
         public Organization ReadOrganization(int id)
         {
-            return ctx.Organizations.Include(a => a.Alerts).Include(a => a.socialMediaProfiles).ToList().Find(u => u.ItemId == id);
+            return ctx.Organizations.Include(a => a.Alerts).Include(a => a.SocialMediaProfiles).ToList().Find(u => u.ItemId == id);
         }
 
         public List<Organization> ReadOrganization(string name)
@@ -157,9 +191,28 @@ namespace DAL.Repositories
             return ctx.Themes.Where(t => t.Name == name).ToList();
         }
 
+        public List<SocialMediaProfile> readProfiles(Item item)
+        {
+            return ctx.SocialMediaProfiles.Where(smp => smp.Item.ItemId == item.ItemId).ToList();
+        }
+
+        public SocialMediaProfile readProfiles(int profileId)
+        {
+            return ctx.SocialMediaProfiles.Find(profileId);
+        }
+
+        public SocialMediaProfile updateProfile(SocialMediaProfile profile)
+        {
+            SocialMediaProfile tempProfile = ctx.SocialMediaProfiles.Find(profile.Id);
+            tempProfile.Url = profile.Url;
+            ctx.Entry(tempProfile).State = System.Data.Entity.EntityState.Modified;
+            ctx.SaveChanges();
+            return tempProfile;
+        }
+
         public Keyword CreateKeyword(Item theme, string keyword)
         {
-            Keyword keywordTemp = new Keyword() { Value = keyword, Theme = (Theme)theme};
+            Keyword keywordTemp = new Keyword() { Value = keyword, Theme = (Theme)theme };
             ctx.Keywords.Add(keywordTemp);
             ctx.SaveChanges();
             return keywordTemp;
@@ -171,51 +224,49 @@ namespace DAL.Repositories
             ctx.Keywords.Remove(keyword);
         }
 
-
-
-    //TODO delete
+        //TODO delete
         public Person ReadPerson(int id)
-    {
-        return ctx.Persons.Include(a => a.Alerts).Include(a => a.SocialMediaProfiles).ToList().Find(u => u.ItemId == id);
+        {
+            return ctx.Persons.Include(a => a.Alerts).Include(a => a.SocialMediaProfiles).ToList().Find(u => u.ItemId == id);
+        }
+
+        public Theme ReadTheme(int id)
+        {
+            return ctx.Themes.ToList().Find(u => u.ItemId == id);
+        }
+
+        public IEnumerable<Item> SearchItems(string SearchValue)
+        {
+            string s = SearchValue.ToUpper();
+            return ctx.Items.ToList().Where(item => (
+              item.TypeInt == 1 && (((Person)item).Name.ToUpper().Contains(s))) || (
+              item.TypeInt == 2 && (item.Name.ToUpper().Contains(s))) || (
+              item.TypeInt == 3 && (item.Name.ToUpper().Contains(s)))
+             );
+        }
+
+        public void DeleteItem(Item i)
+        {
+            ctx.Items.Remove(i);
+            ctx.SaveChanges();
+        }
+
+        public List<Organization> ReadOrganizations()
+        {
+            return ctx.Organizations.ToList();
+        }
+
+        public List<Person> ReadPersons()
+        {
+            return ctx.Persons.ToList();
+        }
+
+
+        public List<Theme> ReadThemes()
+        {
+            return ctx.Themes.ToList();
+        }
+
+
     }
-   
-    public Theme ReadTheme(int id)
-    {
-        return ctx.Themes.ToList().Find(u => u.ItemId == id);
-    }
-
-    public IEnumerable<Item> SearchItems(string SearchValue)
-    {
-        string s = SearchValue.ToUpper();
-        return ctx.Items.ToList().Where(item => (
-          item.TypeInt == 1 && (((Person)item).Name.ToUpper().Contains(s))) || (
-          item.TypeInt == 2 && (item.Name.ToUpper().Contains(s))) || (
-          item.TypeInt == 3 && (item.Name.ToUpper().Contains(s)))
-         );
-    }
-
-    public void DeleteItem(Item i)
-    {
-        ctx.Items.Remove(i);
-        ctx.SaveChanges();
-    }
-
-    public List<Organization> ReadOrganizations()
-    {
-      return ctx.Organizations.ToList();
-    }
-
-    public List<Person> ReadPersons()
-    {
-      return ctx.Persons.ToList();
-    }
-
-
-    public List<Theme> ReadThemes()
-    {
-      return ctx.Themes.ToList();
-    }
-
-
-  }
 }

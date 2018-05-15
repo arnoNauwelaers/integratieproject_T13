@@ -41,7 +41,7 @@ namespace BL.Managers
                 alerts.AddRange(item.Alerts);
             }
 
-          alertManager.HandleAlerts(alerts);
+            alertManager.HandleAlerts(alerts);
 
         }
 
@@ -59,11 +59,13 @@ namespace BL.Managers
                 date = "8 May 2018 08:49:12";
             }
 
+
             List<SocialMediaPost> data2 = (List<SocialMediaPost>)read.ReadData(date);
             foreach (var item in data2)
             {
                 ArraysToLists(item);
                 socialMediaRepository.CreateSocialMediaPost(item);
+                socialMediaRepository.addPostToItems(item);
             }
             return itemManager.GetAllItemsFromPosts(data2);
         }
@@ -125,14 +127,14 @@ namespace BL.Managers
         //TODO uitbreiden voor organisaties en themas
         public Dictionary<Item, int> GetItemsFromChartWithoutItems(DateTime since, ChartValue value)
         {
-            List<SocialMediaPost> posts = (List<SocialMediaPost>) socialMediaRepository.ReadSocialMediaPostsSince(since);
+            List<SocialMediaPost> posts = (List<SocialMediaPost>)socialMediaRepository.ReadSocialMediaPostsSince(since);
             if (value == ChartValue.trendPersons)
             {
                 return GetTrendPersonData(posts);
             }
             else if (value == ChartValue.trendOrganizations)
             {
-                
+
             }
             else if (value == ChartValue.trendThemes)
             {
@@ -203,7 +205,7 @@ namespace BL.Managers
             return list.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
         }
 
-            public Dictionary<string, int> GetWordData(List<SocialMediaPost> posts)
+        public Dictionary<string, int> GetWordData(List<SocialMediaPost> posts)
         {
             Dictionary<string, int> list = new Dictionary<string, int>();
             foreach (var post in posts)
@@ -221,6 +223,35 @@ namespace BL.Managers
                 }
             }
             return list.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+        }
+
+        public List<string> getTopTenUrl(Item item)
+        {
+            List<string> allUrls = new List<string>();
+            List<string> topTen = new List<string>();
+            foreach (var post in item.SocialMediaPosts)
+            {
+                foreach (var url in post.Urls)
+                {
+                    allUrls.Add(url.Value);
+                }
+            }
+            var sortedUrlsGroup = allUrls.GroupBy(s => s).OrderByDescending(g => g.Count());
+            if((sortedUrlsGroup.ToList()).Count() < 10)
+            {
+                foreach(var url in (sortedUrlsGroup.ToList()).GetRange(0, (sortedUrlsGroup.ToList()).Count()))
+                {
+                    topTen.Add(url.Key);
+                }
+            }
+            else
+            {
+                foreach (var url in (sortedUrlsGroup.ToList()).GetRange(0, 10))
+                {
+                    topTen.Add(url.Key);
+                }
+            }
+            return topTen;
         }
 
         public List<SocialMediaProfile> GetSocialMediaProfiles()
@@ -251,7 +282,7 @@ namespace BL.Managers
             {
                 post.PostSentiment = new Sentiment(post.Sentiment[0], post.Sentiment[1]);
             }
-            
+
             foreach (var item in post.Hashtag)
             {
                 if (item != null)

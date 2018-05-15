@@ -23,9 +23,9 @@ namespace BL.Managers
         }
 
         public List<Item> GetItems(string s)
-    {
-      return itemRepository.ReadItems(s);
-    }
+        {
+            return itemRepository.ReadItems(s);
+        }
 
         public IEnumerable<Person> GetPersons()
         {
@@ -42,23 +42,42 @@ namespace BL.Managers
             return itemRepository.ReadThemes();
         }
 
+        public List<SocialMediaProfile> GetProfiles(Item item)
+        {
+            return itemRepository.readProfiles(item);
+        }
+
         public Person CreatePersonIfNotExists(string name)
         {
             return itemRepository.CreatePersonIfNotExists(name);
         }
 
-        public void AddItem(string name, string type, int selectedOrganizationId, string keywords)
+        public void AddItem(string name, string type, int selectedOrganizationId, string keywords, string twitterUrl)
         {
             if (type == "Person")
             {
                 Organization tempOrganization = itemRepository.ReadOrganization(selectedOrganizationId);
                 Person person = new Person() { Name = name, Organization = tempOrganization };
-                itemRepository.CreateItem(person);
+                Item tempPerson = itemRepository.CreateItem(person);
+                if(twitterUrl != null && twitterUrl != " ")
+                {
+                    SocialMediaProfile socialMediaProfile = new SocialMediaProfile() { Url = twitterUrl, Source = "Twitter", Item = tempPerson };
+                    SocialMediaProfile tempSocialMediaProfile = itemRepository.createSocialmediaprofile(socialMediaProfile);
+                    ((Person)tempPerson).SocialMediaProfiles.Add(tempSocialMediaProfile);
+                }
+                itemRepository.UpdateItem(tempPerson);
             }
             else if (type == "Organization")
             {
                 Organization organization = new Organization() { Name = name };
-                itemRepository.CreateItem(organization);
+                Item tempOrganization = itemRepository.CreateItem(organization);
+                if (twitterUrl != null && twitterUrl != " ")
+                {
+                    SocialMediaProfile socialMediaProfile = new SocialMediaProfile() { Url = twitterUrl, Source = "Twitter", Item = tempOrganization };
+                    SocialMediaProfile tempSocialMediaProfile = itemRepository.createSocialmediaprofile(socialMediaProfile);
+                    ((Organization)tempOrganization).SocialMediaProfiles.Add(tempSocialMediaProfile);
+                }
+                itemRepository.UpdateItem(tempOrganization);
             }
             else if (type == "Theme")
             {
@@ -131,18 +150,18 @@ namespace BL.Managers
             return itemRepository.ReadItem(id);
         }
 
-        public void EditItem(int id, string name, string type, int selectedOrganizationId, IEnumerable<int> selectedKeywords, string stringKeywords)
+        public Item EditItem(int id, string name, string type, int selectedOrganizationId, IEnumerable<int> selectedKeywords, string stringKeywords)
         {
             if (type == "Persoon")
             {
                 Organization tempOrganization = itemRepository.ReadOrganization(selectedOrganizationId);
                 Person person = new Person() { ItemId = id, Name = name, Organization = tempOrganization };
-                itemRepository.UpdateItem(person);
+                return itemRepository.UpdateItem(person);
             }
             else if (type == "Organisatie")
             {
                 Organization organization = new Organization() { ItemId = id, Name = name };
-                itemRepository.UpdateItem(organization);
+                return itemRepository.UpdateItem(organization);
             }
             else if (type == "Thema")
             {
@@ -171,10 +190,44 @@ namespace BL.Managers
 
                     }
                 }
-
                 Theme theme = new Theme() { ItemId = id, Name = name, Keywords = keywordsList };
-                itemRepository.UpdateItem(theme);
+                return itemRepository.UpdateItem(theme);
+            }
+            throw new Exception();
+        }
 
+        public void EditProfiles(List<int> profileIds, string url)
+        {
+            if(profileIds != null && profileIds.Count != 0 && url != null && url != " ")
+            {
+                foreach (var profileId in profileIds)
+                {
+                    SocialMediaProfile tempProfile = itemRepository.readProfiles(profileId);
+                    tempProfile.Url = url;
+                    itemRepository.updateProfile(tempProfile);
+                }
+            }
+        }
+
+        public void AddProfileToItem(Item item, string TwitterUrl)
+        {
+            SocialMediaProfile tempProfile = new SocialMediaProfile() { Source = "Twitter", Url = TwitterUrl, Item = item};
+            itemRepository.createSocialmediaprofile(tempProfile);
+            if (item.GetType().ToString().Contains("Person"))
+            {
+                ((Person)item).SocialMediaProfiles.Add(tempProfile);
+            }else if (item.GetType().ToString().Contains("Organization"))
+            {
+                ((Organization)item).SocialMediaProfiles.Add(tempProfile);
+            }
+            itemRepository.UpdateItem(item);
+        }
+
+        public void deleteProfiles(List<int> profileIds)
+        {
+            foreach(var profileId in profileIds)
+            {
+                itemRepository.deleteProfile(profileId);
             }
         }
 
@@ -243,7 +296,7 @@ namespace BL.Managers
             itemRepository.UpdateItem(item);
         }
 
-        
+
 
         public void RemoveItem(Item i)
         {
@@ -255,10 +308,10 @@ namespace BL.Managers
             return itemRepository.ReadItem(id);
         }
 
-    public Item GetItem(string s)
-    {
-      return itemRepository.ReadItem(s);
-    }
+        public Item GetItem(string s)
+        {
+            return itemRepository.ReadItem(s);
+        }
 
 
     }

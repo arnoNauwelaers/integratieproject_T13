@@ -1,0 +1,21 @@
+﻿.scroll {
+    overflow: auto;
+    height: 80vh !important;
+}
+
+.divMiddle {
+    margin-top: 50% !important;
+    margin-left: 50% !important;
+}
+
+.grafiek {
+    background-color: #f7f7f7;
+    color: black;
+    font-size: 20px;
+    font-family: sans-serif;
+    border-radius: 8px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 2px solid black;
+    height: 40vh !important;
+}

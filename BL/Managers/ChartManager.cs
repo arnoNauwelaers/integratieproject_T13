@@ -37,8 +37,8 @@ namespace BL.Managers
         {
             if (standardCharts.Count == 0 && chartRepository.ReadStandardCharts() == null)
             {
-                Chart trendingPersonWeek = new Chart() { Standard = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendPersons, FrequencyType = DateFrequencyType.weekly };
-                Chart trendingPersonMonth = new Chart() { Standard = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendPersons, FrequencyType = DateFrequencyType.monthly };
+                Chart trendingPersonWeek = new Chart() { PageBound = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendPersons, FrequencyType = DateFrequencyType.weekly };
+                Chart trendingPersonMonth = new Chart() { PageBound = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendPersons, FrequencyType = DateFrequencyType.monthly };
 
                 standardCharts.Add("trendingPersonWeek", chartRepository.CreateChart(trendingPersonWeek));
                 standardCharts.Add("trendingPersonMonth", chartRepository.CreateChart(trendingPersonMonth));

@@ -32,7 +32,7 @@ namespace politiekeBarometer.Controllers
         public ActionResult AdminItemCreate()
         {
             var model = new ItemCreateViewModel();
-            var organizationSelect = itemManager.GetOrganizations().Select(x => new SelectListItem { Value = x.ItemId.ToString(), Text = x.Name});
+            var organizationSelect = itemManager.GetOrganizations().Select(x => new SelectListItem { Value = x.ItemId.ToString(), Text = x.Name });
             model.Organizations = new SelectList(organizationSelect, "Value", "Text");
             return View(model);
         }
@@ -42,25 +42,25 @@ namespace politiekeBarometer.Controllers
         {
             try
             {
-                itemManager.AddItem(newItem.Name,newItem.type,newItem.SelectedOrganizationId,newItem.StringKeywords);
+                itemManager.AddItem(newItem.Name, newItem.type, newItem.SelectedOrganizationId, newItem.StringKeywords, newItem.TwitterUrl);
                 return RedirectToAction("AdminItemIndex");
             }
             catch
             {
-                return View();
+                return View(newItem);
             }
         }
 
-        public ActionResult AdminItemDelete(int itemId)
+        public ActionResult AdminItemDelete(int ItemId)
         {
             try
             {
-                itemManager.DeleteItem(itemId);
+                itemManager.DeleteItem(ItemId);
                 return RedirectToAction("AdminItemIndex");
             }
             catch
             {
-               return View();
+                return View("AdminItemIndex");
             }
         }
 
@@ -73,19 +73,31 @@ namespace politiekeBarometer.Controllers
             model.Organizations = new SelectList(organizaionsSelect, "Value", "Text");
             model.ItemId = item.ItemId;
             model.Name = item.Name;
+            model.profileIds = new List<int>();
 
             if (item.GetType().ToString().Contains("Person"))
             {
-                if(((Person)item).Organization != null)
+                if (((Person)item).Organization != null)
                 {
                     model.SelectedOrganizationId = ((Person)item).Organization.ItemId;
+                }
+                foreach (var profile in itemManager.GetProfiles(item))
+                {
+                    model.profileIds.Add(profile.Id);
+                    model.TwitterUrl = profile.Url;
                 }
                 model.type = "Persoon";
             }
             else if (item.GetType().ToString().Contains("Organization"))
             {
+                foreach (var profile in itemManager.GetProfiles(item))
+                {
+                    model.profileIds.Add(profile.Id);
+                    model.TwitterUrl = profile.Url;
+                }
                 model.type = "Organisatie";
-            }else if (item.GetType().ToString().Contains("Theme"))
+            }
+            else if (item.GetType().ToString().Contains("Theme"))
             {
                 model.ListKeywords = new List<SelectListItem>() { new SelectListItem { Value = "", Text = "" } };
                 model.ListKeywords.AddRange((((Theme)item).Keywords).Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Value }).ToList());
@@ -97,15 +109,36 @@ namespace politiekeBarometer.Controllers
         [HttpPost]
         public ActionResult AdminItemEdit(int ItemId, ItemCreateViewModel editItem)
         {
-            itemManager.EditItem(ItemId, editItem.Name, editItem.type, editItem.SelectedOrganizationId, editItem.SelectedKeywords, editItem.StringKeywords);
-            return RedirectToAction("AdminItemIndex");
+            try
+            {
+                Item tempitem = itemManager.EditItem(ItemId, editItem.Name, editItem.type, editItem.SelectedOrganizationId, editItem.SelectedKeywords, editItem.StringKeywords);
+                if (editItem.profileIds != null)
+                {
+                    itemManager.EditProfiles(editItem.profileIds, editItem.TwitterUrl);
+                }
+                else
+                {
+                    itemManager.AddProfileToItem(tempitem, editItem.TwitterUrl);
+                }
+
+                if(editItem.TwitterUrl == null && editItem.profileIds != null)
+                {
+                    itemManager.deleteProfiles(editItem.profileIds);
+                }
+                return RedirectToAction("AdminItemIndex");
+            }
+            catch
+            {
+                return View(editItem);
+            }
+            
         }
 
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase upload)
         {
             var model = new ItemViewModel();
-            if (upload != null && upload.ContentLength > 0 )
+            if (upload != null && upload.ContentLength > 0)
             {
                 if (upload.FileName.EndsWith(".csv"))
                 {
@@ -130,17 +163,17 @@ namespace politiekeBarometer.Controllers
                 {
                     model.fileError = "(je hebt geen csv file geupload)";
                 }
-                
+
             }
             else
             {
                 model.fileError = "(je hebt geen file geselecteerd of deze file is leeg)";
             }
-            
+
             model.Persons = itemManager.GetPersons().ToList();
             model.organizations = itemManager.GetOrganizations().ToList();
             model.themes = itemManager.GetThemes().ToList();
-            return View("AdminItemIndex",model);
+            return View("AdminItemIndex", model);
         }
 
         //TODO delete
@@ -181,41 +214,41 @@ namespace politiekeBarometer.Controllers
                 return View();
             }
         }
-		
-		public ActionResult PersonDetails(int id)
-    {
-      Person p = itemManager.ReadPerson(id);
-      ViewBag.Profiles = p.SocialMediaProfiles;
-      return View(p);
 
-    }
+        public ActionResult PersonDetails(int id)
+        {
+            Person p = itemManager.ReadPerson(id);
+            ViewBag.Profiles = p.SocialMediaProfiles;
+            return View(p);
 
-    [HttpGet]
-    public ActionResult AddSocialmediaProfileToPerson(int id)
-    {
-      ViewBag.Person = itemManager.ReadPerson(id);
-      return View();
+        }
 
-    }
+        [HttpGet]
+        public ActionResult AddSocialmediaProfileToPerson(int id)
+        {
+            ViewBag.Person = itemManager.ReadPerson(id);
+            return View();
 
-    [HttpPost]
-    public ActionResult AddSocialMediaProfileToPerson(FormCollection collection)
-    {
-      try
-      {
-        Person p = itemManager.ReadPerson(Convert.ToInt32(collection["id"]));
-        SocialMediaProfile smp = new SocialMediaProfile { Url = collection["url"], Source = collection["src"] };
-        p.SocialMediaProfiles.Add(smp);
-        itemManager.ChangeItem(p);
-        return RedirectToAction("PersonIndex");
-      }
-      catch (Exception e)
-      {
-        return View(e);
-      }
+        }
+
+        [HttpPost]
+        public ActionResult AddSocialMediaProfileToPerson(FormCollection collection)
+        {
+            try
+            {
+                Person p = itemManager.ReadPerson(Convert.ToInt32(collection["id"]));
+                SocialMediaProfile smp = new SocialMediaProfile { Url = collection["url"], Source = collection["src"] };
+                p.SocialMediaProfiles.Add(smp);
+                itemManager.ChangeItem(p);
+                return RedirectToAction("PersonIndex");
+            }
+            catch (Exception e)
+            {
+                return View(e);
+            }
 
 
-    }
+        }
 
 
         /*public ActionResult OrganizationIndex()
