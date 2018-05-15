@@ -4,6 +4,9 @@
     ViewBag.Title = "Organization";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<head>
+    <link href="~/Content/pageStyle.css" rel="stylesheet" type="text/css" />
+</head>
 
 @if (Model == null)
 {
@@ -23,3 +26,12 @@ else
 @Html.ActionLink("Stel alert in", "CreateAlert");
 @Html.ActionLink("Alle Organisaties", "OrganizationOverview");
 
+<div class="row">
+    <div class="col scroll">
+        <a class="twitter-timeline" href="https://twitter.com/@Model.SocialMediaProfiles.ToList().Where(smp => smp.Source == "Twitter").First().Url"></a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+    <div class="col">
+        <a></a>
+    </div>
+</div>

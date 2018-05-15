@@ -59,13 +59,14 @@ namespace BL.Managers
                 date = "8 May 2018 08:49:12";
             }
 
+
             List<SocialMediaPost> data2 = (List<SocialMediaPost>)read.ReadData(date);
             foreach (var item in data2)
             {
-                if (ArraysToLists(item))
-                {
-                    socialMediaRepository.CreateSocialMediaPost(item);
-                }
+
+                ArraysToLists(item);
+                socialMediaRepository.CreateSocialMediaPost(item);
+                socialMediaRepository.AddPostToItems(item);
             }
             return itemManager.GetAllItemsFromPosts(data2);
         }
@@ -322,6 +323,35 @@ namespace BL.Managers
                 }
             }
             return list.OrderByDescending(w => w.Value).Take(50).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+        }
+
+        public List<string> GetTopTenUrl(Item item)
+        {
+            List<string> allUrls = new List<string>();
+            List<string> topTen = new List<string>();
+            foreach (var post in item.SocialMediaPosts)
+            {
+                foreach (var url in post.Urls)
+                {
+                    allUrls.Add(url.Value);
+                }
+            }
+            var sortedUrlsGroup = allUrls.GroupBy(s => s).OrderByDescending(g => g.Count());
+            if((sortedUrlsGroup.ToList()).Count() < 10)
+            {
+                foreach(var url in (sortedUrlsGroup.ToList()).GetRange(0, (sortedUrlsGroup.ToList()).Count()))
+                {
+                    topTen.Add(url.Key);
+                }
+            }
+            else
+            {
+                foreach (var url in (sortedUrlsGroup.ToList()).GetRange(0, 10))
+                {
+                    topTen.Add(url.Key);
+                }
+            }
+            return topTen;
         }
 
         public List<SocialMediaProfile> GetSocialMediaProfiles()

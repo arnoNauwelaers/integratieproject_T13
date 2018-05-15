@@ -11,17 +11,21 @@ namespace politiekeBarometer.Models
     public class ItemCreateViewModel
     {
         public int ItemId { get; set; }
+        [Display(Name = "Type")]
+        public string type { get; set; }
         [Display(Name = "Naam")]
         public string Name { get; set; }
         [Display(Name = "Organisatie")]
         public int SelectedOrganizationId { get; set; }
+        public List<int> profileIds { get; set; }
+        [Display(Name = "Twitter account")]
+        public String TwitterUrl { get; set; }
         public IEnumerable<SelectListItem> Organizations { get; set; }
         [Display(Name = "Verwijder trefwoorden")]
         public IEnumerable<int> SelectedKeywords { get; set; }
         public List<SelectListItem> ListKeywords { get; set; }
         [Display(Name = "Toevoegen trefwoorden")]
         public string StringKeywords { get; set; }
-        [Display(Name = "Type")]
-        public string type { get; set; }
+
     }
 }

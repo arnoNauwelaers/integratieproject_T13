@@ -57,6 +57,21 @@ namespace DAL.Repositories
 
         }
 
+        public void AddPostToItems(SocialMediaPost post)
+        {
+            foreach(var person in post.Persons)
+            {
+                person.SocialMediaPosts.Add(post);
+                ctx.Entry(person).State = System.Data.Entity.EntityState.Modified;
+            }
+            foreach(var theme in post.Themes)
+            {
+                theme.SocialMediaPosts.Add(post);
+                ctx.Entry(theme).State = System.Data.Entity.EntityState.Modified;
+            }
+            ctx.SaveChanges();
+        }
+
         public List<SocialMediaProfile> GetProfile(SocialMediaPost post)
         {
             List<SocialMediaProfile> tempprofiles = new List<SocialMediaProfile>();
@@ -183,14 +198,10 @@ namespace DAL.Repositories
 
         }
 
-
-
         private Word ReadWord(string value)
         {
             return ctx.Words.Single(w => w.Value == value);
         }
-
-
 
         public List<SocialMediaProfile> ReadProfiles()
         {

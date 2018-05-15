@@ -27,7 +27,7 @@ namespace politiekeBarometer
         {
             var SocialMediaManager = new SocialMediaManager();
             //TODO int moet configureerbaar zijn
-            SocialMediaManager.ActivateAPI(5);
+            //SocialMediaManager.ActivateAPI(5);
         }
 
         private void CreateRolesAndUsers()

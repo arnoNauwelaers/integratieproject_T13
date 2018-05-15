@@ -40,7 +40,8 @@ namespace BL.Domain
         [JsonProperty("source")]
         public string Source { get; set; }
         [JsonProperty("profile")]
-        public virtual SocialMediaProfile SocialMediaProfile { get; set; }
+        public virtual SocialMediaPostProfile SocialMediaPostProfile { get; set; }
+
         public virtual SocialMediaSource SocialMediaSource { get; set; }
         public virtual ICollection<SocialMediaProfile> SocialMediaProfiles { get; set; } = new List<SocialMediaProfile>();
         public virtual Sentiment PostSentiment { get; set; }

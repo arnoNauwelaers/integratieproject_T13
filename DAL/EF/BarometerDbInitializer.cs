@@ -11,9 +11,8 @@ using System.Diagnostics;
 
 namespace DAL.EF
 {
-    internal class BarometerDbInitializer : DropCreateDatabaseIfModelChanges<DbContext>
+    internal class BarometerDbInitializer : CreateDatabaseIfNotExists<DbContext>
     {
 
-        
     }
 }

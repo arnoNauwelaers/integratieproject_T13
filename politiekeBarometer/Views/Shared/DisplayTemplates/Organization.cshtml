@@ -1,9 +1,17 @@
 ﻿@model BL.Domain.Organization
 
+@{String profiles = null;}
+@foreach (BL.Domain.SocialMediaProfile socialmediaprofile in Model.SocialMediaProfiles)
+{
+    profiles += "@" + socialmediaprofile.Url + ",";
+}
 
 <tr>
-    <td colspan="2">
+    <td>
         @Html.DisplayFor(p => p.Name)
+    </td>
+    <td colspan="2">
+        @profiles
     </td>
     <td>
         @Html.ActionLink("Wijzig", "AdminItemEdit", new { Model.ItemId }) |
