@@ -137,24 +137,21 @@ namespace BL.Managers
 
                 if (item != null)
                 {
-                    if (item.GetType() == typeof(Organization) && IsPostFromOrganization(post, (Organization)item))
+                    if (item.TypeInt == 2 && IsPostFromOrganization(post, (Organization)item))
                     {
                         results.Add(post);
                     }
-                    else if (item.GetType() == typeof(Theme) && IsPostFromTheme(post, (Theme)item))
+                    else if (item.TypeInt == 3 && IsPostFromTheme(post, (Theme)item))
                     {
                         results.Add(post);
                     }
-                    else if (item.GetType() == typeof(Person))
+                    else if (item.TypeInt == 1 && post.Persons.Contains((Person)item))
                     {
-                        if ( post.Persons.Contains(item))
-                        {
-                            results.Add(post);
-                        }
+                        results.Add(post);
                     }
                 }
             }
-            if (results.Count > 0)
+            if (results.Count == 0)
             {
                 results = posts;
             }
@@ -324,7 +321,7 @@ namespace BL.Managers
                     }
                 }
             }
-            return list.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+            return list.OrderByDescending(w => w.Value).Take(50).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
         }
 
         public List<SocialMediaProfile> GetSocialMediaProfiles()

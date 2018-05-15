@@ -91,13 +91,19 @@ namespace BL.Domain
                 List<int> data = new List<int>();
                 foreach (var label in Labels)
                 {
+                    Boolean found = false;
                     foreach (var itemData in item.Data)
                     {
                         if (label.Equals(itemData.Name))
                         {
                             data.Add(itemData.Amount);
+                            found = true;
                             continue;
                         }
+                    }
+                    if (found == false)
+                    {
+                        data.Add(0);
                     }
                 }
                 DataSets.Add(new ChartDataSet(GetTitle(), GetRgbas(), 1, data));
