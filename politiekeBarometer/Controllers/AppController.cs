@@ -15,6 +15,7 @@ using System.Text;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics;
 
 namespace politiekeBarometer.Controllers {
   //JWT BEARER NOG INSTELLEN
@@ -120,11 +121,18 @@ namespace politiekeBarometer.Controllers {
       UserManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
       UserManager.SetSocialMediaManager(SocialMediaManager);
     }
+    
+    [HttpGet]
+    [Route("api/test")]
+    public IHttpActionResult Test() {
+      return Ok("API Call Succesfull");
+    }
 
     [HttpPost]
     [Route("api/RequestToken")]
     public IHttpActionResult RequestToken([FromBody] TokenRequest request) {
       var user = UserManager.Find(request.Username, request.Password);
+      Debug.WriteLine(request);
       if (user != null) {
         var claims = new[]
         {
@@ -149,7 +157,7 @@ namespace politiekeBarometer.Controllers {
     [HttpGet]
     [Route("api/GetUserData")]
     public IHttpActionResult GetUserData() {
-      string token = Request.Headers.GetValues("SECURITY_ACCESS_TOKEN").First();
+      string token = Request.Headers.GetValues("Authorization").First();
       ApplicationUser user = UserManager.GetUserByToken(token);
       if (user == null) return BadRequest("Security access token not found in user database.");
       return Ok(user);
@@ -158,7 +166,7 @@ namespace politiekeBarometer.Controllers {
     [HttpGet]
     [Route("api/GetNotifications")]
     public IHttpActionResult GetNotifications() {
-      string token = Request.Headers.GetValues("SECURITY_ACCESS_TOKEN").First();
+      string token = Request.Headers.GetValues("Authorization").First();
       ApplicationUser user = UserManager.GetUserByToken(token);
       if (user == null) return BadRequest("Security access token not found in user database.");
       List<Notification> notifications = new List<Notification>();
@@ -174,8 +182,10 @@ namespace politiekeBarometer.Controllers {
       return Ok(notifications);
     }
 
-    public IHttpActionResult GetChartDate() {
-      string token = Request.Headers.GetValues("SECURITY_ACCESS_TOKEN").First();
+    [HttpGet]
+    [Route("api/GetChartData")]
+    public IHttpActionResult GetChartData() {
+      string token = Request.Headers.GetValues("Authorization").First();
       ApplicationUser user = UserManager.GetUserByToken(token);
       if (user == null) return BadRequest("Security access token not found in user database.");
       return Ok(user.Dashboard);
