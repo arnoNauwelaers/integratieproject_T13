@@ -86,10 +86,10 @@
     <Compile Include="Chart\ChartValue.cs" />
     <Compile Include="Chart\Data.cs" />
     <Compile Include="Chart\DateFrequencyType.cs" />
+    <Compile Include="Keyword.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SocialMediaPost\Hashtag.cs" />
     <Compile Include="Item.cs" />
-    <Compile Include="Keyword.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Person.cs" />

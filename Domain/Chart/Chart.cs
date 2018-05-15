@@ -31,6 +31,8 @@ namespace BL.Domain
         //Nodig voor Colors
         [NotMapped]
         private static readonly Random rnd = new Random();
+        [NotMapped]
+        private List<string> Labels = new List<String>();
 
         public string GetStyle()
         {
@@ -87,9 +89,16 @@ namespace BL.Domain
             foreach (var item in ChartItemData)
             {
                 List<int> data = new List<int>();
-                foreach (var itemData in item.Data)
+                foreach (var label in Labels)
                 {
-                    data.Add(itemData.Amount);
+                    foreach (var itemData in item.Data)
+                    {
+                        if (label.Equals(itemData.Name))
+                        {
+                            data.Add(itemData.Amount);
+                            continue;
+                        }
+                    }
                 }
                 DataSets.Add(new ChartDataSet(GetTitle(), GetRgbas(), 1, data));
             }
@@ -127,29 +136,18 @@ namespace BL.Domain
 
         public string GetLabels()
         {
-            List<string> labels = new List<string>();
+            Labels = new List<string>();
             foreach (var chartItemData in ChartItemData)
             {
                 foreach (var item in chartItemData.Data)
                 {
-                    labels.Add(item.Name);
+                    if (!Labels.Contains(item.Name))
+                    {
+                        Labels.Add(item.Name);
+                    }
                 }
             }
-            return JsonConvert.SerializeObject(labels);
-        }
-
-        //overbodig nieuwe functie GetDataSets?
-        public string GetData()
-        {
-            List<int> data = new List<int>();
-            foreach (var chartItemData in ChartItemData)
-            {
-                foreach (var item in chartItemData.Data)
-                {
-                    data.Add(item.Amount);
-                }
-            }
-            return JsonConvert.SerializeObject(data);
+            return JsonConvert.SerializeObject(Labels);
         }
 
         public string GetTitle()
