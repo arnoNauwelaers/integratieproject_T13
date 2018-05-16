@@ -56,7 +56,7 @@ namespace BL.Managers
             else
             {
                 //TODO vanaf vorige maand?
-                date = "8 May 2018 08:49:12";
+                date = "14 May 2018 08:49:12";
             }
 
 
