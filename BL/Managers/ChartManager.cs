@@ -108,9 +108,10 @@ namespace BL.Managers
                 Dictionary<Item, Dictionary<string, int>> listItems = new Dictionary<Item, Dictionary<string, int>>();
                 foreach (var item in chart.Items)
                 {
-                    tempData = socialMediaManager.GetDataFromPost(since, chart.ChartValue, item).OrderByDescending(i => i.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+                    tempData = socialMediaManager.GetDataFromPost(since, chart.ChartValue, item);
                     if (chart.Items.Count == 1)
                     {
+                        tempData = socialMediaManager.GetDataFromPost(since, chart.ChartValue, item).OrderByDescending(i => i.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
                         ChartItemData tempChartItemData = new ChartItemData() { Item = item };
                         foreach (var data in tempData)
                         {
