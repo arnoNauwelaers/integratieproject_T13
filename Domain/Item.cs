@@ -12,6 +12,7 @@ namespace BL.Domain
         public string Name { get; set; }
 
         public virtual ICollection<Alert> Alerts { get; set; } = new List<Alert>();
+        public virtual ICollection<SocialMediaPost> SocialMediaPosts { get; set; } = new List<SocialMediaPost>();
 
         [NotMapped]
         public int TypeInt { get; set; }

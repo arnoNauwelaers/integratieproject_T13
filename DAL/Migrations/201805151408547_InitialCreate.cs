@@ -43,42 +43,25 @@ namespace DAL.Migrations
                 .Index(t => t.ApplicationUser_Id);
             
             CreateTable(
-                "dbo.SocialMediaProfile",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Url = c.String(),
-                        Source = c.String(),
-                        Gender = c.String(),
-                        Age = c.String(),
-                        Education = c.String(),
-                        Language = c.String(),
-                        Personality = c.String(),
-                        Item_ItemId = c.Int(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Item", t => t.Item_ItemId)
-                .Index(t => t.Item_ItemId);
-            
-            CreateTable(
                 "dbo.SocialMediaPost",
                 c => new
                     {
                         PostId = c.Long(nullable: false, identity: true),
-                        TweetId = c.String(),
+                        TweetId = c.String(maxLength: 450),
                         Retweet = c.Boolean(nullable: false),
                         Date = c.DateTime(nullable: false),
                         Source = c.String(),
                         PostSentiment_Id = c.Int(),
-                        SocialMediaProfile_Id = c.Int(),
+                        SocialMediaPostProfile_Id = c.Int(nullable: false),
                         SocialMediaSource_SourceId = c.Int(),
                     })
                 .PrimaryKey(t => t.PostId)
                 .ForeignKey("dbo.Sentiment", t => t.PostSentiment_Id, cascadeDelete: true)
-                .ForeignKey("dbo.SocialMediaProfile", t => t.SocialMediaProfile_Id)
+                .ForeignKey("dbo.SocialMediaPostProfile", t => t.SocialMediaPostProfile_Id)
                 .ForeignKey("dbo.SocialMediaSource", t => t.SocialMediaSource_SourceId)
+                .Index(t => t.TweetId, unique: true)
                 .Index(t => t.PostSentiment_Id)
-                .Index(t => t.SocialMediaProfile_Id)
+                .Index(t => t.SocialMediaPostProfile_Id)
                 .Index(t => t.SocialMediaSource_SourceId);
             
             CreateTable(
@@ -91,12 +74,38 @@ namespace DAL.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.SocialMediaProfile",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Source = c.String(),
+                        Url = c.String(),
+                        Item_ItemId = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Item", t => t.Item_ItemId)
+                .Index(t => t.Item_ItemId);
+            
+            CreateTable(
                 "dbo.Sentiment",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Polarity = c.Double(nullable: false),
                         Subjectivity = c.Double(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.SocialMediaPostProfile",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Gender = c.String(),
+                        Age = c.String(),
+                        Education = c.String(),
+                        Language = c.String(),
+                        Personality = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -166,6 +175,7 @@ namespace DAL.Migrations
                         AantalAanmeldingen = c.Int(nullable: false),
                         LastActivityDate = c.DateTime(),
                         TijdActief = c.Int(nullable: false),
+                        AppToken = c.String(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -202,6 +212,7 @@ namespace DAL.Migrations
                 c => new
                     {
                         ChartId = c.Int(nullable: false, identity: true),
+                        StandardChart = c.Boolean(nullable: false),
                         ChartType = c.Byte(nullable: false),
                         ChartValue = c.Int(nullable: false),
                         Saved = c.Boolean(nullable: false),
@@ -246,7 +257,6 @@ namespace DAL.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         X = c.Double(nullable: false),
                         Y = c.Double(nullable: false),
-                        Height = c.Double(nullable: false),
                         Width = c.Double(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
@@ -282,7 +292,6 @@ namespace DAL.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(),
-                        Interval = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -295,6 +304,18 @@ namespace DAL.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+            
+            CreateTable(
+                "dbo.Settings",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        ApiFrequency = c.Int(nullable: false),
+                        ApiUrl = c.String(),
+                        ApiPort = c.String(),
+                        DataLifetime = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.ItemAlert",
@@ -323,6 +344,58 @@ namespace DAL.Migrations
                 .Index(t => t.Hashtag_Id);
             
             CreateTable(
+                "dbo.OrganizationPerson",
+                c => new
+                    {
+                        Organization_ItemId = c.Int(nullable: false),
+                        Person_ItemId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.Organization_ItemId, t.Person_ItemId })
+                .ForeignKey("dbo.Item", t => t.Organization_ItemId)
+                .ForeignKey("dbo.Item", t => t.Person_ItemId)
+                .Index(t => t.Organization_ItemId)
+                .Index(t => t.Person_ItemId);
+            
+            CreateTable(
+                "dbo.SocialMediaProfileSocialMediaPost",
+                c => new
+                    {
+                        SocialMediaProfile_Id = c.Int(nullable: false),
+                        SocialMediaPost_PostId = c.Long(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.SocialMediaProfile_Id, t.SocialMediaPost_PostId })
+                .ForeignKey("dbo.SocialMediaProfile", t => t.SocialMediaProfile_Id)
+                .ForeignKey("dbo.SocialMediaPost", t => t.SocialMediaPost_PostId)
+                .Index(t => t.SocialMediaProfile_Id)
+                .Index(t => t.SocialMediaPost_PostId);
+            
+            CreateTable(
+                "dbo.OrganizationSocialMediaProfile",
+                c => new
+                    {
+                        Organization_ItemId = c.Int(nullable: false),
+                        SocialMediaProfile_Id = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.Organization_ItemId, t.SocialMediaProfile_Id })
+                .ForeignKey("dbo.Item", t => t.Organization_ItemId)
+                .ForeignKey("dbo.SocialMediaProfile", t => t.SocialMediaProfile_Id)
+                .Index(t => t.Organization_ItemId)
+                .Index(t => t.SocialMediaProfile_Id);
+            
+            CreateTable(
+                "dbo.PersonSocialMediaProfile",
+                c => new
+                    {
+                        Person_ItemId = c.Int(nullable: false),
+                        SocialMediaProfile_Id = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.Person_ItemId, t.SocialMediaProfile_Id })
+                .ForeignKey("dbo.Item", t => t.Person_ItemId)
+                .ForeignKey("dbo.SocialMediaProfile", t => t.SocialMediaProfile_Id)
+                .Index(t => t.Person_ItemId)
+                .Index(t => t.SocialMediaProfile_Id);
+            
+            CreateTable(
                 "dbo.SocialMediaPostPerson",
                 c => new
                     {
@@ -334,19 +407,6 @@ namespace DAL.Migrations
                 .ForeignKey("dbo.Item", t => t.Person_ItemId)
                 .Index(t => t.SocialMediaPost_PostId)
                 .Index(t => t.Person_ItemId);
-            
-            CreateTable(
-                "dbo.SocialMediaPostSocialMediaProfile",
-                c => new
-                    {
-                        SocialMediaPost_PostId = c.Long(nullable: false),
-                        SocialMediaProfile_Id = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.SocialMediaPost_PostId, t.SocialMediaProfile_Id })
-                .ForeignKey("dbo.SocialMediaPost", t => t.SocialMediaPost_PostId)
-                .ForeignKey("dbo.SocialMediaProfile", t => t.SocialMediaProfile_Id)
-                .Index(t => t.SocialMediaPost_PostId)
-                .Index(t => t.SocialMediaProfile_Id);
             
             CreateTable(
                 "dbo.SocialMediaSourceSocialMediaPost",
@@ -401,56 +461,17 @@ namespace DAL.Migrations
                 .Index(t => t.Word_Id);
             
             CreateTable(
-                "dbo.SocialMediaProfileSocialMediaPost",
+                "dbo.ItemSocialMediaPost",
                 c => new
                     {
-                        SocialMediaProfile_Id = c.Int(nullable: false),
+                        Item_ItemId = c.Int(nullable: false),
                         SocialMediaPost_PostId = c.Long(nullable: false),
                     })
-                .PrimaryKey(t => new { t.SocialMediaProfile_Id, t.SocialMediaPost_PostId })
-                .ForeignKey("dbo.SocialMediaProfile", t => t.SocialMediaProfile_Id)
+                .PrimaryKey(t => new { t.Item_ItemId, t.SocialMediaPost_PostId })
+                .ForeignKey("dbo.Item", t => t.Item_ItemId)
                 .ForeignKey("dbo.SocialMediaPost", t => t.SocialMediaPost_PostId)
-                .Index(t => t.SocialMediaProfile_Id)
+                .Index(t => t.Item_ItemId)
                 .Index(t => t.SocialMediaPost_PostId);
-            
-            CreateTable(
-                "dbo.PersonSocialMediaProfile",
-                c => new
-                    {
-                        Person_ItemId = c.Int(nullable: false),
-                        SocialMediaProfile_Id = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.Person_ItemId, t.SocialMediaProfile_Id })
-                .ForeignKey("dbo.Item", t => t.Person_ItemId)
-                .ForeignKey("dbo.SocialMediaProfile", t => t.SocialMediaProfile_Id)
-                .Index(t => t.Person_ItemId)
-                .Index(t => t.SocialMediaProfile_Id);
-            
-            CreateTable(
-                "dbo.OrganizationPerson",
-                c => new
-                    {
-                        Organization_ItemId = c.Int(nullable: false),
-                        Person_ItemId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.Organization_ItemId, t.Person_ItemId })
-                .ForeignKey("dbo.Item", t => t.Organization_ItemId)
-                .ForeignKey("dbo.Item", t => t.Person_ItemId)
-                .Index(t => t.Organization_ItemId)
-                .Index(t => t.Person_ItemId);
-            
-            CreateTable(
-                "dbo.OrganizationSocialMediaProfile",
-                c => new
-                    {
-                        Organization_ItemId = c.Int(nullable: false),
-                        SocialMediaProfile_Id = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.Organization_ItemId, t.SocialMediaProfile_Id })
-                .ForeignKey("dbo.Item", t => t.Organization_ItemId)
-                .ForeignKey("dbo.SocialMediaProfile", t => t.SocialMediaProfile_Id)
-                .Index(t => t.Organization_ItemId)
-                .Index(t => t.SocialMediaProfile_Id);
             
             CreateTable(
                 "dbo.AlertNotification",
@@ -559,14 +580,8 @@ namespace DAL.Migrations
             DropForeignKey("dbo.Notification", "Alert_AlertId", "dbo.Alert");
             DropForeignKey("dbo.Alert", "Item_ItemId", "dbo.Item");
             DropForeignKey("dbo.Alert", "CompareItem_ItemId", "dbo.Item");
-            DropForeignKey("dbo.OrganizationSocialMediaProfile", "SocialMediaProfile_Id", "dbo.SocialMediaProfile");
-            DropForeignKey("dbo.OrganizationSocialMediaProfile", "Organization_ItemId", "dbo.Item");
-            DropForeignKey("dbo.OrganizationPerson", "Person_ItemId", "dbo.Item");
-            DropForeignKey("dbo.OrganizationPerson", "Organization_ItemId", "dbo.Item");
-            DropForeignKey("dbo.PersonSocialMediaProfile", "SocialMediaProfile_Id", "dbo.SocialMediaProfile");
-            DropForeignKey("dbo.PersonSocialMediaProfile", "Person_ItemId", "dbo.Item");
-            DropForeignKey("dbo.SocialMediaProfileSocialMediaPost", "SocialMediaPost_PostId", "dbo.SocialMediaPost");
-            DropForeignKey("dbo.SocialMediaProfileSocialMediaPost", "SocialMediaProfile_Id", "dbo.SocialMediaProfile");
+            DropForeignKey("dbo.ItemSocialMediaPost", "SocialMediaPost_PostId", "dbo.SocialMediaPost");
+            DropForeignKey("dbo.ItemSocialMediaPost", "Item_ItemId", "dbo.Item");
             DropForeignKey("dbo.SocialMediaPostWord", "Word_Id", "dbo.Word");
             DropForeignKey("dbo.SocialMediaPostWord", "SocialMediaPost_PostId", "dbo.SocialMediaPost");
             DropForeignKey("dbo.SocialMediaPostUrl", "Url_Id", "dbo.Url");
@@ -577,16 +592,22 @@ namespace DAL.Migrations
             DropForeignKey("dbo.SocialMediaPost", "SocialMediaSource_SourceId", "dbo.SocialMediaSource");
             DropForeignKey("dbo.SocialMediaSourceSocialMediaPost", "SocialMediaPost_PostId", "dbo.SocialMediaPost");
             DropForeignKey("dbo.SocialMediaSourceSocialMediaPost", "SocialMediaSource_SourceId", "dbo.SocialMediaSource");
-            DropForeignKey("dbo.SocialMediaPostSocialMediaProfile", "SocialMediaProfile_Id", "dbo.SocialMediaProfile");
-            DropForeignKey("dbo.SocialMediaPostSocialMediaProfile", "SocialMediaPost_PostId", "dbo.SocialMediaPost");
-            DropForeignKey("dbo.SocialMediaPost", "SocialMediaProfile_Id", "dbo.SocialMediaProfile");
+            DropForeignKey("dbo.SocialMediaPost", "SocialMediaPostProfile_Id", "dbo.SocialMediaPostProfile");
             DropForeignKey("dbo.SocialMediaPost", "PostSentiment_Id", "dbo.Sentiment");
             DropForeignKey("dbo.SocialMediaPostPerson", "Person_ItemId", "dbo.Item");
             DropForeignKey("dbo.SocialMediaPostPerson", "SocialMediaPost_PostId", "dbo.SocialMediaPost");
+            DropForeignKey("dbo.PersonSocialMediaProfile", "SocialMediaProfile_Id", "dbo.SocialMediaProfile");
+            DropForeignKey("dbo.PersonSocialMediaProfile", "Person_ItemId", "dbo.Item");
+            DropForeignKey("dbo.Item", "Organization_ItemId", "dbo.Item");
+            DropForeignKey("dbo.OrganizationSocialMediaProfile", "SocialMediaProfile_Id", "dbo.SocialMediaProfile");
+            DropForeignKey("dbo.OrganizationSocialMediaProfile", "Organization_ItemId", "dbo.Item");
+            DropForeignKey("dbo.SocialMediaProfileSocialMediaPost", "SocialMediaPost_PostId", "dbo.SocialMediaPost");
+            DropForeignKey("dbo.SocialMediaProfileSocialMediaPost", "SocialMediaProfile_Id", "dbo.SocialMediaProfile");
+            DropForeignKey("dbo.SocialMediaProfile", "Item_ItemId", "dbo.Item");
+            DropForeignKey("dbo.OrganizationPerson", "Person_ItemId", "dbo.Item");
+            DropForeignKey("dbo.OrganizationPerson", "Organization_ItemId", "dbo.Item");
             DropForeignKey("dbo.SocialMediaPostHashtag", "Hashtag_Id", "dbo.Hashtag");
             DropForeignKey("dbo.SocialMediaPostHashtag", "SocialMediaPost_PostId", "dbo.SocialMediaPost");
-            DropForeignKey("dbo.SocialMediaProfile", "Item_ItemId", "dbo.Item");
-            DropForeignKey("dbo.Item", "Organization_ItemId", "dbo.Item");
             DropForeignKey("dbo.ItemAlert", "Alert_AlertId", "dbo.Alert");
             DropForeignKey("dbo.ItemAlert", "Item_ItemId", "dbo.Item");
             DropIndex("dbo.PlatformApplicationUser", new[] { "ApplicationUser_Id" });
@@ -601,14 +622,8 @@ namespace DAL.Migrations
             DropIndex("dbo.ChartItem", new[] { "Chart_ChartId" });
             DropIndex("dbo.AlertNotification", new[] { "Notification_NotificationId" });
             DropIndex("dbo.AlertNotification", new[] { "Alert_AlertId" });
-            DropIndex("dbo.OrganizationSocialMediaProfile", new[] { "SocialMediaProfile_Id" });
-            DropIndex("dbo.OrganizationSocialMediaProfile", new[] { "Organization_ItemId" });
-            DropIndex("dbo.OrganizationPerson", new[] { "Person_ItemId" });
-            DropIndex("dbo.OrganizationPerson", new[] { "Organization_ItemId" });
-            DropIndex("dbo.PersonSocialMediaProfile", new[] { "SocialMediaProfile_Id" });
-            DropIndex("dbo.PersonSocialMediaProfile", new[] { "Person_ItemId" });
-            DropIndex("dbo.SocialMediaProfileSocialMediaPost", new[] { "SocialMediaPost_PostId" });
-            DropIndex("dbo.SocialMediaProfileSocialMediaPost", new[] { "SocialMediaProfile_Id" });
+            DropIndex("dbo.ItemSocialMediaPost", new[] { "SocialMediaPost_PostId" });
+            DropIndex("dbo.ItemSocialMediaPost", new[] { "Item_ItemId" });
             DropIndex("dbo.SocialMediaPostWord", new[] { "Word_Id" });
             DropIndex("dbo.SocialMediaPostWord", new[] { "SocialMediaPost_PostId" });
             DropIndex("dbo.SocialMediaPostUrl", new[] { "Url_Id" });
@@ -617,10 +632,16 @@ namespace DAL.Migrations
             DropIndex("dbo.SocialMediaPostTheme", new[] { "SocialMediaPost_PostId" });
             DropIndex("dbo.SocialMediaSourceSocialMediaPost", new[] { "SocialMediaPost_PostId" });
             DropIndex("dbo.SocialMediaSourceSocialMediaPost", new[] { "SocialMediaSource_SourceId" });
-            DropIndex("dbo.SocialMediaPostSocialMediaProfile", new[] { "SocialMediaProfile_Id" });
-            DropIndex("dbo.SocialMediaPostSocialMediaProfile", new[] { "SocialMediaPost_PostId" });
             DropIndex("dbo.SocialMediaPostPerson", new[] { "Person_ItemId" });
             DropIndex("dbo.SocialMediaPostPerson", new[] { "SocialMediaPost_PostId" });
+            DropIndex("dbo.PersonSocialMediaProfile", new[] { "SocialMediaProfile_Id" });
+            DropIndex("dbo.PersonSocialMediaProfile", new[] { "Person_ItemId" });
+            DropIndex("dbo.OrganizationSocialMediaProfile", new[] { "SocialMediaProfile_Id" });
+            DropIndex("dbo.OrganizationSocialMediaProfile", new[] { "Organization_ItemId" });
+            DropIndex("dbo.SocialMediaProfileSocialMediaPost", new[] { "SocialMediaPost_PostId" });
+            DropIndex("dbo.SocialMediaProfileSocialMediaPost", new[] { "SocialMediaProfile_Id" });
+            DropIndex("dbo.OrganizationPerson", new[] { "Person_ItemId" });
+            DropIndex("dbo.OrganizationPerson", new[] { "Organization_ItemId" });
             DropIndex("dbo.SocialMediaPostHashtag", new[] { "Hashtag_Id" });
             DropIndex("dbo.SocialMediaPostHashtag", new[] { "SocialMediaPost_PostId" });
             DropIndex("dbo.ItemAlert", new[] { "Alert_AlertId" });
@@ -637,10 +658,11 @@ namespace DAL.Migrations
             DropIndex("dbo.Users", "UserNameIndex");
             DropIndex("dbo.Notification", new[] { "Alert_AlertId" });
             DropIndex("dbo.Keyword", new[] { "Theme_ItemId" });
-            DropIndex("dbo.SocialMediaPost", new[] { "SocialMediaSource_SourceId" });
-            DropIndex("dbo.SocialMediaPost", new[] { "SocialMediaProfile_Id" });
-            DropIndex("dbo.SocialMediaPost", new[] { "PostSentiment_Id" });
             DropIndex("dbo.SocialMediaProfile", new[] { "Item_ItemId" });
+            DropIndex("dbo.SocialMediaPost", new[] { "SocialMediaSource_SourceId" });
+            DropIndex("dbo.SocialMediaPost", new[] { "SocialMediaPostProfile_Id" });
+            DropIndex("dbo.SocialMediaPost", new[] { "PostSentiment_Id" });
+            DropIndex("dbo.SocialMediaPost", new[] { "TweetId" });
             DropIndex("dbo.Item", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.Item", new[] { "Organization_ItemId" });
             DropIndex("dbo.Alert", new[] { "User_Id" });
@@ -652,18 +674,19 @@ namespace DAL.Migrations
             DropTable("dbo.ChartItemDataData");
             DropTable("dbo.ChartItem");
             DropTable("dbo.AlertNotification");
-            DropTable("dbo.OrganizationSocialMediaProfile");
-            DropTable("dbo.OrganizationPerson");
-            DropTable("dbo.PersonSocialMediaProfile");
-            DropTable("dbo.SocialMediaProfileSocialMediaPost");
+            DropTable("dbo.ItemSocialMediaPost");
             DropTable("dbo.SocialMediaPostWord");
             DropTable("dbo.SocialMediaPostUrl");
             DropTable("dbo.SocialMediaPostTheme");
             DropTable("dbo.SocialMediaSourceSocialMediaPost");
-            DropTable("dbo.SocialMediaPostSocialMediaProfile");
             DropTable("dbo.SocialMediaPostPerson");
+            DropTable("dbo.PersonSocialMediaProfile");
+            DropTable("dbo.OrganizationSocialMediaProfile");
+            DropTable("dbo.SocialMediaProfileSocialMediaPost");
+            DropTable("dbo.OrganizationPerson");
             DropTable("dbo.SocialMediaPostHashtag");
             DropTable("dbo.ItemAlert");
+            DropTable("dbo.Settings");
             DropTable("dbo.Roles");
             DropTable("dbo.Platform");
             DropTable("dbo.UserRoles");
@@ -679,10 +702,11 @@ namespace DAL.Migrations
             DropTable("dbo.Url");
             DropTable("dbo.Keyword");
             DropTable("dbo.SocialMediaSource");
+            DropTable("dbo.SocialMediaPostProfile");
             DropTable("dbo.Sentiment");
+            DropTable("dbo.SocialMediaProfile");
             DropTable("dbo.Hashtag");
             DropTable("dbo.SocialMediaPost");
-            DropTable("dbo.SocialMediaProfile");
             DropTable("dbo.Item");
             DropTable("dbo.Alert");
         }

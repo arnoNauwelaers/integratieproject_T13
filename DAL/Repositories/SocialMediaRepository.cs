@@ -25,16 +25,23 @@ namespace DAL.Repositories
             return ctx.SocialMediaPosts.Include(a => a.SocialMediaProfiles).ToList<SocialMediaPost>();
         }
 
-        public IEnumerable<SocialMediaPost> ReadSocialMediaPostsSince(DateTime since, Item item = null)
+        public IEnumerable<SocialMediaPost> ReadSocialMediaPostsSince(DateTime since)
         {
             return ctx.SocialMediaPosts.Where(i => i.Date > since).Include(a => a.SocialMediaProfiles).Include(a => a.Words).Include(a => a.Hashtags).Include(a => a.Persons).ToList();
         }
 
         public SocialMediaPost CreateSocialMediaPost(SocialMediaPost socialMediaPost)
         {
-            ctx.SocialMediaPosts.Add(socialMediaPost);
-            ctx.SaveChanges();
-            return socialMediaPost;
+            if (!ctx.SocialMediaPosts.Any(s => s.PostId == socialMediaPost.PostId))
+            {
+                ctx.SocialMediaPosts.Add(socialMediaPost);
+                ctx.SaveChanges();
+                return socialMediaPost;
+            }
+            else
+            {
+                return null;
+            }
         }
 
 
@@ -55,6 +62,21 @@ namespace DAL.Repositories
         {
             return ctx.SocialMediaPosts.ToList().LastOrDefault<SocialMediaPost>();
 
+        }
+
+        public void AddPostToItems(SocialMediaPost post)
+        {
+            foreach(var person in post.Persons)
+            {
+                person.SocialMediaPosts.Add(post);
+                ctx.Entry(person).State = System.Data.Entity.EntityState.Modified;
+            }
+            foreach(var theme in post.Themes)
+            {
+                theme.SocialMediaPosts.Add(post);
+                ctx.Entry(theme).State = System.Data.Entity.EntityState.Modified;
+            }
+            ctx.SaveChanges();
         }
 
         public List<SocialMediaProfile> GetProfile(SocialMediaPost post)
@@ -183,14 +205,10 @@ namespace DAL.Repositories
 
         }
 
-
-
         private Word ReadWord(string value)
         {
             return ctx.Words.Single(w => w.Value == value);
         }
-
-
 
         public List<SocialMediaProfile> ReadProfiles()
         {

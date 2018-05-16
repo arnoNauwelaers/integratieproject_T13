@@ -34,6 +34,9 @@
                 Persoon  (@Html.ActionLink("Toevoegen", "AdminItemCreate"))
             </th>
             <th>
+                Profiel
+            </th>
+            <th>
                 Organisatie
             </th>
             <th>
@@ -45,14 +48,17 @@
         @if (Model.Persons.Count == 0)
         {
             <tr>
-                <td colspan="3">Nog geen personen toegevoegd</td>
+                <td colspan="4">Nog geen personen toegevoegd</td>
             </tr>
         }
 
 
         <tr>
-            <th colspan="2">
+            <th>
                 Organisatie  (@Html.ActionLink("Toevoegen", "AdminItemCreate"))
+            </th>
+            <th colspan="2">
+                Profiel
             </th>
             <th>
                 Actie
@@ -64,7 +70,7 @@
         @if (Model.organizations.Count == 0)
         {
             <tr>
-                <td colspan="3">Nog geen organisaties toegevoegd</td>
+                <td colspan="4">Nog geen organisaties toegevoegd</td>
             </tr>
         }
 
@@ -72,7 +78,7 @@
             <th>
                 Thema  (@Html.ActionLink("Toevoegen", "AdminItemCreate"))
             </th>
-            <th>
+            <th colspan="2">
                 Trefwoorden
             </th>
             <th>
@@ -86,7 +92,7 @@
         @if (Model.themes.Count == 0)
         {
             <tr>
-                <td colspan="3">Nog geen themas toegevoegd</td>
+                <td colspan="4">Nog geen themas toegevoegd</td>
             </tr>
         }
 

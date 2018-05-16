@@ -4,21 +4,63 @@
     ViewBag.Title = "Person";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/Content/pageStyle.css" rel="stylesheet" type="text/css" />
+</head>
 
-@if (Model == null)
-{
-    <p>Persoon niet gevonden.</p>
-}
-else
-{
-    <h1>@Model.Name</h1>
-}
+<body>
+    @if (Model == null)
+    {
+        <p>Persoon niet gevonden.</p>
+    }
+    else
+    {
+        <h1>@Model.Name</h1>
+    }
 
-@using (Html.BeginForm("AddItem", "Page"))
-{
-    <input type="text" style="visibility:hidden" name="id" id="id" value="@Model.ItemId" />
-    <input type="submit" value="Volg" />
+    @using (Html.BeginForm("AddItem", "Page"))
+    {
+        <input type="text" style="visibility:hidden" name="id" id="id" value="@Model.ItemId" />
+        <input type="submit" value="Volg" />
+    }
 
-}
-@Html.ActionLink("Stel alert in", "CreateAlert");
-@Html.ActionLink("Alle personen", "PersonOverview")
+    @Html.ActionLink("Stel alert in", "CreateAlert");
+    @Html.ActionLink("Alle personen", "PersonOverview")
+
+    <div class="row">
+        <div class="col scroll">
+            @if (Model.SocialMediaProfiles != null && Model.SocialMediaProfiles.Count() != 0)
+            {
+                <a class="twitter-timeline" href="https://twitter.com/@Model.SocialMediaProfiles.ToList().Where(smp => smp.Source == "Twitter").First().Url"></a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            }
+            else
+            {
+                <p class="divMiddle">Twitter profiel niet gevonden</p>
+            }
+
+        </div>
+        <div class="col">
+            <div class="grafiek">
+                <h2>Verhalen</h2>
+                @if (ViewBag.Stories != null && Enumerable.Count(ViewBag.Stories) != 0)
+                {
+                    <ul>
+                        @foreach (var url in ViewBag.Stories)
+                        {
+                            <li><a class="url" href="@url">@url</a></li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p class="divMiddle">Geen verhalen gevonden</p>
+                }
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

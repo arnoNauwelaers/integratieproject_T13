@@ -8,6 +8,7 @@ namespace BL.Domain
         public virtual ICollection<SocialMediaProfile> SocialMediaProfiles { get; set; } = new List<SocialMediaProfile>();
         public virtual ICollection<Person> Persons { get; set; } = new List<Person>();
 
+
         public Organization()
         {
           TypeInt = 2;

@@ -34,9 +34,9 @@ namespace DAL.Repositories
 
         public List<Chart> ReadStandardCharts()
         {
-            if (ctx.Charts.Any(c => c.Standard == true))
+            if (ctx.Charts.Any(c => c.StandardChart == true))
             {
-                return ctx.Charts.Where(c => c.Standard == true).ToList();
+                return ctx.Charts.Where(c => c.StandardChart == true).ToList();
             }
             else
             {
@@ -62,7 +62,5 @@ namespace DAL.Repositories
             ctx.Charts.Remove(chart);
             ctx.SaveChanges();
         }
-
-
     }
 }

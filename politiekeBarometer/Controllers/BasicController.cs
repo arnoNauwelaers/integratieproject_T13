@@ -52,7 +52,7 @@ namespace politiekeBarometer.Controllers
                         }
                     }
 
-                    
+
                 }
                 return Ok(notifications);
             }
@@ -77,15 +77,14 @@ namespace politiekeBarometer.Controllers
                     {
                         foreach (var notification in alert.Notifications)
                         {
-                                
-                                notifications.Add(notification);
-                            }
+                            notifications.Add(notification);
                         }
                     }
-
-
                 }
-                return Ok(notifications);
+
+
+            }
+            return Ok(notifications);
         }
 
         [Route("api/Basic/AddChart")]
@@ -114,7 +113,8 @@ namespace politiekeBarometer.Controllers
 
         [Route("api/Basic/Login")]
         [HttpPost]
-        public IHttpActionResult Login(string username, string password, string email = "") {
+        public IHttpActionResult Login(string username, string password, string email = "")
+        {
             var user = UserManager.FindAsync(username, password);
             if (user != null)
             {
@@ -128,14 +128,16 @@ namespace politiekeBarometer.Controllers
 
         [Route("api/Basic/LoginFacebook")]
         [HttpPost]
-        public IHttpActionResult LoginFacebook() {
-          return Ok();
+        public IHttpActionResult LoginFacebook()
+        {
+            return Ok();
         }
 
         [Route("api/Basic/LoginGoogle")]
         [HttpPost]
-        public IHttpActionResult LoginGoogle() {
-          return Ok();
+        public IHttpActionResult LoginGoogle()
+        {
+            return Ok();
         }
-  }
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -11,9 +12,7 @@ using System.Diagnostics;
 
 namespace DAL.EF
 {
-    internal class BarometerDbInitializer : DropCreateDatabaseIfModelChanges<DbContext>
+    internal class BarometerDbInitializer : MigrateDatabaseToLatestVersion<BarometerDbContext, Migrations.Configuration>
     {
-
-        
     }
 }

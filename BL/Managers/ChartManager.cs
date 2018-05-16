@@ -39,11 +39,13 @@ namespace BL.Managers
             int amountStandardCharts = 4;
             if (standardCharts.Count < amountStandardCharts && chartRepository.ReadStandardCharts().Count < amountStandardCharts)
             {
+
                 standardCharts = new Dictionary<string, Chart>();
-                Chart trendingPersonWeek = new Chart() { Standard = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendPersons, FrequencyType = DateFrequencyType.weekly };
-                Chart trendingPersonMonth = new Chart() { Standard = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendPersons, FrequencyType = DateFrequencyType.monthly };
-                Chart trendingOrganizationWeek = new Chart() { Standard = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendOrganizations, FrequencyType = DateFrequencyType.weekly };
-                Chart trendingOrganizationMonth = new Chart() { Standard = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendOrganizations, FrequencyType = DateFrequencyType.monthly };
+                Chart trendingPersonWeek = new Chart() { StandardChart = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendPersons, FrequencyType = DateFrequencyType.weekly };
+                Chart trendingPersonMonth = new Chart() { StandardChart = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendPersons, FrequencyType = DateFrequencyType.monthly };
+                Chart trendingOrganizationWeek = new Chart() { StandardChart = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendOrganizations, FrequencyType = DateFrequencyType.weekly };
+                Chart trendingOrganizationMonth = new Chart() { StandardChart = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendOrganizations, FrequencyType = DateFrequencyType.monthly };
+
 
                 standardCharts.Add("trendingPersonWeek", chartRepository.CreateChart(trendingPersonWeek));
                 standardCharts.Add("trendingPersonMonth", chartRepository.CreateChart(trendingPersonMonth));

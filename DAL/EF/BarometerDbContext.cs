@@ -1,32 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Data.Entity.Infrastructure.Annotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BL.Domain;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Data.Entity.Infrastructure;
 
 namespace DAL.EF
 {
     [DbConfigurationType(typeof(BarometerDbConfiguration))]
     public class BarometerDbContext : IdentityDbContext<ApplicationUser> /* 'public' for testing with project 'DAL-Testing'! */
     {
-        
-
         public BarometerDbContext() : base("PolitiekeBarometerDB")
         {
-          //  Database.SetInitializer<BarometerDbContext>(new BarometerDbInitializer()); // moved to 'SupportCenterDbConfiguration'
+            //  Database.SetInitializer<BarometerDbContext>(new BarometerDbInitializer()); // moved to 'SupportCenterDbConfiguration'
         }
 
         public static BarometerDbContext Create()
-    {
-      return new BarometerDbContext();
-    }
+        {
+            return new BarometerDbContext();
+        }
 
         public DbSet<Item> Items { get; set; }
         public DbSet<Alert> Alerts { get; set; }
@@ -54,24 +45,20 @@ namespace DAL.EF
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder); // needed
-      // identity
-      modelBuilder.Entity<ApplicationUser>().ToTable("Users");
-      modelBuilder.Entity<IdentityRole>().ToTable("Roles");
-      modelBuilder.Entity<IdentityUserRole>().ToTable("UserRoles");
-      modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogins");
-      modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");
+                                                // identity
+            modelBuilder.Entity<ApplicationUser>().ToTable("Users");
+            modelBuilder.Entity<IdentityRole>().ToTable("Roles");
+            modelBuilder.Entity<IdentityUserRole>().ToTable("UserRoles");
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogins");
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");
 
-      
-        
-
-        // Remove pluralizing tablenames
-        modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            // Remove pluralizing tablenames
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             // Remove cascading delete for all required-relationships
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
 
-            
             //modelBuilder.Entity<ApplicationUser>().HasKey(u => u.Id);
             modelBuilder.Entity<Notification>().HasKey(u => u.NotificationId);
 
@@ -84,35 +71,33 @@ namespace DAL.EF
             modelBuilder.Entity<Organization>().HasMany(i => i.Persons).WithMany();
             modelBuilder.Entity<Organization>().HasMany(i => i.SocialMediaProfiles).WithMany();
             modelBuilder.Entity<Person>().HasMany(i => i.SocialMediaProfiles).WithMany();
-            modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.SocialMediaProfiles).WithMany();
+
+            modelBuilder.Entity<Keyword>().HasOptional(k => k.Theme);
+
+            modelBuilder.Entity<SocialMediaPost>().HasRequired(smp => smp.SocialMediaPostProfile).WithRequiredDependent(smpp => smpp.SocialMediaPosts);
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Words).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Urls).WithMany();
-            modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Persons).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Hashtags).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasOptional(i => i.PostSentiment).WithOptionalDependent().WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Persons).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Themes).WithMany();
+            modelBuilder.Entity<Item>().HasMany(i => i.SocialMediaPosts).WithMany();
+
             //modelBuilder.Entity<Theme>().HasMany(i => i.Keywords).WithMany();
-            modelBuilder.Entity<Keyword>().HasOptional(k => k.Theme);
+
             modelBuilder.Entity<ChartItemData>().HasMany(i => i.Data).WithMany();
             //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Words).WithMany();
             //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Person).WithMany();
             //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Verhalen).WithMany();
             //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Hashtags).WithMany();
             //TODO fixen: modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Sentiment).WithMany();
-            modelBuilder.Entity<SocialMediaProfile>().HasMany(i => i.SocialMediaPosts).WithMany();
             modelBuilder.Entity<SocialMediaSource>().HasMany(i => i.SocialMediaPost).WithMany();
             modelBuilder.Entity<Chart>().HasMany(i => i.Items).WithMany();
             modelBuilder.Entity<Platform>().HasMany(i => i.Users).WithMany();
             modelBuilder.Entity<Platform>().HasMany(i => i.Sources).WithMany();
             //modelBuilder.Entity<Theme>().HasMany(i => i.Keywords).WithMany();
             //modelBuilder.Entity<User>().HasMany(i => i.Alerts).WithMany();
-
-
         }
-
-
-        
-
-        //public System.Data.Entity.DbSet<BL.Domain.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

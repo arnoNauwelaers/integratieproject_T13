@@ -12,6 +12,7 @@ namespace BL.Domain
             Value = val;
         }
 
+
         public Word()
         {
         }

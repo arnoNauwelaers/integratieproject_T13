@@ -15,7 +15,7 @@ namespace BL.Domain
     {
         [Key]
         public int ChartId { get; set; }
-        public Boolean Standard { get; set; } = false; //standard zijn charts op bv. homepage
+        public bool StandardChart { get; set; } = false; //standard zijn charts op bv. homepage
         public virtual ICollection<Item> Items { get; set; } = new List<Item>();
         public virtual ChartType ChartType { get; set; }
         public virtual ChartValue ChartValue { get; set; }
@@ -164,10 +164,13 @@ namespace BL.Domain
             {
                 foreach (var item in chartItemData.Data)
                 {
-                    data.Add(item.Amount);
+                    if (!Labels.Contains(item.Name))
+                    {
+                        Labels.Add(item.Name);
+                    }
                 }
             }
-            return JsonConvert.SerializeObject(data);
+            return JsonConvert.SerializeObject(Labels);
         }
 
         public string GetTitle(Item item)

@@ -1,8 +1,17 @@
 ﻿@model BL.Domain.Person
 
+@{String profiles = null;}
+@foreach (BL.Domain.SocialMediaProfile socialmediaprofile in Model.SocialMediaProfiles)
+{
+    profiles += "@" + socialmediaprofile.Url + ",";
+}
+
 <tr>
     <td>
         @Html.DisplayFor(p => p.Name)
+    </td>
+    <td>
+        @profiles
     </td>
     <td>
         @Html.DisplayFor(p => p.Organization.Name)
