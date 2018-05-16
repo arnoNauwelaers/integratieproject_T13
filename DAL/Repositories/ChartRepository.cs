@@ -34,13 +34,13 @@ namespace DAL.Repositories
 
         public List<Chart> ReadStandardCharts()
         {
-            if (ctx.Charts.Any(c => c.PageBound == true))
+            if (ctx.Charts.Any(c => c.StandardChart == true))
             {
-                return ctx.Charts.Where(c => c.PageBound == true).ToList();
+                return ctx.Charts.Where(c => c.StandardChart == true).ToList();
             }
             else
             {
-                return null;
+               return new List<Chart>();
             }
         }
 
@@ -62,7 +62,5 @@ namespace DAL.Repositories
             ctx.Charts.Remove(chart);
             ctx.SaveChanges();
         }
-
-
     }
 }

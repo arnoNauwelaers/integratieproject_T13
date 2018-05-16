@@ -17,5 +17,9 @@
     padding: 10px;
     box-sizing: border-box;
     border: 2px solid black;
-    height: 40vh !important;
+    height: 60vh !important;
+}
+
+.url{
+    font-size: 15px;
 }

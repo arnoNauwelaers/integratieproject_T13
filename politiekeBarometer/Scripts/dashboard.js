@@ -1,5 +1,6 @@
 ﻿var items = "";
-HideDelete();
+var itemsEdit = "";
+HideOptions();
 
 var itemsHidden = document.getElementById("itemsHidden");
 
@@ -102,7 +103,7 @@ function ButtonToEdit() {
     $("#editButton").removeClass("btn-success");
     $("#editButton").html("Edit");
     SaveCharts();
-    HideDelete();
+    HideOptions();
 }
 
 function ButtonToSave() {
@@ -110,15 +111,17 @@ function ButtonToSave() {
     $("#editButton").removeClass("btn-primary");
     $("#editButton").addClass("btn-success");
     $("#editButton").html("Save");
-    ShowDelete();
+    ShowOptions();
 }
 
-function HideDelete() {
+function HideOptions() {
     $(".deleteForm").hide();
+    $(".editForm").hide();
 }
 
-function ShowDelete() {
+function ShowOptions() {
     $(".deleteForm").show();
+    $(".editForm").show();
 }
 
 function SaveCharts() {
@@ -166,9 +169,36 @@ function addItem() {
     itemsHidden.value = items;
 }
 
+function addItemEdit() {
+    var ul = document.getElementById("itemListEdit");
+    var item = $("#itemsEdit option:selected").val();
+    var itemName = $("#itemsEdit option:selected").text();
+    var span = document.createElement("span");
+    span.innerHTML = '<li>' + itemName + '</li>';
+    ul.appendChild(span);
+    if (itemsEdit !== "") {
+        itemsEdit += " " + item;
+    }
+    else {
+        itemsEdit = item;
+    }
+    itemsHiddenEdit.value = items;
+}
+
+function addItemEditStart(itemName) {
+    var ul = document.getElementById("itemListEdit");
+    var span = document.createElement("span");
+    span.innerHTML = '<li>' + itemName + '</li>';
+    ul.appendChild(span);
+}
+
 jQuery(document).ready(function () {
     $('.selectModal').select2({
         dropdownParent: $('#addModal'),
+        width: '100%'
+    });
+    $('#itemsEdit').select2({
+        dropdownParent: $('#editModal'),
         width: '100%'
     });
 });
@@ -180,7 +210,22 @@ $('#addModal').on('hidden.bs.modal', function () {
     ul.innerHTML = "";
 });
 
+$('#editModal').on('hidden.bs.modal', function () {
+    itemsEdit = "";
+    itemsHiddenEdit.value = itemsEdit;
+    var ul = document.getElementById("itemListEdit");
+    ul.innerHTML = "";
+});
+
 function deleteChart(id) {
     var form = document.getElementById(id);
     form.submit();
+}
+
+function fillEditItems(itemNames, chartId) {
+    document.getElementById("chartId").value = chartId;
+    var splitItemNames = itemNames.split(',');
+    splitItemNames.forEach(function(entry) {
+        addItemEditStart(entry);
+    });
 }

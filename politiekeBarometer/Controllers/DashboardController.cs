@@ -35,9 +35,9 @@ namespace politiekeBarometer.Controllers
         {
             UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = UserManager.GetUser(User.Identity.GetUserId());
-            List<Person> Persons = (List<Person>) itemManager.GetPersons();
-            List<Theme> Themes = (List<Theme>) itemManager.GetThemes();
-            List<Organization> Organizations = (List<Organization>) itemManager.GetOrganizations();
+            List<Person> Persons = (List<Person>)itemManager.GetPersons();
+            List<Theme> Themes = (List<Theme>)itemManager.GetThemes();
+            List<Organization> Organizations = (List<Organization>)itemManager.GetOrganizations();
             DashboardModel Model = new DashboardModel
             {
                 Persons = Persons,
@@ -74,6 +74,24 @@ namespace politiekeBarometer.Controllers
                 user.Dashboard.Remove(chart);
                 UserManager.Update(user);
             }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost, Authorize]
+        public ActionResult EditChart(int chartid, string items, string type, string frequency)
+        {
+            ChartManager.EditChartFromDashboard(chartid, items, type, frequency);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet, Authorize]
+        public ActionResult MoveToDashboard(int id)
+        {
+            Chart chart = ChartManager.GetChart(id);
+            UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser user = UserManager.GetUser(User.Identity.GetUserId());
+            user.Dashboard.Add(new Chart() { ChartType=chart.ChartType, ChartValue=chart.ChartValue, FrequencyType=chart.FrequencyType, Zone=(new Zone() { Width = 2.43, X = 10, Y = 10 })});
+            UserManager.Update(user);
             return RedirectToAction("Index");
         }
     }

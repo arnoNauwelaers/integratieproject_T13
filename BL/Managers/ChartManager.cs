@@ -35,19 +35,30 @@ namespace BL.Managers
 
         public void CreateStandardChartsIfNotExists()
         {
-            if (standardCharts.Count == 0 && chartRepository.ReadStandardCharts() == null)
+            int amountStandardCharts = 4;
+            if (standardCharts.Count < amountStandardCharts && chartRepository.ReadStandardCharts().Count < amountStandardCharts)
             {
-                Chart trendingPersonWeek = new Chart() { PageBound = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendPersons, FrequencyType = DateFrequencyType.weekly };
-                Chart trendingPersonMonth = new Chart() { PageBound = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendPersons, FrequencyType = DateFrequencyType.monthly };
+
+                standardCharts = new Dictionary<string, Chart>();
+                Chart trendingPersonWeek = new Chart() { StandardChart = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendPersons, FrequencyType = DateFrequencyType.weekly };
+                Chart trendingPersonMonth = new Chart() { StandardChart = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendPersons, FrequencyType = DateFrequencyType.monthly };
+                Chart trendingOrganizationWeek = new Chart() { StandardChart = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendOrganizations, FrequencyType = DateFrequencyType.weekly };
+                Chart trendingOrganizationMonth = new Chart() { StandardChart = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendOrganizations, FrequencyType = DateFrequencyType.monthly };
+
 
                 standardCharts.Add("trendingPersonWeek", chartRepository.CreateChart(trendingPersonWeek));
                 standardCharts.Add("trendingPersonMonth", chartRepository.CreateChart(trendingPersonMonth));
+                standardCharts.Add("trendingOrganizationWeek", chartRepository.CreateChart(trendingOrganizationWeek));
+                standardCharts.Add("trendingorganizationMonth", chartRepository.CreateChart(trendingOrganizationMonth));
             }
-            else if (standardCharts.Count == 0)
+            else if (standardCharts.Count < amountStandardCharts)
             {
+                standardCharts = new Dictionary<string, Chart>();
                 List<Chart> tempStandardCharts = chartRepository.ReadStandardCharts();
                 standardCharts.Add("trendingPersonWeek", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendPersons && c.FrequencyType == DateFrequencyType.weekly));
                 standardCharts.Add("trendingPersonMonth", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendPersons && c.FrequencyType == DateFrequencyType.monthly));
+                standardCharts.Add("trendingOrganizationWeek", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendOrganizations && c.FrequencyType == DateFrequencyType.weekly));
+                standardCharts.Add("trendingorganizationMonth", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendOrganizations && c.FrequencyType == DateFrequencyType.monthly));
             }
         }
 
@@ -145,7 +156,7 @@ namespace BL.Managers
             {
                 foreach (var id in itemIds)
                 {
-                    itemList.Add(itemManager.ReadPerson(Int32.Parse(id)));
+                    itemList.Add(itemManager.ReadItem(Int32.Parse(id)));
                 }
                 chart.Items = itemList;
             }
@@ -168,6 +179,25 @@ namespace BL.Managers
                 zoneManager.UpdateZone(chartObj.Zone);
                 chartRepository.UpdateChart(chartObj);
             }
+        }
+
+        //TODO Mathijs; afmaken
+        public void EditChartFromDashboard(int id, string items, string type, string frequency)
+        {
+            Chart chart = chartRepository.ReadChart(id);
+            List<Item> itemList = new List<Item>();
+            char[] whitespace = new char[] { ' ', '\t' };
+            string[] itemIds = items.Split(whitespace);
+            if (items != "")
+            {
+                foreach (var itemid in itemIds)
+                {
+                    chart.Items.Add(itemManager.ReadItem(Int32.Parse(itemid)));
+                }
+            }
+            chart.ChartType = (ChartType)Enum.Parse(typeof(ChartType), type);
+            chart.FrequencyType = (DateFrequencyType)Enum.Parse(typeof(DateFrequencyType), frequency);
+            chartRepository.UpdateChart(chart);
         }
     }
 }

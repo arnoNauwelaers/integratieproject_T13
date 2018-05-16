@@ -96,10 +96,18 @@ namespace BL.Managers
             List<SocialMediaPost> results = new List<SocialMediaPost>();
             foreach (var post in posts)
             {
-                post.ListsToArrays();
+
                 if (item != null)
                 {
-                    if (post.Persons.Contains(item))
+                    if (item.GetType() == typeof(Organization) && IsPostFromOrganization(post, (Organization)item))
+                    {
+                        results.Add(post);
+                    }
+                    else if (item.GetType() == typeof(Theme) && IsPostFromTheme(post, (Theme)item))
+                    {
+                        results.Add(post);
+                    }
+                    else if (item.GetType() == typeof(Person) && post.Persons.Contains(item))
                     {
                         results.Add(post);
                     }
@@ -124,6 +132,37 @@ namespace BL.Managers
             return null;
         }
 
+        public Boolean IsPostFromTheme(SocialMediaPost post, Theme item)
+        {
+            if (post.Themes.Contains(item))
+            {
+                return true;
+            }
+            else
+            {
+                foreach (var word in item.Keywords)
+                {
+                    if (post.Words.Any(w => w.Value == word.Value) || post.Hashtags.Any(w => w.Value == word.Value))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public Boolean IsPostFromOrganization(SocialMediaPost post, Organization item)
+        {
+            foreach (var person in item.Persons)
+            {
+                if (person.Organization != null && person.Organization == item)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         //TODO uitbreiden voor organisaties en themas
         public Dictionary<Item, int> GetItemsFromChartWithoutItems(DateTime since, ChartValue value)
         {
@@ -134,7 +173,7 @@ namespace BL.Managers
             }
             else if (value == ChartValue.trendOrganizations)
             {
-
+                return GetTrendOrganizationData(posts);
             }
             else if (value == ChartValue.trendThemes)
             {
@@ -148,7 +187,6 @@ namespace BL.Managers
             Dictionary<Item, int> list = new Dictionary<Item, int>();
             foreach (var post in posts)
             {
-                post.ListsToArrays();
                 foreach (var person in post.Persons)
                 {
                     if (list.ContainsKey(person))
@@ -164,21 +202,44 @@ namespace BL.Managers
             return list.OrderByDescending(i => i.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
         }
 
+        public Dictionary<Item, int> GetTrendOrganizationData(List<SocialMediaPost> posts)
+        {
+            Dictionary<Item, int> list = new Dictionary<Item, int>();
+            foreach (var post in posts)
+            {
+                foreach (var person in post.Persons)
+                {
+                    if (person.Organization != null)
+                    {
+                        if (list.ContainsKey(person.Organization))
+                        {
+                            list[person.Organization]++;
+                        }
+                        else
+                        {
+                            list.Add(person.Organization, 1);
+                        }
+                    }
+                }
+            }
+            return list.OrderByDescending(i => i.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+        }
+
         public Dictionary<string, int> GetHashtagData(List<SocialMediaPost> posts)
         {
             Dictionary<string, int> list = new Dictionary<string, int>();
             foreach (var post in posts)
             {
                 post.ListsToArrays();
-                foreach (var hashtag in post.Hashtag)
+                foreach (var hashtag in post.Hashtags)
                 {
-                    if (list.ContainsKey(hashtag))
+                    if (list.ContainsKey(hashtag.Value))
                     {
-                        list[hashtag]++;
+                        list[hashtag.Value]++;
                     }
                     else
                     {
-                        list.Add(hashtag, 1);
+                        list.Add(hashtag.Value, 1);
                     }
                 }
             }
@@ -276,7 +337,7 @@ namespace BL.Managers
             TimeSpan.FromMinutes(minutes));
         }
 
-        public void ArraysToLists(SocialMediaPost post)
+        public Boolean ArraysToLists(SocialMediaPost post)
         {
             if (post.Sentiment.Count() > 0)
             {
@@ -318,6 +379,7 @@ namespace BL.Managers
                     post.Themes.Add(new Theme(item));
                 }
             }
+            return true;
         }
     }
 }

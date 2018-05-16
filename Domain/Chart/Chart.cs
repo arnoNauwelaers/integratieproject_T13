@@ -15,7 +15,7 @@ namespace BL.Domain
     {
         [Key]
         public int ChartId { get; set; }
-        public bool PageBound { get; set; } = false; //standard zijn charts op bv. homepage
+        public bool StandardChart { get; set; } = false; //standard zijn charts op bv. homepage
         public virtual ICollection<Item> Items { get; set; } = new List<Item>();
         public virtual ChartType ChartType { get; set; }
         public virtual ChartValue ChartValue { get; set; }
@@ -35,6 +35,23 @@ namespace BL.Domain
         public string GetStyle()
         {
             return $"transform: translate({Zone.X}px, {Zone.Y}px);";
+        }
+
+        public string GetItemNames()
+        {
+            string itemNames = "";
+            if (Items.Count > 0)
+            {
+                foreach (var item in Items)
+                {
+                    itemNames += item.Name;
+                    if (item != Items.Last())
+                    {
+                        itemNames += ",";
+                    }
+                }
+            }
+            return itemNames;
         }
 
         public List<string> GetRgbas()
