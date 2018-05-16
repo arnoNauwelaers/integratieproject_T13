@@ -74,7 +74,7 @@ namespace DAL.Repositories
         public int ReadItemParameter(Alert alert, DateTime end, DateTime start)
         {
             int aantal = 0;
-            if (alert.Item.GetType() == typeof(Person))
+            if (alert.Item.GetType().ToString().Contains("Person"))
             {
                 if (alert.Parameter == AlertParameter.mentions)
                 {

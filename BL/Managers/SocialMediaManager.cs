@@ -17,7 +17,6 @@ namespace BL.Managers
     public class SocialMediaManager
     {
         private const int FREQUENTIE = 1;
-        private const int AMOUNT_OF_ELEMENTS = 20;
         private SocialMediaRepository socialMediaRepository;
         private AlertManager alertManager;
         private ItemManager itemManager;
@@ -99,15 +98,15 @@ namespace BL.Managers
 
                 if (item != null)
                 {
-                    if (item.GetType() == typeof(Organization) && IsPostFromOrganization(post, (Organization)item))
+                    if (item.GetType().ToString().Contains("Organization") && IsPostFromOrganization(post, (Organization)item))
                     {
                         results.Add(post);
                     }
-                    else if (item.GetType() == typeof(Theme) && IsPostFromTheme(post, (Theme)item))
+                    else if (item.GetType().ToString().Contains("Theme") && IsPostFromTheme(post, (Theme)item))
                     {
                         results.Add(post);
                     }
-                    else if (item.GetType() == typeof(Person) && post.Persons.Contains(item))
+                    else if (item.GetType().ToString().Contains("Person") && post.Persons.Contains((Person)item))
                     {
                         results.Add(post);
                     }
@@ -199,7 +198,7 @@ namespace BL.Managers
                     }
                 }
             }
-            return list.OrderByDescending(i => i.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+            return list;
         }
 
         public Dictionary<Item, int> GetTrendOrganizationData(List<SocialMediaPost> posts)
@@ -222,7 +221,7 @@ namespace BL.Managers
                     }
                 }
             }
-            return list.OrderByDescending(i => i.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+            return list;
         }
 
         public Dictionary<string, int> GetHashtagData(List<SocialMediaPost> posts)
@@ -243,7 +242,7 @@ namespace BL.Managers
                     }
                 }
             }
-            return list.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+            return list;
         }
 
         public Dictionary<string, int> GetPersonData(List<SocialMediaPost> posts)
@@ -263,7 +262,7 @@ namespace BL.Managers
                     }
                 }
             }
-            return list.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+            return list;
         }
 
         public Dictionary<string, int> GetWordData(List<SocialMediaPost> posts)
@@ -283,7 +282,7 @@ namespace BL.Managers
                     }
                 }
             }
-            return list.OrderByDescending(w => w.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+            return list;
         }
 
         public List<SocialMediaProfile> GetSocialMediaProfiles()

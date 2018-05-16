@@ -31,6 +31,8 @@ namespace BL.Domain
         //Nodig voor Colors
         [NotMapped]
         private static readonly Random rnd = new Random();
+        [NotMapped]
+        private List<string> Labels = new List<String>();
 
         public string GetStyle()
         {
@@ -87,11 +89,24 @@ namespace BL.Domain
             foreach (var item in ChartItemData)
             {
                 List<int> data = new List<int>();
-                foreach (var itemData in item.Data)
+                foreach (var label in Labels)
                 {
-                    data.Add(itemData.Amount);
+                    Boolean found = false;
+                    foreach (var itemData in item.Data)
+                    {
+                        if (label.Equals(itemData.Name))
+                        {
+                            data.Add(itemData.Amount);
+                            found = true;
+                            continue;
+                        }
+                    }
+                    if (found == false)
+                    {
+                        data.Add(0);
+                    }
                 }
-                DataSets.Add(new ChartDataSet(GetTitle(), GetRgbas(), 1, data));
+                DataSets.Add(new ChartDataSet(GetTitle(item.Item), GetRgbas(), 1, data));
             }
             return JsonConvert.SerializeObject(DataSets);
         }
@@ -127,15 +142,18 @@ namespace BL.Domain
 
         public string GetLabels()
         {
-            List<string> labels = new List<string>();
+            Labels = new List<string>();
             foreach (var chartItemData in ChartItemData)
             {
                 foreach (var item in chartItemData.Data)
                 {
-                    labels.Add(item.Name);
+                    if (!Labels.Contains(item.Name))
+                    {
+                        Labels.Add(item.Name);
+                    }
                 }
             }
-            return JsonConvert.SerializeObject(labels);
+            return JsonConvert.SerializeObject(Labels);
         }
 
         //overbodig nieuwe functie GetDataSets?
@@ -152,25 +170,12 @@ namespace BL.Domain
             return JsonConvert.SerializeObject(data);
         }
 
-        public string GetTitle()
+        public string GetTitle(Item item)
         {
             string title = "";
             if (ChartValue == ChartValue.hashtags || ChartValue == ChartValue.words || ChartValue == ChartValue.persons)
             {
-                title = $"Aantal {ChartValue} van ";
-                int i = 1;
-                foreach (var item in ChartItemData)
-                {
-                    if (i == 1)
-                    {
-                        title += item.Item.Name;
-                    }
-                    else
-                    {
-                        title += $" & {item.Item.Name}";
-                    }
-                    i++;
-                }
+                title = $"Aantal {ChartValue} van " + item.Name;
             }
             else
             {

@@ -17,6 +17,7 @@ namespace BL.Managers
         private SocialMediaManager socialMediaManager;
         private ZoneManager zoneManager;
         private static Dictionary<string, Chart> standardCharts = new Dictionary<string, Chart>();
+        private const int AMOUNT_OF_ELEMENTS = 20;
 
         public ChartManager()
         {
@@ -102,21 +103,70 @@ namespace BL.Managers
             }
             if (trend == false)
             {
+                Dictionary<Item, Dictionary<string, int>> listItems = new Dictionary<Item, Dictionary<string, int>>();
                 foreach (var item in chart.Items)
                 {
-                    tempData = socialMediaManager.GetDataFromPost(since, chart.ChartValue, item);
-                    ChartItemData tempChartItemData = new ChartItemData() { Item = item };
-                    foreach (var data in tempData)
+                    tempData = socialMediaManager.GetDataFromPost(since, chart.ChartValue, item).OrderByDescending(i => i.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+                    if (chart.Items.Count == 1)
                     {
-                        tempChartItemData.Data.Add(new Data() { Name = data.Key, Amount = data.Value });
+                        ChartItemData tempChartItemData = new ChartItemData() { Item = item };
+                        foreach (var data in tempData)
+                        {
+                            tempChartItemData.Data.Add(new Data() { Name = data.Key, Amount = data.Value });
+                        }
+                        chart.ChartItemData.Add(tempChartItemData);
                     }
-                    chart.ChartItemData.Add(tempChartItemData);
+                    else
+                    {
+                        listItems.Add(item, tempData);
+                    }
+                }
+                if (chart.Items.Count > 1)
+                {
+                    //gemeenschappelijke data uit items halen
+                    Dictionary<Item, Dictionary<string, int>> tempListItems = new Dictionary<Item, Dictionary<string, int>>();
+                    foreach (var item in listItems) //alle items loopen
+                    {
+                        Dictionary<string, int> itemDictionary = new Dictionary<string, int>();
+                        foreach (var valueItem in item.Value) //alle values van die items loopen (string, int)
+                        {
+                            foreach (var otherItem in listItems) //alle items nog eens loopen
+                            {
+                                if (otherItem.Key == item.Key) //niet dezelfde items met mekaar vergelijken
+                                {
+                                    continue;
+                                }
+                                foreach (var otherValueItem in otherItem.Value) //alle values van laatste loop loopen (string, int)
+                                {
+                                    if (valueItem.Key == otherValueItem.Key)
+                                    {
+                                        if (!itemDictionary.Any(i => i.Key == valueItem.Key))
+                                        {
+                                            itemDictionary.Add(valueItem.Key, valueItem.Value);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        tempListItems.Add(item.Key, itemDictionary);
+                    }
+                    //nu data toevoegen aan chart
+                    foreach (var item in tempListItems)
+                    {
+                        ChartItemData tempChartItemData = new ChartItemData() { Item = item.Key };
+                        item.Value.OrderByDescending(i => i.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+                        foreach (var data in item.Value)
+                        {
+                            tempChartItemData.Data.Add(new Data() { Name = data.Key, Amount = data.Value });
+                        }
+                        chart.ChartItemData.Add(tempChartItemData);
+                    }
                 }
             }
             else if (trend == true)
             {
                 ChartItemData tempChartItemData = new ChartItemData();
-                foreach (var item in itemData)
+                foreach (var item in itemData.OrderByDescending(i => i.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle())
                 {
                     tempChartItemData.Item = item.Key;
                     tempChartItemData.Data.Add(new Data() { Name = item.Key.Name, Amount = item.Value });
