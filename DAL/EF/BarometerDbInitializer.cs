@@ -14,7 +14,5 @@ namespace DAL.EF
 {
     internal class BarometerDbInitializer : MigrateDatabaseToLatestVersion<BarometerDbContext, Migrations.Configuration>
     {
-
-        
     }
 }

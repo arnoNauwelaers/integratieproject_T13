@@ -66,14 +66,14 @@ namespace DAL.Repositories
             }
         }
 
-        public SocialMediaProfile createSocialmediaprofile(SocialMediaProfile socialMediaProfile)
+        public SocialMediaProfile CreateSocialmediaprofile(SocialMediaProfile socialMediaProfile)
         {
             ctx.SocialMediaProfiles.Add(socialMediaProfile);
             ctx.SaveChanges();
             return socialMediaProfile;
         }
 
-        public void deleteProfile(int profileId)
+        public void DeleteProfile(int profileId)
         {
             ctx.SocialMediaProfiles.Remove(ctx.SocialMediaProfiles.Find(profileId));
             ctx.SaveChanges();
@@ -191,17 +191,17 @@ namespace DAL.Repositories
             return ctx.Themes.Where(t => t.Name == name).ToList();
         }
 
-        public List<SocialMediaProfile> readProfiles(Item item)
+        public List<SocialMediaProfile> ReadProfiles(Item item)
         {
             return ctx.SocialMediaProfiles.Where(smp => smp.Item.ItemId == item.ItemId).ToList();
         }
 
-        public SocialMediaProfile readProfiles(int profileId)
+        public SocialMediaProfile ReadProfiles(int profileId)
         {
             return ctx.SocialMediaProfiles.Find(profileId);
         }
 
-        public SocialMediaProfile updateProfile(SocialMediaProfile profile)
+        public SocialMediaProfile UpdateProfile(SocialMediaProfile profile)
         {
             SocialMediaProfile tempProfile = ctx.SocialMediaProfiles.Find(profile.Id);
             tempProfile.Url = profile.Url;

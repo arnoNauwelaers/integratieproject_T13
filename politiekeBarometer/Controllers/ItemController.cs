@@ -123,7 +123,7 @@ namespace politiekeBarometer.Controllers
 
                 if(editItem.TwitterUrl == null && editItem.profileIds != null)
                 {
-                    itemManager.deleteProfiles(editItem.profileIds);
+                    itemManager.DeleteProfiles(editItem.profileIds);
                 }
                 return RedirectToAction("AdminItemIndex");
             }

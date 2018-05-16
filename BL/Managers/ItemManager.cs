@@ -44,7 +44,7 @@ namespace BL.Managers
 
         public List<SocialMediaProfile> GetProfiles(Item item)
         {
-            return itemRepository.readProfiles(item);
+            return itemRepository.ReadProfiles(item);
         }
 
         public Person CreatePersonIfNotExists(string name)
@@ -62,7 +62,7 @@ namespace BL.Managers
                 if(twitterUrl != null && twitterUrl != " ")
                 {
                     SocialMediaProfile socialMediaProfile = new SocialMediaProfile() { Url = twitterUrl, Source = "Twitter", Item = tempPerson };
-                    SocialMediaProfile tempSocialMediaProfile = itemRepository.createSocialmediaprofile(socialMediaProfile);
+                    SocialMediaProfile tempSocialMediaProfile = itemRepository.CreateSocialmediaprofile(socialMediaProfile);
                     ((Person)tempPerson).SocialMediaProfiles.Add(tempSocialMediaProfile);
                 }
                 itemRepository.UpdateItem(tempPerson);
@@ -74,7 +74,7 @@ namespace BL.Managers
                 if (twitterUrl != null && twitterUrl != " ")
                 {
                     SocialMediaProfile socialMediaProfile = new SocialMediaProfile() { Url = twitterUrl, Source = "Twitter", Item = tempOrganization };
-                    SocialMediaProfile tempSocialMediaProfile = itemRepository.createSocialmediaprofile(socialMediaProfile);
+                    SocialMediaProfile tempSocialMediaProfile = itemRepository.CreateSocialmediaprofile(socialMediaProfile);
                     ((Organization)tempOrganization).SocialMediaProfiles.Add(tempSocialMediaProfile);
                 }
                 itemRepository.UpdateItem(tempOrganization);
@@ -202,9 +202,9 @@ namespace BL.Managers
             {
                 foreach (var profileId in profileIds)
                 {
-                    SocialMediaProfile tempProfile = itemRepository.readProfiles(profileId);
+                    SocialMediaProfile tempProfile = itemRepository.ReadProfiles(profileId);
                     tempProfile.Url = url;
-                    itemRepository.updateProfile(tempProfile);
+                    itemRepository.UpdateProfile(tempProfile);
                 }
             }
         }
@@ -212,7 +212,7 @@ namespace BL.Managers
         public void AddProfileToItem(Item item, string TwitterUrl)
         {
             SocialMediaProfile tempProfile = new SocialMediaProfile() { Source = "Twitter", Url = TwitterUrl, Item = item};
-            itemRepository.createSocialmediaprofile(tempProfile);
+            itemRepository.CreateSocialmediaprofile(tempProfile);
             if (item.GetType().ToString().Contains("Person"))
             {
                 ((Person)item).SocialMediaProfiles.Add(tempProfile);
@@ -223,11 +223,11 @@ namespace BL.Managers
             itemRepository.UpdateItem(item);
         }
 
-        public void deleteProfiles(List<int> profileIds)
+        public void DeleteProfiles(List<int> profileIds)
         {
             foreach(var profileId in profileIds)
             {
-                itemRepository.deleteProfile(profileId);
+                itemRepository.DeleteProfile(profileId);
             }
         }
 

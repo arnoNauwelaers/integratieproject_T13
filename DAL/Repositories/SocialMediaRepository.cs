@@ -25,7 +25,7 @@ namespace DAL.Repositories
             return ctx.SocialMediaPosts.Include(a => a.SocialMediaProfiles).ToList<SocialMediaPost>();
         }
 
-        public IEnumerable<SocialMediaPost> ReadSocialMediaPostsSince(DateTime since, Item item = null)
+        public IEnumerable<SocialMediaPost> ReadSocialMediaPostsSince(DateTime since)
         {
             return ctx.SocialMediaPosts.Where(i => i.Date > since).Include(a => a.SocialMediaProfiles).Include(a => a.Words).Include(a => a.Hashtags).Include(a => a.Persons).ToList();
         }
@@ -57,7 +57,7 @@ namespace DAL.Repositories
 
         }
 
-        public void addPostToItems(SocialMediaPost post)
+        public void AddPostToItems(SocialMediaPost post)
         {
             foreach(var person in post.Persons)
             {
