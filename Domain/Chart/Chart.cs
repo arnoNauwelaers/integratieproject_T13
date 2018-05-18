@@ -106,7 +106,7 @@ namespace BL.Domain
                         data.Add(0);
                     }
                 }
-                DataSets.Add(new ChartDataSet(GetTitle(), GetRgbas(), 1, data));
+                DataSets.Add(new ChartDataSet(GetTitle(item.Item), GetRgbas(), 1, data));
             }
             return JsonConvert.SerializeObject(DataSets);
         }
@@ -156,25 +156,29 @@ namespace BL.Domain
             return JsonConvert.SerializeObject(Labels);
         }
 
-        public string GetTitle()
+        //overbodig nieuwe functie GetDataSets?
+        public string GetData()
+        {
+            List<int> data = new List<int>();
+            foreach (var chartItemData in ChartItemData)
+            {
+                foreach (var item in chartItemData.Data)
+                {
+                    if (!Labels.Contains(item.Name))
+                    {
+                        Labels.Add(item.Name);
+                    }
+                }
+            }
+            return JsonConvert.SerializeObject(Labels);
+        }
+
+        public string GetTitle(Item item)
         {
             string title = "";
             if (ChartValue == ChartValue.hashtags || ChartValue == ChartValue.words || ChartValue == ChartValue.persons)
             {
-                title = $"Aantal {ChartValue} van ";
-                int i = 1;
-                foreach (var item in ChartItemData)
-                {
-                    if (i == 1)
-                    {
-                        title += item.Item.Name;
-                    }
-                    else
-                    {
-                        title += $" & {item.Item.Name}";
-                    }
-                    i++;
-                }
+                title = $"Aantal {ChartValue} van " + item.Name;
             }
             else
             {

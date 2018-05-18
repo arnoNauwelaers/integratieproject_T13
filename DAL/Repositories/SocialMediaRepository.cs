@@ -32,9 +32,16 @@ namespace DAL.Repositories
 
         public SocialMediaPost CreateSocialMediaPost(SocialMediaPost socialMediaPost)
         {
-            ctx.SocialMediaPosts.Add(socialMediaPost);
-            ctx.SaveChanges();
-            return socialMediaPost;
+            if (!ctx.SocialMediaPosts.Any(s => s.PostId == socialMediaPost.PostId))
+            {
+                ctx.SocialMediaPosts.Add(socialMediaPost);
+                ctx.SaveChanges();
+                return socialMediaPost;
+            }
+            else
+            {
+                return null;
+            }
         }
 
 
@@ -89,7 +96,7 @@ namespace DAL.Repositories
         public int ReadItemParameter(Alert alert, DateTime end, DateTime start)
         {
             int aantal = 0;
-            if (alert.Item.GetType() == typeof(Person))
+            if (alert.Item.GetType().ToString().Contains("Person"))
             {
                 if (alert.Parameter == AlertParameter.mentions)
                 {
