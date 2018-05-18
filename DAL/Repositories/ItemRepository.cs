@@ -108,6 +108,7 @@ namespace DAL.Repositories
                 {
                     ((Organization)item).SocialMediaProfiles = ((Organization)changedItem).SocialMediaProfiles;
                 }
+                ((Organization)item).Persons = ((Organization)changedItem).Persons;
             }
             if (changedItem.GetType().ToString().Contains("Theme"))
             {
@@ -130,6 +131,10 @@ namespace DAL.Repositories
             else if (item.GetType().ToString().Contains("Organization"))
             {
                 ctx.SocialMediaProfiles.RemoveRange(ctx.SocialMediaProfiles.Where(smp => smp.Item.ItemId == item.ItemId));
+                foreach(Person person in ((Organization)item).Persons)
+                {
+                    person.Organization = null;
+                }
             }
             else if (item.GetType().ToString().Contains("Theme"))
             {

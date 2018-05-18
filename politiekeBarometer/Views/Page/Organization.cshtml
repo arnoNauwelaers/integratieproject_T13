@@ -27,11 +27,33 @@ else
 @Html.ActionLink("Alle Organisaties", "OrganizationOverview");
 
 <div class="row">
-    <div class="col scroll">
-        <a class="twitter-timeline" href="https://twitter.com/@Model.SocialMediaProfiles.ToList().Where(smp => smp.Source == "Twitter").First().Url"></a>
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <div class="col-sm-6 scroll">
+        @if (Model.SocialMediaProfiles != null && Model.SocialMediaProfiles.Count() != 0)
+            {
+            <a class="twitter-timeline" href="https://twitter.com/@Model.SocialMediaProfiles.ToList().Where(smp => smp.Source == "Twitter").First().Url"></a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        }
+        else
+        {
+            <p class="divMiddle">Twitter profiel niet gevonden</p>
+        }
+
     </div>
-    <div class="col">
-        <a></a>
+
+    <div class="col-sm-6 grafiekBackground">
+            <h2>Verhalen</h2>
+            @if (ViewBag.Stories != null && Enumerable.Count(ViewBag.Stories) != 0)
+            {
+                <ul>
+                    @foreach (var url in ViewBag.Stories)
+                    {
+                        <li><a class="url" href="@url">@url</a></li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>Geen verhalen gevonden</p>
+            }
     </div>
 </div>
