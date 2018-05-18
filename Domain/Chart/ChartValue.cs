@@ -13,6 +13,7 @@ namespace BL.Domain
         hashtags,
         trendPersons,
         trendThemes,
-        trendOrganizations
+        trendOrganizations,
+        postsPerDate
     }
 }

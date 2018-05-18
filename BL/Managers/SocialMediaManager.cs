@@ -91,68 +91,7 @@ namespace BL.Managers
 
         public Dictionary<string, int> GetDataFromPost(DateTime since, ChartValue value, Item item = null)
         {
-            List<SocialMediaPost> posts = (List<SocialMediaPost>)socialMediaRepository.ReadSocialMediaPostsSince(since);
-            //if (item != null && item.GetType() == typeof(Person))
-            //{
-            //    posts = posts.Where(p => p.Persons.Contains(item)).ToList();
-            //}
-            //else if (item.GetType() == typeof(Organization))
-            //{
-            //    List<SocialMediaPost> tempPosts = posts;
-            //    Organization organization = (Organization)item;
-            //    foreach (var person in organization.Persons)
-            //    {
-            //        if (posts.Any(p => p.Persons.Contains(person)))
-            //        {
-            //            tempPosts.AddRange(posts.Where(p => p.Persons.Contains(person)).ToList());
-            //        }
-            //    }
-            //    posts = tempPosts;
-            //}
-            //else if (item.GetType() == typeof(Theme))
-            //{
-            //    Theme theme = (Theme)item;
-            //    List<SocialMediaPost> tempPosts = new List<SocialMediaPost>();
-            //    foreach (var word in theme.Keywords)
-            //    {
-            //        if (posts.Any(p => p.Words.Contains(new Word(word.Value))))
-            //        {
-            //            tempPosts.AddRange(posts.Where(p => p.Words.Contains(new Word(word.Value))).ToList());
-            //        }
-            //        if (posts.Any(p => p.Hashtags.Contains(new Hashtag(word.Value))))
-            //        {
-            //            tempPosts.AddRange(posts.Where(p => p.Hashtags.Contains(new Hashtag(word.Value))).ToList());
-            //        }
-            //    }
-            //    if (posts.Any(p => p.Themes.Contains(theme)))
-            //    {
-            //        tempPosts.AddRange(posts.Where(p => p.Themes.Contains(theme)).ToList());
-            //    }
-            //    posts = tempPosts.Distinct().ToList();
-            //}
-            List<SocialMediaPost> results = new List<SocialMediaPost>();
-            foreach (var post in posts)
-            {
-
-                if (item != null)
-                {
-                    if (item.GetType().ToString().Contains("Organization") && IsPostFromOrganization(post, (Organization)item))
-                    {
-                        results.Add(post);
-                    }
-                    else if (item.GetType().ToString().Contains("Theme") && IsPostFromTheme(post, (Theme)item))
-                    {
-                        results.Add(post);
-                    }
-                    else if (item.GetType().ToString().Contains("Person") && post.Persons.Contains((Person)item)) { 
-                        results.Add(post);
-                    }
-                }
-            }
-            if (results.Count == 0)
-            {
-                results = posts;
-            }
+            List<SocialMediaPost> results = GetPostsFromItems(item, since);
             if (value == ChartValue.hashtags)
             {
                 return GetHashtagData(results);
@@ -166,6 +105,91 @@ namespace BL.Managers
                 return GetWordData(results);
             }
             return null;
+        }
+
+        public List<SocialMediaPost> GetPostsFromItems(Item item, DateTime since)
+        {
+            List<SocialMediaPost> posts = (List<SocialMediaPost>)socialMediaRepository.ReadSocialMediaPostsSince(since);
+            List<SocialMediaPost> results = new List<SocialMediaPost>();
+            foreach (var post in posts)
+            {
+                if (item != null)
+                {
+                    if (item.GetType().ToString().Contains("Organization") && IsPostFromOrganization(post, (Organization)item))
+                    {
+                        results.Add(post);
+                    }
+                    else if (item.GetType().ToString().Contains("Theme") && IsPostFromTheme(post, (Theme)item))
+                    {
+                        results.Add(post);
+                    }
+                    else if (item.GetType().ToString().Contains("Person") && post.Persons.Contains((Person)item))
+                    {
+                        results.Add(post);
+                    }
+                }
+            }
+            if (results.Count == 0)
+            {
+                results = posts;
+            }
+            return results;
+        }
+
+        public Dictionary<string, int> GetAmountPostsPerItem(DateTime since, Item item)
+        {
+            List<SocialMediaPost> posts = GetPostsFromItems(item, since).OrderByDescending(p => p.Date).ToList();
+            Dictionary<string, int> result = new Dictionary<string, int>();
+            //for loop en elke datum optellen per item
+            foreach (var post in posts)
+            {
+                if (item.GetType().ToString().Contains("Person"))
+                {
+                    if (post.Persons.Contains((Person)item))
+                    {
+                        string date = post.Date.ToShortDateString();
+                        if (result.Any(p => p.Key == date))
+                        {
+                            result[date]++;
+                        }
+                        else
+                        {
+                            result.Add(date, 1);
+                        }
+                    }
+                }
+                else if (item.GetType().ToString().Contains("Organization"))
+                {
+                    if (IsPostFromOrganization(post, (Organization)item))
+                    {
+                        string date = post.Date.ToShortDateString();
+                        if (result.Any(p => p.Key == date))
+                        {
+                            result[date]++;
+                        }
+                        else
+                        {
+                            result.Add(date, 1);
+                        }
+                    }
+                }
+                else if (item.GetType().ToString().Contains("Theme"))
+                {
+                    if (IsPostFromTheme(post, (Theme)item))
+                    {
+                        string date = post.Date.ToShortDateString();
+                        if (result.Any(p => p.Key == date))
+                        {
+                            result[date]++;
+                        }
+                        else
+                        {
+                            result.Add(date, 1);
+                        }
+                    }
+                }
+            }
+            return result;
         }
 
         public Boolean IsPostFromTheme(SocialMediaPost post, Theme item)

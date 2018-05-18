@@ -225,7 +225,7 @@ function deleteChart(id) {
 function fillEditItems(itemNames, chartId) {
     document.getElementById("chartId").value = chartId;
     var splitItemNames = itemNames.split(',');
-    splitItemNames.forEach(function(entry) {
+    splitItemNames.forEach(function (entry) {
         addItemEditStart(entry);
     });
 }

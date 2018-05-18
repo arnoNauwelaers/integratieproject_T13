@@ -120,6 +120,7 @@
                                 <option value="persons">Meest voorkomende personen</option>
                                 <option value="hashtags">Meest voorkomende hashtags</option>
                                 <option value="trendPersons">Trends personen</option>
+                                <option value="postsPerDate">Aantal posts per item</option>
                             </select>
                         </div>
                     </div>
@@ -164,7 +165,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2 labelchart" for="items">Items:</label>
                         <div class="col-sm-10">
-                            <select class="selectModal form-control" id="itemsEdit" name="itemsSelect" onchange="addItemEdit()">
+                            <select class="selectModalEdit form-control" id="itemsEdit" name="itemsSelect" onchange="addItemEdit()">
                                 <option style="display:none"></option>
                                 @{
                                     <optgroup label="Personen">

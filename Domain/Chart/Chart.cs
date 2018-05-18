@@ -176,9 +176,15 @@ namespace BL.Domain
         public string GetTitle(Item item)
         {
             string title = "";
-            if (ChartValue == ChartValue.hashtags || ChartValue == ChartValue.words || ChartValue == ChartValue.persons)
+            if (ChartValue == ChartValue.hashtags || ChartValue == ChartValue.words || ChartValue == ChartValue.persons || ChartValue == ChartValue.postsPerDate)
             {
-                title = $"Aantal {ChartValue} van " + item.Name;
+                string word = "";
+                switch (ChartValue)
+                {
+                    case ChartValue.postsPerDate: word = "posts"; break;
+                    default: word = ChartValue.ToString(); break;
+                }
+                title = $"Aantal {word} van " + item.Name;
             }
             else
             {

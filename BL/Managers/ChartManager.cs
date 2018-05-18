@@ -103,7 +103,7 @@ namespace BL.Managers
                 trend = true;
                 itemData = socialMediaManager.GetItemsFromChartWithoutItems(since, chart.ChartValue);
             }
-            if (trend == false)
+            if (trend == false && chart.ChartValue != ChartValue.postsPerDate)
             {
                 Dictionary<Item, Dictionary<string, int>> listItems = new Dictionary<Item, Dictionary<string, int>>();
                 foreach (var item in chart.Items)
@@ -165,6 +165,19 @@ namespace BL.Managers
                         chart.ChartItemData.Add(tempChartItemData);
                     }
                 }
+            }
+            else if (trend == false && chart.ChartValue == ChartValue.postsPerDate)
+            {
+                foreach (var item in chart.Items)
+                {
+                    ChartItemData tempChartItemData = new ChartItemData() { Item = item };
+                    foreach (var result in socialMediaManager.GetAmountPostsPerItem(since, item).OrderBy(p => p.Key))
+                    {
+                        tempChartItemData.Data.Add(new Data() { Name=result.Key, Amount=result.Value});
+                    }
+                    chart.ChartItemData.Add(tempChartItemData);
+                }
+                
             }
             else if (trend == true)
             {

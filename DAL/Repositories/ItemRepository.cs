@@ -266,7 +266,5 @@ namespace DAL.Repositories
         {
             return ctx.Themes.ToList();
         }
-
-
     }
 }
