@@ -8,7 +8,7 @@
     margin-left: 50% !important;
 }
 
-.grafiek {
+.grafiekBackground {
     background-color: #f7f7f7;
     color: black;
     font-size: 20px;
@@ -17,9 +17,15 @@
     padding: 10px;
     box-sizing: border-box;
     border: 2px solid black;
-    height: 60vh !important;
+    margin-left: 2%;
 }
 
-.url{
-    font-size: 15px;
+.col-sm-6 {
+    max-width: 48% !important;
+    min-width: 500px;
+    word-wrap: break-word;
+}
+
+.url {
+    font-size: 70%;
 }

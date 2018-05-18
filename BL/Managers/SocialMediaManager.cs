@@ -324,11 +324,11 @@ namespace BL.Managers
             return list.OrderByDescending(w => w.Value).Take(50).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
         }
 
-        public List<string> GetTopTenUrl(Item item)
+        public List<string> GetTopTenUrlPerson(Person person)
         {
             List<string> allUrls = new List<string>();
             List<string> topTen = new List<string>();
-            foreach (var post in item.SocialMediaPosts)
+            foreach (var post in person.SocialMediaPosts)
             {
                 foreach (var url in post.Urls)
                 {
@@ -339,6 +339,32 @@ namespace BL.Managers
             if((sortedUrlsGroup.ToList()).Count() < 10)
             {
                 foreach(var url in (sortedUrlsGroup.ToList()).GetRange(0, (sortedUrlsGroup.ToList()).Count()))
+                {
+                    topTen.Add(url.Key);
+                }
+            }
+            else
+            {
+                foreach (var url in (sortedUrlsGroup.ToList()).GetRange(0, 10))
+                {
+                    topTen.Add(url.Key);
+                }
+            }
+            return topTen;
+        }
+
+        public List<String> GetTopTenUrlOrganization(Organization organization)
+        {
+            List<string> allUrls = new List<string>();
+            List<string> topTen = new List<string>();
+            foreach (Person person in organization.Persons)
+            {
+                allUrls.AddRange(GetTopTenUrlPerson(person));
+            }
+            var sortedUrlsGroup = allUrls.GroupBy(s => s).OrderByDescending(g => g.Count());
+            if ((sortedUrlsGroup.ToList()).Count() < 10)
+            {
+                foreach (var url in (sortedUrlsGroup.ToList()).GetRange(0, (sortedUrlsGroup.ToList()).Count()))
                 {
                     topTen.Add(url.Key);
                 }

@@ -156,7 +156,20 @@ namespace BL.Managers
             {
                 Organization tempOrganization = itemRepository.ReadOrganization(selectedOrganizationId);
                 Person person = new Person() { ItemId = id, Name = name, Organization = tempOrganization };
-                return itemRepository.UpdateItem(person);
+                if(selectedOrganizationId == 0)
+                {
+                    Person tempPerson = itemRepository.ReadPerson(id);
+                    tempOrganization = itemRepository.ReadOrganization(tempPerson.Organization.ItemId);
+                    tempOrganization.Persons.Remove(tempPerson);
+                }
+                else if(! tempOrganization.Persons.Contains(itemRepository.ReadPerson(id)))
+                {
+                    tempOrganization.Persons.Add(itemRepository.ReadPerson(id));
+                }
+                itemRepository.UpdateItem(tempOrganization);
+                Item returnPerson = itemRepository.UpdateItem(person);
+                
+                return returnPerson;
             }
             else if (type == "Organisatie")
             {

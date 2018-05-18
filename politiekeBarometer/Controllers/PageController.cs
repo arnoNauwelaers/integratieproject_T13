@@ -20,13 +20,15 @@ namespace politiekeBarometer.Controllers
         public ActionResult Person(int id)
         {
             Person person = im.ReadPerson(id);
-            ViewBag.Stories = SocialMediaManager.GetTopTenUrl(person);
+            ViewBag.Stories = SocialMediaManager.GetTopTenUrlPerson(person);
             return View(person);
         }
 
         public ActionResult Organization(int Id)
         {
-            return View(im.ReadOrganization(Id));
+            Organization organization = im.ReadOrganization(Id);
+            ViewBag.Stories = SocialMediaManager.GetTopTenUrlOrganization(organization);
+            return View(organization);
         }
 
         public ActionResult Theme(int Id)
