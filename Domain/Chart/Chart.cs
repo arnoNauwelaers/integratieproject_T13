@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Script.Serialization;
 
 namespace BL.Domain
 {
@@ -16,6 +17,7 @@ namespace BL.Domain
         [Key]
         public int ChartId { get; set; }
         public bool StandardChart { get; set; } = false; //standard zijn charts op bv. homepage
+        [JsonIgnore]
         public virtual ICollection<Item> Items { get; set; } = new List<Item>();
         public virtual ChartType ChartType { get; set; }
         public virtual ChartValue ChartValue { get; set; }

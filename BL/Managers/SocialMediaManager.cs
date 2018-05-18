@@ -415,12 +415,13 @@ namespace BL.Managers
 
         public void ActivateAPI(int minutes)
         {
+            SynchronizeDatabase();
             //TODO moet in panel configureerbaar zijn
-            var timer = new System.Threading.Timer(
-            e => SynchronizeDatabase(),
-            null,
-            TimeSpan.Zero,
-            TimeSpan.FromMinutes(minutes));
+            //var timer = new System.Threading.Timer(
+            //e => SynchronizeDatabase(),
+            //null,
+            //TimeSpan.Zero,
+            //TimeSpan.FromMinutes(minutes));
         }
 
         public Boolean ArraysToLists(SocialMediaPost post)

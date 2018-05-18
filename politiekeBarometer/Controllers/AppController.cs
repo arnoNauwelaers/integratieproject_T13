@@ -124,6 +124,7 @@ namespace politiekeBarometer.Controllers
             AlertManager = new AlertManager();
             UserManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             UserManager.SetSocialMediaManager(SocialMediaManager);
+            ChartManager = new ChartManager();
         }
 
         [HttpGet]
@@ -169,6 +170,13 @@ namespace politiekeBarometer.Controllers
             ApplicationUser user = UserManager.GetUserByToken(token);
             if (user == null) return BadRequest("Security access token not found in user database.");
             return Ok(new SimpleUser() { Id = user.Id, Username = user.UserName });
+        }
+
+        [HttpGet]
+        [Route("api/GetHomeCharts")]
+        public IHttpActionResult GetHomeCharts()
+        {
+            return Ok(ChartManager.GetStandardChart());
         }
 
         [HttpGet]
