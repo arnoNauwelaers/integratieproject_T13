@@ -78,10 +78,6 @@
     <Compile Include="Migrations\201805151408547_InitialCreate.Designer.cs">
       <DependentUpon>201805151408547_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201805181350036_Bedankt.cs" />
-    <Compile Include="Migrations\201805181350036_Bedankt.Designer.cs">
-      <DependentUpon>201805181350036_Bedankt.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\AlertRepository.cs" />
     <Compile Include="EF\BarometerDbConfiguration.cs" />

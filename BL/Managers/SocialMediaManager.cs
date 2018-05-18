@@ -192,6 +192,12 @@ namespace BL.Managers
             return result;
         }
 
+        //TODO 18/05
+        public Dictionary<string, int> AddToResultsDictionary(Dictionary<string, int> list)
+        {
+
+        }
+
         public Boolean IsPostFromTheme(SocialMediaPost post, Theme item)
         {
             if (post.Themes.Contains(item))
