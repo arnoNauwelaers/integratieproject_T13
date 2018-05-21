@@ -84,6 +84,7 @@
     <Compile Include="EmailSender.cs" />
     <Compile Include="Mail.cs" />
     <Compile Include="Managers\PlatformManager.cs" />
+    <Compile Include="Managers\SettingsManager.cs" />
     <Compile Include="Managers\UnitOfWorkManager.cs" />
     <Compile Include="Managers\ZoneManager.cs" />
     <Compile Include="Read.cs" />

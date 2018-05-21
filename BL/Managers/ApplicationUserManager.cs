@@ -26,12 +26,22 @@ namespace BL.Managers
         //    this.socialMediaManager = socialMediaManager;
         //}
 
-        public ApplicationUserManager(UnitOfWorkManager unitOfWorkManager) : base(new UserStoreRepository(unitOfWorkManager.UnitOfWork))
+        public ApplicationUserManager(UnitOfWorkManager unitOfWorkManager) : base(new UserStoreRepository(unitOfWorkManager.UnitOfWork.Context))
         {
             alertRepository = new AlertRepository(unitOfWorkManager.UnitOfWork);
             userRepository = new UserRepository(unitOfWorkManager.UnitOfWork);
             this.unitOfWorkManager = unitOfWorkManager;
+        }
+
+        public ApplicationUserManager(BarometerDbContext ctx) : base(new UserStoreRepository(ctx))
+        {
             
+        }
+
+        public void SetRepositories(UnitOfWorkManager unitOfWorkManager)
+        {
+            alertRepository = new AlertRepository(unitOfWorkManager.UnitOfWork);
+            userRepository = new UserRepository(unitOfWorkManager.UnitOfWork);
         }
 
         public void SetSocialMediaManager(SocialMediaManager socialMediaManager)
@@ -42,8 +52,7 @@ namespace BL.Managers
 
     public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
     {
-    UnitOfWorkManager unitOfWorkManager = new UnitOfWorkManager();
-      var manager = new ApplicationUserManager(unitOfWorkManager);
+      var manager = new ApplicationUserManager(context.Get<BarometerDbContext>());
 
       //USERNAME VALIDATION
       manager.UserValidator = new UserValidator<ApplicationUser>(manager)

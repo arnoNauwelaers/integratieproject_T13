@@ -350,9 +350,9 @@ namespace BL.Managers
                 }
             }
             var sortedUrlsGroup = allUrls.GroupBy(s => s).OrderByDescending(g => g.Count());
-            if((sortedUrlsGroup.ToList()).Count() < 10)
+            if ((sortedUrlsGroup.ToList()).Count() < 10)
             {
-                foreach(var url in (sortedUrlsGroup.ToList()).GetRange(0, (sortedUrlsGroup.ToList()).Count()))
+                foreach (var url in (sortedUrlsGroup.ToList()).GetRange(0, (sortedUrlsGroup.ToList()).Count()))
                 {
                     topTen.Add(url.Key);
                 }
@@ -407,13 +407,11 @@ namespace BL.Managers
 
         public void ActivateAPI(int minutes)
         {
-            SynchronizeDatabase();
-            //TODO moet in panel configureerbaar zijn
-            //var timer = new System.Threading.Timer(
-            //e => SynchronizeDatabase(),
-            //null,
-            //TimeSpan.Zero,
-            //TimeSpan.FromMinutes(minutes));
+            var timer = new System.Threading.Timer(
+            e => SynchronizeDatabase(),
+            null,
+            TimeSpan.Zero,
+            TimeSpan.FromMinutes(minutes));
         }
 
         public Boolean ArraysToLists(SocialMediaPost post)

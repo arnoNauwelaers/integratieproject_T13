@@ -25,7 +25,7 @@ namespace politiekeBarometer.Controllers
             UnitOfWorkManager unitOfWorkManager = new UnitOfWorkManager();
             SocialMediaManager = new SocialMediaManager(unitOfWorkManager);
             AlertManager = new AlertManager(unitOfWorkManager);
-            UserManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            UserManager = new ApplicationUserManager(unitOfWorkManager);
             UserManager.SetSocialMediaManager(SocialMediaManager);
             ChartManager = new ChartManager(unitOfWorkManager);
         }

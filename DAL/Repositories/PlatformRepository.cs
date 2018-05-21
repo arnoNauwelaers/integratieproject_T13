@@ -51,7 +51,7 @@ namespace DAL.Repositories
     public void UpdatePlatform(Platform p)
     {
             ctx.Entry(p).State = EntityState.Modified;
-            ctx.SaveChanges(); //WTF
+            ctx.SaveChanges(); 
     }
   }
 }

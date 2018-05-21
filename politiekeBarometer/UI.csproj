@@ -223,6 +223,7 @@
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\PlatformController.cs" />
+    <Compile Include="Controllers\SuperAdminController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -350,6 +351,7 @@
     <Content Include="Views\Page\_1.cshtml" />
     <Content Include="Views\Page\CreateAlert.cshtml" />
     <Content Include="Views\Page\AlertOverview.cshtml" />
+    <Content Include="Views\SuperAdmin\EditSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

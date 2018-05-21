@@ -11,7 +11,7 @@ namespace DAL.Repositories
 {
     public class UserStoreRepository : UserStore<ApplicationUser>
     {
-        public UserStoreRepository(UnitOfWork uow) : base((uow.Context))
+        public UserStoreRepository(BarometerDbContext ctx) : base((ctx))
         {
             
         }
