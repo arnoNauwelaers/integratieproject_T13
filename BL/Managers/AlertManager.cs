@@ -17,10 +17,10 @@ namespace BL.Managers
         private SocialMediaRepository socialMediaRepository;
 
 
-        public AlertManager()
+        public AlertManager(UnitOfWorkManager unitOfWorkManager)
         {
-      socialMediaRepository = RepositoryFactory.CreateSocialMediaRepository();
-            this.alertRepository = RepositoryFactory.CreateAlertRepository();
+            this.socialMediaRepository = new SocialMediaRepository(unitOfWorkManager.UnitOfWork);
+            this.alertRepository = new AlertRepository(unitOfWorkManager.UnitOfWork);
         }
 
         public void VerifyCondition(Alert alert)

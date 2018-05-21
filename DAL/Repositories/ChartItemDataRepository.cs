@@ -10,11 +10,11 @@ namespace DAL.Repositories
 {
     public class ChartItemDataRepository
     {
-        private BarometerDbContext ctx;
+        private readonly BarometerDbContext ctx;
 
-        public ChartItemDataRepository(BarometerDbContext ctx)
+        public ChartItemDataRepository(UnitOfWork uow)
         {
-            this.ctx = ctx;
+            this.ctx = uow.Context;
         }
 
         public List<ChartItemData> ReadChartItemData()

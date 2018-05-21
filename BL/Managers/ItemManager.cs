@@ -12,9 +12,9 @@ namespace BL.Managers
     {
         private ItemRepository itemRepository;
 
-        public ItemManager()
+        public ItemManager(UnitOfWorkManager unitOfWorkManager)
         {
-            itemRepository = RepositoryFactory.CreateItemRepository();
+            itemRepository = new ItemRepository(unitOfWorkManager.UnitOfWork);
         }
 
         public IEnumerable<Item> GetItems()

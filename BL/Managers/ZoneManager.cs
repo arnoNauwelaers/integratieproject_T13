@@ -12,9 +12,9 @@ namespace BL.Managers
     {
         private ZoneRepository ZoneRepository;
 
-        public ZoneManager()
+        public ZoneManager(UnitOfWorkManager unitOfWorkManager)
         {
-            ZoneRepository = RepositoryFactory.CreateZoneRepository();
+            ZoneRepository = new ZoneRepository(unitOfWorkManager.UnitOfWork);
         }
 
         public void UpdateZone(Zone zone)

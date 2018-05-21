@@ -12,7 +12,8 @@ namespace politiekeBarometer.Controllers
         private ChartManager chartManager;
         public HomeController()
         {
-            chartManager = new ChartManager();
+            UnitOfWorkManager unitOfWorkManager = new UnitOfWorkManager();
+            chartManager = new ChartManager(unitOfWorkManager);
         }
 
         public ActionResult Index()

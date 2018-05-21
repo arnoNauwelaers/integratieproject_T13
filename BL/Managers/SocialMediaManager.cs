@@ -23,11 +23,11 @@ namespace BL.Managers
         private Read read;
 
 
-        public SocialMediaManager()
+        public SocialMediaManager(UnitOfWorkManager unitOfWorkManager)
         {
-            socialMediaRepository = RepositoryFactory.CreateSocialMediaRepository();
-            itemManager = new ItemManager();
-            alertManager = new AlertManager();
+            socialMediaRepository = new SocialMediaRepository(unitOfWorkManager.UnitOfWork);
+            itemManager = new ItemManager(unitOfWorkManager);
+            alertManager = new AlertManager(unitOfWorkManager);
             read = new Read();
         }
 
@@ -148,14 +148,7 @@ namespace BL.Managers
                     if (post.Persons.Contains((Person)item))
                     {
                         string date = post.Date.ToShortDateString();
-                        if (result.Any(p => p.Key == date))
-                        {
-                            result[date]++;
-                        }
-                        else
-                        {
-                            result.Add(date, 1);
-                        }
+                        result = AddToResultsDictionary(result, date);
                     }
                 }
                 else if (item.GetType().ToString().Contains("Organization"))
@@ -163,14 +156,7 @@ namespace BL.Managers
                     if (IsPostFromOrganization(post, (Organization)item))
                     {
                         string date = post.Date.ToShortDateString();
-                        if (result.Any(p => p.Key == date))
-                        {
-                            result[date]++;
-                        }
-                        else
-                        {
-                            result.Add(date, 1);
-                        }
+                        result = AddToResultsDictionary(result, date);
                     }
                 }
                 else if (item.GetType().ToString().Contains("Theme"))
@@ -178,24 +164,24 @@ namespace BL.Managers
                     if (IsPostFromTheme(post, (Theme)item))
                     {
                         string date = post.Date.ToShortDateString();
-                        if (result.Any(p => p.Key == date))
-                        {
-                            result[date]++;
-                        }
-                        else
-                        {
-                            result.Add(date, 1);
-                        }
+                        result = AddToResultsDictionary(result, date);
                     }
                 }
             }
             return result;
         }
 
-        //TODO 18/05
-        public Dictionary<string, int> AddToResultsDictionary(Dictionary<string, int> list)
+        public Dictionary<string, int> AddToResultsDictionary(Dictionary<string, int> list, string date)
         {
-
+            if (list.Any(p => p.Key == date))
+            {
+                list[date]++;
+            }
+            else
+            {
+                list.Add(date, 1);
+            }
+            return list;
         }
 
         public Boolean IsPostFromTheme(SocialMediaPost post, Theme item)

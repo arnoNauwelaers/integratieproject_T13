@@ -14,110 +14,117 @@ using BL.Managers;
 
 namespace politiekeBarometer.Controllers
 {
-  public class AdminController : Controller
-  {
-    private static ApplicationUserManager userManager = new ApplicationUserManager();
+    public class AdminController : Controller
+    {
+        private ApplicationUserManager userManager;
+
+        public AdminController()
+        {
+            UnitOfWorkManager unitOfWorkManager = new UnitOfWorkManager();
+            this.userManager = new ApplicationUserManager(unitOfWorkManager);
+        }
+
         // GET: Admin
         [Authorize(Roles = "SuperAdmin")]
         public ActionResult Index()
-    {
-      
-        return View(userManager.GetUsersFromRole("Admin"));
-      
-    }
+        {
+
+            return View(userManager.GetUsersFromRole("Admin"));
+
+        }
 
         // GET: Admin/Create
         [Authorize(Roles = "SuperAdmin")]
         public ActionResult Create()
-    {
-      return View();
-    }
-
-    // POST: Admin/Create
-    [HttpPost, ValidateAntiForgeryToken,  Authorize(Roles = "SuperAdmin")]
-    public async Task<ActionResult> Create(RegisterViewModel model)
-    {
-
-      
-
-      ApplicationUser user = new ApplicationUser
-      {
-
-        UserName = model.UserName,
-        Email = model.Email,
-
-      };
-      var result = await userManager.CreateAsync(user, model.Password);
-      if (result.Succeeded)
-      {
-        var result1 = await userManager.AddToRoleAsync(user.Id, "Admin");
-        if (result1.Succeeded)
         {
-          EmailSender.Instance.SendEmail(model.UserName, model.Email, model.Password);
+            return View();
         }
-        return RedirectToAction("Index");
-      }
-      return View(model);
-    }
+
+        // POST: Admin/Create
+        [HttpPost, ValidateAntiForgeryToken, Authorize(Roles = "SuperAdmin")]
+        public async Task<ActionResult> Create(RegisterViewModel model)
+        {
+
+
+
+            ApplicationUser user = new ApplicationUser
+            {
+
+                UserName = model.UserName,
+                Email = model.Email,
+
+            };
+            var result = await userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                var result1 = await userManager.AddToRoleAsync(user.Id, "Admin");
+                if (result1.Succeeded)
+                {
+                    EmailSender.Instance.SendEmail(model.UserName, model.Email, model.Password);
+                }
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
 
         [Authorize(Roles = "SuperAdmin")]
         public ActionResult Delete(string id)
-    {
-      ApplicationUser user = userManager.GetUser(id);
-      return View(user);
-    }
+        {
+            ApplicationUser user = userManager.GetUser(id);
+            return View(user);
+        }
 
-    // POST: Party/Delete
-    [HttpPost, Authorize(Roles = "SuperAdmin")]
-    public ActionResult Delete(string id, FormCollection collection)
-    {
-      try
-      {
+        // POST: Party/Delete
+        [HttpPost, Authorize(Roles = "SuperAdmin")]
+        public ActionResult Delete(string id, FormCollection collection)
+        {
+            try
+            {
 
-        userManager.DeleteAsync(userManager.FindById(id));
+                userManager.DeleteAsync(userManager.FindById(id));
 
-        return RedirectToAction("Index");
-      }
-      catch
-      {
-        return View();
-      }
-    }
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
 
         // GET: Admin/Details
         [Authorize(Roles = "SuperAdmin")]
         public ActionResult Details(string id)
-    {
-      return View(userManager.GetUser(id));
-    }
+        {
+            return View(userManager.GetUser(id));
+        }
 
         // GET: Admin/Edit
         [Authorize(Roles = "SuperAdmin")]
         public ActionResult Edit(string id)
-    {
+        {
 
-      @ViewBag.Admin = userManager.GetUser(id);
-      return View();
+            @ViewBag.Admin = userManager.GetUser(id);
+            return View();
+        }
+
+        // POST: Admin/Edit
+        [HttpPost, ValidateAntiForgeryToken, Authorize(Roles = "SuperAdmin")]
+        public ActionResult Edit(string id, FormCollection collection)
+        {
+
+            try
+            {
+                ApplicationUser user = userManager.GetUser(id);
+                user.UserName = Convert.ToString(collection["username"]);
+                user.Email = Convert.ToString(collection["email"]);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
     }
-
-    // POST: Admin/Edit
-    [HttpPost, ValidateAntiForgeryToken, Authorize(Roles = "SuperAdmin")]
-    public ActionResult Edit(string id, FormCollection collection)
-    {
-
-      try
-      {
-        ApplicationUser user = userManager.GetUser(id);
-        user.UserName = Convert.ToString(collection["username"]);
-        user.Email = Convert.ToString(collection["email"]);
-        return RedirectToAction("Index");
-      }
-      catch
-      {
-        return View();
-      }
-    }
-
-   
-  }
-  }
+}

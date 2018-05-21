@@ -14,10 +14,14 @@ namespace politiekeBarometer
 {
     public partial class Startup
     {
+        private UnitOfWorkManager unitOfWorkManager;
+        public Startup()
+        {
+            unitOfWorkManager = new UnitOfWorkManager();
+        }
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            RepositoryFactory.CreateContext();
             CreateRolesAndUsers();
             ActivateApi();
         }
@@ -25,15 +29,15 @@ namespace politiekeBarometer
 
         private void ActivateApi()
         {
-            var SocialMediaManager = new SocialMediaManager();
+            var SocialMediaManager = new SocialMediaManager(unitOfWorkManager);
             //TODO int moet configureerbaar zijn
             //SocialMediaManager.ActivateAPI(5);
         }
 
         private void CreateRolesAndUsers()
         {
-            var roleManager = new AppRoleManager();
-            var UserManager = new ApplicationUserManager();
+            var roleManager = new AppRoleManager(unitOfWorkManager);
+            var UserManager = new ApplicationUserManager(unitOfWorkManager);
             // create superadmin role
             if (!roleManager.RoleExists("SuperAdmin"))
             {

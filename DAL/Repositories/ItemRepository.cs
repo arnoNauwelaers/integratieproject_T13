@@ -12,11 +12,11 @@ namespace DAL.Repositories
 {
     public class ItemRepository
     {
-        private BarometerDbContext ctx;
+        private readonly BarometerDbContext ctx;
 
-        public ItemRepository(BarometerDbContext ctx)
+        public ItemRepository(UnitOfWork uow)
         {
-            this.ctx = ctx;
+            this.ctx = uow.Context;
         }
 
         public IEnumerable<Item> ReadItems()

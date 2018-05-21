@@ -13,11 +13,11 @@ namespace DAL.Repositories
 {
     public class SocialMediaRepository
     {
-        private BarometerDbContext ctx;
+        private readonly BarometerDbContext ctx;
 
-        public SocialMediaRepository(BarometerDbContext ctx)
+        public SocialMediaRepository(UnitOfWork uow)
         {
-            this.ctx = ctx;
+            this.ctx = uow.Context;
         }
 
         public IEnumerable<SocialMediaPost> ReadSocialMediaPosts()

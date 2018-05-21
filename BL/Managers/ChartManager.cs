@@ -19,13 +19,13 @@ namespace BL.Managers
         private static Dictionary<string, Chart> standardCharts = new Dictionary<string, Chart>();
         private const int AMOUNT_OF_ELEMENTS = 20;
 
-        public ChartManager()
+        public ChartManager(UnitOfWorkManager unitOfWorkManager)
         {
-            chartRepository = RepositoryFactory.CreateChartRepository();
-            itemManager = new ItemManager();
-            dataManager = new DataManager();
-            socialMediaManager = new SocialMediaManager();
-            zoneManager = new ZoneManager();
+            chartRepository = new ChartRepository(unitOfWorkManager.UnitOfWork);
+            itemManager = new ItemManager(unitOfWorkManager);
+            dataManager = new DataManager(unitOfWorkManager);
+            socialMediaManager = new SocialMediaManager(unitOfWorkManager);
+            zoneManager = new ZoneManager(unitOfWorkManager);
         }
 
         public Dictionary<string, Chart> GetStandardChart()
@@ -85,6 +85,11 @@ namespace BL.Managers
         //TODO kijken of extra nodig is
         public void RetrieveDataChart(Chart chart)
         {
+            if (chart.Saved == true)
+            {
+                chart.ChartItemData = chart.SavedChartItemData;
+                return;
+            }
             Boolean trend = false;
             Dictionary<Item, int> itemData = new Dictionary<Item, int>();
             DateTime since = DateTime.Now.AddDays(-7);

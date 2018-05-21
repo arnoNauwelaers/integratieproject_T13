@@ -12,11 +12,11 @@ namespace DAL.Repositories
     public class PlatformRepository
   {
 
-    private BarometerDbContext ctx;
+        private readonly BarometerDbContext ctx;
 
-    public PlatformRepository(BarometerDbContext ctx)
+    public PlatformRepository(UnitOfWork uow)
     {
-      this.ctx = ctx;
+      this.ctx = uow.Context;
     }
     public Platform CreatePlatform(Platform p)
     {

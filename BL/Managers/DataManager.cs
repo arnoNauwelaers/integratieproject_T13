@@ -13,9 +13,9 @@ namespace BL.Managers
     {
         private DataRepository DataRepository;
 
-        public DataManager()
+        public DataManager(UnitOfWorkManager unitOfWorkManager)
         {
-            DataRepository = RepositoryFactory.CreateDataRepository();
+            DataRepository = new DataRepository(unitOfWorkManager.UnitOfWork);
         }
 
         public void UpdateData(Data data)

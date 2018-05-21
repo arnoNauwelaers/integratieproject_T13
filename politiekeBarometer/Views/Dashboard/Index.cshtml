@@ -42,6 +42,9 @@
         <form id="@chart.ChartId" class="form-horizontal deleteForm" method="post" action="/Dashboard/DeleteChart">
             <a onclick="deleteChart(@chart.ChartId)"><i class="fa fa-fw fa-trash" style="float:right"><input type="hidden" value="@chart.ChartId" name="id" /></i></a>
         </form>
+        <form id="@chart.ChartId+" class="form-horizontal deleteForm" method="post" action="/Dashboard/SaveChart">
+            <a onclick="saveChart('@chart.ChartId+')"><i class="fa fa-fw fa-save" style="float:right"><input type="hidden" value="@chart.ChartId" name="id" /></i></a>
+        </form>
         <canvas id="@chart.GetCanvasId()"></canvas>
     </div>
         <script>
@@ -120,7 +123,7 @@
                                 <option value="persons">Meest voorkomende personen</option>
                                 <option value="hashtags">Meest voorkomende hashtags</option>
                                 <option value="trendPersons">Trends personen</option>
-                                <option value="postsPerDate">Aantal posts per item</option>
+                                <option value="postsPerDate">Aantal posts per dag</option>
                             </select>
                         </div>
                     </div>
@@ -128,11 +131,11 @@
                         <label class="control-label col-sm-2 labelchart" for="frequency">Frequentie</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="frequency" name="frequency">
-                                <option value="hourly">Per uur</option>
-                                <option value="daily">Per dag</option>
-                                <option value="weekly">Per week</option>
-                                <option value="monthly">Per maand</option>
-                                <option value="yearly">Per jaar</option>
+                                <option value="hourly">Laatste uur</option>
+                                <option value="daily">Laatste dag</option>
+                                <option value="weekly">Laatste week</option>
+                                <option value="monthly">Laatste maand</option>
+                                <option value="yearly">Laatste jaar</option>
                             </select>
                         </div>
                     </div>
@@ -206,11 +209,11 @@
                         <label class="control-label col-sm-2 labelchart" for="frequency">Frequentie</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="frequencyEdit" name="frequency">
-                                <option value="hourly">Per uur</option>
-                                <option value="daily">Per dag</option>
-                                <option value="weekly">Per week</option>
-                                <option value="monthly">Per maand</option>
-                                <option value="yearly">Per jaar</option>
+                                <option value="hourly">Laatste uur</option>
+                                <option value="daily">Laatste dag</option>
+                                <option value="weekly">Laatste week</option>
+                                <option value="monthly">Laatste maand</option>
+                                <option value="yearly">Laatste jaar</option>
                             </select>
                         </div>
                     </div>

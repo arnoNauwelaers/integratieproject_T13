@@ -88,12 +88,12 @@
     <Compile Include="Repositories\DataRepository.cs" />
     <Compile Include="Repositories\ItemRepository.cs" />
     <Compile Include="Repositories\PlatformRepository.cs" />
-    <Compile Include="Repositories\RepositoryFactory.cs" />
     <Compile Include="Repositories\SocialMediaRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\UserStoreRepository.cs" />
     <Compile Include="Repositories\ZoneRepository.cs" />
+    <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">
@@ -108,9 +108,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201805151408547_InitialCreate.resx">
       <DependentUpon>201805151408547_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805181350036_Bedankt.resx">
-      <DependentUpon>201805181350036_Bedankt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

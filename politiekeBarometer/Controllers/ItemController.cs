@@ -14,8 +14,15 @@ namespace politiekeBarometer.Controllers
 {
     public class ItemController : Controller
     {
-        ItemManager itemManager = new ItemManager();
-        SocialMediaManager socialMediaManager = new SocialMediaManager();
+        ItemManager itemManager;
+        SocialMediaManager socialMediaManager;
+
+        public ItemController()
+        {
+            UnitOfWorkManager unitOfWorkManager = new UnitOfWorkManager();
+            this.itemManager = new ItemManager(unitOfWorkManager);
+            this.socialMediaManager = new SocialMediaManager(unitOfWorkManager);
+        }
 
         public ActionResult AdminItemIndex()
         {

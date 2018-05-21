@@ -222,6 +222,11 @@ function deleteChart(id) {
     form.submit();
 }
 
+function saveChart(id) {
+    var form = document.getElementById(id);
+    form.submit();
+}
+
 function fillEditItems(itemNames, chartId) {
     document.getElementById("chartId").value = chartId;
     var splitItemNames = itemNames.split(',');

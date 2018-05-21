@@ -11,7 +11,7 @@ namespace BL.Managers
 {
   public class AppRoleManager : RoleManager<IdentityRole>
   {
-    public AppRoleManager() : base(new RoleStore<IdentityRole>(new BarometerDbContext()))
+    public AppRoleManager(UnitOfWorkManager unitOfWorkManager) : base(new RoleStore<IdentityRole>(unitOfWorkManager.UnitOfWork.Context))
     {
 
     }

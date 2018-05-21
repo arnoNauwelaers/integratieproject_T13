@@ -16,6 +16,7 @@ namespace BL.Managers
     private UserRepository userRepository;
         private AlertRepository alertRepository;
         private SocialMediaManager socialMediaManager;
+        private UnitOfWorkManager unitOfWorkManager;
         
 
         //public ApplicationUserManager(SocialMediaManager socialMediaManager)
@@ -25,11 +26,11 @@ namespace BL.Managers
         //    this.socialMediaManager = socialMediaManager;
         //}
 
-        public ApplicationUserManager() : base(new UserStoreRepository())
+        public ApplicationUserManager(UnitOfWorkManager unitOfWorkManager) : base(new UserStoreRepository(unitOfWorkManager.UnitOfWork))
         {
-            alertRepository = RepositoryFactory.CreateAlertRepository();
-            userRepository = RepositoryFactory.CreateUserRepository();
-            
+            alertRepository = new AlertRepository(unitOfWorkManager.UnitOfWork);
+            userRepository = new UserRepository(unitOfWorkManager.UnitOfWork);
+            this.unitOfWorkManager = unitOfWorkManager;
             
         }
 
@@ -41,8 +42,8 @@ namespace BL.Managers
 
     public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
     {
-
-      var manager = new ApplicationUserManager();
+    UnitOfWorkManager unitOfWorkManager = new UnitOfWorkManager();
+      var manager = new ApplicationUserManager(unitOfWorkManager);
 
       //USERNAME VALIDATION
       manager.UserValidator = new UserValidator<ApplicationUser>(manager)

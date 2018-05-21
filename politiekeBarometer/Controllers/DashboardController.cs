@@ -26,8 +26,9 @@ namespace politiekeBarometer.Controllers
         //private BarometerDbContext db = BarometerDbContext.Create();
         public DashboardController()
         {
-            ChartManager = new ChartManager();
-            itemManager = new ItemManager();
+            UnitOfWorkManager unitOfWorkManager = new UnitOfWorkManager();
+            ChartManager = new ChartManager(unitOfWorkManager);
+            itemManager = new ItemManager(unitOfWorkManager);
         }
         // GET: Dashboard
         [Authorize]
@@ -78,6 +79,18 @@ namespace politiekeBarometer.Controllers
         }
 
         [HttpPost, Authorize]
+        public ActionResult SaveChart(int id)
+        {
+            Chart chart = ChartManager.GetChart(id);
+            UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            chart.SavedChartItemData = chart.ChartItemData;
+            chart.Saved = true;
+            ApplicationUser user = UserManager.GetUser(User.Identity.GetUserId());
+            UserManager.Update(user);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost, Authorize]
         public ActionResult EditChart(int chartid, string items, string type, string frequency)
         {
             ChartManager.EditChartFromDashboard(chartid, items, type, frequency);
@@ -90,7 +103,7 @@ namespace politiekeBarometer.Controllers
             Chart chart = ChartManager.GetChart(id);
             UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = UserManager.GetUser(User.Identity.GetUserId());
-            user.Dashboard.Add(new Chart() { ChartType=chart.ChartType, ChartValue=chart.ChartValue, FrequencyType=chart.FrequencyType, Zone=(new Zone() { Width = 2.43, X = 10, Y = 10 })});
+            user.Dashboard.Add(new Chart() { ChartType = chart.ChartType, ChartValue = chart.ChartValue, FrequencyType = chart.FrequencyType, Zone = (new Zone() { Width = 2.43, X = 10, Y = 10 }) });
             UserManager.Update(user);
             return RedirectToAction("Index");
         }
