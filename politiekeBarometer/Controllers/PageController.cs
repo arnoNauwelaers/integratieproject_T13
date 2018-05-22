@@ -16,6 +16,7 @@ namespace politiekeBarometer.Controllers
         ApplicationUserManager userManager;
         AlertManager am;
         SocialMediaManager socialMediaManager;
+        ChartManager chartManager;
         
         public PageController()
         {
@@ -24,12 +25,26 @@ namespace politiekeBarometer.Controllers
             this.userManager = new ApplicationUserManager(unitOfWorkManager);
             this.am = new AlertManager(unitOfWorkManager);
             this.socialMediaManager = new SocialMediaManager(unitOfWorkManager);
+            this.chartManager = new ChartManager(unitOfWorkManager);
         }
 
         public ActionResult Person(int id)
         {
             Person person = im.ReadPerson(id);
             ViewBag.Stories = socialMediaManager.GetTopTenUrlPerson(person);
+            List<Chart> charts = new List<Chart>();
+            List<Item> items = new List<Item>
+            {
+                person
+            };
+            charts.Add(new Chart() { Items=items, ChartType=ChartType.bar, ChartValue=ChartValue.words, FrequencyType=DateFrequencyType.weekly});
+            charts.Add(new Chart() { Items = items, ChartType = ChartType.pie, ChartValue = ChartValue.hashtags, FrequencyType = DateFrequencyType.weekly });
+            charts.Add(new Chart() { Items = items, ChartType = ChartType.line, ChartValue = ChartValue.postsPerDate, FrequencyType = DateFrequencyType.weekly });
+            foreach (var chart in charts)
+            {
+                chartManager.RetrieveDataChart(chart);
+            }
+            ViewBag.Charts = charts;
             return View(person);
         }
 
