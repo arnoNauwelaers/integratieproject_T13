@@ -262,7 +262,7 @@ namespace BL.Managers
                     {
                         foreach (var word in post.Words)
                         {
-                            if (keyword.Equals(word))
+                            if (keyword.Value.Equals(word.Value))
                             {
                                 if (list.ContainsKey(theme))
                                 {
