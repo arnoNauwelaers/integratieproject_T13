@@ -64,15 +64,15 @@
     <div class="col-lg-6">
         <div class="panel panel-default">
             <div class="panel-heading text-center">
-                <h5>Trending organisaties van deze maand <a href="/Dashboard/MoveToDashboard/@Model.Charts["trendingorganizationMonth"].ChartId">(Doorschuiven naar dashboard)</a></h5>
+                <h5>Trending organisaties van deze maand <a href="/Dashboard/MoveToDashboard/@Model.Charts["trendingOrganizationMonth"].ChartId">(Doorschuiven naar dashboard)</a></h5>
             </div>
             <div class="panel-body text-center">
-                <canvas id="@Model.Charts["trendingorganizationMonth"].GetCanvasId()"></canvas>
+                <canvas id="@Model.Charts["trendingOrganizationMonth"].GetCanvasId()"></canvas>
                 <script>
-                    var typeChart = '@Model.Charts["trendingorganizationMonth"].ChartType.ToString()';
-                    var labelsChart = @Html.Raw(@Model.Charts["trendingorganizationMonth"].GetLabels());
-                    var canvasId = document.getElementById("@Model.Charts["trendingorganizationMonth"].GetCanvasId()").getContext('2d');
-                    var dataSets = @Html.Raw(@Model.Charts["trendingorganizationMonth"].GetDataSets());
+                    var typeChart = '@Model.Charts["trendingOrganizationMonth"].ChartType.ToString()';
+                    var labelsChart = @Html.Raw(@Model.Charts["trendingOrganizationMonth"].GetLabels());
+                    var canvasId = document.getElementById("@Model.Charts["trendingOrganizationMonth"].GetCanvasId()").getContext('2d');
+                    var dataSets = @Html.Raw(@Model.Charts["trendingOrganizationMonth"].GetDataSets());
 
                     CreateChart(canvasId, typeChart, labelsChart, dataSets);
                 </script>
@@ -87,7 +87,15 @@
                 <h5>Trending themas van deze week</h5>
             </div>
             <div class="panel-body text-center">
-                <p>HIER KOMT GRAFIEK</p>
+                <canvas id="@Model.Charts["trendingThemeMonth"].GetCanvasId()"></canvas>
+                <script>
+                    var typeChart = '@Model.Charts["trendingThemeMonth"].ChartType.ToString()';
+                    var labelsChart = @Html.Raw(@Model.Charts["trendingThemeMonth"].GetLabels());
+                    var canvasId = document.getElementById("@Model.Charts["trendingThemeMonth"].GetCanvasId()").getContext('2d');
+                    var dataSets = @Html.Raw(@Model.Charts["trendingThemeMonth"].GetDataSets());
+
+                    CreateChart(canvasId, typeChart, labelsChart, dataSets);
+                </script>
             </div>
         </div>
     </div>
@@ -97,7 +105,15 @@
                 <h5>Trending themas van deze maand</h5>
             </div>
             <div class="panel-body text-center">
-                <p>HIER KOMT GRAFIEK</p>
+                <canvas id="@Model.Charts["trendingThemeMonth"].GetCanvasId()"></canvas>
+                <script>
+                    var typeChart = '@Model.Charts["trendingThemeMonth"].ChartType.ToString()';
+                    var labelsChart = @Html.Raw(@Model.Charts["trendingThemeMonth"].GetLabels());
+                    var canvasId = document.getElementById("@Model.Charts["trendingThemeMonth"].GetCanvasId()").getContext('2d');
+                    var dataSets = @Html.Raw(@Model.Charts["trendingThemeMonth"].GetDataSets());
+
+                    CreateChart(canvasId, typeChart, labelsChart, dataSets);
+                </script>
             </div>
         </div>
     </div>

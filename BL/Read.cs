@@ -31,7 +31,11 @@ namespace BL
             {
                 var tweets = new List<SocialMediaPost>();
                 Settings settings = settingsManager.GetSettings();
-                URL = settings.ApiUrl + settings.ApiPort;
+                URL = settings.ApiUrl;
+                if (!settings.ApiPort.Equals("") && settings.ApiPort != null)
+                {
+                    URL += $":{settings.ApiPort}";
+                }
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(URL);
                 httpWebRequest.Headers.Add("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
                 httpWebRequest.ContentType = "application/json; charset=utf-8";

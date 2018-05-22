@@ -231,9 +231,52 @@ namespace BL.Managers
             }
             else if (value == ChartValue.trendThemes)
             {
-
+                return GetTrendThemeData(posts);
             }
             return null;
+        }
+
+        public Dictionary<Item, int> GetTrendThemeData(List<SocialMediaPost> posts)
+        {
+            Dictionary<Item, int> list = new Dictionary<Item, int>();
+            foreach (var post in posts)
+            {
+                foreach (var theme in post.Themes)
+                {
+                    if (theme.Name != null)
+                    {
+                        if (list.ContainsKey(theme))
+                        {
+                            list[theme]++;
+                        }
+                        else
+                        {
+                            list.Add(theme, 1);
+                        }
+                    }
+                }
+                foreach (var theme in itemManager.GetThemes().ToList())
+                {
+                    foreach (var keyword in theme.Keywords)
+                    {
+                        foreach (var word in post.Words)
+                        {
+                            if (keyword.Equals(word))
+                            {
+                                if (list.ContainsKey(theme))
+                                {
+                                    list[theme]++;
+                                }
+                                else
+                                {
+                                    list.Add(theme, 1);
+                                }
+                            }
+                        }
+                    }
+                } 
+            }
+            return list;
         }
 
         public Dictionary<Item, int> GetTrendPersonData(List<SocialMediaPost> posts)
