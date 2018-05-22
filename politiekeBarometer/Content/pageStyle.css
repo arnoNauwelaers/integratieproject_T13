@@ -23,9 +23,41 @@
 .col-sm-6 {
     max-width: 48% !important;
     min-width: 500px;
-    word-wrap: break-word;
 }
 
 .url {
     font-size: 70%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
+    word-break: break-word;
+    hyphens: auto;
+}
+
+.row {
+    height: 100%;
+}
+
+.first {
+    height: 70%;
+}
+
+.second{
+    height: 25%;
+    margin-top: 5px;
+}
+
+.word {
+    font-size: 85%;
+    float: left;
+    list-style: outside none none;
+    width: 30%;
+}
+
+h4{
+    width: 100%;
+}
+
+.secondUl {
+    display: inline-block;
 }

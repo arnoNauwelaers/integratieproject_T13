@@ -10,20 +10,20 @@
   <p>Geen resultaten gevonden.</p>
 } else {
   <ul>
-    @foreach (var item in Model) {
-      switch (item.typeInt) {
-        case 1:
-          <li>@Html.ActionLink(item.Name + " (Persoon)", "Person", "Page", new { id = item.ItemId }, null)</li>
-          break;
-        case 2:
-          <li>@Html.ActionLink(item.Name + " (Organisatie)", "Organization", "Page", new { id = item.ItemId }, null)</li>
-          break;
-        case 3:
-          <li>@Html.ActionLink(item.Name + " (Thema)", "Theme", "Page", new { id = item.ItemId }, null)</li>
-          break;
-        default:
-          break;
-      }
+    @foreach (var item in Model)
+    {
+        if (item.GetType().ToString().Contains("Person"))
+        {
+            <li>@Html.ActionLink(item.Name + " (Persoon)", "Person", "Page", new { id = item.ItemId }, null)</li>
+        }
+        else if (item.GetType().ToString().Contains("Organization"))
+        {
+            <li>@Html.ActionLink(item.Name + " (Organisatie)", "Organization", "Page", new { id = item.ItemId }, null)</li>
+        }
+        else if (item.GetType().ToString().Contains("Theme"))
+        {
+            <li>@Html.ActionLink(item.Name + " (Thema)", "Theme", "Page", new { id = item.ItemId }, null)</li>
+        }
     }
   </ul>
 }

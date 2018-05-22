@@ -78,22 +78,41 @@
                 <p class="divMiddle">Twitter profiel niet gevonden</p>
             }
         </div>
-        <div class="col-sm-6 grafiekBackground">
-            <h2>Verhalen</h2>
-            @if (ViewBag.Stories != null && Enumerable.Count(ViewBag.Stories) != 0)
+        <div class="col-sm-6">
+            <div class="row grafiekBackground first">
+                <h2>Verhalen</h2>
+                @if (ViewBag.Stories != null && Enumerable.Count(ViewBag.Stories) != 0)
             {
-                <ul>
-                    @foreach (var url in ViewBag.Stories)
-                    {
-                        <li><a class="url" href="@url">@url</a></li>
-                    }
-                </ul>
-            }
-            else
-            {
-                <p>Geen verhalen gevonden</p>
-            }
+                    <ul>
+                        @foreach (var url in ViewBag.Stories)
+                        {
+                            <li><a class="url" href="@url">@url</a></li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p>Geen verhalen gevonden</p>
+                }
+            </div>
+            <div class="row grafiekBackground second">
+                <h4>Gekoppelde termen</h4>
+                @if (ViewBag.RelatedWords != null && Enumerable.Count(ViewBag.RelatedWords) != 0)
+                {
+                    <ul class="secondUl">
+                        @foreach (var word in ViewBag.RelatedWords)
+                        {
+                            <li class="word"> <p class="word">@word</p></li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p>Geen verhalen gevonden</p>
+                }
+            </div>
         </div>
+        
     </div>
 </body>
 </html>

@@ -81,9 +81,9 @@ namespace DAL.EF
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Hashtags).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Themes).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasOptional(i => i.PostSentiment).WithOptionalDependent().WillCascadeOnDelete(true);
-
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Persons).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Themes).WithMany();
+
             modelBuilder.Entity<Item>().HasMany(i => i.SocialMediaPosts).WithMany();
 
             //modelBuilder.Entity<Theme>().HasMany(i => i.Keywords).WithMany();

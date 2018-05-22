@@ -127,6 +127,10 @@ namespace DAL.Repositories
             if (item.GetType().ToString().Contains("Person"))
             {
                 ctx.SocialMediaProfiles.RemoveRange(ctx.SocialMediaProfiles.Where(smp => smp.Item.ItemId == item.ItemId));
+                foreach(var post in ((Person)item).SocialMediaPosts)
+                {
+                    post.Persons.Remove((Person)item);
+                }
             }
             else if (item.GetType().ToString().Contains("Organization"))
             {

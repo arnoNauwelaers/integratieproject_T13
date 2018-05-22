@@ -45,6 +45,8 @@ namespace politiekeBarometer.Controllers
                 chartManager.RetrieveDataChart(chart);
             }
             ViewBag.Charts = charts;
+
+            ViewBag.RelatedWords = socialMediaManager.GetTopTenWordsPerson(person);
             return View(person);
         }
 
@@ -52,6 +54,7 @@ namespace politiekeBarometer.Controllers
         {
             Organization organization = im.ReadOrganization(Id);
             ViewBag.Stories = socialMediaManager.GetTopTenUrlOrganization(organization);
+            ViewBag.RelatedWords = socialMediaManager.GetTopTenWordsOrganization(organization);
             return View(organization);
         }
 
