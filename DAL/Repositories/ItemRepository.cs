@@ -43,7 +43,7 @@ namespace DAL.Repositories
 
         public IEnumerable<Theme> GetThemes()
         {
-            return ctx.Items.OfType<Theme>().Include(k => k.Keywords).ToList<Theme>();
+            return ctx.Items.OfType<Theme>().Include(t => t.Keywords).ToList<Theme>();
         }
 
         public Item CreateItem(Item item)
@@ -126,19 +126,42 @@ namespace DAL.Repositories
             Item item = ctx.Items.Find(itemId);
             if (item.GetType().ToString().Contains("Person"))
             {
-                ctx.SocialMediaProfiles.RemoveRange(ctx.SocialMediaProfiles.Where(smp => smp.Item.ItemId == item.ItemId));
-                foreach(var post in ((Person)item).SocialMediaPosts)
+                List<SocialMediaProfile> tempSocialmediaprofiles =  ctx.SocialMediaProfiles.Where(smp => smp.Item.ItemId == item.ItemId).ToList();
+                foreach(var profile in tempSocialmediaprofiles)
+                {
+                    profile.Item = null;
+                    ((Person)item).SocialMediaProfiles.Remove(profile);
+                }
+                ((Person)item).Organization = null;
+                (ctx.Organizations.Find(((Person)item).Organization.ItemId)).Persons.Remove((Person)item);
+                List<SocialMediaPost> tempSocialemediaposts = (ctx.SocialMediaPosts.Where(smp => smp.Persons.Any(p => p.ItemId == item.ItemId))).ToList();
+                foreach(var post in tempSocialemediaposts)
                 {
                     post.Persons.Remove((Person)item);
+                    ((Person)item).SocialMediaPosts.Remove(post);
                 }
+                List<Chart> tempCharts = (ctx.Charts.Where(c => c.Items.Any(i => i.ItemId == item.ItemId))).ToList();
+                foreach(var chart in tempCharts)
+                {
+                    chart.Items.Remove(item);
+                }
+                ctx.SocialMediaProfiles.RemoveRange(ctx.SocialMediaProfiles.Where(smp => smp.Item == null));
+                ctx.SaveChanges();
             }
             else if (item.GetType().ToString().Contains("Organization"))
             {
+                List<SocialMediaProfile> tempSocialmediaprofiles = ctx.SocialMediaProfiles.Where(smp => smp.Item.ItemId == item.ItemId).ToList();
+                foreach (var profile in tempSocialmediaprofiles)
+                {
+                    profile.Item = null;
+                    ((Organization)item).SocialMediaProfiles.Remove(profile);
+                }
                 ctx.SocialMediaProfiles.RemoveRange(ctx.SocialMediaProfiles.Where(smp => smp.Item.ItemId == item.ItemId));
                 foreach(Person person in ((Organization)item).Persons)
                 {
                     person.Organization = null;
                 }
+                ctx.SaveChanges();
             }
             else if (item.GetType().ToString().Contains("Theme"))
             {

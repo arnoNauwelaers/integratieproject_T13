@@ -28,44 +28,7 @@
 
     @Html.ActionLink("Stel alert in", "CreateAlert");
     @Html.ActionLink("Alle personen", "PersonOverview")
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading text-center">
-                    <h5>Woorden van deze week</h5>
-                </div>
-                <div class="panel-body text-center">
-                    <canvas id="canvas1"></canvas>
-                    <script>
-                    var typeChart = '@ViewBag.Charts[0].ChartType.ToString()';
-                    var labelsChart = @Html.Raw(@ViewBag.Charts[0].GetLabels());
-                    var canvasId = document.getElementById("canvas1").getContext('2d');
-                    var dataSets = @Html.Raw(@ViewBag.Charts[0].GetDataSets());
-
-                    CreateChart(canvasId, typeChart, labelsChart, dataSets);
-                    </script>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading text-center">
-                    <h5>Hashtags van deze week</h5>
-                </div>
-                <div class="panel-body text-center">
-                    <canvas id="canvas2"></canvas>
-                    <script>
-                    var typeChart = '@ViewBag.Charts[1].ChartType.ToString()';
-                    var labelsChart = @Html.Raw(@ViewBag.Charts[1].GetLabels());
-                    var canvasId = document.getElementById("canvas2").getContext('2d');
-                    var dataSets = @Html.Raw(@ViewBag.Charts[1].GetDataSets());
-
-                    CreateChart(canvasId, typeChart, labelsChart, dataSets);
-                    </script>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <div class="row">
         <div class="col-sm-6 scroll">
             @if (Model.SocialMediaProfiles != null && Model.SocialMediaProfiles.Count() != 0)
@@ -112,7 +75,45 @@
                 }
             </div>
         </div>
-        
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 grafiekBackground">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <h5>Woorden van deze week</h5>
+                </div>
+                <div class="panel-body text-center">
+                    <canvas id="canvas1"></canvas>
+                    <script>
+                    var typeChart = '@ViewBag.Charts[0].ChartType.ToString()';
+                    var labelsChart = @Html.Raw(@ViewBag.Charts[0].GetLabels());
+                    var canvasId = document.getElementById("canvas1").getContext('2d');
+                    var dataSets = @Html.Raw(@ViewBag.Charts[0].GetDataSets());
+
+                    CreateChart(canvasId, typeChart, labelsChart, dataSets);
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 grafiekBackground">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <h5>Hashtags van deze week</h5>
+                </div>
+                <div class="panel-body text-center">
+                    <canvas id="canvas2"></canvas>
+                    <script>
+                    var typeChart = '@ViewBag.Charts[1].ChartType.ToString()';
+                    var labelsChart = @Html.Raw(@ViewBag.Charts[1].GetLabels());
+                    var canvasId = document.getElementById("canvas2").getContext('2d');
+                    var dataSets = @Html.Raw(@ViewBag.Charts[1].GetDataSets());
+
+                    CreateChart(canvasId, typeChart, labelsChart, dataSets);
+                    </script>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

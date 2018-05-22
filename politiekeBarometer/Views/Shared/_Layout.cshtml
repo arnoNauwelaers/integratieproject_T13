@@ -39,6 +39,16 @@
                     </a>
                 </li>
 
+                @if (Request.IsAuthenticated)
+                {
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                        <a class="nav-link" href="@Url.Action("Index", "Dashboard")">
+                            <i class="fa fa-fw fa-dashboard"></i>
+                            <span class="nav-link-text">Dashboard</span>
+                        </a>
+                    </li>
+                }
+
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Persons">
 
                     <a class="nav-link" href="@Url.Action("PersonOverview", "Page")">
@@ -60,15 +70,7 @@
                         <span class="nav-link-text">Themas</span>
                     </a>
                 </li>
-                @if (Request.IsAuthenticated)
-                {
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                        <a class="nav-link" href="@Url.Action("Index", "Dashboard")">
-                            <i class="fa fa-fw fa-dashboard"></i>
-                            <span class="nav-link-text">Dashboard</span>
-                        </a>
-                    </li>
-                }
+                
                 @if (Request.IsAuthenticated && this.User.IsInRole("Admin"))
                 {
                     <li class="nav-item"><b class="nav-link" style="color:white;">Admin</b></li>
