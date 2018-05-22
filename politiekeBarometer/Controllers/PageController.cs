@@ -32,20 +32,7 @@ namespace politiekeBarometer.Controllers
         {
             Person person = im.ReadPerson(id);
             ViewBag.Stories = socialMediaManager.GetTopTenUrlPerson(person);
-            List<Chart> charts = new List<Chart>();
-            List<Item> items = new List<Item>
-            {
-                person
-            };
-            charts.Add(new Chart() { Items=items, ChartType=ChartType.bar, ChartValue=ChartValue.words, FrequencyType=DateFrequencyType.weekly});
-            charts.Add(new Chart() { Items = items, ChartType = ChartType.pie, ChartValue = ChartValue.hashtags, FrequencyType = DateFrequencyType.weekly });
-            charts.Add(new Chart() { Items = items, ChartType = ChartType.line, ChartValue = ChartValue.postsPerDate, FrequencyType = DateFrequencyType.weekly });
-            foreach (var chart in charts)
-            {
-                chartManager.RetrieveDataChart(chart);
-            }
-            ViewBag.Charts = charts;
-
+            ViewBag.Charts = chartManager.GetChartsFromItem(person);
             ViewBag.RelatedWords = socialMediaManager.GetTopTenWordsPerson(person);
             return View(person);
         }
