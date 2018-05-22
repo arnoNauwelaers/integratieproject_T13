@@ -87,12 +87,12 @@
                 <h5>Trending themas van deze week</h5>
             </div>
             <div class="panel-body text-center">
-                <canvas id="@Model.Charts["trendingThemeMonth"].GetCanvasId()"></canvas>
+                <canvas id="@Model.Charts["trendingThemeWeek"].GetCanvasId()"></canvas>
                 <script>
-                    var typeChart = '@Model.Charts["trendingThemeMonth"].ChartType.ToString()';
-                    var labelsChart = @Html.Raw(@Model.Charts["trendingThemeMonth"].GetLabels());
-                    var canvasId = document.getElementById("@Model.Charts["trendingThemeMonth"].GetCanvasId()").getContext('2d');
-                    var dataSets = @Html.Raw(@Model.Charts["trendingThemeMonth"].GetDataSets());
+                    var typeChart = '@Model.Charts["trendingThemeWeek"].ChartType.ToString()';
+                    var labelsChart = @Html.Raw(@Model.Charts["trendingThemeWeek"].GetLabels());
+                    var canvasId = document.getElementById("@Model.Charts["trendingThemeWeek"].GetCanvasId()").getContext('2d');
+                    var dataSets = @Html.Raw(@Model.Charts["trendingThemeWeek"].GetDataSets());
 
                     CreateChart(canvasId, typeChart, labelsChart, dataSets);
                 </script>

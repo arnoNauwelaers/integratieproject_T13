@@ -98,7 +98,7 @@ namespace DAL.EF
             modelBuilder.Entity<Chart>().HasMany(i => i.Items).WithMany();
             modelBuilder.Entity<Platform>().HasMany(i => i.Users).WithMany();
             modelBuilder.Entity<Platform>().HasMany(i => i.Sources).WithMany();
-            //modelBuilder.Entity<Theme>().HasMany(i => i.Keywords).WithMany();
+            modelBuilder.Entity<Theme>().HasMany(i => i.Keywords).WithMany();
             //modelBuilder.Entity<User>().HasMany(i => i.Alerts).WithMany();
         }
     }

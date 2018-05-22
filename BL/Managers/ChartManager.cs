@@ -52,7 +52,7 @@ namespace BL.Managers
                 standardCharts.Add("trendingPersonWeek", chartRepository.CreateChart(trendingPersonWeek));
                 standardCharts.Add("trendingPersonMonth", chartRepository.CreateChart(trendingPersonMonth));
                 standardCharts.Add("trendingOrganizationWeek", chartRepository.CreateChart(trendingOrganizationWeek));
-                standardCharts.Add("trendingorganizationMonth", chartRepository.CreateChart(trendingOrganizationMonth));
+                standardCharts.Add("trendingOrganizationMonth", chartRepository.CreateChart(trendingOrganizationMonth));
                 standardCharts.Add("trendingThemeWeek", chartRepository.CreateChart(trendingThemeWeek));
                 standardCharts.Add("trendingThemeMonth", chartRepository.CreateChart(trendingThemeMonth));
             }
