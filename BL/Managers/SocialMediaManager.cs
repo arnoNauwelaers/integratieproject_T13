@@ -192,11 +192,11 @@ namespace BL.Managers
             return result;
         }
 
-        //TODO 18/05
+        /*TODO 18/05
         public Dictionary<string, int> AddToResultsDictionary(Dictionary<string, int> list)
         {
 
-        }
+        }*/
 
         public Boolean IsPostFromTheme(SocialMediaPost post, Theme item)
         {
@@ -400,6 +400,61 @@ namespace BL.Managers
             else
             {
                 foreach (var url in (sortedUrlsGroup.ToList()).GetRange(0, 10))
+                {
+                    topTen.Add(url.Key);
+                }
+            }
+            return topTen;
+        }
+
+        public List<string> GetTopTenWordsPerson(Person person)
+        {
+            List<string> allWords = new List<string>();
+            List<string> topTen = new List<string>();
+            foreach (var post in person.SocialMediaPosts)
+            {
+                foreach (var word in post.Words)
+                {
+                    allWords.Add(word.Value);
+                }
+            }
+            var sortedWordsGroup = allWords.GroupBy(s => s).OrderByDescending(g => g.Count());
+            if ((sortedWordsGroup.ToList()).Count() < 10)
+            {
+                foreach (var word in (sortedWordsGroup.ToList()).GetRange(0, (sortedWordsGroup.ToList()).Count()))
+                {
+                    topTen.Add(word.Key);
+                }
+            }
+            else
+            {
+                foreach (var word in (sortedWordsGroup.ToList()).GetRange(0, 10))
+                {
+                    topTen.Add(word.Key);
+                }
+            }
+            return topTen;
+        }
+
+        public List<string> GetTopTenWordsOrganization(Organization organization)
+        {
+            List<string> allWords = new List<string>();
+            List<string> topTen = new List<string>();
+            foreach (Person person in organization.Persons)
+            {
+                allWords.AddRange(GetTopTenWordsPerson(person));
+            }
+            var sortedWordsGroup = allWords.GroupBy(s => s).OrderByDescending(g => g.Count());
+            if ((sortedWordsGroup.ToList()).Count() < 10)
+            {
+                foreach (var word in (sortedWordsGroup.ToList()).GetRange(0, (sortedWordsGroup.ToList()).Count()))
+                {
+                    topTen.Add(word.Key);
+                }
+            }
+            else
+            {
+                foreach (var url in (sortedWordsGroup.ToList()).GetRange(0, 10))
                 {
                     topTen.Add(url.Key);
                 }

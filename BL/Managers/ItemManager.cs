@@ -59,7 +59,7 @@ namespace BL.Managers
                 Organization tempOrganization = itemRepository.ReadOrganization(selectedOrganizationId);
                 Person person = new Person() { Name = name, Organization = tempOrganization };
                 Item tempPerson = itemRepository.CreateItem(person);
-                if(twitterUrl != null && twitterUrl != " ")
+                if(twitterUrl != null && twitterUrl != " " && twitterUrl != "")
                 {
                     SocialMediaProfile socialMediaProfile = new SocialMediaProfile() { Url = twitterUrl, Source = "Twitter", Item = tempPerson };
                     SocialMediaProfile tempSocialMediaProfile = itemRepository.CreateSocialmediaprofile(socialMediaProfile);
@@ -71,7 +71,7 @@ namespace BL.Managers
             {
                 Organization organization = new Organization() { Name = name };
                 Item tempOrganization = itemRepository.CreateItem(organization);
-                if (twitterUrl != null && twitterUrl != " ")
+                if (twitterUrl != null && twitterUrl != " " && twitterUrl != "")
                 {
                     SocialMediaProfile socialMediaProfile = new SocialMediaProfile() { Url = twitterUrl, Source = "Twitter", Item = tempOrganization };
                     SocialMediaProfile tempSocialMediaProfile = itemRepository.CreateSocialmediaprofile(socialMediaProfile);
@@ -95,7 +95,7 @@ namespace BL.Managers
             }
         }
 
-        public void AddItem(string name, string type, string organization, string keywords)
+        public void AddItem(string name, string type, string organization, string keywords, string twitterUrl)
         {
             if (type.ToUpper() == "PERSOON" || type.ToUpper() == "PERSON")
             {
@@ -103,40 +103,26 @@ namespace BL.Managers
                 if (tempOrganization.Count() == 0)
                 {
                     Organization newOrganization = new Organization() { Name = organization };
-                    itemRepository.CreateItem(newOrganization);
-                    Person person = new Person() { Name = name, Organization = newOrganization };
-                    itemRepository.CreateItem(person);
+                    newOrganization = (Organization)itemRepository.CreateItem(newOrganization);
+                    AddItem(name, "Person", newOrganization.ItemId, keywords, twitterUrl);
                 }
                 else
                 {
-                    Person person = new Person() { Name = name, Organization = tempOrganization[0] };
-                    itemRepository.CreateItem(person);
+                    AddItem(name, "Person", tempOrganization.First().ItemId, keywords, twitterUrl);
                 }
-
             }
             else if (type.ToUpper() == "ORGANISATIE" || type.ToUpper() == "ORGANIZATION")
             {
                 if (itemRepository.ReadOrganization(name).Count() == 0)
                 {
-                    Organization tempOrganization = new Organization() { Name = name };
-                    itemRepository.CreateItem(tempOrganization);
+                    AddItem(name, "Organization", 0, null, twitterUrl);
                 }
             }
             else if (type.ToUpper() == "THEMA" || type.ToUpper() == "THEME")
             {
                 if (itemRepository.ReadTheme(name).Count() == 0)
                 {
-                    List<string> keywordsStringList = (keywords.Replace(" ", "").Split(',').ToList<string>());
-                    List<Keyword> keywordsList = new List<Keyword>();
-                    Theme theme = new Theme() { Name = name };
-                    Item item = itemRepository.CreateItem(theme);
-                    foreach (var keyword in keywordsStringList)
-                    {
-                        Keyword keywordTemp = itemRepository.CreateKeyword(item, keyword);
-                        keywordsList.Add(keywordTemp);
-                    }
-                    ((Theme)item).Keywords = keywordsList;
-                    itemRepository.UpdateItem(item);
+                    AddItem(name, "Theme", 0, keywords, null);
                 }
             }
             else

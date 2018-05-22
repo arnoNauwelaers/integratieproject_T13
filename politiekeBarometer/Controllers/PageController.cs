@@ -21,6 +21,7 @@ namespace politiekeBarometer.Controllers
         {
             Person person = im.ReadPerson(id);
             ViewBag.Stories = SocialMediaManager.GetTopTenUrlPerson(person);
+            ViewBag.RelatedWords = SocialMediaManager.GetTopTenWordsPerson(person);
             return View(person);
         }
 
@@ -28,6 +29,7 @@ namespace politiekeBarometer.Controllers
         {
             Organization organization = im.ReadOrganization(Id);
             ViewBag.Stories = SocialMediaManager.GetTopTenUrlOrganization(organization);
+            ViewBag.RelatedWords = SocialMediaManager.GetTopTenWordsOrganization(organization);
             return View(organization);
         }
 

@@ -109,9 +109,6 @@
     <EmbeddedResource Include="Migrations\201805151408547_InitialCreate.resx">
       <DependentUpon>201805151408547_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805181350036_Bedankt.resx">
-      <DependentUpon>201805181350036_Bedankt.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

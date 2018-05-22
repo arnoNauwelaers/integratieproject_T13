@@ -60,7 +60,7 @@ namespace politiekeBarometer.Controllers
             }
             catch
             {
-                return View("AdminItemIndex");
+                return RedirectToAction("AdminItemIndex");
             }
         }
 
@@ -151,7 +151,7 @@ namespace politiekeBarometer.Controllers
                         try
                         {
                             itemString = (line.Split(';').ToList<string>());
-                            itemManager.AddItem(itemString[0], itemString[1], itemString[2], itemString[3]);
+                            itemManager.AddItem(itemString[0], itemString[1], itemString[2], itemString[3], itemString[4]);
                         }
                         catch
                         {
