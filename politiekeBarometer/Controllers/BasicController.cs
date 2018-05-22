@@ -22,11 +22,12 @@ namespace politiekeBarometer.Controllers
 
         protected BasicController()
         {
-            SocialMediaManager = new SocialMediaManager();
-            AlertManager = new AlertManager();
-            UserManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            UnitOfWorkManager unitOfWorkManager = new UnitOfWorkManager();
+            SocialMediaManager = new SocialMediaManager(unitOfWorkManager);
+            AlertManager = new AlertManager(unitOfWorkManager);
+            UserManager = new ApplicationUserManager(unitOfWorkManager);
             UserManager.SetSocialMediaManager(SocialMediaManager);
-            ChartManager = new ChartManager();
+            ChartManager = new ChartManager(unitOfWorkManager);
         }
 
 

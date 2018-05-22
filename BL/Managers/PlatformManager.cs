@@ -15,10 +15,11 @@ namespace BL.Managers
     private PlatformRepository repo;
     private ApplicationUserManager userManager;
     private static int idCounter = 0;
-    public PlatformManager()
+
+    public PlatformManager(UnitOfWorkManager unitOfWorkManager)
     {
-      repo = RepositoryFactory.CreatePlatformRepository();
-      userManager = new ApplicationUserManager();
+      repo = new PlatformRepository(unitOfWorkManager.UnitOfWork);
+      userManager = new ApplicationUserManager(unitOfWorkManager);
     }
 
     public Platform MakePlatformWithID()

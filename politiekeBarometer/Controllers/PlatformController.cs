@@ -11,10 +11,15 @@ namespace politiekeBarometer.Controllers
 {
     public class PlatformController : Controller
     {
-        PlatformManager platformManager = new PlatformManager();
-        ApplicationUserManager userManager = new ApplicationUserManager();
+        PlatformManager platformManager;
+        ApplicationUserManager userManager;
 
-
+        public PlatformController()
+        {
+            UnitOfWorkManager unitOfWorkManager = new UnitOfWorkManager();
+            this.platformManager = new PlatformManager(unitOfWorkManager);
+            this.userManager = new ApplicationUserManager(unitOfWorkManager);
+        }
 
         // GET: Platform
         [Authorize(Roles = "SuperAdmin")]

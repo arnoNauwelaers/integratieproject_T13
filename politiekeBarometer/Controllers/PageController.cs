@@ -12,24 +12,33 @@ namespace politiekeBarometer.Controllers
     //TODO YAGO: AUTHORIZATION DINGES
     public class PageController : Controller
     {
-        ItemManager im = new ItemManager();
-        ApplicationUserManager userManager = new ApplicationUserManager();
-        AlertManager am = new AlertManager();
-        SocialMediaManager SocialMediaManager = new SocialMediaManager();
+        ItemManager im;
+        ApplicationUserManager userManager;
+        AlertManager am;
+        SocialMediaManager socialMediaManager;
         
+        public PageController()
+        {
+            UnitOfWorkManager unitOfWorkManager = new UnitOfWorkManager();
+            this.im = new ItemManager(unitOfWorkManager);
+            this.userManager = new ApplicationUserManager(unitOfWorkManager);
+            this.am = new AlertManager(unitOfWorkManager);
+            this.socialMediaManager = new SocialMediaManager(unitOfWorkManager);
+        }
+
         public ActionResult Person(int id)
         {
             Person person = im.ReadPerson(id);
-            ViewBag.Stories = SocialMediaManager.GetTopTenUrlPerson(person);
-            ViewBag.RelatedWords = SocialMediaManager.GetTopTenWordsPerson(person);
+            ViewBag.Stories = socialMediaManager.GetTopTenUrlPerson(person);
+            ViewBag.RelatedWords = socialMediaManager.GetTopTenWordsPerson(person);
             return View(person);
         }
 
         public ActionResult Organization(int Id)
         {
             Organization organization = im.ReadOrganization(Id);
-            ViewBag.Stories = SocialMediaManager.GetTopTenUrlOrganization(organization);
-            ViewBag.RelatedWords = SocialMediaManager.GetTopTenWordsOrganization(organization);
+            ViewBag.Stories = socialMediaManager.GetTopTenUrlOrganization(organization);
+            ViewBag.RelatedWords = socialMediaManager.GetTopTenWordsOrganization(organization);
             return View(organization);
         }
 

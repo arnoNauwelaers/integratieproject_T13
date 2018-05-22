@@ -9,49 +9,63 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Web.Script.Serialization;
+using BL.Managers;
 
 namespace BL
 {
     public class Read
     {
-        private const string URL = "https://kdg.textgain.com/query";
+        private string URL;
         static HttpClient client = new HttpClient();
+        private SettingsManager settingsManager;
+
+        public Read(UnitOfWorkManager unitOfWorkManager)
+        {
+            settingsManager = new SettingsManager(unitOfWorkManager);
+        }
 
         //TODO elke .. minuten uitvoeren
         public IEnumerable<SocialMediaPost> ReadData(string sinceDate)
         {
-            var tweets = new List<SocialMediaPost>();
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(URL);
-            httpWebRequest.Headers.Add("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
-            httpWebRequest.ContentType = "application/json; charset=utf-8";
-            httpWebRequest.Accept = "application/json; charset=utf-8";
-            httpWebRequest.Method = "POST";
-            if (sinceDate != null)
-            {
-                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                {
-                    string json = new JavaScriptSerializer().Serialize(new
-                    {
-                        since = sinceDate
-                    });
-                    //TODO since met json nog catchen met postman
-                    streamWriter.Write(json);
-                }
-            }
             try
             {
+                var tweets = new List<SocialMediaPost>();
+                Settings settings = settingsManager.GetSettings();
+                URL = settings.ApiUrl;
+                if (!settings.ApiPort.Equals("") && settings.ApiPort != null)
+                {
+                    URL += $":{settings.ApiPort}";
+                }
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(URL);
+                httpWebRequest.Headers.Add("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
+                httpWebRequest.ContentType = "application/json; charset=utf-8";
+                httpWebRequest.Accept = "application/json; charset=utf-8";
+                httpWebRequest.Method = "POST";
+                if (sinceDate != null)
+                {
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    {
+                        string json = new JavaScriptSerializer().Serialize(new
+                        {
+                            since = sinceDate
+                        });
+                        //TODO since met json nog catchen met postman
+                        streamWriter.Write(json);
+                    }
+                }
+
                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException("Something went wrong while reading the server response.")))
                 {
                     tweets = JArray.Parse(streamReader.ReadToEnd()).ToObject<List<SocialMediaPost>>();
                 }
+                return tweets;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Er is een error opgetreden in de API reader: " + ex.ToString());
+                Debug.WriteLine("API instellingen verkeerd: " + ex.Message);
             }
-            return tweets;
-
+            return (new List<SocialMediaPost>());
         }
     }
 }

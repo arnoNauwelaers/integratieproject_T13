@@ -30,6 +30,7 @@ namespace BL.Domain
         public DateFrequencyType FrequencyType { get; set; }
         public DateTime? StartDate { get; set; } = null;
         public DateTime? EndDate { get; set; } = null;
+        public List<string> Rgbas = new List<string>();
         //Nodig voor Colors
         [NotMapped]
         private static readonly Random rnd = new Random();
@@ -60,14 +61,18 @@ namespace BL.Domain
 
         public List<string> GetRgbas()
         {
-            List<string> rgbas = new List<string>();
+            if (Saved == true && Rgbas.Count != 0)
+            {
+                return Rgbas;
+            }
+            Rgbas = new List<string>();
             if (ChartType == ChartType.pie || ChartType == ChartType.polarArea)
             {
                 foreach (var item in ChartItemData)
                 {
                     foreach (var data in item.Data)
                     {
-                        rgbas.Add(GenerateRandomRGBA());
+                        Rgbas.Add(GenerateRandomRGBA());
                     }
                 }
             }
@@ -78,11 +83,11 @@ namespace BL.Domain
                     string tempRgba = GenerateRandomRGBA();
                     foreach (var data in item.Data)
                     {
-                        rgbas.Add(tempRgba);
+                        Rgbas.Add(tempRgba);
                     }
                 }
             }
-            return rgbas;
+            return Rgbas;
         }
 
         public string GetDataSets()
@@ -203,6 +208,10 @@ namespace BL.Domain
                 {
                     title += "thema";
                 }
+            }
+            if (Saved == true)
+            {
+                title += " (opgeslagen)";
             }
             return title;
         }

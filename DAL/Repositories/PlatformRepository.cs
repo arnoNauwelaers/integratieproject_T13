@@ -12,11 +12,11 @@ namespace DAL.Repositories
     public class PlatformRepository
   {
 
-    private BarometerDbContext ctx;
+        private readonly BarometerDbContext ctx;
 
-    public PlatformRepository(BarometerDbContext ctx)
+    public PlatformRepository(UnitOfWork uow)
     {
-      this.ctx = ctx;
+      this.ctx = uow.Context;
     }
     public Platform CreatePlatform(Platform p)
     {
@@ -51,7 +51,7 @@ namespace DAL.Repositories
     public void UpdatePlatform(Platform p)
     {
             ctx.Entry(p).State = EntityState.Modified;
-            ctx.SaveChanges(); //WTF
+            ctx.SaveChanges(); 
     }
   }
 }

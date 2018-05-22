@@ -12,11 +12,11 @@ namespace DAL.Repositories
 {
     public class UserRepository
     {
-        private BarometerDbContext ctx;
+        private readonly BarometerDbContext ctx;
 
-        public UserRepository(BarometerDbContext ctx)
+        public UserRepository(UnitOfWork uow)
         {
-            this.ctx = ctx;
+            this.ctx = uow.Context;
         }
 
         public List<ApplicationUser> ReadUsers()

@@ -20,15 +20,17 @@ namespace BL.Managers
         private SocialMediaRepository socialMediaRepository;
         private AlertManager alertManager;
         private ItemManager itemManager;
+        private SettingsManager settingsManager;
         private Read read;
 
 
-        public SocialMediaManager()
+        public SocialMediaManager(UnitOfWorkManager unitOfWorkManager)
         {
-            socialMediaRepository = RepositoryFactory.CreateSocialMediaRepository();
-            itemManager = new ItemManager();
-            alertManager = new AlertManager();
-            read = new Read();
+            socialMediaRepository = new SocialMediaRepository(unitOfWorkManager.UnitOfWork);
+            itemManager = new ItemManager(unitOfWorkManager);
+            alertManager = new AlertManager(unitOfWorkManager);
+            settingsManager = new SettingsManager(unitOfWorkManager);
+            read = new Read(unitOfWorkManager);
         }
 
         public void SynchronizeDatabase()
@@ -148,14 +150,7 @@ namespace BL.Managers
                     if (post.Persons.Contains((Person)item))
                     {
                         string date = post.Date.ToShortDateString();
-                        if (result.Any(p => p.Key == date))
-                        {
-                            result[date]++;
-                        }
-                        else
-                        {
-                            result.Add(date, 1);
-                        }
+                        result = AddToResultsDictionary(result, date);
                     }
                 }
                 else if (item.GetType().ToString().Contains("Organization"))
@@ -163,14 +158,7 @@ namespace BL.Managers
                     if (IsPostFromOrganization(post, (Organization)item))
                     {
                         string date = post.Date.ToShortDateString();
-                        if (result.Any(p => p.Key == date))
-                        {
-                            result[date]++;
-                        }
-                        else
-                        {
-                            result.Add(date, 1);
-                        }
+                        result = AddToResultsDictionary(result, date);
                     }
                 }
                 else if (item.GetType().ToString().Contains("Theme"))
@@ -178,25 +166,25 @@ namespace BL.Managers
                     if (IsPostFromTheme(post, (Theme)item))
                     {
                         string date = post.Date.ToShortDateString();
-                        if (result.Any(p => p.Key == date))
-                        {
-                            result[date]++;
-                        }
-                        else
-                        {
-                            result.Add(date, 1);
-                        }
+                        result = AddToResultsDictionary(result, date);
                     }
                 }
             }
             return result;
         }
 
-        /*TODO 18/05
-        public Dictionary<string, int> AddToResultsDictionary(Dictionary<string, int> list)
+        public Dictionary<string, int> AddToResultsDictionary(Dictionary<string, int> list, string date)
         {
-
-        }*/
+            if (list.Any(p => p.Key == date))
+            {
+                list[date]++;
+            }
+            else
+            {
+                list.Add(date, 1);
+            }
+            return list;
+        }
 
         public Boolean IsPostFromTheme(SocialMediaPost post, Theme item)
         {
@@ -243,9 +231,52 @@ namespace BL.Managers
             }
             else if (value == ChartValue.trendThemes)
             {
-
+                return GetTrendThemeData(posts);
             }
             return null;
+        }
+
+        public Dictionary<Item, int> GetTrendThemeData(List<SocialMediaPost> posts)
+        {
+            Dictionary<Item, int> list = new Dictionary<Item, int>();
+            foreach (var post in posts)
+            {
+                foreach (var theme in post.Themes)
+                {
+                    if (theme.Name != null)
+                    {
+                        if (list.ContainsKey(theme))
+                        {
+                            list[theme]++;
+                        }
+                        else
+                        {
+                            list.Add(theme, 1);
+                        }
+                    }
+                }
+                foreach (var theme in itemManager.GetThemes().ToList())
+                {
+                    foreach (var keyword in theme.Keywords)
+                    {
+                        foreach (var word in post.Words)
+                        {
+                            if (keyword.Equals(word))
+                            {
+                                if (list.ContainsKey(theme))
+                                {
+                                    list[theme]++;
+                                }
+                                else
+                                {
+                                    list.Add(theme, 1);
+                                }
+                            }
+                        }
+                    }
+                } 
+            }
+            return list;
         }
 
         public Dictionary<Item, int> GetTrendPersonData(List<SocialMediaPost> posts)
@@ -364,9 +395,9 @@ namespace BL.Managers
                 }
             }
             var sortedUrlsGroup = allUrls.GroupBy(s => s).OrderByDescending(g => g.Count());
-            if((sortedUrlsGroup.ToList()).Count() < 10)
+            if ((sortedUrlsGroup.ToList()).Count() < 10)
             {
-                foreach(var url in (sortedUrlsGroup.ToList()).GetRange(0, (sortedUrlsGroup.ToList()).Count()))
+                foreach (var url in (sortedUrlsGroup.ToList()).GetRange(0, (sortedUrlsGroup.ToList()).Count()))
                 {
                     topTen.Add(url.Key);
                 }
@@ -474,15 +505,18 @@ namespace BL.Managers
 
         }
 
-        public void ActivateAPI(int minutes)
+        public void ActivateAPI()
         {
-            SynchronizeDatabase();
-            //TODO moet in panel configureerbaar zijn
-            //var timer = new System.Threading.Timer(
-            //e => SynchronizeDatabase(),
-            //null,
-            //TimeSpan.Zero,
-            //TimeSpan.FromMinutes(minutes));
+            int minutes = settingsManager.GetSettings().ApiFrequency;
+            if (minutes == 0)
+            {
+                minutes = 10;
+            }
+            var timer = new System.Threading.Timer(
+            e => SynchronizeDatabase(),
+            null,
+            TimeSpan.Zero,
+            TimeSpan.FromMinutes(minutes));
         }
 
         public Boolean ArraysToLists(SocialMediaPost post)

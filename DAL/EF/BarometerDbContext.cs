@@ -11,6 +11,7 @@ namespace DAL.EF
     {
         public BarometerDbContext() : base("PolitiekeBarometerDB")
         {
+            this.Database.CommandTimeout = 60;
             //  Database.SetInitializer<BarometerDbContext>(new BarometerDbInitializer()); // moved to 'SupportCenterDbConfiguration'
         }
 
@@ -78,6 +79,7 @@ namespace DAL.EF
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Words).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Urls).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Hashtags).WithMany();
+            modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Themes).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasOptional(i => i.PostSentiment).WithOptionalDependent().WillCascadeOnDelete(true);
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Persons).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Themes).WithMany();
@@ -96,7 +98,7 @@ namespace DAL.EF
             modelBuilder.Entity<Chart>().HasMany(i => i.Items).WithMany();
             modelBuilder.Entity<Platform>().HasMany(i => i.Users).WithMany();
             modelBuilder.Entity<Platform>().HasMany(i => i.Sources).WithMany();
-            //modelBuilder.Entity<Theme>().HasMany(i => i.Keywords).WithMany();
+            modelBuilder.Entity<Theme>().HasMany(i => i.Keywords).WithMany();
             //modelBuilder.Entity<User>().HasMany(i => i.Alerts).WithMany();
         }
     }

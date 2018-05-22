@@ -13,11 +13,11 @@ namespace DAL.Repositories
 {
     public class AlertRepository
     {
-        private BarometerDbContext ctx;
+        private readonly BarometerDbContext ctx;
 
-        public AlertRepository(BarometerDbContext ctx)
+        public AlertRepository(UnitOfWork uow)
         {
-      this.ctx = ctx;
+      this.ctx = uow.Context;
         }
 
         public List<Alert> ReadAlerts()

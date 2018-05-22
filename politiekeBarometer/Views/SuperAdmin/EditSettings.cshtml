@@ -1,0 +1,56 @@
+﻿@model BL.Domain.Settings
+
+@{
+    ViewBag.Title = "Edit Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Settings</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="ApiFrequency">Api Frequency (Aantal minuten)</label>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ApiFrequency, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ApiFrequency, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="ApiUrl">URL van Api</label>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ApiUrl, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ApiUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="ApiPort">Poort van Api (optioneel, wordt toegevoegd achter link)</label>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ApiPort, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ApiPort, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="DataLifetime">Data lifetime (aantal dagen)</label>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DataLifetime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DataLifetime, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }

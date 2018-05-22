@@ -19,15 +19,10 @@ namespace politiekeBarometer.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        UnitOfWorkManager unitOfWorkManager = new UnitOfWorkManager();
         public AccountController()
-            //TODO vraag hoe context naar manager verplaatsen (meegeven mag niet)
-            : this(new ApplicationUserManager())
         {
-        }
-
-        public AccountController(UserManager<ApplicationUser> userManager)
-        {
-            UserManager = userManager;
+            UserManager = new ApplicationUserManager(unitOfWorkManager);
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
@@ -332,7 +327,7 @@ namespace politiekeBarometer.Controllers
     [HttpPost]
     public ActionResult UpdateLastActivityDate(string userName)
     {
-      ApplicationUserManager userManager = new ApplicationUserManager();
+      ApplicationUserManager userManager = new ApplicationUserManager(unitOfWorkManager);
       ApplicationUser user = userManager.GetUserByName(userName);
       user.LastActivityDate = DateTime.Now;
       userManager.ChangeUser(user);

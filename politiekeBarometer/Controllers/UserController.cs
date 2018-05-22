@@ -12,8 +12,13 @@ namespace politiekeBarometer.Controllers
 {
     public class UserController : Controller
     {
-
-        ApplicationUserManager userManager = new ApplicationUserManager();
+        ApplicationUserManager userManager;
+        public UserController()
+        {
+            UnitOfWorkManager unitOfWorkManager = new UnitOfWorkManager();
+            this.userManager = new ApplicationUserManager(unitOfWorkManager);
+        }
+        
         // GET: User
         public ActionResult Index()
         {

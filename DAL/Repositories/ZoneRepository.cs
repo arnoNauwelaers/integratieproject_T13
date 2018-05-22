@@ -10,11 +10,11 @@ namespace DAL.Repositories
 {
     public class ZoneRepository
     {
-        private BarometerDbContext ctx;
+        private readonly BarometerDbContext ctx;
 
-        public ZoneRepository(BarometerDbContext ctx)
+        public ZoneRepository(UnitOfWork uow)
         {
-            this.ctx = ctx;
+            this.ctx = uow.Context;
         }
 
         public List<Zone> ReadZone()

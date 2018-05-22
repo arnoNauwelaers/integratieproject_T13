@@ -16,6 +16,7 @@ namespace BL.Managers
     private UserRepository userRepository;
         private AlertRepository alertRepository;
         private SocialMediaManager socialMediaManager;
+        private UnitOfWorkManager unitOfWorkManager;
         
 
         //public ApplicationUserManager(SocialMediaManager socialMediaManager)
@@ -25,12 +26,22 @@ namespace BL.Managers
         //    this.socialMediaManager = socialMediaManager;
         //}
 
-        public ApplicationUserManager() : base(new UserStoreRepository())
+        public ApplicationUserManager(UnitOfWorkManager unitOfWorkManager) : base(new UserStoreRepository(unitOfWorkManager.UnitOfWork.Context))
         {
-            alertRepository = RepositoryFactory.CreateAlertRepository();
-            userRepository = RepositoryFactory.CreateUserRepository();
+            alertRepository = new AlertRepository(unitOfWorkManager.UnitOfWork);
+            userRepository = new UserRepository(unitOfWorkManager.UnitOfWork);
+            this.unitOfWorkManager = unitOfWorkManager;
+        }
+
+        public ApplicationUserManager(BarometerDbContext ctx) : base(new UserStoreRepository(ctx))
+        {
             
-            
+        }
+
+        public void SetRepositories(UnitOfWorkManager unitOfWorkManager)
+        {
+            alertRepository = new AlertRepository(unitOfWorkManager.UnitOfWork);
+            userRepository = new UserRepository(unitOfWorkManager.UnitOfWork);
         }
 
         public void SetSocialMediaManager(SocialMediaManager socialMediaManager)
@@ -41,8 +52,7 @@ namespace BL.Managers
 
     public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
     {
-
-      var manager = new ApplicationUserManager();
+      var manager = new ApplicationUserManager(context.Get<BarometerDbContext>());
 
       //USERNAME VALIDATION
       manager.UserValidator = new UserValidator<ApplicationUser>(manager)
