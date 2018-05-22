@@ -133,7 +133,12 @@ namespace BL.Managers
 
         public Item ReadItem(int id)
         {
-            return itemRepository.ReadItem(id);
+            Item tempItem = itemRepository.ReadItem(id);
+            if (tempItem.GetType().ToString().Contains("Theme"))
+            {
+                return itemRepository.ReadTheme(id);
+            }
+            return tempItem;
         }
 
         public Item EditItem(int id, string name, string type, int selectedOrganizationId, IEnumerable<int> selectedKeywords, string stringKeywords)

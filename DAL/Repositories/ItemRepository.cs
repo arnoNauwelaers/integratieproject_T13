@@ -241,7 +241,7 @@ namespace DAL.Repositories
 
         public Theme ReadTheme(int id)
         {
-            return ctx.Themes.ToList().Find(u => u.ItemId == id);
+            return ctx.Themes.Include(t => t.Keywords).ToList().Find(u => u.ItemId == id);
         }
 
         public IEnumerable<Item> SearchItems(string SearchValue)
@@ -273,7 +273,7 @@ namespace DAL.Repositories
 
         public List<Theme> ReadThemes()
         {
-            return ctx.Themes.ToList();
+            return ctx.Themes.Include(t => t.Keywords).ToList();
         }
     }
 }

@@ -74,7 +74,6 @@ namespace politiekeBarometer.Controllers
         public ActionResult AdminItemEdit(int ItemId)
         {
             Item item = itemManager.ReadItem(ItemId);
-
             var model = new ItemCreateViewModel();
             var organizaionsSelect = itemManager.GetOrganizations().Select(x => new SelectListItem { Value = x.ItemId.ToString(), Text = x.Name });
             model.Organizations = new SelectList(organizaionsSelect, "Value", "Text");
@@ -123,7 +122,7 @@ namespace politiekeBarometer.Controllers
                 {
                     itemManager.EditProfiles(editItem.profileIds, editItem.TwitterUrl);
                 }
-                else
+                else if(editItem.type != "Thema")
                 {
                     itemManager.AddProfileToItem(tempitem, editItem.TwitterUrl);
                 }
@@ -182,192 +181,5 @@ namespace politiekeBarometer.Controllers
             model.themes = itemManager.GetThemes().ToList();
             return View("AdminItemIndex", model);
         }
-
-        //TODO delete
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: update logic
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: delete logic
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public ActionResult PersonDetails(int id)
-        {
-            Person p = itemManager.ReadPerson(id);
-            ViewBag.Profiles = p.SocialMediaProfiles;
-            return View(p);
-
-        }
-
-        [HttpGet]
-        public ActionResult AddSocialmediaProfileToPerson(int id)
-        {
-            ViewBag.Person = itemManager.ReadPerson(id);
-            return View();
-
-        }
-
-        [HttpPost]
-        public ActionResult AddSocialMediaProfileToPerson(FormCollection collection)
-        {
-            try
-            {
-                Person p = itemManager.ReadPerson(Convert.ToInt32(collection["id"]));
-                SocialMediaProfile smp = new SocialMediaProfile { Url = collection["url"], Source = collection["src"] };
-                p.SocialMediaProfiles.Add(smp);
-                itemManager.ChangeItem(p);
-                return RedirectToAction("PersonIndex");
-            }
-            catch (Exception e)
-            {
-                return View(e);
-            }
-
-
-        }
-
-
-        /*public ActionResult OrganizationIndex()
-        {
-            return View();
-        }
-
-        //GET: Item/DeleteOrganization
-        public ActionResult DeleteOrganization(int id)
-        {
-            Organization o = itemManager.ReadOrganization(id);
-            if (o.Equals(null))
-            {
-                return HttpNotFound();
-            }
-            return View(o);
-        }
-        // POST: Item/DeleteOrganizatin
-        [HttpPost, ActionName("DeleteOrganization")]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            try
-            {
-                Organization o = itemManager.ReadOrganization(id);
-                itemManager.RemoveOrganization(o);
-
-                return RedirectToAction("Index");
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.InnerException);
-                return RedirectToAction("Index");
-            }
-        }
-
-        // Get: Item/CreateOrganization
-        public ActionResult CreateOrganization()
-        {
-            return View();
-        }
-
-        //Post: Item/CreateOrganization
-        [HttpPost]
-        public ActionResult CreateOrganization(FormCollection collection)
-        {
-            try
-            {
-                Organization o = new Organization
-                {
-                    Name = collection["name"],
-                    typeInt = 2,
-                    socialMediaProfiles = new List<SocialMediaProfile>() { new SocialMediaProfile { Url = collection["url"], Source = collection["src"] } }
-                };
-                itemManager.AddOrganization(o);
-
-                return RedirectToAction("OrganizationIndex");
-            }
-            catch (Exception e)
-            {
-                return View("Error " + e);
-            }
-        }
-
-        // POST: Item/EditOrganization
-        [HttpPost]
-        public ActionResult Edit(FormCollection collection)
-        {
-            ViewBag.Profiles = socialMediaManager.GetSocialMediaProfiles();
-            try
-            {
-                Organization o = itemManager.ReadOrganization(Convert.ToInt32(collection["id"]));
-                o.socialMediaProfiles.Add(socialMediaManager.GetSocialMediaProfile(Convert.ToInt32(collection["smp"])));
-                itemManager.ChangeItem(o);
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Item/CreatePerson
-        public ActionResult CreatePerson()
-        {
-            return View();
-        }
-
-        // POST: Item/CreatePerson
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreatePerson(FormCollection collection)
-        {
-
-            try
-            {
-                Person p = new Person();
-                p.Organization = itemManager.ReadOrganization(Convert.ToInt32(collection["organization"]));
-                p.Name = collection["name"];
-                p.socialMediaProfiles = new List<SocialMediaProfile>() { new SocialMediaProfile { Url = collection["url"], Source = collection["src"] } };
-                p.typeInt = 1;
-                itemManager.AddPerson(p);
-
-                return RedirectToAction("Index");
-
-            }
-            catch (Exception e)
-            {
-                return View("Error " + e);
-            }
-        }*/
-
     }
 }
