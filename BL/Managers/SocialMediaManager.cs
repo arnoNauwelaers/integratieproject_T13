@@ -20,6 +20,7 @@ namespace BL.Managers
         private SocialMediaRepository socialMediaRepository;
         private AlertManager alertManager;
         private ItemManager itemManager;
+        private SettingsManager settingsManager;
         private Read read;
 
 
@@ -28,7 +29,8 @@ namespace BL.Managers
             socialMediaRepository = new SocialMediaRepository(unitOfWorkManager.UnitOfWork);
             itemManager = new ItemManager(unitOfWorkManager);
             alertManager = new AlertManager(unitOfWorkManager);
-            read = new Read();
+            settingsManager = new SettingsManager(unitOfWorkManager);
+            read = new Read(unitOfWorkManager);
         }
 
         public void SynchronizeDatabase()
@@ -405,8 +407,13 @@ namespace BL.Managers
 
         }
 
-        public void ActivateAPI(int minutes)
+        public void ActivateAPI()
         {
+            int minutes = settingsManager.GetSettings().ApiFrequency;
+            if (minutes == 0)
+            {
+                minutes = 10;
+            }
             var timer = new System.Threading.Timer(
             e => SynchronizeDatabase(),
             null,

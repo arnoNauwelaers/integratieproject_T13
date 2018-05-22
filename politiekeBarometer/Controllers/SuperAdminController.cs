@@ -12,6 +12,7 @@ using DAL.EF;
 
 namespace politiekeBarometer.Controllers
 {
+    [Authorize(Roles = "SuperAdmin")]
     public class SuperAdminController : Controller
     {
         private UnitOfWorkManager unitOfWorkManager;
