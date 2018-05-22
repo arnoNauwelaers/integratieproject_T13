@@ -28,6 +28,21 @@ namespace BL.Managers
             zoneManager = new ZoneManager(unitOfWorkManager);
         }
 
+        public List<Chart> GetChartsFromItem(Item item)
+        {
+            List<Chart> charts = new List<Chart>();
+            List<Item> items = new List<Item>();
+            items.Add(item);
+            charts.Add(new Chart() { Items = items, ChartType = ChartType.bar, ChartValue = ChartValue.words, FrequencyType = DateFrequencyType.weekly });
+            charts.Add(new Chart() { Items = items, ChartType = ChartType.pie, ChartValue = ChartValue.hashtags, FrequencyType = DateFrequencyType.weekly });
+            charts.Add(new Chart() { Items = items, ChartType = ChartType.line, ChartValue = ChartValue.postsPerDate, FrequencyType = DateFrequencyType.weekly });
+            foreach(var chart in charts)
+            {
+                RetrieveDataChart(chart);
+            }
+            return charts;
+        }
+
         public Dictionary<string, Chart> GetStandardChart()
         {
             CreateStandardChartsIfNotExists();

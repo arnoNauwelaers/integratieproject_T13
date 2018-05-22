@@ -33,6 +33,7 @@ namespace BL.Managers
             read = new Read(unitOfWorkManager);
         }
 
+
         public void SynchronizeDatabase()
         {
             List<Item> alteredItems = CreatePosts();
