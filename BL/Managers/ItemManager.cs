@@ -6,6 +6,7 @@ using DAL.EF;
 using System;
 using DAL.Repositories;
 
+//TODO In manager geen Read maar Get gebruiken!
 namespace BL.Managers
 {
     public class ItemManager
@@ -262,7 +263,6 @@ namespace BL.Managers
         }
 
 
-        //TODO delete
         public Person ReadPerson(int id)
         {
             return itemRepository.ReadPerson(id);

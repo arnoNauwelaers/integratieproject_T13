@@ -18,6 +18,7 @@ namespace BL.Managers
         private ZoneManager zoneManager;
         private static Dictionary<string, Chart> standardCharts = new Dictionary<string, Chart>();
         private const int AMOUNT_OF_ELEMENTS = 20;
+        private const int AMOUNT_OF_CHARTS_ITEM = 2;
 
         public ChartManager(UnitOfWorkManager unitOfWorkManager)
         {
@@ -31,12 +32,22 @@ namespace BL.Managers
         public List<Chart> GetChartsFromItem(Item item)
         {
             List<Chart> charts = new List<Chart>();
-            List<Item> items = new List<Item>();
-            items.Add(item);
-            charts.Add(new Chart() { Items = items, ChartType = ChartType.bar, ChartValue = ChartValue.words, FrequencyType = DateFrequencyType.weekly });
-            charts.Add(new Chart() { Items = items, ChartType = ChartType.pie, ChartValue = ChartValue.hashtags, FrequencyType = DateFrequencyType.weekly });
-            charts.Add(new Chart() { Items = items, ChartType = ChartType.line, ChartValue = ChartValue.postsPerDate, FrequencyType = DateFrequencyType.weekly });
-            foreach(var chart in charts)
+            if (item.StandardCharts.Count == 0)
+            {
+                List<Item> items = new List<Item>
+                {
+                    item
+                };
+                Chart itemWordsWeekly = AddChart(new Chart() { Items = items, ChartType = ChartType.bar, ChartValue = ChartValue.words, FrequencyType = DateFrequencyType.weekly });
+                Chart itemHashtagsWeekly = AddChart(new Chart() { Items = items, ChartType = ChartType.pie, ChartValue = ChartValue.hashtags, FrequencyType = DateFrequencyType.weekly });
+                Chart itemPostsMonthly = AddChart(new Chart() { Items = items, ChartType = ChartType.line, ChartValue = ChartValue.postsPerDate, FrequencyType = DateFrequencyType.monthly });
+                item.StandardCharts.Add(itemWordsWeekly);
+                item.StandardCharts.Add(itemHashtagsWeekly);
+                item.StandardCharts.Add(itemPostsMonthly);
+                itemManager.ChangeItem(item);
+            }
+            charts = item.StandardCharts.Take(AMOUNT_OF_CHARTS_ITEM).ToList();
+            foreach (var chart in charts)
             {
                 RetrieveDataChart(chart);
             }
@@ -103,7 +114,6 @@ namespace BL.Managers
             return chart;
         }
 
-        //TODO kijken of extra nodig is
         public void RetrieveDataChart(Chart chart)
         {
             if (chart.Saved == true)
@@ -199,11 +209,11 @@ namespace BL.Managers
                     ChartItemData tempChartItemData = new ChartItemData() { Item = item };
                     foreach (var result in socialMediaManager.GetAmountPostsPerItem(since, item).OrderBy(p => p.Key))
                     {
-                        tempChartItemData.Data.Add(new Data() { Name=result.Key, Amount=result.Value});
+                        tempChartItemData.Data.Add(new Data() { Name = result.Key, Amount = result.Value });
                     }
                     chart.ChartItemData.Add(tempChartItemData);
                 }
-                
+
             }
             else if (trend == true)
             {

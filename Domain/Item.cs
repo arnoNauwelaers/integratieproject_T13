@@ -13,16 +13,12 @@ namespace BL.Domain
 
         public virtual ICollection<Alert> Alerts { get; set; } = new List<Alert>();
         public virtual ICollection<SocialMediaPost> SocialMediaPosts { get; set; } = new List<SocialMediaPost>();
+        //Volgorde charts: itemwordsweekly(0), itemhashtagsweekly(1), itempostsmonthly(2)
+        public virtual List<Chart> StandardCharts { get; set; } = new List<Chart>();
 
-        [NotMapped]
-        public int TypeInt { get; set; }
 
         public Item()
         {
-          TypeInt = 0;
-          //person = 1
-          //organisation = 2
-          //theme = 3
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json.Linq;
 using BL.Managers;
-//TODO meer code van controller naar managers verplaatsen om inhoud minimaal te houden?
+
 namespace politiekeBarometer.Controllers
 {
     public class BasicController : ApiController
@@ -89,7 +89,6 @@ namespace politiekeBarometer.Controllers
         }
 
         [Route("api/Basic/AddChart")]
-        //TODO 27/04 values worden niet gepost?
         [HttpPost]
         [Authorize]
         public IHttpActionResult AddChart(string json)

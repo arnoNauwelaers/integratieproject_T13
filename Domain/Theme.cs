@@ -11,12 +11,10 @@ namespace BL.Domain
         public Theme(string val)
         {
             base.Name = val;
-            TypeInt = 3;
         }
 
         public Theme()
         {
-            TypeInt = 3;
         }
     }
 }

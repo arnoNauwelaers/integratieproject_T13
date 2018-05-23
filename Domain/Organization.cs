@@ -11,7 +11,6 @@ namespace BL.Domain
 
         public Organization()
         {
-          TypeInt = 2;
         }
     }
 }

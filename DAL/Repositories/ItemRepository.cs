@@ -192,7 +192,7 @@ namespace DAL.Repositories
 
         public List<Organization> ReadOrganization(string name)
         {
-            return ctx.Organizations.Where(o => o.Name == name).ToList();
+            return ctx.Organizations.Include(a => a.StandardCharts).Where(o => o.Name == name).ToList();
         }
 
         public List<Theme> ReadTheme(string name)
@@ -233,25 +233,20 @@ namespace DAL.Repositories
             ctx.Keywords.Remove(keyword);
         }
 
-        //TODO delete
         public Person ReadPerson(int id)
         {
-            return ctx.Persons.Include(a => a.Alerts).Include(a => a.SocialMediaProfiles).ToList().Find(u => u.ItemId == id);
+            return ctx.Persons.Include(a => a.Alerts).Include(a => a.SocialMediaProfiles).Include(a => a.StandardCharts).ToList().Find(u => u.ItemId == id);
         }
 
         public Theme ReadTheme(int id)
         {
-            return ctx.Themes.Include(t => t.Keywords).ToList().Find(u => u.ItemId == id);
+            return ctx.Themes.Include(t => t.Keywords).Include(a => a.StandardCharts).ToList().Find(u => u.ItemId == id);
         }
 
         public IEnumerable<Item> SearchItems(string SearchValue)
         {
             string s = SearchValue.ToUpper();
-            return ctx.Items.ToList().Where(item => (
-              item.TypeInt == 1 && (((Person)item).Name.ToUpper().Contains(s))) || (
-              item.TypeInt == 2 && (item.Name.ToUpper().Contains(s))) || (
-              item.TypeInt == 3 && (item.Name.ToUpper().Contains(s)))
-             );
+            return ctx.Items.ToList().Where(item => item.Name.ToUpper().Contains(s));
         }
 
         public void DeleteItem(Item i)

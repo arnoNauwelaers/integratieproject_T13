@@ -69,6 +69,7 @@ namespace DAL.EF
             modelBuilder.Entity<Alert>().HasMany(i => i.Notifications).WithMany();
             modelBuilder.Entity<Chart>().HasMany(i => i.SavedChartItemData).WithMany();
             modelBuilder.Entity<Item>().HasMany(i => i.Alerts).WithMany();
+            modelBuilder.Entity<Item>().HasMany(i => i.StandardCharts).WithMany();
             modelBuilder.Entity<Organization>().HasMany(i => i.Persons).WithMany();
             modelBuilder.Entity<Organization>().HasMany(i => i.SocialMediaProfiles).WithMany();
             modelBuilder.Entity<Person>().HasMany(i => i.SocialMediaProfiles).WithMany();
@@ -93,7 +94,6 @@ namespace DAL.EF
             //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Person).WithMany();
             //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Verhalen).WithMany();
             //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Hashtags).WithMany();
-            //TODO fixen: modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Sentiment).WithMany();
             modelBuilder.Entity<SocialMediaSource>().HasMany(i => i.SocialMediaPost).WithMany();
             modelBuilder.Entity<Chart>().HasMany(i => i.Items).WithMany();
             modelBuilder.Entity<Platform>().HasMany(i => i.Users).WithMany();

@@ -41,13 +41,16 @@ namespace politiekeBarometer.Controllers
         {
             Organization organization = im.ReadOrganization(Id);
             ViewBag.Stories = socialMediaManager.GetTopTenUrlOrganization(organization);
+            ViewBag.Charts = chartManager.GetChartsFromItem(organization);
             ViewBag.RelatedWords = socialMediaManager.GetTopTenWordsOrganization(organization);
             return View(organization);
         }
 
         public ActionResult Theme(int Id)
         {
-            return View(im.ReadTheme(Id));
+            Theme theme = im.ReadTheme(Id);
+            ViewBag.Charts = chartManager.GetChartsFromItem(theme);
+            return View(theme);
         }
 
         public ActionResult OrganizationOverview()
@@ -78,10 +81,10 @@ namespace politiekeBarometer.Controllers
             Item i = im.GetItem(Convert.ToInt32(collection["id"]));
             u.FollowedItems.Add(i);
             userManager.ChangeUser(u);
-            if (i.TypeInt == 1) { return RedirectToAction("Person", new { id = i.ItemId }); }
+            if (i.GetType().ToString().Equals("Person")) { return RedirectToAction("Person", new { id = i.ItemId }); }
             else
             {
-                return RedirectToAction(i.TypeInt == 2 ? "Organization" : "Theme", new { id = i.ItemId });
+                return RedirectToAction(i.GetType().ToString().Equals("Organization") ? "Organization" : "Theme", new { id = i.ItemId });
             }
         }
 

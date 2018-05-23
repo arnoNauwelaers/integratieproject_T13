@@ -24,7 +24,6 @@ namespace BL
             settingsManager = new SettingsManager(unitOfWorkManager);
         }
 
-        //TODO elke .. minuten uitvoeren
         public IEnumerable<SocialMediaPost> ReadData(string sinceDate)
         {
             try
@@ -49,7 +48,6 @@ namespace BL
                         {
                             since = sinceDate
                         });
-                        //TODO since met json nog catchen met postman
                         streamWriter.Write(json);
                     }
                 }

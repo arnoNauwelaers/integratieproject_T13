@@ -29,9 +29,9 @@ namespace politiekeBarometer.Controllers
             var model = new ItemViewModel
             {
                 Persons = itemManager.GetPersons().ToList(),
-                organizations = itemManager.GetOrganizations().ToList(),
-                themes = itemManager.GetThemes().ToList(),
-                fileError = null
+                Organizations = itemManager.GetOrganizations().ToList(),
+                Themes = itemManager.GetThemes().ToList(),
+                FileError = null
             };
             return View(model);
         }
@@ -161,24 +161,24 @@ namespace politiekeBarometer.Controllers
                         }
                         catch
                         {
-                            model.fileError = "(er is iets fout gegaan bij het aanmaken van de objecten. Mogelijk heb je het bestand fout geformateerd)";
+                            model.FileError = "(er is iets fout gegaan bij het aanmaken van de objecten. Mogelijk heb je het bestand fout geformateerd)";
                         }
                     }
                 }
                 else
                 {
-                    model.fileError = "(je hebt geen csv file geupload)";
+                    model.FileError = "(je hebt geen csv file geupload)";
                 }
 
             }
             else
             {
-                model.fileError = "(je hebt geen file geselecteerd of deze file is leeg)";
+                model.FileError = "(je hebt geen file geselecteerd of deze file is leeg)";
             }
 
             model.Persons = itemManager.GetPersons().ToList();
-            model.organizations = itemManager.GetOrganizations().ToList();
-            model.themes = itemManager.GetThemes().ToList();
+            model.Organizations = itemManager.GetOrganizations().ToList();
+            model.Themes = itemManager.GetThemes().ToList();
             return View("AdminItemIndex", model);
         }
     }

@@ -12,6 +12,44 @@
 else
 {
     <h1>@Model.Name</h1>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <h5>Woorden van deze week <a href="/Dashboard/MoveToDashboard/@ViewBag.Charts[0].ChartId">(Doorschuiven naar dashboard)</a></h5>
+                </div>
+                <div class="panel-body text-center">
+                    <canvas id="@ViewBag.Charts[0].GetCanvasId()"></canvas>
+                    <script>
+                    var typeChart = '@ViewBag.Charts[0].ChartType.ToString()';
+                    var labelsChart = @Html.Raw(@ViewBag.Charts[0].GetLabels());
+                    var canvasId = document.getElementById("@ViewBag.Charts[0].GetCanvasId()").getContext('2d');
+                    var dataSets = @Html.Raw(@ViewBag.Charts[0].GetDataSets());
+
+                    CreateChart(canvasId, typeChart, labelsChart, dataSets);
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <h5>Hashtags van deze week <a href="/Dashboard/MoveToDashboard/@ViewBag.Charts[1].ChartId">(Doorschuiven naar dashboard)</a></h5>
+                </div>
+                <div class="panel-body text-center">
+                    <canvas id="@ViewBag.Charts[1].GetCanvasId()"></canvas>
+                    <script>
+                    var typeChart = '@ViewBag.Charts[1].ChartType.ToString()';
+                    var labelsChart = @Html.Raw(@ViewBag.Charts[1].GetLabels());
+                    var canvasId = document.getElementById("@ViewBag.Charts[1].GetCanvasId()").getContext('2d');
+                    var dataSets = @Html.Raw(@ViewBag.Charts[1].GetDataSets());
+
+                    CreateChart(canvasId, typeChart, labelsChart, dataSets);
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 @using (Html.BeginForm("AddItem", "Page"))
 {

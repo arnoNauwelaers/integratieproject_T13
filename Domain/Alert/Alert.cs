@@ -10,7 +10,6 @@ namespace BL.Domain
         public int AlertId { get; set; }
         public virtual ICollection<AlertType> Type { get; set; }
         public virtual AlertParameter Parameter { get; set; }
-        //TODO max length: 1
         //public string Condition { get; set; }
         public double ConditionPerc { get; set; } // vanaf welke verandering van de parameter moet er alert worden gestuurd
         //[Required] geeft voorlopig error in database

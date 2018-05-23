@@ -11,7 +11,6 @@ using System.Web.Script.Serialization;
 
 namespace BL.Domain
 {
-    //TODO per item een lijst met data kunnen bevatten
     public class Chart
     {
         [Key]

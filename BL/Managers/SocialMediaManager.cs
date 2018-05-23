@@ -11,7 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-//TODO query's in repository?
+
 namespace BL.Managers
 {
     public class SocialMediaManager
@@ -218,7 +218,6 @@ namespace BL.Managers
             return false;
         }
 
-        //TODO uitbreiden voor organisaties en themas
         public Dictionary<Item, int> GetItemsFromChartWithoutItems(DateTime since, ChartValue value)
         {
             List<SocialMediaPost> posts = (List<SocialMediaPost>)socialMediaRepository.ReadSocialMediaPostsSince(since);
