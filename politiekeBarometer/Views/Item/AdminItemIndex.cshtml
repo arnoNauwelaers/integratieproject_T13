@@ -21,9 +21,9 @@
         <div class="form-group">
             <input type="file" id="dataFile" name="upload" />
             <input type="submit" value="Upload" class="btn btn-default" />
-            @if (Model.fileError != null)
+            @if (Model.FileError != null)
             {
-                <p>@Model.fileError</p>
+                <p>@Model.FileError</p>
             }
         </div>
     }
@@ -65,9 +65,9 @@
             </th>
         </tr>
 
-        @Html.DisplayFor(m => m.organizations)
+        @Html.DisplayFor(m => m.Organizations)
 
-        @if (Model.organizations.Count == 0)
+        @if (Model.Organizations.Count == 0)
         {
             <tr>
                 <td colspan="4">Nog geen organisaties toegevoegd</td>
@@ -86,10 +86,10 @@
             </th>
         </tr>
 
-       @Html.DisplayFor(m => m.themes)
+       @Html.DisplayFor(m => m.Themes)
 
 
-        @if (Model.themes.Count == 0)
+        @if (Model.Themes.Count == 0)
         {
             <tr>
                 <td colspan="4">Nog geen themas toegevoegd</td>

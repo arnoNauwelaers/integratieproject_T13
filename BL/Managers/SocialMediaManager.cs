@@ -22,6 +22,8 @@ namespace BL.Managers
         private ItemManager itemManager;
         private SettingsManager settingsManager;
         private Read read;
+        private static DateTime lastQuery;
+        private static Dictionary<string, List<SocialMediaPost>> postsSaved = new Dictionary<string, List<SocialMediaPost>>();
 
 
         public SocialMediaManager(UnitOfWorkManager unitOfWorkManager)
@@ -112,7 +114,7 @@ namespace BL.Managers
 
         public List<SocialMediaPost> GetPostsFromItems(Item item, DateTime since)
         {
-            List<SocialMediaPost> posts = (List<SocialMediaPost>)socialMediaRepository.ReadSocialMediaPostsSince(since);
+            List<SocialMediaPost> posts = ReadPostsSince(since).ToList();
             List<SocialMediaPost> results = new List<SocialMediaPost>();
             foreach (var post in posts)
             {
@@ -126,17 +128,56 @@ namespace BL.Managers
                     {
                         results.Add(post);
                     }
-                    else if (item.GetType().ToString().Contains("Person") && post.Persons.Contains((Person)item))
+                    else if (item.GetType().ToString().Contains("Person") && IsPostFromPerson(post, (Person)item))
                     {
                         results.Add(post);
                     }
                 }
             }
-            if (results.Count == 0)
+            if (item == null)
             {
                 results = posts;
             }
             return results;
+        }
+
+        public Boolean IsPostFromPerson(SocialMediaPost post, Person item)
+        {
+            if (post.Persons.Any(p => p.Name.Contains(item.Name)))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public List<SocialMediaPost> ReadPostsSince(DateTime since)
+        {
+            if (postsSaved.Where(p => p.Key.Contains(since.ToShortDateString())).Any())
+            {
+                DateTime now = DateTime.Now;
+                if (lastQuery != null)
+                {
+                    TimeSpan dateDifference = now.Subtract(lastQuery);
+                    if (dateDifference.TotalMinutes <= 2)
+                    {
+                        return postsSaved.Where(p => p.Key.Contains(since.ToShortDateString())).First().Value;
+                    }
+                }
+            }
+            else
+            {
+                List<SocialMediaPost> postsTemp = (List<SocialMediaPost>)socialMediaRepository.ReadSocialMediaPostsSince(since);
+                lastQuery = DateTime.Now;
+                postsSaved.Add(since.ToShortDateString(), postsTemp);
+                return postsTemp;
+            }
+            List<SocialMediaPost> posts = (List<SocialMediaPost>)socialMediaRepository.ReadSocialMediaPostsSince(since);
+            lastQuery = DateTime.Now;
+            postsSaved[since.ToShortDateString()] = posts;
+            return posts;
         }
 
         public Dictionary<string, int> GetAmountPostsPerItem(DateTime since, Item item)
@@ -220,7 +261,7 @@ namespace BL.Managers
 
         public Dictionary<Item, int> GetItemsFromChartWithoutItems(DateTime since, ChartValue value)
         {
-            List<SocialMediaPost> posts = (List<SocialMediaPost>)socialMediaRepository.ReadSocialMediaPostsSince(since);
+            List<SocialMediaPost> posts = ReadPostsSince(since).ToList();
             if (value == ChartValue.trendPersons)
             {
                 return GetTrendPersonData(posts);
