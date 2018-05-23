@@ -25,6 +25,9 @@
     min-width: 500px;
 }
 
+.col-lg-6 {
+    max-width: 48% !important;
+}
 .url {
     font-size: 70%;
     overflow-wrap: break-word;
