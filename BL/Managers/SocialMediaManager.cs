@@ -259,7 +259,7 @@ namespace BL.Managers
             return false;
         }
 
-        public Dictionary<Item, int> GetItemsFromChartWithoutItems(DateTime since, ChartValue value)
+        public Dictionary<Item, int> GetItemsFromChartWithoutItems(DateTime since, ChartValue value, string itemType)
         {
             List<SocialMediaPost> posts = ReadPostsSince(since).ToList();
             if (value == ChartValue.trendPersons)
@@ -274,7 +274,72 @@ namespace BL.Managers
             {
                 return GetTrendThemeData(posts);
             }
+            else if (value == ChartValue.trendMostPositive)
+            {
+                return GetTrendSentimentData(posts, itemType, true);
+            }
+            else if (value == ChartValue.trendMostNegative)
+            {
+                return GetTrendSentimentData(posts, itemType, false);
+            }
             return null;
+        }
+
+        public Dictionary<Item, int> GetTrendSentimentData(List<SocialMediaPost> posts, string itemType, Boolean positive = true)
+        {
+            Dictionary<Item, List<int>> list = new Dictionary<Item, List<int>>();
+            Dictionary<Item, int> definitiveList = new Dictionary<Item, int>();
+            foreach (var post in posts)
+            {
+                if (post.PostSentiment == null)
+                {
+                    continue;
+                }
+                if (itemType.Contains("Person"))
+                {
+                    foreach (var person in post.Persons)
+                    {
+                        if (!list.Any(p => p.Key == person))
+                        {
+                            list.Add(person, new List<int>());
+                        }
+                        list[person].Add((int)(post.PostSentiment.Polarity * 100));
+                    }
+                }
+                else if (itemType.Contains("Organization"))
+                {
+                    foreach (var person in post.Persons)
+                    {
+                        if (person.Organization != null)
+                        {
+                            if (!list.Any(p => p.Key == person.Organization))
+                            {
+                                list.Add(person.Organization, new List<int>());
+                            }
+                            list[person.Organization].Add((int)(post.PostSentiment.Polarity * 100));
+                        }
+                    }
+                }
+                else if (itemType.Contains("Theme"))
+                {
+                    foreach (var theme in itemManager.GetThemes().ToList())
+                    {
+                        if (IsPostFromTheme(post, theme))
+                        {
+                            if (!list.Any(p => p.Key == theme))
+                            {
+                                list.Add(theme, new List<int>());
+                            }
+                            list[theme].Add((int)(post.PostSentiment.Polarity * 100));
+                        }
+                    }
+                }
+            }
+            foreach (var item in list)
+            {
+                definitiveList.Add(item.Key, (int)item.Value.Average());
+            }
+            return definitiveList;
         }
 
         public Dictionary<Item, int> GetTrendThemeData(List<SocialMediaPost> posts)

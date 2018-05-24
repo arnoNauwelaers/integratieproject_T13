@@ -66,7 +66,7 @@ namespace politiekeBarometer.Controllers
         [HttpPost, Authorize]
         public ActionResult DeleteChart(int id)
         {
-            Chart chart = ChartManager.GetChart(id);
+            Chart chart = ChartManager.GetChart(id, false);
             ApplicationUser user = userManager.GetUser(User.Identity.GetUserId());
             if (user.Dashboard.Contains(chart))
             {
@@ -79,7 +79,7 @@ namespace politiekeBarometer.Controllers
         [HttpPost, Authorize]
         public ActionResult SaveChart(int id)
         {
-            Chart chart = ChartManager.GetChart(id);
+            Chart chart = ChartManager.GetChart(id, false);
             chart.SavedChartItemData = chart.ChartItemData;
             chart.Saved = true;
             ApplicationUser user = userManager.GetUser(User.Identity.GetUserId());
@@ -97,7 +97,7 @@ namespace politiekeBarometer.Controllers
         [HttpGet, Authorize]
         public ActionResult MoveToDashboard(int id)
         {
-            Chart chart = ChartManager.GetChart(id);
+            Chart chart = ChartManager.GetChart(id, false);
             ApplicationUser user = userManager.GetUser(User.Identity.GetUserId());
             user.Dashboard.Add(new Chart() { ChartType = chart.ChartType, ChartValue = chart.ChartValue, FrequencyType = chart.FrequencyType, Zone = (new Zone() { Width = 2.43, X = 10, Y = 10 }) });
             userManager.Update(user);

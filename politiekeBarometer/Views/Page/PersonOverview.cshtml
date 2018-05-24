@@ -5,8 +5,45 @@
     List<Person> pers = ViewBag.Persons;
 }
 
-<h2>List of all persons:</h2>
+<h2>Personen:</h2>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                <h5>Meest positieve personen <a href="/Dashboard/MoveToDashboard/@ViewBag.Charts["mostPositivePersons"].ChartId">(Doorschuiven naar dashboard)</a></h5>
+            </div>
+            <div class="panel-body text-center">
+                <canvas id="@ViewBag.Charts["mostPositivePersons"].GetCanvasId()"></canvas>
+                <script>
+                    var typeChart = '@ViewBag.Charts["mostPositivePersons"].ChartType.ToString()';
+                    var labelsChart = @Html.Raw(@ViewBag.Charts["mostPositivePersons"].GetLabels());
+                    var canvasId = document.getElementById("@ViewBag.Charts["mostPositivePersons"].GetCanvasId()").getContext('2d');
+                    var dataSets = @Html.Raw(@ViewBag.Charts["mostPositivePersons"].GetDataSets());
 
+                    CreateChart(canvasId, typeChart, labelsChart, dataSets);
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                <h5>Meest negatieve personen <a href="/Dashboard/MoveToDashboard/@ViewBag.Charts["mostNegativePersons"].ChartId">(Doorschuiven naar dashboard)</a></h5>
+            </div>
+            <div class="panel-body text-center">
+                <canvas id="@ViewBag.Charts["mostNegativePersons"].GetCanvasId()"></canvas>
+                <script>
+                    var typeChart = '@ViewBag.Charts["mostNegativePersons"].ChartType.ToString()';
+                    var labelsChart = @Html.Raw(@ViewBag.Charts["mostNegativePersons"].GetLabels());
+                    var canvasId = document.getElementById("@ViewBag.Charts["mostNegativePersons"].GetCanvasId()").getContext('2d');
+                    var dataSets = @Html.Raw(@ViewBag.Charts["mostNegativePersons"].GetDataSets());
+
+                    CreateChart(canvasId, typeChart, labelsChart, dataSets);
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
 @foreach (Person p in pers)
 {
     

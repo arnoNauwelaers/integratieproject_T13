@@ -23,6 +23,7 @@ namespace BL.Domain
         public virtual Zone Zone { get; set; }
         public Boolean Saved { get; set; } = false;
         public Boolean MultipleItems { get; set; } = false;
+        public string ItemType { get; set; }
         [NotMapped]
         public virtual ICollection<ChartItemData> ChartItemData { get; set; } = new List<ChartItemData>();
         public virtual ICollection<ChartItemData> SavedChartItemData { get; set; } = new List<ChartItemData>();
@@ -191,6 +192,19 @@ namespace BL.Domain
                     default: word = ChartValue.ToString(); break;
                 }
                 title = $"Aantal {word} van " + item.Name;
+            }
+            else if (ChartValue == ChartValue.trendMostNegative || ChartValue == ChartValue.trendMostPositive)
+            {
+                title = $"Meest ";
+                if (ChartValue == ChartValue.trendMostNegative)
+                {
+                    title += "negatieve ";
+                }
+                else
+                {
+                    title += "positieve ";
+                }
+                title += ItemType + " (%)";
             }
             else
             {

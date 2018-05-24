@@ -14,6 +14,8 @@ namespace BL.Domain
         trendPersons,
         trendThemes,
         trendOrganizations,
-        postsPerDate
+        postsPerDate,
+        trendMostPositive,
+        trendMostNegative
     }
 }

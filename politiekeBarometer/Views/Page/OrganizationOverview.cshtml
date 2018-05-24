@@ -5,8 +5,45 @@
     List<Organization> org = ViewBag.Organizations;
 }
 
-<h2>List of all organizations:</h2>
+<h2>Organisaties:</h2>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                <h5>Meest positieve organisaties <a href="/Dashboard/MoveToDashboard/@ViewBag.Charts["mostPositiveOrganizations"].ChartId">(Doorschuiven naar dashboard)</a></h5>
+            </div>
+            <div class="panel-body text-center">
+                <canvas id="@ViewBag.Charts["mostPositiveOrganizations"].GetCanvasId()"></canvas>
+                <script>
+                    var typeChart = '@ViewBag.Charts["mostPositiveOrganizations"].ChartType.ToString()';
+                    var labelsChart = @Html.Raw(@ViewBag.Charts["mostPositiveOrganizations"].GetLabels());
+                    var canvasId = document.getElementById("@ViewBag.Charts["mostPositiveOrganizations"].GetCanvasId()").getContext('2d');
+                    var dataSets = @Html.Raw(@ViewBag.Charts["mostPositiveOrganizations"].GetDataSets());
 
+                    CreateChart(canvasId, typeChart, labelsChart, dataSets);
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                <h5>Meest negatieve organisaties <a href="/Dashboard/MoveToDashboard/@ViewBag.Charts["mostNegativeOrganizations"].ChartId">(Doorschuiven naar dashboard)</a></h5>
+            </div>
+            <div class="panel-body text-center">
+                <canvas id="@ViewBag.Charts["mostNegativeOrganizations"].GetCanvasId()"></canvas>
+                <script>
+                    var typeChart = '@ViewBag.Charts["mostNegativeOrganizations"].ChartType.ToString()';
+                    var labelsChart = @Html.Raw(@ViewBag.Charts["mostNegativeOrganizations"].GetLabels());
+                    var canvasId = document.getElementById("@ViewBag.Charts["mostNegativeOrganizations"].GetCanvasId()").getContext('2d');
+                    var dataSets = @Html.Raw(@ViewBag.Charts["mostNegativeOrganizations"].GetDataSets());
+
+                    CreateChart(canvasId, typeChart, labelsChart, dataSets);
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
 @foreach (Organization o in org)
 {
     <li>@Html.ActionLink(o.Name, "Organization", new { id = o.ItemId }, null)</li>

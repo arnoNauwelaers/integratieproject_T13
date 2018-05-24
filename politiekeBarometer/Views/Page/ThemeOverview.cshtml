@@ -5,8 +5,45 @@
     List<Theme> Themes = ViewBag.Themes;
 }
 
-<h2>themas:</h2>
+<h2>Themas:</h2>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                <h5>Meest positieve themas <a href="/Dashboard/MoveToDashboard/@ViewBag.Charts["mostPositiveThemes"].ChartId">(Doorschuiven naar dashboard)</a></h5>
+            </div>
+            <div class="panel-body text-center">
+                <canvas id="@ViewBag.Charts["mostPositiveThemes"].GetCanvasId()"></canvas>
+                <script>
+                    var typeChart = '@ViewBag.Charts["mostPositiveThemes"].ChartType.ToString()';
+                    var labelsChart = @Html.Raw(@ViewBag.Charts["mostPositiveThemes"].GetLabels());
+                    var canvasId = document.getElementById("@ViewBag.Charts["mostPositiveThemes"].GetCanvasId()").getContext('2d');
+                    var dataSets = @Html.Raw(@ViewBag.Charts["mostPositiveThemes"].GetDataSets());
 
+                    CreateChart(canvasId, typeChart, labelsChart, dataSets);
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                <h5>Meest negatieve themas <a href="/Dashboard/MoveToDashboard/@ViewBag.Charts["mostNegativeThemes"].ChartId">(Doorschuiven naar dashboard)</a></h5>
+            </div>
+            <div class="panel-body text-center">
+                <canvas id="@ViewBag.Charts["mostNegativeThemes"].GetCanvasId()"></canvas>
+                <script>
+                    var typeChart = '@ViewBag.Charts["mostNegativeThemes"].ChartType.ToString()';
+                    var labelsChart = @Html.Raw(@ViewBag.Charts["mostNegativeThemes"].GetLabels());
+                    var canvasId = document.getElementById("@ViewBag.Charts["mostNegativeThemes"].GetCanvasId()").getContext('2d');
+                    var dataSets = @Html.Raw(@ViewBag.Charts["mostNegativeThemes"].GetDataSets());
+
+                    CreateChart(canvasId, typeChart, labelsChart, dataSets);
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
 @foreach (Theme t in Themes)
 {
     <li>@Html.ActionLink(t.Name, "Theme", new { id = t.ItemId }, null)</li>

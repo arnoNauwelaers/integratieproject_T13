@@ -57,6 +57,17 @@ namespace politiekeBarometer.Controllers
         {
             List<Organization> orgs = (List<Organization>)im.GetOrganizations();
             ViewBag.Organizations = orgs;
+            Dictionary<string, Chart> charts = chartManager.GetStandardChart();
+            Dictionary<string, Chart> defCharts = new Dictionary<string, Chart>();
+            foreach (var chart in charts)
+            {
+                if (chart.Value.ItemType == "Organization")
+                {
+                    chartManager.RetrieveDataChart(chart.Value);
+                    defCharts.Add(chart.Key, chart.Value);
+                }
+            }
+            ViewBag.Charts = defCharts;
             return View();
 
         }
@@ -65,6 +76,17 @@ namespace politiekeBarometer.Controllers
         {
             List<Person> pers = (List<Person>)im.GetPersons();
             ViewBag.Persons = pers;
+            Dictionary<string, Chart> charts = chartManager.GetStandardChart();
+            Dictionary<string, Chart> defCharts = new Dictionary<string, Chart>();
+            foreach (var chart in charts)
+            {
+                if (chart.Value.ItemType == "Person")
+                {
+                    chartManager.RetrieveDataChart(chart.Value);
+                    defCharts.Add(chart.Key, chart.Value);
+                }
+            }
+            ViewBag.Charts = defCharts;
             return View();
         }
 
@@ -72,6 +94,17 @@ namespace politiekeBarometer.Controllers
         {
             List<Theme> themes = (List<Theme>)im.GetThemes();
             ViewBag.Themes = themes;
+            Dictionary<string, Chart> charts = chartManager.GetStandardChart();
+            Dictionary<string, Chart> defCharts = new Dictionary<string, Chart>();
+            foreach (var chart in charts)
+            {
+                if (chart.Value.ItemType == "Theme")
+                {
+                    chartManager.RetrieveDataChart(chart.Value);
+                    defCharts.Add(chart.Key, chart.Value);
+                }
+            }
+            ViewBag.Charts = defCharts;
             return View();
         }
 

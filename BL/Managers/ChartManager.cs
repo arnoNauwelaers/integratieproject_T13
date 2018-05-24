@@ -27,6 +27,7 @@ namespace BL.Managers
             dataManager = new DataManager(unitOfWorkManager);
             socialMediaManager = new SocialMediaManager(unitOfWorkManager);
             zoneManager = new ZoneManager(unitOfWorkManager);
+            CreateStandardChartsIfNotExists();
         }
 
         public List<Chart> GetChartsFromItem(Item item)
@@ -56,13 +57,12 @@ namespace BL.Managers
 
         public Dictionary<string, Chart> GetStandardChart()
         {
-            CreateStandardChartsIfNotExists();
             return standardCharts;
         }
 
         public void CreateStandardChartsIfNotExists()
         {
-            int amountStandardCharts = 6;
+            int amountStandardCharts = 12;
             if (standardCharts.Count < amountStandardCharts && chartRepository.ReadStandardCharts().Count < amountStandardCharts)
             {
 
@@ -73,6 +73,12 @@ namespace BL.Managers
                 Chart trendingOrganizationMonth = new Chart() { StandardChart = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendOrganizations, FrequencyType = DateFrequencyType.monthly };
                 Chart trendingThemeWeek = new Chart() { StandardChart = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendThemes, FrequencyType = DateFrequencyType.weekly };
                 Chart trendingThemeMonth = new Chart() { StandardChart = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendThemes, FrequencyType = DateFrequencyType.monthly };
+                Chart mostPositivePersons = new Chart() { StandardChart = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendMostPositive, FrequencyType = DateFrequencyType.weekly, ItemType="Person" };
+                Chart mostNegativePersons = new Chart() { StandardChart = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendMostNegative, FrequencyType = DateFrequencyType.weekly, ItemType = "Person" };
+                Chart mostPositiveOrganizations = new Chart() { StandardChart = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendMostPositive, FrequencyType = DateFrequencyType.weekly, ItemType = "Organization" };
+                Chart mostNegativeOrganizations = new Chart() { StandardChart = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendMostNegative, FrequencyType = DateFrequencyType.weekly, ItemType = "Organization" };
+                Chart mostPositiveThemes = new Chart() { StandardChart = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendMostPositive, FrequencyType = DateFrequencyType.weekly, ItemType = "Theme" };
+                Chart mostNegativeThemes = new Chart() { StandardChart = true, ChartType = ChartType.bar, ChartValue = ChartValue.trendMostNegative, FrequencyType = DateFrequencyType.weekly, ItemType = "Theme" };
 
 
                 standardCharts.Add("trendingPersonWeek", chartRepository.CreateChart(trendingPersonWeek));
@@ -81,6 +87,12 @@ namespace BL.Managers
                 standardCharts.Add("trendingOrganizationMonth", chartRepository.CreateChart(trendingOrganizationMonth));
                 standardCharts.Add("trendingThemeWeek", chartRepository.CreateChart(trendingThemeWeek));
                 standardCharts.Add("trendingThemeMonth", chartRepository.CreateChart(trendingThemeMonth));
+                standardCharts.Add("mostPositivePersons", chartRepository.CreateChart(mostPositivePersons));
+                standardCharts.Add("mostNegativePersons", chartRepository.CreateChart(mostNegativePersons));
+                standardCharts.Add("mostPositiveOrganizations", chartRepository.CreateChart(mostPositiveOrganizations));
+                standardCharts.Add("mostNegativeOrganizations", chartRepository.CreateChart(mostNegativeOrganizations));
+                standardCharts.Add("mostPositiveThemes", chartRepository.CreateChart(mostPositiveThemes));
+                standardCharts.Add("mostNegativeThemes", chartRepository.CreateChart(mostNegativeThemes));
             }
             else if (standardCharts.Count < amountStandardCharts)
             {
@@ -92,6 +104,12 @@ namespace BL.Managers
                 standardCharts.Add("trendingOrganizationMonth", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendOrganizations && c.FrequencyType == DateFrequencyType.monthly));
                 standardCharts.Add("trendingThemeWeek", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendThemes && c.FrequencyType == DateFrequencyType.weekly));
                 standardCharts.Add("trendingThemeMonth", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendThemes && c.FrequencyType == DateFrequencyType.monthly));
+                standardCharts.Add("mostPositivePersons", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendMostPositive && c.FrequencyType == DateFrequencyType.weekly && c.ItemType == "Person"));
+                standardCharts.Add("mostNegativePersons", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendMostNegative && c.FrequencyType == DateFrequencyType.weekly && c.ItemType == "Person"));
+                standardCharts.Add("mostPositiveOrganizations", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendMostPositive && c.FrequencyType == DateFrequencyType.weekly && c.ItemType == "Organization"));
+                standardCharts.Add("mostNegativeOrganizations", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendMostNegative && c.FrequencyType == DateFrequencyType.weekly && c.ItemType == "Organization"));
+                standardCharts.Add("mostPositiveThemes", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendMostPositive && c.FrequencyType == DateFrequencyType.weekly && c.ItemType == "Theme"));
+                standardCharts.Add("mostNegativeThemes", tempStandardCharts.First(c => c.ChartValue == ChartValue.trendMostNegative && c.FrequencyType == DateFrequencyType.weekly && c.ItemType == "Theme"));
             }
         }
 
@@ -107,10 +125,13 @@ namespace BL.Managers
 
 
         //Non saved chart -> data realtime ophalen
-        public Chart GetChart(int id)
+        public Chart GetChart(int id, Boolean retrieveData)
         {
             Chart chart = chartRepository.ReadChart(id);
-            RetrieveDataChart(chart);
+            if (retrieveData == true)
+            {
+                RetrieveDataChart(chart);
+            }
             return chart;
         }
 
@@ -137,7 +158,7 @@ namespace BL.Managers
             if (chart.Items.Count == 0)
             {
                 trend = true;
-                itemData = socialMediaManager.GetItemsFromChartWithoutItems(since, chart.ChartValue);
+                itemData = socialMediaManager.GetItemsFromChartWithoutItems(since, chart.ChartValue, chart.ItemType);
             }
             if (trend == false && chart.ChartValue != ChartValue.postsPerDate)
             {
@@ -218,7 +239,15 @@ namespace BL.Managers
             else if (trend == true)
             {
                 ChartItemData tempChartItemData = new ChartItemData();
-                foreach (var item in itemData.OrderByDescending(i => i.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle())
+                if (chart.ChartValue == ChartValue.trendMostNegative)
+                {
+                    itemData = itemData.OrderBy(i => i.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+                }
+                else
+                {
+                    itemData = itemData.OrderByDescending(i => i.Value).Take(AMOUNT_OF_ELEMENTS).ToDictionary(pair => pair.Key, pair => pair.Value).Shuffle();
+                }
+                foreach (var item in itemData)
                 {
                     tempChartItemData.Item = item.Key;
                     tempChartItemData.Data.Add(new Data() { Name = item.Key.Name, Amount = item.Value });
