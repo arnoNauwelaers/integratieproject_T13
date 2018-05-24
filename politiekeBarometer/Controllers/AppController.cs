@@ -122,7 +122,15 @@ namespace politiekeBarometer.Controllers
         [Route("api/GetHomeCharts")]
         public IHttpActionResult GetHomeCharts()
         {
-            return Ok(ChartManager.GetStandardChart());
+            List<SimpleChart> charts = new List<SimpleChart>();
+            foreach(KeyValuePair<string, Chart> entry in ChartManager.GetStandardChart()) {
+              SimpleChart sc = new SimpleChart();
+              sc.Name = entry.Key;
+              sc.Type = entry.Value.ChartType;
+              sc.Data = entry.Value.ChartItemData;
+              charts.Add(sc);
+            }
+            return Ok(charts);
         }
 
         [HttpGet]
@@ -146,5 +154,12 @@ namespace politiekeBarometer.Controllers
     {
         public string Id { get; set; }
         public string Username { get; set; }
+    }
+
+    public class SimpleChart
+    {
+        public string Name { get; set; }
+        public ChartType Type { get; set; }
+        public ICollection<ChartItemData> Data { get; set; }
     }
 }
