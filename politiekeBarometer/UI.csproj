@@ -340,8 +340,6 @@
     <Content Include="Views\Item\AdminItemIndex.cshtml" />
     <Content Include="Views\Item\AdminItemCreate.cshtml" />
     <Content Include="Views\Item\AdminItemEdit.cshtml" />
-    <Content Include="Views\Item\AddSocialMediaProfileToOrganization.cshtml" />
-    <Content Include="Views\Item\AddSocialMediaProfileToPerson.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\Page\OrganizationOverview.cshtml" />

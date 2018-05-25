@@ -12,7 +12,6 @@ namespace BL.Managers
     public class ChartManager
     {
         private ChartRepository chartRepository;
-        private DataManager dataManager;
         private ItemManager itemManager;
         private SocialMediaManager socialMediaManager;
         private ZoneManager zoneManager;
@@ -24,7 +23,6 @@ namespace BL.Managers
         {
             chartRepository = new ChartRepository(unitOfWorkManager.UnitOfWork);
             itemManager = new ItemManager(unitOfWorkManager);
-            dataManager = new DataManager(unitOfWorkManager);
             socialMediaManager = new SocialMediaManager(unitOfWorkManager);
             zoneManager = new ZoneManager(unitOfWorkManager);
             CreateStandardChartsIfNotExists();

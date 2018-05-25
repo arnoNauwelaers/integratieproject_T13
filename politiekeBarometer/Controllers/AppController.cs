@@ -149,11 +149,13 @@ namespace politiekeBarometer.Controllers
             }
             List<SimpleChart> charts = new List<SimpleChart>();
             foreach(Chart c in userCharts) {
-              SimpleChart sc = new SimpleChart();
-              sc.Name = "Grafiek";
-              sc.Type = c.ChartType;
-              sc.Data = c.ChartItemData;
-              charts.Add(sc);
+                SimpleChart sc = new SimpleChart
+                {
+                    Name = "Grafiek",
+                    Type = c.ChartType,
+                    Data = c.ChartItemData
+                };
+                charts.Add(sc);
             }
             return Ok(charts);
         }

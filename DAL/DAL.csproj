@@ -89,7 +89,6 @@
     <Compile Include="EF\BarometerDbInitializer.cs" />
     <Compile Include="Repositories\ChartItemDataRepository.cs" />
     <Compile Include="Repositories\ChartRepository.cs" />
-    <Compile Include="Repositories\DataRepository.cs" />
     <Compile Include="Repositories\ItemRepository.cs" />
     <Compile Include="Repositories\PlatformRepository.cs" />
     <Compile Include="Repositories\SettingsRepository.cs" />
