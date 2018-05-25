@@ -38,12 +38,12 @@
     {
         //TODO hier code om elke chart in te laden op juiste positie en grootte
     <div id="@chart.GetDivId()" data-x="@chart.Zone.X" data-y="@chart.Zone.Y" value="@chart.ChartId" class="grafiek resize-drag" style="@chart.GetStyle()">
-        <i class="fa fa-fw fa-edit editForm" id="editFormButton" style="float:right" data-toggle="modal" data-target="#editModal" onclick="fillEditItems('@chart.GetItemNames()', @chart.ChartId)"></i>
+        <a href="#"><i class="fa fa-fw fa-edit editForm" id="editFormButton" style="float:right" data-toggle="modal" data-target="#editModal" onclick="fillEditItems('@chart.GetItemNames()', @chart.ChartId)"></i></a>
         <form id="@chart.ChartId" class="form-horizontal deleteForm" method="post" action="/Dashboard/DeleteChart">
-            <a onclick="deleteChart(@chart.ChartId)"><i class="fa fa-fw fa-trash" style="float:right"><input type="hidden" value="@chart.ChartId" name="id" /></i></a>
+            <a href="#" onclick="deleteChart(@chart.ChartId)"><i class="fa fa-fw fa-trash" style="float:right"><input type="hidden" value="@chart.ChartId" name="id" /></i></a>
         </form>
         <form id="@chart.ChartId+" class="form-horizontal deleteForm" method="post" action="/Dashboard/SaveChart">
-            <a onclick="saveChart('@chart.ChartId+')"><i class="fa fa-fw fa-save" style="float:right"><input type="hidden" value="@chart.ChartId" name="id" /></i></a>
+            <a href="#" onclick="saveChart('@chart.ChartId+')"><i class="fa fa-fw fa-save" style="float:right"><input type="hidden" value="@chart.ChartId" name="id" /></i></a>
         </form>
         <canvas id="@chart.GetCanvasId()"></canvas>
     </div>

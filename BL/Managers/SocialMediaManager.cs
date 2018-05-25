@@ -39,6 +39,7 @@ namespace BL.Managers
         public void SynchronizeDatabase()
         {
             List<Item> alteredItems = CreatePosts();
+            Read.LastRead = DateTime.Now;
             List<Alert> alerts = new List<Alert>();
             foreach (var item in alteredItems)
             {
@@ -59,10 +60,9 @@ namespace BL.Managers
             }
             else
             {
-                //TODO vanaf vorige maand?
-                date = "14 May 2018 08:49:12";
+                DateTime start = DateTime.Now.AddDays(-(settingsManager.GetSettings().DataLifetime));
+                date = start.Day + " " + GetMonthFromInt(start.Month) + " " + start.Year + " " + start.Hour + ":" + start.Minute + ":" + start.Second;
             }
-
 
             List<SocialMediaPost> data2 = (List<SocialMediaPost>)read.ReadData(date);
             foreach (var item in data2)
@@ -96,7 +96,7 @@ namespace BL.Managers
 
         public Dictionary<string, int> GetDataFromPost(DateTime since, ChartValue value, Item item = null)
         {
-            List<SocialMediaPost> results = GetPostsFromItems(item, since);
+            List<SocialMediaPost> results = GetPostsFromItem(item, since);
             if (value == ChartValue.hashtags)
             {
                 return GetHashtagData(results);
@@ -112,7 +112,7 @@ namespace BL.Managers
             return null;
         }
 
-        public List<SocialMediaPost> GetPostsFromItems(Item item, DateTime since)
+        public List<SocialMediaPost> GetPostsFromItem(Item item, DateTime since)
         {
             List<SocialMediaPost> posts = ReadPostsSince(since).ToList();
             List<SocialMediaPost> results = new List<SocialMediaPost>();
@@ -182,17 +182,20 @@ namespace BL.Managers
 
         public Dictionary<string, int> GetAmountPostsPerItem(DateTime since, Item item)
         {
-            List<SocialMediaPost> posts = GetPostsFromItems(item, since).OrderByDescending(p => p.Date).ToList();
+            List<SocialMediaPost> posts = GetPostsFromItem(item, since).OrderByDescending(p => p.Date).ToList();
             Dictionary<string, int> result = new Dictionary<string, int>();
             //for loop en elke datum optellen per item
             foreach (var post in posts)
             {
                 if (item.GetType().ToString().Contains("Person"))
                 {
-                    if (post.Persons.Contains((Person)item))
+                    foreach (var person in post.Persons.ToList())
                     {
-                        string date = post.Date.ToShortDateString();
-                        result = AddToResultsDictionary(result, date);
+                        if (person.Name.Equals(item.Name))
+                        {
+                            string date = post.Date.ToShortDateString();
+                            result = AddToResultsDictionary(result, date);
+                        }
                     }
                 }
                 else if (item.GetType().ToString().Contains("Organization"))

@@ -113,5 +113,14 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        @foreach (var person in Model.Persons.ToList())
+        {
+            if (!String.IsNullOrEmpty(person.Name))
+            {
+                <li>@Html.ActionLink(person.Name, "Person", new { id = person.ItemId }, null)</li>
+            }
+        }
+    </div>
 </body>
 </html>

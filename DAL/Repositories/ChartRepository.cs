@@ -22,7 +22,7 @@ namespace DAL.Repositories
 
         public List<Chart> ReadCharts()
         {
-            return ctx.Charts.Include(i => i.Items).Include(i => i.SavedChartItemData).ToList();
+            return ctx.Charts.Include(i => i.Items).Include(i => i.ChartItemData).ToList();
         }
 
         public Chart CreateChart(Chart chart)
@@ -36,7 +36,7 @@ namespace DAL.Repositories
         {
             if (ctx.Charts.Any(c => c.StandardChart == true))
             {
-                return ctx.Charts.Where(c => c.StandardChart == true).ToList();
+                return ctx.Charts.Include(i => i.ChartItemData).Where(c => c.StandardChart == true).ToList();
             }
             else
             {
@@ -46,13 +46,13 @@ namespace DAL.Repositories
 
         public Chart ReadChart(int id)
         {
-            return ctx.Charts.Include(i => i.Items).Include(i => i.SavedChartItemData).ToList().Find(c => c.ChartId == id);
+            return ctx.Charts.Include(i => i.Items).Include(i => i.ChartItemData).ToList().Find(c => c.ChartId == id);
         }
 
 
         public void UpdateChart(Chart chart)
         {
-            ctx.Entry(chart).State = System.Data.Entity.EntityState.Modified;
+            ctx.Charts.AddOrUpdate(chart);
             ctx.SaveChanges();
         }
 

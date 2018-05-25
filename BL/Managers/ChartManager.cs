@@ -139,9 +139,13 @@ namespace BL.Managers
         {
             if (chart.Saved == true)
             {
-                chart.ChartItemData = chart.SavedChartItemData;
                 return;
             }
+            if (chart.LastRead > Read.LastRead && Read.LastRead != null && chart.ChartItemData.Count > 0)
+            {
+                return;
+            }
+            chart.ChartItemData.Clear();
             Boolean trend = false;
             Dictionary<Item, int> itemData = new Dictionary<Item, int>();
             DateTime since = DateTime.Now.AddDays(-7);
@@ -254,6 +258,8 @@ namespace BL.Managers
                 }
                 chart.ChartItemData.Add(tempChartItemData);
             }
+            chartRepository.UpdateChart(chart);
+            chart.LastRead = DateTime.Now;
         }
 
         public void UpdateChartsFromTempChart(List<TempChartEdit> chartList)
@@ -314,6 +320,7 @@ namespace BL.Managers
         public void EditChartFromDashboard(int id, string items, string type, string frequency)
         {
             Chart chart = chartRepository.ReadChart(id);
+            chart.LastRead = null;
             List<Item> itemList = new List<Item>();
             char[] whitespace = new char[] { ' ', '\t' };
             string[] itemIds = items.Split(whitespace);

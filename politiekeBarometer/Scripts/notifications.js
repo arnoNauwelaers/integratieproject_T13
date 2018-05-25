@@ -7,8 +7,8 @@
     });
     setTimeout(synchronizeDB, 5000);
 }
-//synchronizeDB();
-//loadNotifications();
+synchronizeDB();
+loadNotifications();
 var ul = document.getElementById("notifications");
 function loadNotifications() {
     $.getJSON("/api/Basic/GetNotifications", function (data) {

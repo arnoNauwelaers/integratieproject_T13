@@ -182,7 +182,7 @@ function addItemEdit() {
     else {
         itemsEdit = item;
     }
-    itemsHiddenEdit.value = items;
+    itemsHiddenEdit.value = itemsEdit;
 }
 
 function addItemEditStart(itemName) {

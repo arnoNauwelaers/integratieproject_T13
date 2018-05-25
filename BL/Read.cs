@@ -18,6 +18,7 @@ namespace BL
         private string URL;
         static HttpClient client = new HttpClient();
         private SettingsManager settingsManager;
+        public static DateTime? LastRead { get; set; } = null;
 
         public Read(UnitOfWorkManager unitOfWorkManager)
         {
@@ -31,7 +32,7 @@ namespace BL
                 var tweets = new List<SocialMediaPost>();
                 Settings settings = settingsManager.GetSettings();
                 URL = settings.ApiUrl;
-                if (!settings.ApiPort.Equals("") && settings.ApiPort != null)
+                if (settings.ApiPort != null && !settings.ApiPort.Equals(""))
                 {
                     URL += $":{settings.ApiPort}";
                 }

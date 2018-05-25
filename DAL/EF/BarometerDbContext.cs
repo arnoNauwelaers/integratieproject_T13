@@ -67,7 +67,7 @@ namespace DAL.EF
             //modelBuilder.Entity<IdentityUserRole>().HasKey(u => new (u.RoleId, uint.))
 
             modelBuilder.Entity<Alert>().HasMany(i => i.Notifications).WithMany();
-            modelBuilder.Entity<Chart>().HasMany(i => i.SavedChartItemData).WithMany();
+            modelBuilder.Entity<Chart>().HasMany(i => i.ChartItemData).WithMany();
             modelBuilder.Entity<Item>().HasMany(i => i.Alerts).WithMany();
             modelBuilder.Entity<Item>().HasMany(i => i.StandardCharts).WithMany();
             modelBuilder.Entity<Organization>().HasMany(i => i.Persons).WithMany();

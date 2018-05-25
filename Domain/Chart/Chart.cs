@@ -24,9 +24,7 @@ namespace BL.Domain
         public Boolean Saved { get; set; } = false;
         public Boolean MultipleItems { get; set; } = false;
         public string ItemType { get; set; }
-        [NotMapped]
         public virtual ICollection<ChartItemData> ChartItemData { get; set; } = new List<ChartItemData>();
-        public virtual ICollection<ChartItemData> SavedChartItemData { get; set; } = new List<ChartItemData>();
         public DateFrequencyType FrequencyType { get; set; }
         public DateTime? StartDate { get; set; } = null;
         public DateTime? EndDate { get; set; } = null;
@@ -36,6 +34,8 @@ namespace BL.Domain
         private static readonly Random rnd = new Random();
         [NotMapped]
         private List<string> Labels = new List<String>();
+        [NotMapped]
+        public DateTime? LastRead { get; set; }
 
         public string GetStyle()
         {

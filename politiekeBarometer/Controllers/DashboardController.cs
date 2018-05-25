@@ -80,7 +80,6 @@ namespace politiekeBarometer.Controllers
         public ActionResult SaveChart(int id)
         {
             Chart chart = ChartManager.GetChart(id, false);
-            chart.SavedChartItemData = chart.ChartItemData;
             chart.Saved = true;
             ApplicationUser user = userManager.GetUser(User.Identity.GetUserId());
             userManager.Update(user);

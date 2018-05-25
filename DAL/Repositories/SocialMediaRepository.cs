@@ -44,7 +44,6 @@ namespace DAL.Repositories
             }
         }
 
-
         public void UpdateSocialMediaPost(SocialMediaPost socialMediaPost)
         {
             ctx.Set<SocialMediaPost>().AddOrUpdate(socialMediaPost);
