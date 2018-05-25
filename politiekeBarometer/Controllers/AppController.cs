@@ -140,7 +140,20 @@ namespace politiekeBarometer.Controllers
             string token = Request.Headers.GetValues("Authorization").First();
             ApplicationUser user = UserManager.GetUserByToken(token);
             if (user == null) return BadRequest("Security access token not found in user database.");
-            return Ok(user.Dashboard);
+            List<Chart> userCharts = new List<Chart>();
+            foreach(Chart c in user.Dashboard) {
+              ChartManager.RetrieveDataChart(c);
+              userCharts.Add(c);
+            }
+            List<SimpleChart> charts = new List<SimpleChart>();
+            foreach(Chart c in userCharts) {
+              SimpleChart sc = new SimpleChart();
+              sc.Name = "Grafiek";
+              sc.Type = c.ChartType;
+              sc.Data = c.ChartItemData;
+              charts.Add(sc);
+            }
+            return Ok(charts);
         }
     }
 
