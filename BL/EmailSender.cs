@@ -34,14 +34,16 @@ namespace BL
     
     public void SendEmail(string name, string login, string pwd)
     {
-      // Creating the email
-      MailMessage msg = new MailMessage();
+            // Creating the email
+            MailMessage msg = new MailMessage
+            {
 
-      // Set the sender
-      msg.From = new MailAddress("politiekebarometert13@gmail.com", "t13");
+                // Set the sender
+                From = new MailAddress("politiekebarometert13@gmail.com", "t13")
+            };
 
-      // Set Retriever
-      msg.To.Add(new MailAddress(login, name));
+            // Set Retriever
+            msg.To.Add(new MailAddress(login, name));
 
       // Set subject
       msg.Subject = "Registratie Barometer Platform";
@@ -60,14 +62,16 @@ namespace BL
       // Set priority
       msg.Priority = MailPriority.High;
 
-      // Connect to server
-      SmtpClient sender = new SmtpClient(server, 25);
-      sender.EnableSsl = true;
-      sender.Credentials = new NetworkCredential(email, password);
+            // Connect to server
+            SmtpClient sender = new SmtpClient(server, 25)
+            {
+                EnableSsl = true,
+                Credentials = new NetworkCredential(email, password)
+            };
 
-      // Send email
-      // krijg nog verbindingsfout oid, voorlopig in commentaar
-      //sender.Send(msg);
-    }
+            // Send email
+            // krijg nog verbindingsfout oid, voorlopig in commentaar
+            //sender.Send(msg);
+        }
   }
 }

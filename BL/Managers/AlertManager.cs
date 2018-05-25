@@ -26,17 +26,17 @@ namespace BL.Managers
         public void VerifyCondition(Alert alert)
         {
 
-              switch (alert.Parameter)
-                {
-        case AlertParameter.compared: CompareNrOfPosts(alert); break;
-        case AlertParameter.comparedSentiment:CompareSentiment(alert); break;
-        case AlertParameter.mentions:  CompareNrOfPostsWithSelf(alert); break;
-        case AlertParameter.sentiment:  CompareSentimentWithSelf(alert); break;
-        
-              }
-            
-    
-       
+            switch (alert.Parameter)
+            {
+                case AlertParameter.compared: CompareNrOfPosts(alert); break;
+                case AlertParameter.comparedSentiment: CompareSentiment(alert); break;
+                case AlertParameter.mentions: CompareNrOfPostsWithSelf(alert); break;
+                case AlertParameter.sentiment: CompareSentimentWithSelf(alert); break;
+
+            }
+
+
+
             //int tweetAmount = socialMediaRepository.ReadItemParameter(alert, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
             //if (alert.CompareItem == null)
             //{
@@ -62,166 +62,133 @@ namespace BL.Managers
             //return false;
         }
 
-    private void CompareSentimentWithSelf(Alert alert)
-    {
-      double newSentiment = socialMediaRepository.ReadAverageSentimentFromItem(alert.Item, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
-      double oldSentiment = socialMediaRepository.ReadAverageSentimentFromItem(alert.Item, DateTime.Now.AddHours(-FREQUENTIE), DateTime.Now.AddHours(-(FREQUENTIE * 2)));
-      if (newSentiment >= oldSentiment * (alert.ConditionPerc / 100))
-      {
-        Notification n = new Notification() { DateTime = DateTime.Now, Alert = alert };
-        n.Content = String.Format("{0} wordt nu {1}% positiever gezien dan eerder", alert.Item.Name, alert.ConditionPerc);
-        alertRepository.CreateNotification(n);
-        alert.Notifications.Add(n);
-        alertRepository.UpdateAlert(alert);
-        SendAlert(alert, n);
-      } ;
-    }
-
-    private void CompareSentiment(Alert alert)
-    {
-      double s1 = socialMediaRepository.ReadAverageSentimentFromItem(alert.Item, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
-      double s2 = socialMediaRepository.ReadAverageSentimentFromItem(alert.CompareItem, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
-      if (s1 >= s2 * (alert.ConditionPerc / 100))
-      {
-        Notification n = new Notification() { DateTime = DateTime.Now, Alert = alert };
-        n.Content = String.Format("{0} wordt nu {1}% zo positief als {2} gezien", alert.Item.Name, alert.ConditionPerc, alert.CompareItem.Name);
-        alertRepository.CreateNotification(n);
-        alert.Notifications.Add(n);
-        alertRepository.UpdateAlert(alert);
-        SendAlert(alert, n);
-      }
-    }
-
-    private void CompareNrOfPosts(Alert alert)
-    {
-      int tweetAmountItem1 = socialMediaRepository.ReadNrOfPostsFromItem(alert.Item, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
-      int tweetAmountItem2 = socialMediaRepository.ReadNrOfPostsFromItem(alert.CompareItem, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
-      if(tweetAmountItem1 >= tweetAmountItem2 * (alert.ConditionPerc / 100))
-      {
-        Notification n = new Notification() { DateTime = DateTime.Now, Alert = alert };
-        n.Content = String.Format("{0} is nu meer dan {1}% zo populair als {2}",alert.Item.Name,alert.ConditionPerc,alert.CompareItem.Name);
-        alertRepository.CreateNotification(n);
-        alert.Notifications.Add(n);
-        alertRepository.UpdateAlert(alert);
-        SendAlert(alert, n);
-      }
-    }
-
-    private void CompareNrOfPostsWithSelf(Alert alert)
-    {
-      int tweetAmount = socialMediaRepository.ReadNrOfPostsFromItem(alert.Item, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
-      int oldTweetAmount = socialMediaRepository.ReadNrOfPostsFromItem(alert.Item, DateTime.Now.AddHours(-FREQUENTIE), DateTime.Now.AddHours(-(FREQUENTIE * 2)));
-
-      if (alert.ConditionPerc > 100)
-      {
-        if (tweetAmount >=oldTweetAmount * (alert.ConditionPerc / 100))
+        private void CompareSentimentWithSelf(Alert alert)
         {
-          if (!alertRepository.NotificationExists(alert.AlertId))
-          {
-            Notification notification = new Notification() { DateTime = DateTime.Now, Alert = alert };
-            notification.Content = String.Format("Er wordt meer over {0} gepraat op sociale media", alert.Item.Name);
-            alertRepository.CreateNotification(notification);
-            alert.Notifications.Add(notification);
-            alertRepository.UpdateAlert(alert);
-            SendAlert(alert, notification);
-          }
+            double newSentiment = socialMediaRepository.ReadAverageSentimentFromItem(alert.Item, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
+            double oldSentiment = socialMediaRepository.ReadAverageSentimentFromItem(alert.Item, DateTime.Now.AddHours(-FREQUENTIE), DateTime.Now.AddHours(-(FREQUENTIE * 2)));
+            if (newSentiment >= oldSentiment * (alert.ConditionPerc / 100))
+            {
+                Notification n = new Notification() { DateTime = DateTime.Now, Alert = alert };
+                n.Content = String.Format("{0} wordt nu {1}% positiever gezien dan eerder", alert.Item.Name, alert.ConditionPerc);
+                alertRepository.CreateNotification(n);
+                alert.Notifications.Add(n);
+                alertRepository.UpdateAlert(alert);
+                SendAlert(alert, n);
+            };
+        }
 
+        private void CompareSentiment(Alert alert)
+        {
+            double s1 = socialMediaRepository.ReadAverageSentimentFromItem(alert.Item, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
+            double s2 = socialMediaRepository.ReadAverageSentimentFromItem(alert.CompareItem, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
+            if (s1 >= s2 * (alert.ConditionPerc / 100))
+            {
+                Notification n = new Notification() { DateTime = DateTime.Now, Alert = alert };
+                n.Content = String.Format("{0} wordt nu {1}% zo positief als {2} gezien", alert.Item.Name, alert.ConditionPerc, alert.CompareItem.Name);
+                alertRepository.CreateNotification(n);
+                alert.Notifications.Add(n);
+                alertRepository.UpdateAlert(alert);
+                SendAlert(alert, n);
+            }
+        }
+
+        private void CompareNrOfPosts(Alert alert)
+        {
+            int tweetAmountItem1 = socialMediaRepository.ReadNrOfPostsFromItem(alert.Item, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
+            int tweetAmountItem2 = socialMediaRepository.ReadNrOfPostsFromItem(alert.CompareItem, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
+            if (tweetAmountItem1 >= tweetAmountItem2 * (alert.ConditionPerc / 100))
+            {
+                Notification n = new Notification() { DateTime = DateTime.Now, Alert = alert };
+                n.Content = String.Format("{0} is nu meer dan {1}% zo populair als {2}", alert.Item.Name, alert.ConditionPerc, alert.CompareItem.Name);
+                alertRepository.CreateNotification(n);
+                alert.Notifications.Add(n);
+                alertRepository.UpdateAlert(alert);
+                SendAlert(alert, n);
+            }
+        }
+
+        private void CompareNrOfPostsWithSelf(Alert alert)
+        {
+            int tweetAmount = socialMediaRepository.ReadNrOfPostsFromItem(alert.Item, DateTime.Now, DateTime.Now.AddHours(-FREQUENTIE));
+            int oldTweetAmount = socialMediaRepository.ReadNrOfPostsFromItem(alert.Item, DateTime.Now.AddHours(-FREQUENTIE), DateTime.Now.AddHours(-(FREQUENTIE * 2)));
+
+            if (alert.ConditionPerc > 100)
+            {
+                if (tweetAmount >= oldTweetAmount * (alert.ConditionPerc / 100))
+                {
+                    if (!alertRepository.NotificationExists(alert.AlertId))
+                    {
+                        Notification notification = new Notification() { DateTime = DateTime.Now, Alert = alert };
+                        notification.Content = String.Format("Er wordt meer over {0} gepraat op sociale media", alert.Item.Name);
+                        alertRepository.CreateNotification(notification);
+                        alert.Notifications.Add(notification);
+                        alertRepository.UpdateAlert(alert);
+                        SendAlert(alert, notification);
+                    }
+
+
+                }
+
+            }
+            else
+            {
+                if (tweetAmount <= oldTweetAmount * (alert.ConditionPerc / 100))
+                {
+                    if (!alertRepository.NotificationExists(alert.AlertId))
+                    {
+                        Notification notification = new Notification() { DateTime = DateTime.Now, Alert = alert };
+                        notification.Content = String.Format("Er wordt minder over {0} gepraat op sociale media", alert.Item.Name);
+                        alertRepository.CreateNotification(notification);
+                        alert.Notifications.Add(notification);
+                        alertRepository.UpdateAlert(alert);
+                        SendAlert(alert, notification);
+                    }
+
+
+                }
+            }
 
         }
-          
-      }
-      else
-      {
-        if (tweetAmount <= oldTweetAmount  * (alert.ConditionPerc / 100))
-        {
-          if (!alertRepository.NotificationExists(alert.AlertId))
-          {
-            Notification notification = new Notification() { DateTime = DateTime.Now, Alert = alert };
-            notification.Content = String.Format("Er wordt minder over {0} gepraat op sociale media", alert.Item.Name);
-            alertRepository.CreateNotification(notification);
-            alert.Notifications.Add(notification);
-            alertRepository.UpdateAlert(alert);
-            SendAlert(alert, notification);
-          }
 
+        public void HandleAlerts(List<Alert> alerts)
+        {
+            foreach (Alert a in alerts)
+            {
+                VerifyCondition(a);
+            }
+        }
+
+        private void SendAlert(Alert a, Notification n)
+        {
+            foreach (AlertType t in a.Type)
+            {
+                switch (t)
+                {
+                    case AlertType.mail: SendMail(a.User, n); break;
+                    case AlertType.notification: SendNotification(a.User, n); break;
+                    case AlertType.pushbericht: SendPush(a.User, n); break;
+
+                }
+            }
+        }
+
+        private void SendPush(ApplicationUser u, Notification n)
+        {
+            // push bericht naar android, TODO
+            throw new NotImplementedException();
+        }
+
+        private void SendNotification(ApplicationUser u, Notification n)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SendMail(ApplicationUser u, Notification n)
+        {
+
+            Mail.SendMail(u.Email, "Nieuwe social media trend", n.Content);
 
         }
-      }
-
-    }
-
-   
-
-        
-
-        
-
-        //public void InspectAlert(Alert alert)
-        //{
-        //    bool condionAns = VerifyCondition(alert);
-        //    int notificationNmr = 1;
-        //    if (condionAns == true)
-        //    {
-        //        AlertType type = alert.Type;
-        //        if (type != AlertType.mail)
-        //        {
-        //            //TODO controleer of notification al in database is opgenomen
-        //            if (!alertRepository.NotificationExists(alert.AlertId))
-        //            {
-        //                Notification notification = new Notification() { NotificationId = notificationNmr, DateTime = DateTime.Now, Alert = alert };                                                
-        //                alertRepository.CreateNotification(notification);
-        //                alert.Notifications.Add(notification);
-        //                alertRepository.UpdateAlert(alert);
-        //                notificationNmr++;
-        //            }
-        //        }
-        //        if (type != AlertType.notification)
-        //        {
-        //            //TODO Mail versturen naar gebruiker?
-        //        }
-        //    }
-        //}
-
-       public void HandleAlerts(List<Alert> alerts)
-    {
-      foreach(Alert a in alerts)
-      {
-        VerifyCondition(a);
-      }
-    }
-
-        private void SendAlert(Alert a,Notification n)
-    {
-      foreach (AlertType t in a.Type)
-      {
-        switch (t)
-        {
-          case AlertType.mail: SendMail(a.User, n); break;
-          case AlertType.notification: SendNotification(a.User, n); break;
-          case AlertType.pushbericht: SendPush(a.User, n); break;
-
-        }
-      }
-    }
-
-    private void SendPush(ApplicationUser u, Notification n)
-    {
-
-      // push bericht naar android, TODO
-      throw new NotImplementedException();
-    }
-
-    private void SendNotification(ApplicationUser u, Notification n)
-    {
-      throw new NotImplementedException();
-    }
-
-    private void SendMail(ApplicationUser u, Notification n)
-    {
-
-      Mail.sendMail(u.Email, "Nieuwe social media trend", n.Content);
-      
-    }
 
         public List<Alert> GetAlerts(Item item)
         {
