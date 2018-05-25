@@ -46,13 +46,6 @@
     <WarningLevel>4</WarningLevel>
     <PublishDatabaseSettings>
       <Objects>
-        <ObjectGroup Name="SchoolServerProfile" Order="1" Enabled="False">
-          <Destination Path="Data Source=10.134.216.25%3bInitial Catalog=dbTeam13%3bUser ID=dbuserTeam13%3bPassword=Opfoeind0" />
-          <Object Type="DbFullSql">
-            <PreSource Path="Data Source=DESKTOP-O88HEBH\SQLSERVER2016%3bInitial Catalog=PolitiekeBarometerDB%3bIntegrated Security=True" ScriptSchema="False" ScriptData="True" CopyAllFullTextCatalogs="False" DriDefaults="True" />
-            <Source Path="obj\Release\AutoScripts\SchoolServerProfile_DataOnly.sql" Transacted="True" />
-          </Object>
-        </ObjectGroup>
       </Objects>
     </PublishDatabaseSettings>
   </PropertyGroup>
@@ -267,9 +260,8 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
-    <None Include="Properties\PublishProfiles\MyserverProfile.pubxml" />
-    <None Include="Properties\PublishProfiles\SchoolServerProfile.pubxml" />
-    <None Include="Properties\PublishProfiles\SchoolServerProfile2.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\MyServerProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\iziToast.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
