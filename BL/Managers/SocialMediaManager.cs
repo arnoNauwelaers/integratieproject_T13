@@ -233,7 +233,7 @@ namespace BL.Managers
 
         public Boolean IsPostFromTheme(SocialMediaPost post, Theme item)
         {
-            if (post.Themes.Contains(item))
+            if (post.Themes.Any(i => i.Name.Equals(item.Name)))
             {
                 return true;
             }
@@ -254,7 +254,7 @@ namespace BL.Managers
         {
             foreach (var person in item.Persons)
             {
-                if (person.Organization != null && person.Organization == item)
+                if (person.Organization != null && person.Organization.Name.Equals(item.Name))
                 {
                     return true;
                 }
