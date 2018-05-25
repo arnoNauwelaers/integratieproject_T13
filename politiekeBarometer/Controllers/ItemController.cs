@@ -49,7 +49,7 @@ namespace politiekeBarometer.Controllers
         {
             try
             {
-                itemManager.AddItem(newItem.Name, newItem.type, newItem.SelectedOrganizationId, newItem.StringKeywords, newItem.TwitterUrl);
+                itemManager.AddItem(newItem.Name, newItem.Type, newItem.SelectedOrganizationId, newItem.StringKeywords, newItem.TwitterUrl);
                 return RedirectToAction("AdminItemIndex");
             }
             catch
@@ -79,7 +79,7 @@ namespace politiekeBarometer.Controllers
             model.Organizations = new SelectList(organizaionsSelect, "Value", "Text");
             model.ItemId = item.ItemId;
             model.Name = item.Name;
-            model.profileIds = new List<int>();
+            model.ProfileIds = new List<int>();
 
             if (item.GetType().ToString().Contains("Person"))
             {
@@ -89,25 +89,25 @@ namespace politiekeBarometer.Controllers
                 }
                 foreach (var profile in itemManager.GetProfiles(item))
                 {
-                    model.profileIds.Add(profile.Id);
+                    model.ProfileIds.Add(profile.Id);
                     model.TwitterUrl = profile.Url;
                 }
-                model.type = "Persoon";
+                model.Type = "Persoon";
             }
             else if (item.GetType().ToString().Contains("Organization"))
             {
                 foreach (var profile in itemManager.GetProfiles(item))
                 {
-                    model.profileIds.Add(profile.Id);
+                    model.ProfileIds.Add(profile.Id);
                     model.TwitterUrl = profile.Url;
                 }
-                model.type = "Organisatie";
+                model.Type = "Organisatie";
             }
             else if (item.GetType().ToString().Contains("Theme"))
             {
                 model.ListKeywords = new List<SelectListItem>() { new SelectListItem { Value = "", Text = "" } };
                 model.ListKeywords.AddRange((((Theme)item).Keywords).Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Value }).ToList());
-                model.type = "Thema";
+                model.Type = "Thema";
             }
             return View(model);
         }
@@ -117,19 +117,19 @@ namespace politiekeBarometer.Controllers
         {
             try
             {
-                Item tempitem = itemManager.EditItem(ItemId, editItem.Name, editItem.type, editItem.SelectedOrganizationId, editItem.SelectedKeywords, editItem.StringKeywords);
-                if (editItem.profileIds != null)
+                Item tempitem = itemManager.EditItem(ItemId, editItem.Name, editItem.Type, editItem.SelectedOrganizationId, editItem.SelectedKeywords, editItem.StringKeywords);
+                if (editItem.ProfileIds != null)
                 {
-                    itemManager.EditProfiles(editItem.profileIds, editItem.TwitterUrl);
+                    itemManager.EditProfiles(editItem.ProfileIds, editItem.TwitterUrl);
                 }
-                else if(editItem.type != "Thema")
+                else if(editItem.Type != "Thema")
                 {
                     itemManager.AddProfileToItem(tempitem, editItem.TwitterUrl);
                 }
 
-                if(editItem.TwitterUrl == null && editItem.profileIds != null)
+                if(editItem.TwitterUrl == null && editItem.ProfileIds != null)
                 {
-                    itemManager.DeleteProfiles(editItem.profileIds);
+                    itemManager.DeleteProfiles(editItem.ProfileIds);
                 }
                 return RedirectToAction("AdminItemIndex");
             }

@@ -63,7 +63,6 @@ namespace politiekeBarometer.Controllers
             }
         }
 
-        //TODO return al gelezen notifications van vandaag en ongelezen notifications andere dagen. ReadDate toevoegen aan Notification naast Read boolean?
         [Route("api/Basic/GetNotifications")]
         [Authorize]
         public IHttpActionResult GetNotifications()

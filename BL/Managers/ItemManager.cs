@@ -6,7 +6,6 @@ using DAL.EF;
 using System;
 using DAL.Repositories;
 
-//TODO In manager geen Read maar Get gebruiken!
 namespace BL.Managers
 {
     public class ItemManager
@@ -263,15 +262,15 @@ namespace BL.Managers
         }
 
 
-        public Person ReadPerson(int id)
+        public Person GetPerson(int id)
         {
             return itemRepository.ReadPerson(id);
         }
-        public Organization ReadOrganization(int id)
+        public Organization GetOrganization(int id)
         {
             return itemRepository.ReadOrganization(id);
         }
-        public Theme ReadTheme(int id)
+        public Theme GetTheme(int id)
         {
             return itemRepository.ReadTheme(id);
         }

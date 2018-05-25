@@ -154,7 +154,7 @@ namespace BL.Managers
 
     public void SendMail(ApplicationUser u,Notification n)
     {
-          Mail.sendMail(u.Email, "Nieuwe melding", n.Content);
+          Mail.SendMail(u.Email, "Nieuwe melding", n.Content);
     }
 
     public List<Item> GetItemsFromUser(ApplicationUser userO)

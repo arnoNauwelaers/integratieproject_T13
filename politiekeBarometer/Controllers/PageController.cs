@@ -9,7 +9,6 @@ using politiekeBarometer.Models;
 
 namespace politiekeBarometer.Controllers
 {
-    //TODO YAGO: AUTHORIZATION DINGES
     public class PageController : Controller
     {
         ItemManager im;
@@ -30,7 +29,7 @@ namespace politiekeBarometer.Controllers
 
         public ActionResult Person(int id)
         {
-            Person person = im.ReadPerson(id);
+            Person person = im.GetPerson(id);
             ViewBag.Stories = socialMediaManager.GetTopTenUrlPerson(person);
             ViewBag.Charts = chartManager.GetChartsFromItem(person);
             ViewBag.RelatedWords = socialMediaManager.GetTopTenWordsPerson(person);
@@ -39,7 +38,7 @@ namespace politiekeBarometer.Controllers
 
         public ActionResult Organization(int Id)
         {
-            Organization organization = im.ReadOrganization(Id);
+            Organization organization = im.GetOrganization(Id);
             ViewBag.Stories = socialMediaManager.GetTopTenUrlOrganization(organization);
             ViewBag.Charts = chartManager.GetChartsFromItem(organization);
             ViewBag.RelatedWords = socialMediaManager.GetTopTenWordsOrganization(organization);
@@ -48,7 +47,7 @@ namespace politiekeBarometer.Controllers
 
         public ActionResult Theme(int Id)
         {
-            Theme theme = im.ReadTheme(Id);
+            Theme theme = im.GetTheme(Id);
             ViewBag.Charts = chartManager.GetChartsFromItem(theme);
             return View(theme);
         }

@@ -124,11 +124,13 @@ namespace politiekeBarometer.Controllers
         {
             List<SimpleChart> charts = new List<SimpleChart>();
             foreach(KeyValuePair<string, Chart> entry in ChartManager.GetStandardChart()) {
-              SimpleChart sc = new SimpleChart();
-              sc.Name = entry.Key;
-              sc.Type = entry.Value.ChartType;
-              sc.Data = entry.Value.ChartItemData;
-              charts.Add(sc);
+                SimpleChart sc = new SimpleChart
+                {
+                    Name = entry.Key,
+                    Type = entry.Value.ChartType,
+                    Data = entry.Value.ChartItemData
+                };
+                charts.Add(sc);
             }
             return Ok(charts);
         }

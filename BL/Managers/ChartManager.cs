@@ -316,7 +316,6 @@ namespace BL.Managers
             }
         }
 
-        //TODO Mathijs; afmaken
         public void EditChartFromDashboard(int id, string items, string type, string frequency)
         {
             Chart chart = chartRepository.ReadChart(id);

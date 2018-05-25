@@ -12,9 +12,6 @@ namespace BL.Domain
         public long PostId { get; set; }
         [JsonProperty("id"), StringLength(450), Index(IsUnique = true)]
         public string TweetId { get; set; }
-        //TODO geo kan zowel array van double en boolean zijn
-        //[JsonProperty("geo")]
-        //public double[] Geo { get; set; }
         [JsonProperty("retweet")]
         public Boolean Retweet { get; set; }
         [JsonProperty("date")]
