@@ -22,9 +22,9 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
             <div class="form-group">
-                @Html.LabelFor(model => model.type, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.type, new List<SelectListItem>
+                    @Html.DropDownListFor(model => model.Type, new List<SelectListItem>
                {
                         new SelectListItem { Text = "Persoon", Value = "Person"},
                         new SelectListItem { Text = "Organisatie", Value = "Organization" },
