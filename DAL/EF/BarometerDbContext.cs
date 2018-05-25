@@ -7,12 +7,11 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace DAL.EF
 {
     [DbConfigurationType(typeof(BarometerDbConfiguration))]
-    public class BarometerDbContext : IdentityDbContext<ApplicationUser> /* 'public' for testing with project 'DAL-Testing'! */
+    public class BarometerDbContext : IdentityDbContext<ApplicationUser> 
     {
         public BarometerDbContext() : base("PolitiekeBarometerDB")
         {
             this.Database.CommandTimeout = 60;
-            //  Database.SetInitializer<BarometerDbContext>(new BarometerDbInitializer()); // moved to 'SupportCenterDbConfiguration'
         }
 
         public static BarometerDbContext Create()
@@ -40,31 +39,25 @@ namespace DAL.EF
         public DbSet<Zone> Zones { get; set; }
         public DbSet<Keyword> Keywords { get; set; }
         public DbSet<Settings> Settings { get; set; }
-        //public DbSet<User> Users { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder); // needed
-                                                // identity
+            base.OnModelCreating(modelBuilder); 
+                                                
             modelBuilder.Entity<ApplicationUser>().ToTable("Users");
             modelBuilder.Entity<IdentityRole>().ToTable("Roles");
             modelBuilder.Entity<IdentityUserRole>().ToTable("UserRoles");
             modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogins");
             modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");
 
-            // Remove pluralizing tablenames
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            // Remove cascading delete for all required-relationships
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
 
-            //modelBuilder.Entity<ApplicationUser>().HasKey(u => u.Id);
             modelBuilder.Entity<Notification>().HasKey(u => u.NotificationId);
 
-            // modelBuilder.Entity<IdentityUserLogin>().HasKey(u => u.UserId);
-            //modelBuilder.Entity<IdentityUserRole>().HasKey(u => new (u.RoleId, uint.))
 
             modelBuilder.Entity<Alert>().HasMany(i => i.Notifications).WithMany();
             modelBuilder.Entity<Chart>().HasMany(i => i.ChartItemData).WithMany();
@@ -80,26 +73,18 @@ namespace DAL.EF
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Words).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Urls).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Hashtags).WithMany();
-            //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Themes).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasOptional(i => i.PostSentiment).WithOptionalDependent().WillCascadeOnDelete(true);
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Persons).WithMany();
             modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Themes).WithMany();
 
             modelBuilder.Entity<Item>().HasMany(i => i.SocialMediaPosts).WithMany();
 
-            //modelBuilder.Entity<Theme>().HasMany(i => i.Keywords).WithMany();
 
             modelBuilder.Entity<ChartItemData>().HasMany(i => i.Data).WithMany();
-            //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Words).WithMany();
-            //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Person).WithMany();
-            //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Verhalen).WithMany();
-            //modelBuilder.Entity<SocialMediaPost>().HasMany(i => i.Hashtags).WithMany();
             modelBuilder.Entity<SocialMediaSource>().HasMany(i => i.SocialMediaPost).WithMany();
             modelBuilder.Entity<Chart>().HasMany(i => i.Items).WithMany();
             modelBuilder.Entity<Platform>().HasMany(i => i.Users).WithMany();
             modelBuilder.Entity<Platform>().HasMany(i => i.Sources).WithMany();
-            //modelBuilder.Entity<Theme>().HasMany(i => i.Keywords).WithMany();
-            //modelBuilder.Entity<User>().HasMany(i => i.Alerts).WithMany();
         }
     }
 }
