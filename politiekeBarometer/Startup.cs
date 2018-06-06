@@ -23,7 +23,8 @@ namespace politiekeBarometer
         {
             ConfigureAuth(app);
             CreateRolesAndUsers();
-            ActivateApi();
+            Read.LastRead = DateTime.Now;
+            //ActivateApi();
         }
 
 

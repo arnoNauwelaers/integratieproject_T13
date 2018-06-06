@@ -77,23 +77,23 @@
     </div>
 
     <script>
-        document.getElementById('type').addEventListener("change", hideElements);
+        document.getElementById('Type').addEventListener("change", hideElements);
         hideElements();
         function hideElements() {
-            if ($("#type option:selected").val() != "Person") {
+            if ($("#Type option:selected").val() != "Person") {
                 $("#organization").hide();
             }
             else {
                 $("#organization").show();
             }
 
-            if ($("#type option:selected").val() != "Theme") {
+            if ($("#Type option:selected").val() != "Theme") {
                 $("#keyword").hide();
             } else {
                 $("#keyword").show();
             }
 
-            if ($("#type option:selected").val() == "Theme") {
+            if ($("#Type option:selected").val() == "Theme") {
                 $("#TwitterUrl").hide();
             } else {
                 $("#TwitterUrl").show();

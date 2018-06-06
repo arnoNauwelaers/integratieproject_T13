@@ -98,7 +98,7 @@ namespace politiekeBarometer.Controllers
         {
             Chart chart = ChartManager.GetChart(id, false);
             ApplicationUser user = userManager.GetUser(User.Identity.GetUserId());
-            user.Dashboard.Add(new Chart() { ChartType = chart.ChartType, ChartValue = chart.ChartValue, FrequencyType = chart.FrequencyType, Zone = (new Zone() { Width = 2.43, X = 10, Y = 10 }) });
+            user.Dashboard.Add(new Chart() { ChartType = chart.ChartType, ChartValue = chart.ChartValue, FrequencyType = chart.FrequencyType,ItemType=chart.ItemType, Zone = (new Zone() { Width = 2.43, X = 10, Y = 10 }) });
             userManager.Update(user);
             return RedirectToAction("Index");
         }

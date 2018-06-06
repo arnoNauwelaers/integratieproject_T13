@@ -256,7 +256,7 @@ namespace BL.Managers
                 }
                 chart.ChartItemData.Add(tempChartItemData);
             }
-            chartRepository.UpdateChart(chart);
+            //chartRepository.UpdateChart(chart);
             chart.LastRead = DateTime.Now;
         }
 

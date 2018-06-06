@@ -633,6 +633,7 @@ namespace BL.Managers
             if (post.Sentiment.Count() > 0)
             {
                 post.PostSentiment = new Sentiment(post.Sentiment[0], post.Sentiment[1]);
+                post.Sentiment = null;
             }
 
             foreach (var item in post.Hashtag)
@@ -642,6 +643,7 @@ namespace BL.Managers
                     post.Hashtags.Add(new Hashtag(item));
                 }
             }
+            post.Hashtag = null;
             foreach (var item in post.Verhaal)
             {
                 if (item != null)
@@ -649,6 +651,7 @@ namespace BL.Managers
                     post.Urls.Add(new Url(item));
                 }
             }
+            post.Verhaal = null;
             foreach (var item in post.Word)
             {
                 if (item != null)
@@ -656,6 +659,7 @@ namespace BL.Managers
                     post.Words.Add(new Word(item));
                 }
             }
+            post.Word = null;
             foreach (var item in post.Person)
             {
                 if (item != null)
@@ -670,6 +674,7 @@ namespace BL.Managers
                     post.Themes.Add(new Theme(item));
                 }
             }
+            post.Theme = null;
             return true;
         }
     }
